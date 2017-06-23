@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" jaba="true" xsi:noNamespaceSchemaLocation="JMTmodel.xsd"><description><![CDATA[The objective of this example is to show how it is possible to identify the bottlenecks of a closed system with a two-classes workload and three resources.The optimal loads of the system that keep saturated more than one resource are also identified.
+
+All the mixes of the closed population of N customers are considered and the potential asymptotic bottlenecks (when N tend to infinite) with the different mixes are identified.
+
+After the execution of the JABA program one "common saturation sector" in which two stations saturate concurrently has been identified. Indeed, when the number of Class 2 customers in execution is between 12.5% and 41.7% of the total population N, the two servers 1 and 3 saturate concurrently with the increasing of the number N of customers in execution.
+
+Let us remark that to obtain such information it is required to know only the global service demands for all the stations of the system.
+
+As the mix of customers change, only the stations that lie on the convex hull may become bottlenecks . The convex hull representation allows the users to understand immediately how strong are the bottlenecks and how to improve the performance of the system decreasing the load on the more saturated stations.
+
+See the manual of JABA for more details on the asymptotic technique.
+
+]]></description><parameters><classes number="2"><closedclass name="Class1" population="0"/><closedclass name="Class2" population="0"/></classes><stations number="3"><listation name="Server1"><servicetimes><servicetime customerclass="Class1">60.0</servicetime><servicetime customerclass="Class2">15.0</servicetime></servicetimes><visits><visit customerclass="Class1">1.0</visit><visit customerclass="Class2">1.0</visit></visits></listation><listation name="Server2"><servicetimes><servicetime customerclass="Class1">15.0</servicetime><servicetime customerclass="Class2">40.0</servicetime></servicetimes><visits><visit customerclass="Class1">1.0</visit><visit customerclass="Class2">1.0</visit></visits></listation><listation name="Server3"><servicetimes><servicetime customerclass="Class1">40.0</servicetime><servicetime customerclass="Class2">50.0</servicetime></servicetimes><visits><visit customerclass="Class1">1.0</visit><visit customerclass="Class2">1.0</visit></visits></listation></stations></parameters></model>

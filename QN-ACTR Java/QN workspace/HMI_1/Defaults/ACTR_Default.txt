@@ -1,0 +1,216 @@
+;; comment symbols are ;; and #| ... |#, same as ACT-R (Lisp)
+
+;; some common chunk-types that may belong to multiple modules
+(chunk-type chunk)
+(chunk-type clear)
+(chunk-type pm-constant)
+
+
+
+;;copied from audio.lisp
+
+  (chunk-type audio-event onset offset pitch kind location id )  
+  (chunk-type sound kind content event location )  ;; location, same as audio-event location  is added by Cao for programming convenience, control vocalization of words in a sentence.
+
+  (chunk-type audio-command)
+
+ (define-chunks
+    (digit isa chunk)
+    (speech isa chunk)
+    (tone isa chunk)
+    (word isa chunk))
+
+
+
+
+;;copied from model.lisp	.buffer state names
+  (define-chunks
+     (free isa chunk)
+ 
+     (busy isa chunk)
+       
+     (error isa chunk)
+       
+     (empty isa chunk)
+              
+     (full isa chunk)
+                      
+     (requested isa chunk)
+                  
+     (unrequested isa chunk)
+  )
+
+
+
+
+
+;; copied from motor.lisp, and modified because QN doesn't have :include method:
+  (chunk-type motor-command)
+  (chunk-type click-mouse)  ;; (chunk-type (click-mouse (:include motor-command)))
+	(chunk-type-include click-mouse motor-command)
+  (chunk-type hand-to-mouse) ;; (chunk-type (hand-to-mouse (:include motor-command)))
+	(chunk-type-include hand-to-mouse motor-command)
+  (chunk-type hand-to-home) ;; (chunk-type (hand-to-home (:include motor-command)))
+	(chunk-type-include hand-to-home motor-command)
+  (chunk-type move-cursor object loc device) ;; (chunk-type (move-cursor (:include motor-command)) object loc device)
+	(chunk-type-include move-cursor motor-command)
+  (chunk-type peck hand finger r theta) ;; (chunk-type (peck (:include motor-command)) hand finger r theta)
+	(chunk-type-include peck motor-command)
+  (chunk-type peck-recoil hand finger r theta) ;; (chunk-type (peck-recoil (:include motor-command)) hand finger r theta)
+	(chunk-type-include peck-recoil  motor-command)
+  (chunk-type point-hand-at-key hand to-key) ;; (chunk-type (point-hand-at-key (:include motor-command)) hand to-key)
+	(chunk-type-include point-hand-at-key motor-command)
+  (chunk-type press-key key) ;; (chunk-type (press-key (:include motor-command)) key)
+	(chunk-type-include press-key motor-command)
+  (chunk-type punch hand finger) ;; (chunk-type (punch (:include motor-command)) hand finger)
+  	(chunk-type-include punch motor-command)
+  (chunk-type prepare style hand finger r theta) ;; (chunk-type (prepare (:include motor-command)) style hand finger r theta)
+	(chunk-type-include prepare motor-command)
+  (chunk-type execute ) ;; (chunk-type (execute (:include motor-command)))
+	(chunk-type-include execute motor-command)
+
+
+;; modified from act-touch.lisp
+  (chunk-type move-hand-touch object loc hand) 
+	(chunk-type-include move-hand-touch motor-command)
+  (chunk-type tap hand finger)
+  	(chunk-type-include tap motor-command)
+
+
+
+;;copied and modifed from speech.lisp
+(chunk-type speech-command)
+(chunk-type speak string)  ;;(chunk-type (speak (:include speech-command)) string)
+	(chunk-type-include  speak speech-command)
+(chunk-type  subvocalize string) ;;  (chunk-type (subvocalize (:include speech-command)) string)
+	(chunk-type-include  subvocalize  speech-command)
+
+(define-chunks (self isa pm-constant))
+
+
+
+
+;; copied from vision.lisp, and modified because QN doesn't have the same :include method:
+  (chunk-type visual-object screen-pos value status color height width )  
+  (chunk-type abstract-object value line-pos bin-pos)
+  (chunk-type abstract-letter value line-pos bin-pos)   ;;(chunk-type (abstract-letter (:include abstract-object)))
+ 	(chunk-type-include abstract-letter abstract-object)	;;so that an abstract-letter chunk will be matched for ISA abstract-object test
+  (chunk-type abstract-number value line-pos bin-pos) ;;(chunk-type (abstract-number (:include abstract-object)))
+	(chunk-type-include abstract-number abstract-object)
+  (chunk-type text screen-pos value status color height width) ;;(chunk-type (text (:include visual-object)))
+	(chunk-type-include text visual-object)
+  (chunk-type empty-space screen-pos value status color height width) ;;(chunk-type (empty-space (:include visual-object)))
+  	(chunk-type-include empty-space visual-object)
+  (chunk-type line screen-pos value status color height width end1-x end1-y end2-x end2-y)  ;;(chunk-type (line (:include visual-object)) end1-x end1-y end2-x end2-y)
+	(chunk-type-include line visual-object)
+  (chunk-type oval screen-pos value status color height width) ;;(chunk-type (oval (:include visual-object)))
+	(chunk-type-include oval visual-object)
+  (chunk-type cursor screen-pos value status color height width) ;;(chunk-type (cursor (:include visual-object)))
+	(chunk-type-include cursor visual-object)
+  (chunk-type phrase! screen-pos value status color height width objects words colors) ;;(chunk-type (phrase! (:include visual-object)) objects words colors)
+  	(chunk-type-include  phrase! visual-object)
+  (chunk-type visual-location screen-x screen-y distance kind color value height width size)  	;; :attended slot is added later in the code.
+  
+  (chunk-type set-visloc-default type screen-x screen-y distance kind color value height width size)
+  
+  (chunk-type char-primitive screen-x screen-y distance kind color value height width size left right) ;;(chunk-type (char-primitive (:include visual-location)) left right)
+   	(chunk-type-include  char-primitive visual-location)
+  (chunk-type vision-command)
+  ;; (chunk-type pm-constant) ;;moved to common area
+  (chunk-type color)
+  
+  (chunk-type move-attention screen-pos scale)  ;;(chunk-type (move-attention (:include vision-command)) screen-pos scale)
+	(chunk-type-include  move-attention vision-command)
+  (chunk-type start-tracking)  ;;(chunk-type (start-tracking (:include vision-command)))
+	(chunk-type-include  start-tracking  vision-command)
+  (chunk-type assign-finst object location) ;;(chunk-type (assign-finst (:include vision-command)) object location)
+	(chunk-type-include  assign-finst  vision-command)
+  (chunk-type clear-scene-change)  ;;(chunk-type (clear-scene-change (:include vision-command)))
+	(chunk-type-include  clear-scene-change vision-command)
+
+  (define-chunks 
+    (lowest isa pm-constant)
+    (highest isa pm-constant)
+    (current isa pm-constant)
+    (external isa pm-constant)
+    (internal isa pm-constant)
+    (find-location isa vision-command)
+    (move-attention isa vision-command)
+    (assign-finst isa vision-command)
+    (start-tracking isa vision-command)
+    
+    (black isa color)
+    (red isa color)
+    (blue isa color)
+    (green isa color)
+    (white isa color)
+    (magenta isa color)
+    (yellow isa color)
+    (cyan isa color)
+    (dark-green isa color)
+    (dark-red isa color)
+    (dark-cyan isa color)
+    (dark-blue isa color)
+    (dark-magenta isa color)
+    (dark-yellow isa color)
+    (light-gray isa color)
+    (dark-gray isa color)
+        
+    (text isa chunk)
+    (box isa chunk)
+    (line isa chunk)
+    (oval isa chunk)
+    
+    (new isa chunk)
+    (clear isa chunk))
+
+
+;;;
+;;; here are in fact some chunk-types and chunks added in ACTR-QN
+;;;
+
+;; for World3D ralated model
+
+;; vision
+
+(chunk-type visual-location-world3d-driving screen-x screen-y distance kind color value height width size  	lane angle ) 
+	(chunk-type-include  visual-location-world3d-driving visual-location)
+
+(chunk-type world3d-visual-point screen-pos value status color height width 	world-3d-id)
+	(chunk-type-include world3d-visual-point visual-object)
+
+(chunk-type world3d-visual-car screen-pos value status color height width 	world-3d-id)
+	(chunk-type-include world3d-visual-car visual-object)
+
+
+
+
+(define-chunks
+     (near-point isa chunk)
+ 	(far-point isa chunk)
+   (customized-local-point isa chunk)
+
+)
+
+
+
+;; motor: manual and pedal (foot)?
+
+(chunk-type world3d-driving-two-point-visual-manual-steer	na-old na-new fa-old fa-new  time-old time-new  	delta-na delta-fa delta-time   delta-steer)  
+	(chunk-type-include  world3d-driving-two-point-visual-manual-steer  motor-command)
+
+(chunk-type world3d-driving-accelerate-brake	fd-old  fd-new  time-old time-new   delta-fd delta-time) 
+	(chunk-type-include  world3d-driving-accelerate-brake  motor-command)
+
+(chunk-type world3d-sp-driving-control-manual-joystick	axis	value	duration)
+	(chunk-type-include  world3d-sp-driving-control-manual-joystick  motor-command)
+
+(chunk-type customized-manual-action	name	preparation-duration	initiation-duration	execution-duration   	finish-duration		para-1 para-2 para-3 para-4 para-5 para-6 para-7 para-8 para-9 para-10 ) 
+	(chunk-type-include  customized-manual-action  motor-command)
+
+(chunk-type type-letters letters) 
+	(chunk-type-include  type-letters  motor-command)
+
+
+;; temporal module
+(chunk-type time ticks)

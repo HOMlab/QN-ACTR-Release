@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Step 3: define stations parameters</title>
+<link href="../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile2 { font-size:18pt; color:#0000FF; font-style:italic; }
+.Stile5 { color:#FF0000; font-size:16pt; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+</head>
+<body>
+<h1>Step 3: define station parameter</h1>
+<p>_________________________________________</p>
+<p>&nbsp;</p>
+<p>Define the parameters of the stations  included in the network.</p>
+<p>In  our example of web server, we have 1 source station, 3 servers and 1 sink, having  the following  equal properties:</p>
+<ul>
+  <li>
+    <p>All routing strategies for each customer class  are Random.</p>
+  </li>
+  <li>
+    <p>All the server stations have an Infinite Capacity Queue and its Policy  is set to FCFS.</p>
+  </li>
+  <li>
+    <p>In all the stations, the Service Time is Load Independent with Exponential Time Distribution, with different  rate &lambda; values depending  on the main value<em> &mu;</em>. </p>
+  </li>
+</ul>
+<p>&nbsp;</p>
+<p class="Stile2">Customers Station</p>
+<p class="Stile5">- Routing Section:</p>
+<p>Set Random for each Class.:</p>
+<p><img src="3source_prop.gif" width="397" height="339"></p>
+<p>&nbsp;</p>
+<p class="Stile2">CPU Station: </p>
+<p class="Stile5">- Queue Section </p>
+<p>Set infinte capacity and the policy to FCFS as in the figure : </p>
+<p><img src="3cpu_1.gif" width="293" height="358"></p>
+<p>&nbsp;</p>
+<p class="Stile5">- Service Section:</p>
+<p>We suppose the CPU serves  requests independently    of the number of jobs  (Load Independent) following an Exponential Service Time distribution  with &lambda;=3.2 for Class0 and with &lambda;=1.6 for Class1. </p>
+<p><img src="3cpu_2.gif" width="346" height="358"></p>
+<p class="Stile5">- Routing Section: </p>
+<p>Set all Routing Strategies as Random </p>
+<p><img src="3cpu_3.gif" width="384" height="398"></p>
+<p>&nbsp;</p>
+<p class="Stile2">Disks Station:</p>
+<p>To set the Service Time press &quot;Edit&quot; and insert the mean value C (see table). The rate value &lambda; is immediately calculated.</p>
+<table width="238" height="101" border="2" cellpadding="1" cellspacing="1" bordercolor="#0000FF">
+  <tr>
+    <td><div align="center">
+      <p>c</p>
+    </div></td>
+    <td><div align="center">
+      <p>Disk 1 </p>
+    </div></td>
+    <td><div align="center">
+      <p>Disk 2</p>
+    </div></td>
+  </tr>
+  <tr>
+    <td><div align="center">
+      <p>Class0</p>
+    </div></td>
+    <td><div align="center">
+      <p>1.2</p>
+    </div></td>
+    <td><div align="center">
+      <p>1.5</p>
+    </div></td>
+  </tr>
+  <tr>
+    <td><div align="center">
+      <p>Class1</p>
+    </div></td>
+    <td><div align="center">
+      <p>2.0</p>
+    </div></td>
+    <td><div align="center">
+      <p>2.2</p>
+    </div></td>
+  </tr>
+</table>
+<p class="Stile2"> <img src="3disk1_2.gif" width="344" height="321"></p>
+<p class="Stile2">&nbsp;</p>
+<p class="Stile2">Out Station:</p>
+<p>Set only the name, no parameter is required. </p>
+<p>&nbsp;</p>
+<p>
+  <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0" width="100" height="22">
+    <param name="movie" value="bt1">
+    <param name="quality" value="high">
+    <param name="bgcolor" value="#00FF33">
+    <embed src="bt1" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="100" height="22" bgcolor="#00FF33"></embed>
+  </object>
+</p>
+</body>
+</html>

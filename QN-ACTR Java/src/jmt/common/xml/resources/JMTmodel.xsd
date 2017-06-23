@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited by Bertoli Marco (Politecnico di Milano) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="model">
+		<xs:annotation>
+			<xs:documentation>jmt exact solver model description</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="description" type="xs:string" minOccurs="0"/>
+				<xs:element name="parameters">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="classes">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:choice maxOccurs="unbounded">
+											<xs:element name="closedclass">
+												<xs:complexType>
+													<xs:attribute name="name" type="xs:string" use="required"/>
+													<xs:attribute name="population" type="xs:double" use="required"/>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="openclass">
+												<xs:complexType>
+													<xs:attribute name="name" type="xs:string" use="required"/>
+													<xs:attribute name="rate" type="xs:double" use="required"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:choice>
+									</xs:sequence>
+									<xs:attribute name="number" type="xs:positiveInteger" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="stations">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:choice maxOccurs="unbounded">
+											<xs:element name="delaystation">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="servicetimes">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="servicetime" maxOccurs="unbounded">
+																		<xs:complexType>
+																			<xs:simpleContent>
+																				<xs:extension base="xs:double">
+																					<xs:attribute name="customerclass" type="xs:string" use="required"/>
+																				</xs:extension>
+																			</xs:simpleContent>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="visits">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="visit" maxOccurs="unbounded">
+																		<xs:complexType>
+																			<xs:simpleContent>
+																				<xs:extension base="xs:double">
+																					<xs:attribute name="customerclass" type="xs:string" use="required"/>
+																				</xs:extension>
+																			</xs:simpleContent>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+													<xs:attribute name="name" type="xs:string" use="required"/>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="listation">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="servicetimes">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="servicetime" maxOccurs="unbounded">
+																		<xs:complexType>
+																			<xs:simpleContent>
+																				<xs:extension base="xs:double">
+																					<xs:attribute name="customerclass" type="xs:string" use="required"/>
+																				</xs:extension>
+																			</xs:simpleContent>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="visits">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="visit" maxOccurs="unbounded">
+																		<xs:complexType>
+																			<xs:simpleContent>
+																				<xs:extension base="xs:double">
+																					<xs:attribute name="customerclass" type="xs:string" use="required"/>
+																				</xs:extension>
+																			</xs:simpleContent>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+													<xs:attribute name="name" type="xs:string" use="required"/>
+													<xs:attribute name="servers" type="xs:integer" use="optional"/>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="ldstation">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="servicetimes">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="servicetimes" maxOccurs="unbounded">
+																		<xs:complexType>
+																			<xs:simpleContent>
+																				<xs:extension base="xs:string">
+																					<xs:attribute name="customerclass" type="xs:string" use="required"/>
+																				</xs:extension>
+																			</xs:simpleContent>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="visits">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="visit" maxOccurs="unbounded">
+																		<xs:complexType>
+																			<xs:simpleContent>
+																				<xs:extension base="xs:double">
+																					<xs:attribute name="customerclass" type="xs:string" use="required"/>
+																				</xs:extension>
+																			</xs:simpleContent>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+													<xs:attribute name="name" type="xs:string" use="required"/>
+													<xs:attribute name="servers" type="xs:integer" use="optional"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:choice>
+									</xs:sequence>
+									<xs:attribute name="number" type="xs:positiveInteger" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="blockingRegion" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="regionNode" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="nodeName" type="xs:string" use="required"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="globalConstraint">
+								<xs:complexType>
+									<xs:attribute name="maxJobs" type="xs:double" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="classConstraint" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="jobClass" type="xs:string" use="required"/>
+									<xs:attribute name="maxJobsPerClass" type="xs:double" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="classWeight" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="jobClass" type="xs:string" use="required"/>
+									<xs:attribute name="weight" type="xs:double" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="dropRules" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="jobClass" type="xs:string" use="required"/>
+									<xs:attribute name="dropThisClass" type="xs:boolean" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="type" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="whatIf" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute name="type" type="xs:string" use="required"/>
+						<xs:attribute name="values" type="xs:string" use="required"/>
+						<xs:attribute name="className" type="xs:string" use="optional"/>
+						<xs:attribute name="stationName" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="solutions" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="stationresults" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="classresults" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="measure" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="measureType" type="xs:string" use="required"/>
+															<xs:attribute name="meanValue" type="xs:double" use="optional"/>
+															<xs:attribute name="lowerLimit" type="xs:double" use="optional"/>
+															<xs:attribute name="upperLimit" type="xs:double" use="optional"/>
+															<xs:attribute name="successful" type="xs:boolean" use="required"/>
+															<xs:attribute name="analyzedSamples" type="xs:int" use="optional"/>
+															<xs:attribute name="discardedSamples" type="xs:int" use="optional"/>
+															<xs:attribute name="precision" type="xs:double" use="optional"/>
+															<xs:attribute name="alfa" type="xs:double" use="optional"/>
+															<xs:attribute name="maxSamples" type="xs:int" use="optional"/>
+															<xs:attribute name="nodeType" type="xs:string" use="optional"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="customerclass" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="station" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="regionresults" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="classresults" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="measure" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="measureType" type="xs:string" use="required"/>
+															<xs:attribute name="meanValue" type="xs:double" use="optional"/>
+															<xs:attribute name="lowerLimit" type="xs:double" use="optional"/>
+															<xs:attribute name="upperLimit" type="xs:double" use="optional"/>
+															<xs:attribute name="successful" type="xs:boolean" use="required"/>
+															<xs:attribute name="analyzedSamples" type="xs:int" use="optional"/>
+															<xs:attribute name="discardedSamples" type="xs:int" use="optional"/>
+															<xs:attribute name="precision" type="xs:double" use="optional"/>
+															<xs:attribute name="alfa" type="xs:double" use="optional"/>
+															<xs:attribute name="maxSamples" type="xs:int" use="optional"/>
+															<xs:attribute name="nodeType" type="xs:string" use="optional"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="customerclass" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="region" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="ok" type="xs:boolean" use="optional"/>
+						<xs:attribute name="solutionMethod" type="xs:string" use="optional"/>
+						<xs:attribute name="iteration" type="xs:integer" use="optional"/>
+						<xs:attribute name="iterationValue" type="xs:double" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="jaba" type="xs:boolean" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

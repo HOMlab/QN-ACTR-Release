@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN" "http://java.sun.com/products/javahelp/toc_2_0.dtd">
+<toc version="2.0">
+ <tocitem text="Introduction to JSIMgraph">
+  <tocitem text="Introduction to JSIMgraph Tool" target="jsimgraph_htm" />
+  </tocitem>
+ <tocitem text="Menù">
+  <tocitem text="File menu" target="menu_m_file_html" />
+  <tocitem text="Edit menu" target="menu_m_edit_html" />
+  <tocitem text="Define menu" target="menu_m_define_htm" />
+  <tocitem text="Solve menu" target="menu_m_solve_htm" />
+  <tocitem text="Help menu" target="menu_m_help_htm" />
+  </tocitem>
+ <tocitem text="How To">
+  <tocitem text="Define a New Model" target="how_to_create_new_model_new_model_html" >
+   <tocitem text="Step 1: Topology of the Network" target="how_to_create_new_model_step2_customer_class_html" />
+   <tocitem text="Step 2: Customer Classes" target="how_to_create_new_model_step2_customer_class_html" />
+   <tocitem text="Step 3:  Station Parameters" target="how_to_create_new_model_step3_station_param_html" />
+   <tocitem text="Step 4: Performance Indices" target="how_to_create_new_model_ste4_perf_indices_html" />
+   <tocitem text="Step 5: Reference Station" target="how_to_create_new_model_ste5_reference_station_html" />
+   <tocitem text="Step 6: Finite Capacity Region" target="how_to_create_new_model_step6_finite_region_html" />
+   <tocitem text="Step 7: Start Simulation" target="how_to_create_new_model_step7_simulazion_html" />
+   </tocitem>
+  <tocitem text="Define Customer Classes">
+   <tocitem text="Define Customer Classes" target="how_to_define_cclass_html" />
+   <tocitem text="Classes" target="definition_class_html" />
+   <tocitem text="Distributions" target="definition_distribuzioni_html" />
+   </tocitem>
+  <tocitem text="Define Performance Indices">
+   <tocitem text="Define Performance Indices" target="how_to_define_pindices_html" />
+   <tocitem text="Confidence Interval and  Relative Error" target="definition_confidenceinterval_html" />
+   <tocitem text="Performance Indices" target="definition_ind_htm" />
+   </tocitem>
+  <tocitem text="Define Simulation Parameters">
+   <tocitem text="Define Simulation Parameters" target="how_to_define_simul_param_html" />
+   </tocitem>
+  <tocitem text="Define What-If Analysis">
+   <tocitem text="Define What-if Analysis" target="how_to_define_what_if_analysis_html" />
+   </tocitem>
+  <tocitem text="Define a Finite Capacity Region">
+   <tocitem text="Define a Finite Capacity Region" target="how_to_define_fcr_html" />
+   </tocitem>
+  <tocitem text="Define Network Topology">
+   <tocitem text="Define Network Topology" target="how_to_define_network_topology_html" />
+   <tocitem text="Connect two Elements" target="how_to_stations_connect_elem_htm" />
+   <tocitem text="Stations Properties">
+    <tocitem text="Source" target="how_to_stations_source_properties_htm" />
+    <tocitem text="Sink" target="how_to_stations_sink_properties_html" />
+    <tocitem text="Delay " target="how_to_stations_delay_prop_html" />
+    <tocitem text="Fork" target="how_to_stations_fork_prop_html" />
+    <tocitem text="Join" target="how_to_stations_join_prop_html" />
+    <tocitem text="Loadsplitter" target="how_to_stations_loadsplitter_prop_html" />
+    <tocitem text="Server" target="how_to_stations_server_prop_html" />
+    </tocitem>
+   </tocitem>
+  <tocitem text="Modify Simulation Parameters" target="how_to_modify_modify_simulation_parameters_html" />
+  <tocitem text="Modify Stations Parameters" target="how_to_modify_modify_station_parameters_html" />
+  <tocitem text="Modify Default Parameters" target="how_to_modify_default_param_htm" />
+  <tocitem text="Error and Warning Messages">
+   <tocitem text="Error and Warning Messages" target="definition_error_warning_html" />
+   </tocitem>
+  <tocitem text="Read  Results">
+   <tocitem text="Read the Results of the Simulation" target="definition_read_result_html" />
+   </tocitem>
+  <tocitem text="Export as Image">
+   <tocitem text="Export the Model as Image" target="export_image_export_as_image_html" />
+   </tocitem>
+  <tocitem text="Export in JMVA" target="how_to_exp_jmva_htm" />
+  </tocitem>
+  <!--
+ <tocitem text="Example: WebServer" target="webserver1_webserver_html" >
+  <tocitem text="Step1: Topology network" target="webserver1_step1_html" />
+  <tocitem text="Step 2: Customer Classes" target="webserver1_step2_html" />
+  <tocitem text="Step 3: Stations parameters" target="webserver1_step3_html" />
+  <tocitem text="Step 4: Performance index" target="webserver1_step4_html" />
+  <tocitem text="Step 5: Simulation parameters" target="webserver1_step5_html" />
+  <tocitem text="Step 6: What-if Analysis" target="webserver1_step6_html" />
+  <tocitem text="Step 7: Start the simualtion" target="webserver1_step7_html" />
+  <tocitem text="Step 8: See results" target="webserver1_step8_html" />
+  </tocitem>
+ -->
+ <tocitem text="Glossary and Notation">
+  <tocitem text="Bibliography" target="bibliography_htm" />
+  <tocitem text="Glossary" target="glossary_htm" />
+  <tocitem text="Model File Format" target="model_file_format_htm" />
+  </tocitem>
+</toc>

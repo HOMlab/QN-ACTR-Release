@@ -1,0 +1,315 @@
+<project name="QN-ACTR Java" default="create_jar" basedir=".">
+
+    <description>
+        build QN-ACTR Java project
+    </description>
+
+	<property file="global.properties" />
+	<property file="${globalsettings.path}" />
+	<property file="build.custom.properties" />
+	<property file="build.properties" />
+	
+	<filter filtersfile="${globalsettings.path}"/>
+
+    <target name="init" description="initialize build process" >
+		<echo>Initialize build process for JMT v.${jmt.version}</echo>
+        <!-- Create the time stamp -->
+        <tstamp/>
+
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${jmt_base}"/>
+        <mkdir dir="${class}"/>
+
+    </target>
+
+
+
+    <target name="compile" depends="init"
+        description="compile the source code " >
+
+    	<!-- create a property containing all .jar files, prefix lib/, and seperated with a : -->
+    	<pathconvert property="javac.libs" pathsep=":">
+    	    <mapper>
+    	      <chainedmapper>
+
+    	        <!-- remove absolute path -->
+    	        <flattenmapper />
+
+    	        <!-- add lib/ prefix -->
+    	        <globmapper from="*" to="lib/*" />
+    	      </chainedmapper>
+    	    </mapper>
+
+    	    <path>
+
+    	      <!-- lib.home contains all jar files, in several subdirectories -->
+    	      <fileset dir="lib/">
+    	        <include name="**/*.jar" />
+    	      </fileset>
+    	    </path>
+    	</pathconvert>
+
+        <!-- Compile the java code from ${src} into ${build} -->
+        <!-- includes resource files -->
+        <javac srcdir="${src}" destdir="${class}" classpath="${javac.libs}" compiler="javac1.5" />
+
+    </target>
+
+
+
+    <target name="copy_resources" description="copies resources into build dir" depends="compile">
+
+        <!-- Copy application resources -->
+        <copy todir="${class}">
+            <fileset dir="${src}" 
+            	excludes="**/*.java,**/*.bak,**/*.log,**/*.dfPackage,**/.svn,**/package.htm*" />
+        </copy>
+    	
+    	<!-- Copy License and Readme to class folder -->
+    	<copy file="license\License_JMT.txt" tofile="${class}/License.txt"/>
+    	<copy file="README.txt" todir="${class}"/>
+
+    </target>
+
+
+    <target name="copy_help" description="copies the help dir into build dir" depends="compile">
+
+        <!-- copies the help dir in build dir -->
+        <sync todir="${class}/help">
+            <fileset dir="help"/>
+        </sync>
+
+    </target>
+
+
+
+    <target name="prepare_dist" depends="compile,copy_help,copy_resources"
+        description="generate the distribution jar" >
+
+        <!-- Create the output and the lib directory -->
+        <mkdir dir="${out}/lib"/>
+
+        <!-- copy libraries -->
+        <sync todir="${out}/lib" >
+            <fileset dir="lib" includes="**/*.jar"/>
+        </sync>
+
+    </target>
+
+
+    <!-- Bertoli Marco-->
+    <target name="create_jar" depends="prepare_dist"
+        description="creates application jar" >
+    	
+    	<!-- create a property containing all .jar files, prefix lib/, and seperated with a space -->
+    	<pathconvert property="libs.project" pathsep=" ">
+    	    <mapper>
+    	      <chainedmapper>
+
+    	        <!-- remove absolute path -->
+    	        <flattenmapper />
+
+    	        <!-- add lib/ prefix -->
+    	        <globmapper from="*" to="lib/*" />
+    	      </chainedmapper>
+    	    </mapper>
+
+    	    <path>
+
+    	      <!-- lib.home contains all jar files, in several subdirectories -->
+    	      <fileset dir="lib/">
+    	        <include name="**/*.jar" />
+    	      </fileset>
+    	    </path>
+    	</pathconvert>
+    	
+    	<!-- Put application and resources in ${build} into the JMT.jar file -->
+        <jar jarfile="${out}/JMT.jar">
+        	<fileset dir="${class}">
+        		<include name="**/*"/>
+        		<exclude name="jmt/test/**/*"/>
+        	</fileset>
+        	<manifest>
+        	    <attribute name="Built-By" value="${user.name}"/>
+        	    <attribute name="Class-Path" value="${libs.project}" />
+        		<attribute name="Main-Class" value="${startScreen}"/>
+        	</manifest>
+        </jar>	
+    </target>
+
+    <!-- Bertoli Marco-->
+    <target name="create_single_jar" depends="create_jar"
+        description="creates a single jar with every library">
+        <!-- creates the directory -->
+        <mkdir dir="${dist}/singlejar_JMT" />
+
+        <!-- unjars all libs into singlejar_JMT dir -->
+        <unjar dest="${dist}/singlejar_JMT">
+            <fileset dir="${out}/lib"
+                includes="*.jar" />
+        </unjar>
+
+        <!-- copy JMT classes into singlejar_jMVA dir -->
+        <copy todir="${dist}/singlejar_JMT">
+        	<fileset dir="${class}">
+        		<include name="**/*"/>
+        		<exclude name="jmt/test/**/*"/>
+        	</fileset>
+        </copy>
+
+        <!-- adds license to singlejar -->
+        <mkdir dir="${dist}/singlejar_JMT/license"/>
+
+        <!-- copy lib licenses dir -->
+        <sync todir="${dist}/singlejar_JMT/license" >
+            <fileset dir="license" includes="*.txt"/>
+        </sync>
+
+        <!-- deletes meta-inf dir (which contains the manifests of unpackaged libs) -->
+        <delete dir="${dist}/singlejar_JMT/META-INF"/>
+
+        <!-- create services for freehep (to save vectorial images) and copy service file -->
+	    <mkdir dir="${dist}/singlejar_JMT/META-INF/services"/>
+        <copy file="${util}/org.freehep.util.export.ExportFileType" todir="${dist}/singlejar_JMT/META-INF/services" />
+        <copy file="${util}/javax.imageio.spi.ImageWriterSpi" todir="${dist}/singlejar_JMT/META-INF/services" />
+
+        <!-- jar all dir contents into a single jar file-->
+        <jar destfile="${dist}/${jarName}" basedir="${dist}/singlejar_JMT/" includes="**/*.*">
+    		<manifest>
+    	    	<attribute name="Built-By" value="${user.name}"/>
+    			<attribute name="Main-Class" value="${startScreen}"/>
+    		</manifest>
+    	</jar>
+
+    </target>
+
+    <target name="create_JMT_output_dir" depends="create_jar" description="create output package">
+        <!-- Create license directory -->
+        <mkdir dir="${out}/license"/>
+
+        <!-- copy lib licenses dir -->
+        <sync todir="${out}/license" >
+            <fileset dir="license" includes="*.txt"/>
+        </sync>
+
+        <!-- copy jmt license file -->
+        <copy file="license\License_JMT.txt" todir="${out}" />
+
+
+        <!-- Create examples directory -->
+        <mkdir dir="${out}/examples"/>
+
+        <!-- copy examples dir -->
+        <sync todir="${out}/examples" >
+            <fileset dir="examples" includes="*.*"/>
+        </sync>
+
+        <!-- Create jwatFormats directory -->
+        <mkdir dir="${out}/jwatFormats"/>
+
+        <!-- copy jwatFormats dir -->
+        <sync todir="${out}/jwatFormats" >
+            <fileset dir="jwatFormats" includes="*.*"/>
+        </sync>
+
+        <!-- Create manuals directory 
+        <mkdir dir="${out}/manuals"/>
+		-->
+        <!-- copy lib manuals dir
+        <sync todir="${out}/manuals" >
+            <fileset dir="manuals" includes="*.*"/>
+        </sync>
+    	-->
+    </target>
+
+    <!-- We call IzPack -->
+    <target name="create_installer" depends="create_JMT_output_dir"
+        description="Creates the jar with the installer, using IzPack">
+
+        <!-- Allows us to use the IzPack Ant task -->
+        <taskdef name="iz_pack" classpath="${izpack}/lib/compiler.jar"
+             classname="com.izforge.izpack.ant.IzPackTask"/>
+
+        <!-- copy resources used by installer. Filters shortcut specs  -->
+        <copy todir="${out}" >
+            <fileset dir="${util}/" includes="*.*" excludes="*shortcutSpec.xml" />
+        </copy>
+    	<copy todir="${out}" filtering="true" overwrite="true">
+    	     <fileset dir="${util}/" includes="*shortcutSpec.xml" />
+    	</copy>
+
+        <!-- Create license directory -->
+
+        <echo message="Makes the installer using IzPack"/>
+
+        <mkdir dir="${installer}"/>
+
+        <iz_pack input="${out}/jmt_install.xml"
+            output="${installer}/${jarName}"
+            installerType="standard"
+            basedir="${out}"
+            izPackDir="${izpack}/" 
+        	inheritall="true"/>
+   </target>
+
+
+
+    <target name="clean_intermediate_dirs"
+        description="clean up" >
+
+        <!-- Delete the ${out} and ${dist} directory trees -->
+        <delete dir="${dist}"/>
+        <delete dir="${out}" />
+    </target>
+
+
+
+    <target name="clean_all" depends="clean_intermediate_dirs"
+        description="clean up" >
+
+        <!-- Delete the ${out} directory -->
+        <delete dir="${installer}"/>
+    	<delete dir="${class}"/>
+    </target>
+	
+	<target name="create_framework" depends="copy_resources" description="builds the framework in a separate JAR">
+        <mkdir dir="${dist}" />
+		<jar destfile="${dist}/${frameworkJarName}">
+        	<fileset dir="${class}">
+        		<include name="**/framework/**/*"/>
+        		<include name="License.txt"/>
+        	</fileset>
+        	<manifest>
+        	    <attribute name="Built-By" value="${user.name}"/>
+        	</manifest>
+		</jar>
+		<copy todir="${src}" file="License.txt" />
+		<jar destfile="${dist}/${frameworkSrcJarName}">
+        	<fileset dir="${src}">
+        		<include name="jmt/framework/**/*"/>
+        		<include name="License.txt"/>
+        	</fileset>
+        	<manifest>
+        	    <attribute name="Built-By" value="${user.name}"/>
+        	</manifest>
+		</jar>
+		<delete file="${src}/License.txt" />
+	</target>
+
+	<target name="create_engine" depends="copy_resources" description="builds the engine in a separate JAR">
+        <mkdir dir="${dist}" />
+		<jar destfile="${dist}/${engineJarName}">
+        	<fileset dir="${class}">
+        		<include name="jmt/common/**/*"/>
+        		<include name="jmt/engine/**/*"/>
+        		<include name="jmt/analytical/**/*"/>
+        		<include name="License.txt"/>
+        	</fileset>
+        	<manifest>
+        	    <attribute name="Built-By" value="${user.name}"/>
+        	</manifest>
+		</jar>
+	</target>
+
+</project>
+

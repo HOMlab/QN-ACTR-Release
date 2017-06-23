@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+
+<map version="1.0">
+  <mapID target="menu_file_menu_htm" url="Menu/File_menu.htm" />
+  <mapID target="menu_action_menu_htm" url="Menu/Action_menu.htm" />
+  <mapID target="menu_help_menu_htm" url="Menu/Help_menu.htm" />
+  <mapID target="how_to_insert_a_new_model_defining_a_new_model_htm" url="How_to/Insert_a_new_model/Defining_a_new_model.htm" />
+  <mapID target="how_to_insert_a_new_model_step_1_-__htm" url="How_to/Insert_a_new_model/Step_1_-_.htm" />
+  <mapID target="how_to_insert_a_new_model_step_2_-_stations_htm" url="How_to/Insert_a_new_model/Step_2_-_Stations.htm" />
+  <mapID target="how_to_insert_a_new_model_step_3_-_service_times_htm" url="How_to/Insert_a_new_model/Step_3_-_Service_times.htm" />
+  <mapID target="how_to_insert_a_new_model_step_3a_-_service_demands_htm" url="How_to/Insert_a_new_model/Step_3a_-_Service_demands.htm" />
+  <mapID target="how_to_insert_a_new_model_step_3b_-_service_times_and_visits_htm" url="How_to/Insert_a_new_model/Step_3b_-_Service_times_and_Visits.htm" />
+  <mapID target="how_to_insert_a_new_model_step_4_-_comments_htm" url="How_to/Insert_a_new_model/Step_4_-_Comments.htm" />
+  <mapID target="how_to_insert_a_new_model_end_-_confirmation_of_data_entered_htm" url="How_to/Insert_a_new_model/End_-_Confirmation_of_data_entered.htm" />
+  <mapID target="how_to_modifing_the_current_model_modify_the_current_model_htm" url="How_to/Modifing_the_current_model/Modify_the_current_model.htm" />
+  <mapID target="glossary_and_notation_bibliography_htm" url="Glossary_and_Notation/Bibliography.htm" />
+  <mapID target="glossary_and_notation_glossary_htm" url="Glossary_and_Notation/Glossary.htm" />
+  <mapID target="glossary_and_notation_file_mva_format_htm" url="Glossary_and_Notation/File_MVA_format.htm" />
+  <mapID target="menu_link_menu_about_htm" url="Menu/Link_Menu/About.htm" />
+  <mapID target="menu_link_menu_exit_htm" url="Menu/Link_Menu/Exit.htm" />
+  <mapID target="menu_link_menu_jmva_help_htm" url="Menu/Link_Menu/jMva_help.htm" />
+  <mapID target="menu_link_menu_new_htm" url="Menu/Link_Menu/New.htm" />
+  <mapID target="menu_link_menu_open_htm" url="Menu/Link_Menu/Open.htm" />
+  <mapID target="menu_link_menu_randomize_htm" url="Menu/Link_Menu/Randomize.htm" />
+  <mapID target="relationship_between_input_data_of_the_model_htm" url="Relationship_between_input_data_of_the_model.htm" />
+  <mapID target="menu_link_menu_save_htm" url="Menu/Link_Menu/Save.htm" />
+  <mapID target="menu_link_menu_solve_htm" url="Menu/Link_Menu/Solve.htm" />
+  <mapID target="menu_link_menu_switch_to_simulator_htm" url="Menu/Link_Menu/Switch_to_simulator.htm" />
+  <mapID target="da_implementare____htm" url="da_implementare....htm" />
+  <mapID target="first_topic_htm" url="First_Topic.htm" />
+  <mapID target="how_to_exporting_data_da_implementare____htm" url="How_to/Exporting_data/da_implementare....htm" />
+  <mapID target="how_to_viewing_a_table_with_intermediate_data_ancora_da_implementare_htm" url="How_to/Viewing_a_table_with_intermediate_data/Ancora_da_implementare.htm" />
+  <mapID target="how_to_vizualizing_a_plot_ancora_da_implementare____htm" url="How_to/Vizualizing_a_plot/Ancora_da_implementare....htm" />
+  <mapID target="how_to_vizualizing_a_plot_personalizing_the_plottings_da_implementare____htm" url="How_to/Vizualizing_a_plot/Personalizing_the_plottings/da_implementare....htm" />
+  <mapID target="how_to_vizualizing_a_plot_personalizing_the_plottings_plotting_window_options_da_implementare____htm" url="How_to/Vizualizing_a_plot/Personalizing_the_plottings/Plotting_window_options/da_implementare....htm" />
+</map>

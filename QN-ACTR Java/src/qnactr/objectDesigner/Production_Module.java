@@ -1,0 +1,87 @@
+package qnactr.objectDesigner;
+
+import java.util.*;
+
+public class Production_Module {
+	public  boolean Do_Not_Harvest_Aural_Buffer;
+	public  boolean Do_Not_Harvest_Aural_Location_Buffer;
+	public  boolean Do_Not_Harvest_Goal_Buffer;
+	public  boolean Do_Not_Harvest_Goal_Buffer_2;
+	public  boolean Do_Not_Harvest_Imaginal_Buffer;
+	public  boolean Do_Not_Harvest_Manual_Buffer;
+	public  boolean Do_Not_Harvest_Retrieval_Buffer;
+	public  boolean Do_Not_Harvest_Temporal_Buffer;
+	public  boolean Do_Not_Harvest_Visual_Buffer;
+	public  boolean Do_Not_Harvest_Visual_Location_Buffer;
+	public  boolean Do_Not_Harvest_Vocal_Buffer;
+	public String Focus_One_Goal_Name = "";
+	public LinkedList<String> Forbidden_Name_In_Production_Rule=new LinkedList<String>();
+	public LinkedList<String> Goal_Thread_Order_List_For_Threaded_Cognition=new LinkedList<String>();
+	public  Hashtable<String, String> Filtering_Follow_Up_Rule_Goal_Table = new Hashtable<String, String>();
+	public LinkedList<String> PG_C_Since_Last_Flag_Selected_Rule_Name=new LinkedList<String>();
+	public LinkedList<Double> PG_C_Since_Last_Flag_Selected_Rule_Time=new LinkedList<Double>();
+	public  int Processor_Aural_Action_Max_Number;
+	public  int Processor_Aural_Action_Remaining_Number;
+	public  int Processor_Aural_Location_Action_Max_Number;
+	public  int Processor_Aural_Location_Action_Remaining_Number;
+	public  int Processor_Goal_Action_Max_Number;
+	public  int Processor_Goal_Action_Remaining_Number;
+	public  int Processor_High_Level_Max_Capacity;
+	public  int Processor_High_Level_Remaining_Capacity;
+	public  int Processor_Imaginal_Action_Max_Number;
+	public  int Processor_Imaginal_Action_Remaining_Number;
+	public  int Processor_Low_Level_Max_Capacity;
+	public int Processor_Low_Level_Remaining_Capacity;
+	public  int Processor_Manual_Action_Max_Number;
+	public  int Processor_Manual_Action_Remaining_Number;
+	public  int Processor_Retrieval_Action_Max_Number;
+	public  int Processor_Retrieval_Action_Remaining_Number;
+	public  int Processor_Visual_Action_Max_Number;
+	public  int Processor_Visual_Action_Remaining_Number;
+	public  int Processor_Visual_Location_Action_Max_Number;
+	public  int Processor_Visual_Location_Action_Remaining_Number;
+	public  int Processor_Vocal_Action_Max_Number;
+	public  int Processor_Vocal_Action_Remaining_Number;
+	public LinkedList<Production_Rule> Production_Rules=new LinkedList<Production_Rule>();
+	public int Rule_Number;
+	public Hashtable Rule_Process_Goal_Buffer_Table= new Hashtable();
+	public LinkedList<String> Since_Last_Reward_Selected_Rule_Name=new LinkedList<String>();
+	public LinkedList<Double> Since_Last_Reward_Selected_Rule_Time=new LinkedList<Double>();
+	
+	public Production_Module(){
+		Do_Not_Harvest_Aural_Buffer=false;
+		Do_Not_Harvest_Aural_Location_Buffer=false;
+		Do_Not_Harvest_Goal_Buffer=true;
+		Do_Not_Harvest_Goal_Buffer_2=true;
+		Do_Not_Harvest_Imaginal_Buffer=false;
+		Do_Not_Harvest_Manual_Buffer=false;
+		Do_Not_Harvest_Retrieval_Buffer=false;
+		Do_Not_Harvest_Temporal_Buffer=true;
+		Do_Not_Harvest_Visual_Buffer=false;
+		Do_Not_Harvest_Visual_Location_Buffer=false;
+		Do_Not_Harvest_Vocal_Buffer=false;
+		Processor_Aural_Action_Max_Number=1;
+		Processor_Aural_Action_Remaining_Number=0;
+		Processor_Aural_Location_Action_Max_Number=1;
+		Processor_Aural_Location_Action_Remaining_Number=0;
+		Processor_Goal_Action_Max_Number=2;
+		Processor_Goal_Action_Remaining_Number=0;
+		Processor_High_Level_Max_Capacity=1;
+		Processor_High_Level_Remaining_Capacity=0;
+		Processor_Imaginal_Action_Max_Number=1;
+		Processor_Imaginal_Action_Remaining_Number=0;
+		Processor_Low_Level_Max_Capacity=4;
+		Processor_Low_Level_Remaining_Capacity=0;
+		Processor_Manual_Action_Max_Number=1;
+		Processor_Manual_Action_Remaining_Number=0;
+		Processor_Retrieval_Action_Max_Number=1;
+		Processor_Retrieval_Action_Remaining_Number=0;
+		Processor_Visual_Action_Max_Number=1;
+		Processor_Visual_Action_Remaining_Number=0;
+		Processor_Visual_Location_Action_Max_Number=1;
+		Processor_Visual_Location_Action_Remaining_Number=0;
+		Processor_Vocal_Action_Max_Number=1;
+		Processor_Vocal_Action_Remaining_Number=0;
+		Rule_Number=0;
+	}
+}

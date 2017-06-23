@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Define network topology</title>
+<link href="../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile1 { font-family:Arial; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com"><style title="hcp" type="text/css">
+<!--
+span.hcp1 { mso-ansi-language:EN-GB; }
+span.hcp2 { font-family:Arial; }
+-->
+</style>
+</head>
+<body bgcolor="white" lang="IT" link="blue" vlink="blue" style="tab-interval:35.4pt">
+<h1><span lang="EN-GB" class="hcp1">Define Network Topology<o:p></o:p>
+</span></h1>
+<p>________________________________</p>
+<p>&nbsp;</p>
+<p class=hcp2><span lang="EN-GB" class="hcp1"> To define a new model
+select New from File menu or click the <img src="../image/ic_new.PNG" width="15" height="17"> icon and draw the
+network topology.
+    <o:p></o:p></span></p>
+
+<p class=hcp2><img width=271 height=31 id="_x0000_i1025"
+src="../image/icon_object.png"></p>
+
+<p class=hcp2>Select <span lang="EN-GB" class="hcp1"> the station   and  click on the model panel to insert
+    <o:p></o:p>
+</span>it.</p>
+
+<p class=hcp2>The available stations are: </p>
+<p class=hcp2>&nbsp;</p>
+<table border="0" cellpadding="10">
+  <tr>
+    <td width="238"><p class="MsoNormal"><span class=SpellE><span class="hcp2"><a href="stations/source_properties.htm">source</a></span></span><span class="hcp2"> <img
+  src="../image/topology/source.png" alt="s" width=31 height=26 id="_x0000_i1026">
+      <o:p></o:p>
+    </span></p></td>
+    <td width="1098"><p class="hcp2">Used to generate    customers of open classes. </p></td>
+  </tr>
+  <tr>
+    <td><p class="MsoNormal"><span class=SpellE><span class="hcp2"><a href="stations/sink_properties.html">sink</a></span></span><span class="hcp2"> <img
+  src="../image/topology/sink.png" alt="s" width=19 height=19 id="_x0000_i1027">
+      <o:p></o:p>
+    </span></p></td>
+    <td><p class="hcp2">Used to collect customers of open classes that are leaving the network (i.e. that have completed therir execution).</p></td>
+  </tr>
+  <tr>
+    <td><p class="MsoNormal"><span class=SpellE><span class="hcp2"><a href="stations/loadsplitter_prop.html">routing station</a></span></span><span class="hcp2"> <img width=30 height=24 id="_x0000_i1028"
+  src="../image/topology/loadsplitter.png">
+          <o:p></o:p>
+    </span></p></td>
+    <td><p class="hcp2">Distributes the arriving jobs to the connected output stations according to a set of pre-defined routing strategies.<span class="hcp2">
+      <o:p></o:p>
+    </span></p></td>
+  </tr>
+  <tr>
+    <td><p class="MsoNormal"><span class=SpellE><span class="hcp2"><a href="stations/logger_prop.html">logger station</a></span></span><span class="hcp2"> <img width=30 height=24 id="_x0000_i1035"
+  src="../image/topology/logger.png">
+          <o:p></o:p>
+    </span></p></td>
+    <td><p class="hcp2">Passively logs traffic information to disk.<span class="hcp2">
+      <o:p></o:p>
+    </span></p></td>
+  </tr>
+  <tr>
+    <td><p class="MsoNormal"><span class=SpellE><span class="hcp2"><a href="stations/delay_prop.html">delay</a></span></span><span class="hcp2"> <img width=24 height=28 id="_x0000_i1029"
+  src="../image/topology/delay.png">
+      <o:p></o:p>
+    </span></p></td>
+    <td><p class="hcp2">The jobs are delayed, according to a provided service time distribution, without a queue.</p></td>
+  </tr>
+  <tr>
+    <td><p class="MsoNormal"><span class="hcp2"><a href="stations/server_prop.html">queueing station</a> <img width=24
+  height=11 id="_x0000_i1030" src="../image/topology/server.png">
+          <o:p></o:p>
+    </span></p></td>
+    <td><p align="left" class=hcp2>Handles  customer requests  serving one or more jobs at a time (depending on the number of servers). </p>
+      <p align="left" class=hcp2>Each queueing station is described by a waiting queue for the arriving jobs that are processed  according to the queue policy. Each queueing station has a queue, a service time distribution and a routing strategy for the jobs that have completed servicing.</p></td>
+  </tr>
+  <tr>
+    <td><p class="MsoNormal"><span class=SpellE><span class="hcp2"><a href="stations/fork_prop.html">fork</a></span></span><span class="hcp2"> <img
+  src="../image/topology/folk.png" alt="f" width=29 height=26 align=middle id="_x0000_i1031">
+      <o:p></o:p>
+    </span></p></td>
+    <td><p align="left" class=hcp2>Generates a fixed number of tasks (copies of the input job) on its forward links for each input  job. Usually </p>
+      <p align="left" class=hcp2>each fork  in the network is used coupled with a join station, but this is not mandatory. </p></td>
+  </tr>
+  <tr>
+    <td><p class="MsoNormal"><span class=SpellE><span class="hcp2"><a href="stations/join_prop.html">join</a></span></span><span class="hcp2"> <img
+  src="../image/topology/join.png" alt="1" width=29 height=24 align=middle id="_x0000_i1032">
+      <o:p></o:p>
+    </span></p></td>
+    <td><p>Waits for the complete execution of all the tasks of a fork and recreates the original job back.</p>
+    </td>
+  </tr>
+  <tr>
+    <td><span class="MsoNormal">
+      <p><a href="stations/connect_elem.htm"><span class="Stile1">connect two elements</span></a><span class="hcp2"><img src="../image/topology/connect.png" alt="1"
+  width=29 height=28
+  align=top id="_x0000_i1033">
+          <o:p></o:p>
+      </span></p></td>
+    <td><p class="hcp2">Used to connect two elements of the newtork.</p></td>
+  </tr>
+  <tr>
+    <td><p style="font-family:Arial"><a href="define_fcr.html">finite capacity region</a> <img
+  src="../image/topology/region.png" alt="1" width=28 height=22 align=top id="_x0000_i1034">
+      <o:p></o:p>
+    </p></td>
+    <td><p class="hcp2">Used to create a Finite Capacity Region, i.e. a region in which the number of customers is controlled and limited. </p></td>
+  </tr>
+</table>
+<p class=hcp2>&nbsp;</p>
+<p class=hcp2>&nbsp;</p>
+<p class=hcp2>&nbsp;</p>
+
+</body>
+</html>

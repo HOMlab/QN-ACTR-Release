@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE index PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN" "http://java.sun.com/products/javahelp/index_1_0.dtd">
+<index version="1.0">
+ <indexitem text="About" target="menu_link_menu_about_htm" />
+ <indexitem text="Action menu" target="menu_action_menu_htm" />
+ <indexitem text="Arrival Rate (See classes types)" target="how_to_insert_a_new_model_step_1_-__htm" />
+ <indexitem text="Bibliography" target="glossary_and_notation_bibliography_htm" />
+ <indexitem text="Change system parameters" target="how_to_modifing_the_current_model_modify_the_current_model_htm" />
+ <indexitem text="Customers (See classes types)" target="how_to_insert_a_new_model_step_1_-__htm" />
+ <indexitem text="Define a new model" target="how_to_insert_a_new_model_defining_a_new_model_htm" />
+ <indexitem text="Define stations names" target="how_to_insert_a_new_model_step_2_-_stations_htm" />
+ <indexitem text="Define the number of customers or the arrival frequency" target="how_to_insert_a_new_model_step_1_-__htm" />
+ <indexitem text="Define the type of classes" target="how_to_insert_a_new_model_step_1_-__htm" />
+ <indexitem text="Define the type of stations" target="how_to_insert_a_new_model_step_2_-_stations_htm" />
+ <indexitem text="Definition of a new model" target="how_to_insert_a_new_model_defining_a_new_model_htm" />
+ <indexitem text="End - Model Resolution" target="how_to_insert_a_new_model_end_-_confirmation_of_data_entered_htm" />
+ <indexitem text="Exit command" target="menu_link_menu_exit_htm" />
+ <indexitem text="File menu" target="menu_file_menu_htm" />
+ <indexitem text="Glossary" target="glossary_and_notation_glossary_htm" />
+ <indexitem text="Help menu" target="menu_help_menu_htm" />
+ <indexitem text="jMva help" target="menu_link_menu_jmva_help_htm" />
+ <indexitem text="Model File Format" target="glossary_and_notation_file_mva_format_htm" />
+ <indexitem text="Model resolution" target="how_to_insert_a_new_model_end_-_confirmation_of_data_entered_htm" />
+ <indexitem text="Modify the current model" target="how_to_modifing_the_current_model_modify_the_current_model_htm" />
+ <indexitem text="MVA file format" target="glossary_and_notation_file_mva_format_htm" />
+ <indexitem text="New" target="menu_link_menu_new_htm" />
+ <indexitem text="Open" target="menu_link_menu_open_htm" />
+ <indexitem text="Randomize" target="menu_link_menu_randomize_htm" />
+ <indexitem text="Relationship between input data of the model" target="relationship_between_input_data_of_the_model_htm" />
+ <indexitem text="Save" target="menu_link_menu_save_htm" />
+ <indexitem text="Service demands" target="how_to_insert_a_new_model_step_3_-_service_times_htm" />
+ <indexitem text="Service times" target="how_to_insert_a_new_model_step_3_-_service_times_htm" />
+ <indexitem text="Solve" target="menu_link_menu_solve_htm" />
+ <indexitem text="Stations type" target="how_to_insert_a_new_model_step_2_-_stations_htm" />
+ <indexitem text="Step 1 - Classes" target="how_to_insert_a_new_model_step_1_-__htm" />
+ <indexitem text="Step 2 - Stations" target="how_to_insert_a_new_model_step_2_-_stations_htm" />
+ <indexitem text="Step 3 - Service demands (D)" target="how_to_insert_a_new_model_step_3_-_service_times_htm" >
+  <indexitem text="Step 3a - Service demands" target="how_to_insert_a_new_model_step_3a_-_service_demands_htm" />
+  <indexitem text="Step 3b - Service times and Visits" target="how_to_insert_a_new_model_step_3b_-_service_times_and_visits_htm" />
+  </indexitem>
+ <indexitem text="Step 4 - Comment" target="how_to_insert_a_new_model_step_4_-_comments_htm" />
+ <indexitem text="Switch to simulator" target="menu_link_menu_switch_to_simulator_htm" />
+ <indexitem text="Symbols glossary" target="glossary_and_notation_glossary_htm" />
+ <indexitem text="System parameters" target="how_to_modifing_the_current_model_modify_the_current_model_htm" />
+ <indexitem text="Terms glossary" target="glossary_and_notation_glossary_htm" />
+</index>

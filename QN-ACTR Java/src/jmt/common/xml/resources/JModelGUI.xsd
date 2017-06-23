@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="jmodel">
+		<xs:annotation>
+			<xs:documentation>Root element containing all JMODEL's GUI specific elements </xs:documentation>
+			<xs:documentation>Author: Bertoli Marco</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="userClass" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>User classes parameters</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="color" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="station" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Station parameters</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="position">
+								<xs:annotation>
+									<xs:documentation>Position where station will be placed on jgraph window</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="x" type="xs:double" use="required"/>
+									<xs:attribute name="y" type="xs:double" use="required"/>
+									<xs:attribute name="rotate" type="xs:boolean" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="parametric" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>stores information on parametric analysis</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="field" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="name" type="xs:string" use="required"/>
+									<xs:attribute name="value" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="classPath" type="xs:string" use="required"/>
+						<xs:attribute name="enabled" type="xs:boolean" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

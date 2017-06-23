@@ -1,0 +1,730 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+
+
+<html>
+
+
+
+
+
+
+
+
+
+
+
+<head>
+
+<title>Define Stations</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+
+<link href="../../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+
+<!--
+
+p.hcp6 { font-family:"times new roman" , serif; }
+
+li.kadov-p-chcp6 { font-family:"times new roman" , serif; }
+
+.stile6 { color:#ff0000; }
+
+li.kadov-cstile6 { color:#ff0000; }
+
+-->
+
+</style><style title="hcp" type="text/css">
+
+<!--
+
+img.hcp1 { float:none; border-style:none; }
+
+img.hcp2 { border-style:none; vertical-align:baseline; }
+
+img.hcp3 { border-style:none; }
+
+-->
+
+</style>
+
+</head>
+
+<body>
+
+<p class="stile1">Define stations </p>
+
+
+
+<p class="stile2">_________________</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">When you create a new model, you must define the Stations 
+
+ from the <b>Stations</b> page of the tabs menu. </p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/define_station1.gif" x-maintain-ratio="TRUE" style="width:454px; height:376px;" width="454" height="376" border="0" class="hcp1"></p>
+
+
+
+<p class="stile4" style="text-align: Center;" Align="center">&nbsp;</p>
+
+
+
+<blockquote>
+
+<p class="stile4">You can insert one station at a time, by pressing 
+
+the <img src="Images/button_addStation.gif" name="immagini2" style="width:117px; height:20px;" width="117" height="20" border="0" Align="bottom" class="hcp2"> button,
+
+or multiple stations all at once, by choosing the desired number in the 
+
+input form <img src="Images/button_Nstations.gif" name="immagini3" style="width:117px; height:25px;" width="117" height="25" border="0" Align="bottom" class="hcp2">.
+
+The added stations will be listed in the page.
+
+Various types of stations are available, the default type being <em>server</em>.
+
+<br>
+
+If you want to remove any of the stations, select the target and press the
+
+corresponding <img src="Images/delete.gif" style="width:16px; height:17px;" width="16" height="17" border="0" class="hcp3"> delete button.
+
+<br>
+
+Stations are name Station1, Station2, and so on by default. If you want 
+
+to assign model-relevant names, left-clik on a name to change and replace 
+
+it.
+
+Similarly, if the default station type Server is not what you need, 
+
+select from the drop down menu of each station the correct type. 
+
+</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4" style="text-align: Center;" Align="center"><img src="Images/station_types.gif" style="width:360px; height:109px;" width="360" height="109" border="0" class="hcp3"></p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">You can choose among the following types of station:</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile3">1 - Delay station: <img src="Images/delay.gif" style="width:20px; height:24px;" width="20" height="24" border="0" class="hcp3"></p>
+
+
+
+<blockquote>
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">Customers that arrive at this station are delayed for
+
+the amount of time that defines the station service time. They do not 
+
+experience any queueing, since a delay station is modelled as a station
+
+with an infinite number of servers with identical service time.
+
+Because customers never have to wait for service, response time at delay
+
+stations is equal to service time, <em>Ri = Si</em>.
+
+Furthermore, the queue length corresponds in this case to the number of
+
+jobs receiving service since there is no waiting:
+
+<em>Qi </em>=<em> RiXi = SiX = Ui</em>. The utilization of the delay center
+
+represents the average number of jobs receiving service.
+
+<br>
+
+Delay centers are used when it is necessary to force some known
+
+average delay. A common application of delay centers is to model 
+
+transmission time of large amounts of data over a dedicated low speed
+
+transmission line. </p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">In the Station Parameters tab menu page, you can modify:
+
+<br>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Service Section: </em>
+
+in this section you can choose the service time distribution for the station.
+
+For more information, see
+
+<a href="sections/service_section.html">Service section</a>.
+
+<br>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Routing Section: </em>
+
+in this section you can specify how serviced customers should be routed
+
+to the next station they will visit in the model. 
+
+For more information, see
+
+<a href="sections/routing_section.html">Routing section</a>.</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+</blockquote>
+
+
+
+<p class="stile3">2 - Queueing station: <img src="Images/server.gif" style="width:25px; height:25px;" width="25" height="25" border="0" class="hcp3"></p>
+
+
+
+<blockquote>
+
+<p>&nbsp;</p>
+
+
+
+<p class="stile4">The Queueing station is one of the most important components
+
+in a queuing network model. Queueing stations represent the service facilities
+
+of the system being modelled. A queueing station provides the required service to 
+
+its customers. Queueing stations may have any (finite) number of servers.
+
+If all the servers in the service station are busy when a customer arrives 
+
+at the station, the arriving customer is put in a waiting queue until its
+
+turn to receive service from the first available server is up.
+
+The queueing discipline decides which customer is served next when a queueing station
+
+becomes free.
+
+Therefore, the response time at server stations includes service time and
+
+queuing time.
+
+<br>
+
+Queueing stations may have more than one server. Their number is a 
+
+parameter to be specified (default is 1).</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">In the Station Parameters tab menu page, you can modify:<br>
+
+
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Queue Section: </em>
+
+in this section you can choose the type of queue (finite or infinite) and
+
+the policy used to select the next customer to be served.
+
+For more information, see 
+
+<a href="sections/queue_section.html">Queue section</a>.</p>
+
+
+
+<p class="stile6">&nbsp;</p>
+
+
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Service Section: </em>
+
+in this section you can choose the service time distribution for the station.
+
+For more information, see  
+
+<a href="sections/service_section.html">Service section</a>.</p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Routing Section: </em>
+
+in this section you can specify how serviced customers should be routed
+
+to the next station they will visit in the model. 
+
+For more information, see 
+
+<a href="sections/routing_section.html">Routing section</a>.</p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+</blockquote>
+
+
+
+<p class="stile3">3 - Fork station: <img src="Images/fork.gif" style="width:26px; height:25px;" width="26" height="25" border="0" class="hcp3"></p>
+
+
+
+<blockquote>
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">
+
+A JSIM Fork station is simply a station where jobs are split into tasks.
+
+No service is provided, therefore there is no service time specification.
+
+Tasks are then routed along the Fork station outgoing links.
+
+<p>&nbsp;</p>
+
+<p class="stile4">
+
+Unlike classical queueing theory fork-join queues, a JSIM Fork station
+
+is not associated with a join station automatically. 
+
+Any combination of server stations, finite regions, fork-join, routing
+
+stations, etc., is possibile after a Fork station.
+
+This feature allows the modeling of very general parallel behaviors, of
+
+which the traditional Fork-Join one is a special case.
+
+In JSIM the classical queueing theory Fork-Join queue behavior is obtained
+
+by connecting the Fork station to as many Server stations as the degree of
+
+parallelism requested, with one task per outgoing link. 
+
+Each Server station is then connected to a Join station, where the job is
+
+recomposed.
+
+<p>&nbsp;</p>
+
+<p class="stile4">
+
+A Fork station is characterized by the forking degree, i.e., the number of
+
+tasks routed on each one of its outgoing links, and the capacity,
+
+i.e., the maximum number of jobs that can be served by the station
+
+simultaneously.
+
+Therefore, the number of sibling tasks a job is split into is given by the product of 
+
+the number of outgoing links from the Fork station times the forking degree.
+
+Note that a finite station capacity makes sense only when there is a join
+
+station downstream from the fork station that can recompose the split jobs.
+
+Otherwise, inconsistencies in the model and subsequent simulation error,
+
+such as out-of-memory, may occur. No automatic checks are available at
+
+the moment that can identify such critical conditions.
+
+Both the forking degree and the capacity are section parameters to be
+
+specified in the model.
+
+As an example,
+
+a Fork station with forking degree 1, connected to three Server stations,
+
+would split a job into 3 sibling tasks (this is a traditional Fork-Join like behavior).
+
+If no Join station is connected to any of the three Servers, a warning
+
+message is displayed since the model could quickly saturate due to the
+
+extra load (3 more jobs) created in addition to each job entering the Fork
+
+station. 
+
+</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">In the Station Parameters page of the tabs menu,
+
+you can modify:
+
+<br>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Fork Section:</em>
+
+in this section you can choose the forking degree of a job on each outgoing
+
+link and the fork station capacity, i.e., the maximum number
+
+of jobs that can be served in parallel by the station.
+
+For more information, see 
+
+<a href="sections/fork_section.html">Fork section</a>.</p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Queue Section: </em>
+
+in this section you can choose the type of queue (finite or infinite) of the 
+
+fork station in case its capacity is finite and jobs must wait before 
+
+proceeding through the fork station.
+
+For more information, see
+
+<a href="sections/queue_section.html">Queue section</a>.</p>
+
+
+
+<p class="stile6">&nbsp;</p>
+
+
+
+<p>&nbsp;</p>
+
+</blockquote>
+
+
+
+<p class="stile3">4 - Join station: <img src="Images/join.gif" style="width:25px; height:25px;" width="25" height="25" border="0" class="hcp3"></p>
+
+
+
+<blockquote>
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">Join stations are complementary to fork stations.
+
+In classical queueing network theory, a task arrives at a join station
+
+from the corresponding Fork station. 
+
+In JSIM, a Join station may have incoming links from stations other than
+
+the corresponding Fork one.
+
+A Join station has no service time, as it is only used to recombine 
+
+the tasks a job had been previously split into and then route the job
+
+to some other station(s). 
+
+When a task arrives at a join station, it waits until all its sibling tasks
+
+have arrived. At this time, the original job is
+
+recomposed and routed to the next station.
+
+If a job arrives from a station other than the corresponding Fork, i.e.,
+
+a job that was not split, it is simply routed to the next station. In this case
+
+the Join station operates as a routing station.
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">In the Station Parameters tab menu page, you can modify:
+
+<br>
+
+
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Routing Section: </em>
+
+in this section you can specify how serviced customers should be routed to 
+
+the next station they will visit in the model.
+
+For more information, see 
+
+<a href="sections/routing_section.html">Routing section</a>.</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+</blockquote>
+
+
+
+<p class="stile3">5 - Routing station: <img src="Images/load_splitter.gif" style="width:28px; height:26px;" width="28" height="26" border="0" class="hcp3"></p>
+
+
+
+<blockquote>
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">A routing station is a dummy station, with service time
+
+equal 0, that is used to create more complex and sophisticated routing
+
+strategies by sending jobs through one or more such stations.
+
+For example, if we wanted two thirds of the incoming traffic at
+
+station Z to be randomly routed to either station A or B 
+
+and the remaining third to go either to station C or D, depending on the
+
+shortest queue at the two stations, we could implement the following.
+
+Add a routing station, Y, among Z's output stations and define
+
+random routing for the three of them (A, B, Y). Then connect Y to C and D
+
+and define Shortest queue routing to C and D.
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">In the Station Parameters tab menu page, you can modify:
+
+<br>
+
+
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Routing Section: </em>
+
+in this section you can specify how serviced customers should be routed
+
+to the next station they will visit in the model.
+
+For more information, see
+
+<a href="sections/routing_section.html">Routing section</a>.</p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<p>&nbsp;</p>
+
+</blockquote>
+
+</blockquote>
+
+
+
+<p class="stile3">&nbsp;</p>
+
+
+
+<blockquote>
+
+<p class="stile3">6 - Source station: <img src="Images/source.gif" style="width:25px; height:25px;" width="25" height="25" border="0" class="hcp3"></p>
+
+
+
+<blockquote>
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">If the model comprises at least an open class, a sink and 
+
+ a source stations are created by default, as they are necessary for the
+
+simulation and cannot be removed</p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<p style="text-align: center;" Align="center"><img src="Images/source_sink.gif" x-maintain-ratio="TRUE" style="width:402px; height:66px;" width="402" height="66" border="0" class="hcp1"></p>
+
+
+
+
+
+<p class="stile4">Open classes are characterized by an infinite stream of jobs 
+
+that can enter the system. Source stations are used to introduce jobs 
+
+in the model. Their service time is the interarrival time of each customer
+
+class and as such, it is defined as a parameter of the 
+
+class the job belongs to. The routing strategy defines the first station 
+
+a newly created job will visit. Only open class jobs can be routed from
+
+source stations.
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">In the Station Parameters tab menu page, you can modify:
+
+<br>
+
+
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Routing Section:</em>
+
+in this section you can specify how newly created customers should be routed
+
+to the next station they will visit in the model.
+
+For more information, see
+
+<a href="sections/routing_section.html">Routing section</a>.</p>
+
+</blockquote>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile3">7 - Sink Station: <img src="Images/sink.gif" style="width:23px; height:23px;" width="23" height="23" border="0" class="hcp3"></p>
+
+
+
+<blockquote>
+
+<p class="stile3">&nbsp;</p>
+
+
+
+<p class="stile4">Open class customers leave the system once they have 
+
+received all the service the need. 
+
+Sink stations are used to model customers leaving the system, as they 
+
+enter the sink station but do not ever leave it.
+
+Sink stations have no parameters, only incoming connections from one or more
+
+stations, depending upon the model.</p>
+
+
+
+</blockquote>
+
+</blockquote>
+
+
+
+</body>
+
+</html>
+

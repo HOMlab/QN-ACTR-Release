@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="author" content="Bertoli Marco">
+<meta name="description" content="Java Modelling Tools is an Open Source Suite for Queueing Network Modelling and Workload Analysis developed by Politecnico di Milano ">
+<title>Documento senza titolo</title>
+</head>
+
+<body background="img/Background.gif">
+<table width="100%" border="0" cellspacing="10">
+  <tr>
+    <td width="23%"><div align="center">
+      <p><a href="http://www.elet.polimi.it/index.jsp?en"><img src="img/logo.gif" alt="Politecnico di Milano" width="78" height="78" border="0"></a></p>
+      <p><font size="-1"><b>Laboratorio di Valutazione<br>
+        delle Prestazioni <br>
+        Dipartimento di Elettronica e<br>Informazione<br>
+        Politecnico di Milano - Italia</b></font></p>
+    </div></td>
+    <td><div align="center"><font face="Verdana, Arial, Helvetica, sans-serif" size="48"><i><b>Java Modelling Tools</b></i></font></div></td>
+  </tr>
+  <tr>
+    <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td background="img/sideBarHeader.gif" height="18" bgcolor="#85c0ed"><div align="center"><font color="#FFFF00"><b>Menu</b></font></div></td>
+      </tr>
+      <tr>
+        <td bgcolor="#85c0ed"><p>
+	&nbsp;<a href="#jsim"><img src="img/JSIMIcon.gif" width="15" height="15" border="0"></a>&nbsp;<a href="#jsim">JSIM<em>wiz</em></a><br>
+	&nbsp;<a href="#jmodel"><img src="img/JMODELIcon.gif" width="15" height="15" border="0"></a>&nbsp;<a href="#jmodel">JSIM<em>graph</em></a><br>
+	&nbsp;<a href="#jmva"><img src="img/JMVAIcon.gif" width="15" height="15" border="0"></a>&nbsp;<a href="#jmva">JMVA</a><br>
+	&nbsp;<a href="#jmch"><img src="img/JMCHIcon.gif" width="15" height="15" border="0"></a>&nbsp;<a href="#jmch">JMCH</a><br>
+	&nbsp;<a href="#jaba"><img src="img/JABAIcon.gif" width="15" height="15" border="0"></a>&nbsp;<a href="#jaba">JABA</a><br>
+	&nbsp;<a href="#jwat"><img src="img/JWATIcon.gif" width="15" height="15" border="0"></a>&nbsp;<a href="#jwat">JWAT</a><br>
+	&nbsp;<a href="#license">Licenza</a><br>
+</p>
+
+</td>
+      </tr>
+      <tr>
+        <td background="img/sideBarFooter.gif" height="18"> </td>
+      </tr>
+      <tr>
+        <td><br><br></td>
+      </tr>
+      <tr>
+        <td background="img/sideBarHeader.gif" height="18" bgcolor="#85c0ed"><div align="center"><b><font color="#FFFF00">Collegamenti</font></b></div></td>
+      </tr>
+      <tr>
+        <td bgcolor="#85c0ed"><p>
+	&nbsp;<a href="http://jmt.sourceforge.net/" target="_blank"><img src="img/JMTIcon.gif" width="15" height="15" border="0"></a>&nbsp;<a href="http://jmt.sourceforge.net/" target="_blank">Home Page</a><br>
+        &nbsp;<a href="http://jmt.sourceforge.net/JMT_users_Manual.pdf" target="_blank"><img src="img/manual.gif" width="15" height="15" border="0"></a>&nbsp;<a href="http://jmt.sourceforge.net/JMT_users_Manual.pdf" target="_blank">Manuale utente</a><br>
+        </p></td>
+      </tr>
+      <tr>
+        <td background="img/sideBarFooter.gif" height="18"> </td>
+      </tr>
+    </table></td>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td background="img/titleBar.gif" height="26" align="center"><font size="+1" color="#FFFF00">Descrizione</font></td>
+      </tr>
+      <tr>
+        <td bgcolor="#FFFFFF" style="border-width:thick; border-color:#FFFFFF"><em>
+        <p>I  Java Modelling Tools (JMT) sono una suite open source per la valutazione delle prestazioni, il capacity planning e la modellazione di reti di computer e sistemi di comunicazione. La suite implementa molti algoritmi allo stato dell'arte per la risoluzione di modelli a reti di code (sia in forma prodotto che non) mediante tecniche esatte, asintotiche e simulative. I modelli possono essere descritti sia attraverso finestre di dialogo wizard che attraverso il disegno del grafo della rete con un'interfaccia user-friendly. Inoltre JMT include uno strumento per l'analisi dei files di log utilizzando tecniche di clustering.<br>
+           La suite incorpora uno strato  di XML che garantisce la piena riusabilit&agrave; dei motori computazionali nell'ambito di differenti progetti. </p>
+        </em>
+	      <p>La suite JMT &egrave; composta da <strong>sei</strong> tools che supportano i differenti tipi di analisi utilizzati solitamente negli studi di capacity planning. Sono a seguito descritte le caratteristiche principali di ognuno dei tool.</p>
+	      <p><strong><img src="img/JSIMIcon.gif" width="25" height="25"> <a name="jsim" id="jsim"></a>JSIM<em>wiz</em>:</strong> un simulatore ad eventi discreti per l'analisi di modelli a reti di code. Una intuitiva sequenza di finestre <em>wizard</em> guida l'utente verso la specifica delle propriet&agrave; della rete. Il simulatore supporta numerose distribuzioni di probabilit&agrave; per caratterizzare i tempi di servizio ed i tempi di interarrivo. &Egrave; altres&igrave; possibile specificare strategie di tipo Load-dependent  utilizzando funzioni arbitrarie del corrente valore di lunghezza di coda.<br>
+JSIM supporta sia strategie di routing indipendenti dallo stato (ad esempio Markoviane o round robin) che strategie dipendenti dallo stato (routing
+verso il server con utilizzo minimo, o con tempo di risposta inferiore o con lunghezza di coda minima). Il motore di simulazione supporta molte funzionalit&agrave; estese non ammesse nelle reti in forma prodotto, ad esempio: regioni a capacit&agrave; finita (ovvero regioni con blocco), parallelismo attraverso fork e join, e politiche di coda con priorit&agrave;. 
+<br>
+L'analisi dei risultati di simulazione utilizza, on-line, tecniche avanzate per l'individuazione e l'eliminazione del transiente iniziale basate sui metodi di anali spettrale. &Egrave; possibile specificare, in modo automatizzato, analisi di tipo what-if dove una sequenza di simulazioni viene eseguita variando il valore di un parametro.</p>
+	      <p><strong><img src="img/JMODELIcon.gif" width="25" height="25"> <a name="jmodel" id="jmodel"></a>JSIM<em>graph</em>:</strong> un'interfaccia grafica  user-friendly per il motore di simulazione utilizzato da  JSIM<em>wiz</em>. Integra le medesime funzionalit&agrave; di JSIM<em>wiz</em> con un intuitivo workspace  che permette la specifica della topologia della rete in forma grafica. Questo applicativo, oltre a semplificare la specifica della struttura della rete, rende estremamente pi&ugrave; intuitiva la specifica di molte caratteristiche della rete, quali le regioni a capacit&agrave; finita. La topologia della rete pu&ograve; essere esportata come immagine nei pi&ugrave; diffusi formati vettoriali e raster.</p>
+          <p><strong><img src="img/JMVAIcon.gif" width="25" height="25"> <a name="jmva" id="jmva"></a>JMVA:</strong> disegnato per risolvere in modo analitico esatto modelli a reti di code in forma prodotto a classe singola o classe multipla, con workload aperti, chiusi o misti. La soluzione avviene attraverso il classico algoritmo MVA, stabilizzato nel caso di stazioni losd-dependent.
+<br>
+La struttura della rete &egrave; specificata per mezzo di pannelli <em>wizard</em>, con funzioni di conversione tra probabilit&agrave; di routing e numero medio di visite (e vice versa). Sono supportate, in modo auomatizzato, analisi di tipo what-if.</p>
+	      <p><strong><img src="img/JMCHIcon.gif" width="25" height="25"> <a name="jmch" id="jmch"></a>JMCH:</strong> tool didattico che, con tecniche simulative, mostra l'andamento di modelli con una singola stazione a coda finita (M/M/1/k) o infinita(M/M/1), e mostra la catena di Markov sottostante. &Egrave; prevista la possibilit&agrave; di cambiare dinamicamente i tempi di interarrivo e di servizio del sistema.</p>
+	      <p><strong><img src="img/JABAIcon.gif" width="25" height="25"> <a name="jaba" id="jaba"></a>JABA:</strong> un tool per l'identificazione dei colli di bottiglia (<em>bottleneck</em>) in modelli a reti di code chiusi in forma prodotto utilizzando algoritmi efficienti di ricerca dei poligoni convessi (<em>convex hull algorithms</em>). Il tool supporta attualmente modelli con un numero massimo di tre classi di utenti. &Egrave; possibile identificare i potenziali colli di bottiglia corrispondenti a differenti mix di popolazione delle varie classi. Data l'efficienza degli algoritmi, anche modelli con migliaia di stazioni possono essere analizzati in modo veloce. I <em>saturation sectors</em>, ovvero i mix delle classi di utenti che saturano pi&ugrave; di una risorsa contemporaneamente, vengono identificati e mostrati graficamente.</p>
+	      <p><strong><img src="img/JWATIcon.gif" width="25" height="25"> <a name="jwat" id="jwat"></a>JWAT:</strong> supporta la fase di caratterizzazione del <em>workload</em>, con enfasi sui file di log provenienti dai Web servers. Il tool presenta alcuni formati standard (ad esempio Apache HTTP) ma permette la specifica di formati personalizzati. I dati importati possono essere analizzati inizialmente utilizzando tecniche statistiche descrittive (ad esempio valore atteso, correlazione, pdf histograms, boxplots, scatterplots), sia su dati univariati che multivariati. Sono previsti anche algoritmi per il data scaling, l'estrazione di campioni, l'identificazione degli outliers e gli algoritmi di clustering k-menas e fuzzy k-means per identificare le similarit&agrave; tra i dati di input. Queste tecniche permettono di determinare i <em>centroidi</em> dei cluster e stimare il workload medio e i service demands da utilizzare per parametrizzare il modello. Il tool include anche un'interfaccia verso il tool di similarit&agrave; CLUTO.</p></td>
+      </tr>
+      <tr>
+        <td background="img/footerBar.gif" height="18"> </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td background="img/titleBar.gif" height="26" align="center"><font size="+1" color="#FFFF00"><a name="license" id="license"></a>Licenza</font></td>
+      </tr>
+      <tr>
+        <td bgcolor="#FFFFFF" style="border-width:thick; border-color:#FFFFFF"><p>Copyright (C) 2006, Laboratorio di Valutazione delle Prestazioni - Dipartimento di Elettronica e Informazione - Politecnico di Milano </p>
+              <p>Java Modelling Tools &egrave; software libero; &egrave; lecito redistribuirlo o modificarlo secondo i termini della   Licenza Pubblica Generica GNU come &egrave; pubblicata dalla Free Software Foundation;   o la versione 2 della licenza o (a propria scelta) una versione successiva. </p>
+              <p>Java Modelling Tools  distribuito nella speranza che sia utile, ma SENZA ALCUNA GARANZIA; senza   neppure la garanzia implicita di NEGOZIABILIT&Agrave; o di APPLICABILIT&Agrave; PER UN   PARTICOLARE SCOPO. Si veda la Licenza Pubblica Generica GNU per avere maggiori   dettagli. </p>
+              <p>Questo programma deve essere distribuito assieme ad una copia della Licenza   Pubblica Generica GNU; in caso contrario, se ne pu&ograve; ottenere una scrivendo alla   Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA   02110-1301 USA </p>
+              <p>Java Modelling Tools  include le seguenti librerie sviluppate da  <em>terze parti</em> che possono essere liberamente distribuite secondo i termini delle licenze contenute nella directory <strong><em>license</em></strong>:
+			  <ul>
+			  	<li>FreeHEP <a href="http://java.freehep.org/freehep1.x/vectorgraphics/index.html" target="_blank">VectorGraphics</a> package, rilasciato sotto GNU LGPL.</li>
+			    <li>Apache <a href="http://jakarta.apache.org/oro/" target="_blank">Jakarta-ORO</a>, rilasciato sotto Apache Software License.</li>
+			    <li><a href="http://jfep.sourceforge.net" target="_blank">JFEP</a>, rilasciato sotto Apache License, Version 2.0.</li>
+			    <li>SUN <a href="http://java.sun.com/products/javahelp/" target="_blank">JavaHelp</a> System, rilasciato sotto Sun Microsystems, Inc. Binary Code License Agreement.</li>
+			    <li>JGoodies <a href="http://www.jgoodies.com/" target="_blank">Looks</a>, rilasciato sotto  BSD open source License.</li>
+			    <li><a href="http://www.jgraph.com/" target="_blank">JGraph</a>, rilasciato sotto GNU LGPL License.</li>
+			    <li>Apache <a href="http://logging.apache.org/log4j/" target="_blank">Log4j</a>,  rilasciato sotto Apache Software License.</li>
+			    <li>Ptolemy II <a href="http://ptolemy.berkeley.edu/java/ptplot/" target="_blank">Ptplot</a>, rilasciato sotto BSD open source License.</li>
+			    <li>Apache <a href="http://xerces.apache.org/" target="_blank">Xerces</a> Java Parser, rilasciato sotto Apache Software License.</li>
+			    <ul> 
+</p></td>
+      </tr>
+      <tr>
+        <td background="img/footerBar.gif" height="18"> </td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</body>
+</html>

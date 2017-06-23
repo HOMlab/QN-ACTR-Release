@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" >
+<html>
+<head>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+<TITLE>Define Customers Classes</TITLE>
+<link href="../default.css" rel="stylesheet" type="text/css">
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com"><style title="hcp" type="text/css">
+<!--
+P.hcp1 { margin-bottom:0cm; }
+-->
+</style>
+</HEAD>
+<BODY LANG="it-IT" BGCOLOR="#ffffff" DIR="LTR">
+<H1>Define customers classes</H1>
+<P CLASS="hcp2"><a href="../definition/class.html">Customers Classes</a> identify different customer behavior and characteristics, such   as the type (closed or open), the size of the customer population (for closed   classes) or the interarrival time distribution (for open classes). <BR>
+They can   be set from menu &quot;Define&quot; pressing &quot;Customer Classes&quot;. The following panel will be shown.</P>
+<P><img src="../image/define_class1.png" width="400" height="186"></P>
+<P>Classes must be explicitly added to the model, either one at a   time by clicking the <IMG SRC="../image/button_addClass.png" alt="add class" NAME="immagini2" WIDTH=115 HEIGHT=22 BORDER=0 ALIGN=BOTTOM> button, or by selecting directly the final number of classes   desired in the form<IMG SRC="../image/button_NClass.png" alt="number of classes" NAME="immagini3" WIDTH=113 HEIGHT=23 BORDER=0 ALIGN=BOTTOM>.   The newly added classes will be listed with deafult parameters. <BR>
+  Double click   on the default name (ClassN) to change it. <BR>
+Each new class has a priority in   the system. A smaller number indicates a lower priority. Default value is 0 and   it can be changed by double clicking on the corresponding area. </P>
+<P>in this pannel you can insert one customer class or multiple
+customer classes.</P>
+<P>&nbsp;</P>
+<H1 CLASS="stile2">How To define Open Class</H1>
+<P CLASS="stile2">&nbsp;</P>
+<BLOCKQUOTE>
+  <p>After adding a class and possibly changing its name and   priority, you must choose the type of customers comprising the class. Classes   are created Closed by default, so if you want an Open class, select the type   Open in the menu</p>
+  <p>&nbsp;</p>
+  <p align="center"><span class="hcp2"><IMG SRC="../image/type_class.PNG" alt="class type" NAME="immagini5" WIDTH=80 HEIGHT=69 BORDER=0 ALIGN=TOP></span>
+  
+  <p>&nbsp;</p>
+  <p>The class characteristics looks like this now</p>
+  <p>&nbsp;</p>
+  <p align="center"><span class="stile2"><img src="../image/open_class1.png" width="440" height="29"></span></p>
+  <p>&nbsp;</p>
+  <p>Open classes describe customer populations that vary during   time, therefore they are best characterized by the probability distribution of   the interarrival time, rather than by a constant number of customers. The   default Interarrival Time Distribution is exp(1) (Exponential Distribution with   &lambda; =1). <BR>
+    To change the Interarrival Time Distribution click the Edit   button</p>
+  <p>&nbsp;</p>
+  <p align="center"><span class="hcp2"><img src="../image/arrival_time_distribution1.PNG" name="immagini6" align=TOP width=216 height=38 border=0></span></p>
+  <p>&nbsp;</p>
+  <p>The following window will   appear:</p>
+</BLOCKQUOTE>
+<TABLE WIDTH=500 BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<COL WIDTH=298>
+	<COL WIDTH=377>
+	<TR>
+		<TD WIDTH=298>
+			<P align="center"><img src="../image/edit_ArrDistribution.png" width="207" height="219"></P>	  </TD>
+		<TD WIDTH=377 VALIGN=TOP>
+			<P CLASS="hcp2" ALIGN=LEFT>Click on the Selected Distribution drop down menu to choose from any of the   following distributions:			</P>
+			<UL>
+				<LI><P ALIGN="LEFT" class="hcp1"><a href="../definition/distribuzioni.html#constant">Constant</a></P>
+				<LI><P ALIGN="LEFT" class="hcp1"><a href="../definition/distribuzioni.html#erlang">Erlang</a>				</P>
+				<LI><P ALIGN="LEFT" class="hcp1"><a href="../definition/distribuzioni.html#exponential">Exponential</a>
+			  </P>
+				<LI><P ALIGN="LEFT" class="hcp1"><a href="../definition/distribuzioni.html#gamma">Gamma</a>				</P>
+				<LI><P ALIGN="LEFT" class="hcp1"><a href="../definition/distribuzioni.html#hyperexp">Hyperexponential 
+				</a></P>
+				<LI><P ALIGN="LEFT" class="hcp1"><a href="../definition/distribuzioni.html#normal">Normal</a>				</P>
+				<LI><P ALIGN="LEFT" class="hcp1"><a href="../definition/distribuzioni.html#pareto">Pareto</a>				</P>
+				<LI><P ALIGN="LEFT" class="hcp1"><a href="../definition/distribuzioni.html#poisson">Poisson</a>				</P>
+				<LI><P ALIGN="LEFT" class="hcp1"><a href="../definition/distribuzioni.html#replayer">Replayer</a>				</P>
+				<LI><P ALIGN="LEFT" class="hcp1"><a href="../definition/distribuzioni.html#replayer">StudentT 
+				</a></P>
+				<LI><P ALIGN=LEFT><a href="../definition/distribuzioni.html#uniform">Uniform</a>				</P>
+	  </UL>		</TD>
+	</TR>
+</TABLE>
+<P style="clear:both">&nbsp;</P>
+<P>In each case, it is possible to configure the distribution   parameters as you wish, or use the default values. Parameters that are related   among each other are automatically adjusted if one is modified (for example, the   figure shows how for an Erlang distribution, if you set the (alfa, r) pair, the   (mean, c) pair is automatically adjusted to the correct value). <BR>
+  The Replayer   distribution allows you to provide data traces from files. <BR>
+Click OK when you   are done to return to Class parameters definition. </P>
+<p>&nbsp;</p>
+<p>The final step in defining a class is the definition of the   Reference Station, i.e., that station in the model with respect to which the   performance indices will be computed. You can select it
+  from this menu. <IMG SRC="../image/ref_station.PNG" NAME="immagini8" ALIGN=TOP WIDTH=111 HEIGHT=56 BORDER=0> Attention because for Open Classes it is only possible to select one of the Source as a  Reference Station.The Reference Station is used to calculate the System Throughput of the class. </p>
+<P CLASS="hcp2">&nbsp;</P>
+<H1><FONT SIZE=4 STYLE="font-size: 16pt">How To define Close Class</FONT></H1>
+<P CLASS="hcp2"><img src="../image/close_class1.PNG" width="398" height="30"></P>
+<p>Classes are created Closed by default, so there is not need to   change the Type. Priority can be changed as in the Open class case. The   population size is the parameter that characterizes a Closed class. It is fixed   and does not change for the entire life of the system. By default is 1 and it   can be changed by clicking on the corresponding area in the class properties   matrix.  
+<p>
+<p>The final step is to define a Reference Station for the class    from the menu 
+<IMG SRC="../image/close_class.PNG" NAME="immagini11" ALIGN=TOP WIDTH=112 HEIGHT=115 BORDER=0>. In this case you can select all the other station but not a source not a sink. The Reference Station is used to calculate the System Throughput for this class </p>
+<P CLASS="hcp2">&nbsp;</P>
+</BODY>
+</HTML>

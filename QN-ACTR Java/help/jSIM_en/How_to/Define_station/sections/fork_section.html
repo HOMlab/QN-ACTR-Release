@@ -1,0 +1,38 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+<html>
+<head>
+<title>Fork section</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+<link href="../../../default.css" rel="stylesheet" type="text/css">
+<style title="hcp" type="text/css">
+<!--img.hcp1 { border-style:none; }-->
+</style>
+</head>
+<body>
+<p class="stile1">How to define the Forking Behavior</p>
+<p class="stile2">_________________</p>
+<p class="stile4">&nbsp;</p>
+<p class="stile4"><span class="stile4">This section is characteristic onlyof fork stations. It defines the parallelism degree of a job, in terms of the number of tasks it is split into and how many jobs can be serviced simultaneoulsy.</span></p>
+<p class="stile4">&nbsp;</p>
+<blockquote>
+  <p class="stile4">
+  <span class="stile4">In this section you can define the station forking degree, i.e., the number of tasks created for each job arriving at the fork station, and its capacity, i.e., the maximum number of of jobs that can be in a fork-join section (when a join is present):
+  <p class="stile4">&nbsp;</p>
+</blockquote>
+<p class="stile4" style="text-align: center;" Align="center"><img src="../Images/fork1.gif"	maintain-ratio=TRUE	style="border-style: none;	float: none;	border-style: none;"	border=0></p>
+<p class="stile4">&nbsp;</p>
+<blockquote>
+  <p class="stile4"><em class="stile6" style="font-style: italic;">Forking degree:</em>it is the number of tasks that are routed on each outgoing link of the fork station. Therefore, each job is split into (forking degree)*(number of outgoing links) tasks. By default the forking degree is 1 and it can be modified using this form:</p>
+  <p class="stile4">&nbsp;</p>
+</blockquote>
+<p class="stile4" style="text-align: center;" Align="center"><img src="../Images/tasks.gif" style="width:413px; height:23px;" width="413" height="23" border="0" class="hcp1"></p>
+<p class="stile4">&nbsp;</p>
+<blockquote>
+  <p class="stile4"><em class="stile6" style="font-style: italic;">Capacity:</em> it is the maximum number of jobs that can be served by a fork-jon sectionsimultaneously. It makes sense only if there is a join station matching the fork one. It can be finite, in which case once the limit is reached, jobs wait in the queue of the fork station. A job is removed from the queue and serviced (i.e., split into tasks) when a job is recomposed at the matching join station and leaves it. Capacity is defined using the form below, after checking the &quot;Finite capacity...&quot; box:</p>
+  <p class="stile4">&nbsp;</p>
+</blockquote>
+<p class="stile4" style="text-align: center;" Align="center"><img src="../Images/blocking.gif" border="0" class="hcp1"></p>
+<p class="stile4">&nbsp; </p>
+</body>
+</html>

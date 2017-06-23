@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Pannelli della simulazione.</TITLE>
+<META NAME="description" CONTENT="Pannelli della simulazione.">
+<META NAME="keywords" CONTENT="Manuale">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="Manuale.css">
+
+<LINK REL="next" HREF="node10.html">
+<LINK REL="previous" HREF="node8.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node10.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html124"
+  HREF="node10.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html122"
+  HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html116"
+  HREF="node8.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html125"
+  HREF="node10.html">Controlli della simulazione.</A>
+<B> Up:</B> <A NAME="tex2html123"
+  HREF="node3.html">Descrizione della schermata principale.</A>
+<B> Previous:</B> <A NAME="tex2html117"
+  HREF="node8.html">Risultati della simulazione.</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00034000000000000000"></A><A NAME="sub:Pannelli-della-simulazione."></A>
+<BR>
+Pannelli della simulazione.
+</H2>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:Simulazione"></A><A NAME="301"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 7:</STRONG>
+Simulazione.</CAPTION>
+<TR><TD><P>
+
+<P>
+<DIV ALIGN="CENTER">
+<IMG
+  WIDTH="788" HEIGHT="268" ALIGN="BOTTOM" BORDER="0"
+ SRC="./simulazione.png"
+ ALT="Image simulazione">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+Quest'area &#232; a sua volta divisa in due parti (come si vede dalla figura&nbsp;<A HREF="#fig:Simulazione">7</A>):
+
+<P>
+
+<UL>
+<LI>nella parte <B>4a</B> viene visualizzato un pannello di tipo tabbed,
+che permette di cambiare il tipo di visualizzazione. Sono mostrate
+due etichette:
+
+<P>
+
+<UL>
+<LI><B>Stati</B> &#232; quella selezionata per default, e, quando attiva,
+visualizza un grafico della coda a stati (da cui il nome), dove lo
+stato colorato in rosso (nel caso di default) o comunque indicato
+nella legenda come ``current queue'' rappresenta la dimensione
+della coda in quel particolare momento. I valori presenti sugli stati
+rappresentano la probabilit&#224; che ha quello stesso stato di essere
+occupato e lo stesso vale per la ``tortina'' in verde chiaro presente
+nello stato stesso (vedi figura&nbsp;<A HREF="#fig:sprobab">8</A>), che viene indicata
+nella legenda come ``probability''. Durante la simulazione gli
+stati gi&#224; riempiti saranno indicati in verde (default) e un pallino
+sugli archi indicher&#224; l'arrivo o l'esecuzione di un job.
+<DIV ALIGN="CENTER"><A NAME="fig:sprobab"></A><A NAME="302"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 8:</STRONG>
+Stati - probabilit&#224; (4a).</CAPTION>
+<TR><TD><P>
+
+<P>
+<DIV ALIGN="CENTER">
+<IMG
+  WIDTH="302" HEIGHT="131" ALIGN="BOTTOM" BORDER="0"
+ SRC="./probabilita.png"
+ ALT="Image probabilita">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><B>Log</B> visualizza un log degli arrivi e delle esecuzioni.
+</LI>
+</UL>
+</LI>
+<LI>nella parte <B>4b</B> viene visualizzata un'altra rappresentazione
+grafica della coda (vedi figura&nbsp;<A HREF="#fig:Coda">9</A>). In questo caso
+il cerchio a destra rappresenta il processore che esegue i job in
+arrivo, mentre i rettangoli rappresentano la coda. Sono inoltre visualizzati
+la coda media, il numero di job attualmente in coda e il livello medio
+di utilizzo/tempo di esecuzione residuo<A NAME="tex2html11"
+  HREF="footnode.html#foot303"><SUP>3</SUP></A> e il job attualmente in esecuzione. All'occorrenza, verranno inoltre
+visualizzati un rettangolo che rappresenta i jobs che non era possibile
+visualizzare per motivi di spazio e un rettangolo che rappresenta
+i jobs persi a causa del riempimento del buffer (ovviamente solo nel
+caso di coda <B>M/M/1/k</B>).
+</LI>
+</UL>
+
+<DIV ALIGN="CENTER"><A NAME="fig:Coda"></A><A NAME="304"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9:</STRONG>
+Coda (4b).</CAPTION>
+<TR><TD><P>
+
+<P>
+<DIV ALIGN="CENTER">
+<IMG
+  WIDTH="400" HEIGHT="180" ALIGN="BOTTOM" BORDER="0"
+ SRC="./coda1.png"
+ ALT="Image coda1">
+</DIV>
+
+<P>
+<DIV ALIGN="CENTER">
+[job persi]<IMG
+  WIDTH="400" HEIGHT="180" ALIGN="BOTTOM" BORDER="0"
+ SRC="./coda1_jobpersi.png"
+ ALT="Image coda1_jobpersi"> [jobs che eccedono quelli visualizzabili]<IMG
+  WIDTH="400" HEIGHT="180" ALIGN="BOTTOM" BORDER="0"
+ SRC="./coda1_jobsover.png"
+ ALT="Image coda1_jobsover">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html124"
+  HREF="node10.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html122"
+  HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html116"
+  HREF="node8.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html125"
+  HREF="node10.html">Controlli della simulazione.</A>
+<B> Up:</B> <A NAME="tex2html123"
+  HREF="node3.html">Descrizione della schermata principale.</A>
+<B> Previous:</B> <A NAME="tex2html117"
+  HREF="node8.html">Risultati della simulazione.</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Ernesto
+2004-04-15
+</ADDRESS>
+</BODY>
+</HTML>

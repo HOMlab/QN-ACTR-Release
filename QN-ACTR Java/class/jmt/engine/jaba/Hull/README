@@ -1,0 +1,51 @@
+HULL
+----
+
+Hull reads a file containing a list of 3D points, constructs their
+convex hull, and writes it to an output file using the OFF file
+format.  OFF files can be viewed using Geomview
+http://www.geom.umn.edu/software/download/geomview.html
+
+The algorithm used to construct the convex hull is an implementation
+of the point insertion algortithm given in Joseph O'Rourke's
+``Computational Geometry in C''.
+
+
+usage: Hull <infile> <outfile>
+
+
+The input file format is as follows:
+
+x[0] y[0] z[0]
+...
+x[n] y[n] z[n]
+
+The (x, y, z) must be integers in the range -512...512.
+
+The OFF file format is described in the Geomview documentation.
+
+Hull has been developed using jdk-1.1.5 
+
+Files
+-----
+*.java		Java source code
+*.class		Java class files (jdk 1.1.5) generated using javac Hull.java
+doc/*.html	HTML documentation generated using javadoc
+testsphere	Test file.  1000 random points on the surface of a sphere
+testsphere.off	The results of running Hull on testsphere, i.e.
+		java Hull testsphere testsphere.OFF
+
+Revision History
+----------------
+
+-- v1.2 --
+
+2 Dec 1998	Replaced integers with longs in Triangle.volumeSign()
+
+-- v1.1 --
+
+17 Mar 1998	Replaced use of Polygon.volume6() with more efficient
+		Polygon.volumeSign().  This also allowed 
+		ConvexHull.COORD_RANGE to be increased from 512 to 1000000
+
+-- v1.0 --

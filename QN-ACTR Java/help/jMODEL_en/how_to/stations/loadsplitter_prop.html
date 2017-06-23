@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 FrameSet//EN" >
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=Windows-1252">
+<title>Edit loadsplitter properties</title>
+<link href="../../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile1 { color:#0000FF; }
+.Stile2 { color:#FF0000; }
+.Stile3 { color:#0000FF; font-style:italic; font-size:18pt; }
+.Stile6 { color:#0000FF; font-style:italic; font-size:18pt; font-family:"Times New Roman" , Times, serif; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+</head>
+<body>
+<h1>Routing Station Properties<span class="hcp2"><img src="../../image/topology/edit/loadsplitter1.png" width="81" height="49" align="top"></span></h1>
+<p>______________________________</p>
+<p>&nbsp;</p>
+<p>A routing station is a dummy station, with service time equal 0, that is used to   create more complex and sophisticated routing strategies by sending jobs through   one or more such stations. For example, if we wanted two thirds of the incoming   traffic at station Z to be randomly routed to either station A or B and the   remaining third to go either to station C or D, depending on the shortest queue   at the two stations, we could implement the following. Add a routing station, Y,   among Z's output stations and define random routing for the three of them (A, B,   Y). Then connect Y to C and D and define Shortest queue routing to C and D.</p>
+<p>&nbsp;</p>
+<p class="Stile2">Set or change the properties:</p>
+<p class="hcp2">&nbsp;</p>
+<p class="hcp2">With a double click on its icon you can see this panel:</p>
+<p class="hcp2"><img src="../../image/topology/edit/loadsplitter_prop.png" width="286" height="366"></p>
+<p class="hcp2"><em>Station Name</em>: name of the routing station appearing in the model and in the property panel of other stations. </p>
+<p class="hcp2">&nbsp;</p>
+<ul>
+  
+  <li p class="Stile6"> Routing Section:</li>
+</ul>
+<p>&nbsp;</p>
+<p>In the routing section, for every class defined, you can decide   how the completed jobs are routed to the other devices connected to station for   which the routing strategy is defined. </p>
+<p>&nbsp;</p>
+<p><span class="hcp2"><img src="../../image/topology/edit/routing_section.png" alt="routing_sect" width="409" height="86"></span></p>
+<p class="hcp2">&nbsp;</p>
+<p class="hcp2">For each class, select the algorithm you want to use for outgoing connections.</p>
+<p>&nbsp;</p>
+<table border="0.5" cellpadding="5" cellspacing="5">
+  <tr>
+    <td width="190" align="left" valign="top" class="Stile1"><ul>
+      <li>
+        <p>Random</p>
+      </li>
+    </ul></td>
+    <td width="901" class="hcp2"><p align="left">With this strategy, jobs are routed randomly to one of the stations connected to   the routing device. The outgoing links are selected with the same   probability.The figure illustrates the routing strategy with 3 output links. For   each link the probability to be selected is 1/3.</p>
+        <p align="left"><img src="../../image/routing/random.PNG" alt="5" width="168" height="129"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Round Robin </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this algorithm, jobs are cyclically routed to the outgoing links according   to a circular routing. As the figure shows, the first job is sent to the top   station, the second job is sent to the central station, and the third job is   sent to the bottom station. The next job would be sent to the top station again,   and so on.</p>
+        <p align="left"><img src="../../image/routing/round_robin.PNG" alt="6" width="165" height="86"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Probabilities </p>
+      </li>
+    </ul>
+        <p><img src="../../image/routing/prob1.png" alt="1" width="139" height="134"></p></td>
+    <td class="hcp2"><p align="left">With this algorithm, you can define the routing probability for each outgoing   link.The sum of all probabilities must equal 1. If the values provided do not   satisfy the constraint, JSIM automatically normalizes the values before the   simulation starts. This strategy requires that you define the probability foreach   output link via the panel on the bottom right of the window.</p>
+        <p align="left"><img src="../../image/routing/probability.PNG" alt="2" width="164" height="130"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Join the Shortest Queue (JSQ)</p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p>With this strategy, each job is routed to the device that has the smallest queue   length, i.e., number of jobs waiting, at the time the job leaves therouting   station. </p>
+        <p>The figure shows a case where the queue lenghts at the devices   are 3, 2, and 1 jobs, respectively, from top to bottom. The exitiing job will be   routed to the bottom station, since its queue is the shortest(1 job).</p>
+      <p align="left">&nbsp;</p>
+      <p align="left"><img src="../../image/routing/Q_length.PNG" alt="3" width="182" height="144"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Shortest R Time </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this algorithm, jobs are sent to the station where the average response   time for the job's class is the smallest at the moment a job leaves the routing   station.The figure shows that at the time of routing, the middle station has the   smallest average response time, R, so the job will be sent to it.</p>
+        <p align="left"><img src="../../image/routing/R_length.PNG" alt="4" width="203" height="143"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Least Utilization </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this strategy, the destination device is chosen as the one with the   smallest average utilization at the time routing is performed. In the example   depicted in the picture, the top station is the least utilized, so it will   receive the next job to leave the blue station.</p>
+        <p align="left"><img src="../../image/routing/utilization.PNG" alt="8" width="169" height="126"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Fastest Service </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this strategy, a job is routed to the device with the smallest average   service time, S, for the job's class. In the figure, the exiting job will be   routed to the top station since it service time is the minimum among the three.</p>
+        <p align="left"><img src="../../image/routing/S_time.PNG" alt="7" width="188" height="129"></p></td>
+  </tr>
+</table>
+<p></p>
+<p class="hcp2">&nbsp; </p>
+<p class="hcp2"></p>
+<ul>
+  <li></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited by Bertoli Marco (Politecnico di Milano) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="results">
+		<xs:annotation>
+			<xs:documentation>Root element containing all calculated measures</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="measure" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="sample" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="meanValue" type="xs:double" use="required"/>
+									<xs:attribute name="upperBound" type="xs:double" use="optional"/>
+									<xs:attribute name="lowerBound" type="xs:double" use="optional"/>
+									<xs:attribute name="validity" type="xs:boolean" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="referenceClass" type="xs:string" use="required"/>
+						<xs:attribute name="type" type="xs:integer" use="required"/>
+						<xs:attribute name="referenceStation" type="xs:string" use="required"/>
+						<xs:attribute name="finalValue" type="xs:double" use="optional"/>
+						<xs:attribute name="state" type="xs:integer" use="optional"/>
+						<xs:attribute name="analyzedSamples" type="xs:integer" use="required"/>
+						<xs:attribute name="precision" type="xs:double" use="required"/>
+						<xs:attribute name="alpha" type="xs:double" use="required"/>
+						<xs:attribute name="nodeType" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="pollingInterval" type="xs:double" use="required"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,434 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+
+
+<html>
+
+
+
+
+
+
+
+
+
+
+
+<head>
+
+<title>Service section</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+
+<link href="../../../default.css" rel="stylesheet" type="text/css"><style title="hcp" type="text/css">
+
+<!--
+
+img.hcp1 { border-style:none; }
+
+p.hcp2 { text-align:center; }
+
+-->
+
+</style>
+
+</head>
+
+<body>
+
+<p class="stile1">How to Define the Service Strategy</p>
+
+
+
+<p class="stile2">_________________</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">This section is present in server and delay stations. 
+
+ </p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<blockquote>
+
+<p class="stile4">This section allows the specification of the number of
+
+servers, for server stations, and the service time distribution, for both
+
+server and delay stations. 
+
+<br>
+
+Delay stations are infinite servers with identical service time, therefore
+
+they only need the service time distribution. The infinite number of servers
+
+provides for equal average response time for all jobs, as no job waits in
+
+queue for service. 
+
+<br>
+
+In this section, the load dependent or independent nature of the service
+
+time is also specified for each class in server stations:
+
+</p>
+
+
+
+<p>&nbsp;</p>
+
+</blockquote>
+
+
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="../Images/service_section1.gif" style="width:481px; height:139px;" width="481" height="139" border="0" class="hcp1"></p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<blockquote>
+
+<p class="stile4">The number of servers in a server station can be modified
+
+using the corresponding input area:</p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<p Align="center" class="hcp2"><img src="../Images/num_servers.gif" style="width:113px; height:25px;" width="113" height="25" border="0" class="hcp1"></p>
+
+
+
+<p>&nbsp; </p>
+
+
+
+<p class="stile4">For each class, you must specify whether the service time 
+
+is Load Dependent or Load Independent using this menu:</p>
+
+
+
+<p Align="center" class="hcp2">&nbsp;</p>
+
+
+
+<p Align="center" class="hcp2"><span class="stile4"><img src="../Images/load.gif" style="width:109px; height:71px;" width="109" height="71" border="0" class="hcp1"></span></p>
+
+
+
+<p Align="center" class="hcp2">&nbsp;</p>
+
+
+
+<p class="stile4">A load independent service indicates that, regardless of
+
+the number of jobs that are in the station, the system will serve all 
+
+jobs following a fixed policy modelled by the chosen statistical distribution.
+
+</p>
+
+
+
+<p class="stile4">For each class, the Service Time Distribution is set to
+
+Exponential with average equal to 1. It can be modified by clicking the 
+
+<img src="../Images/edit.gif" style="width:65px; height:17px;" width="65" height="17" border="0" class="hcp1">
+
+button and inserting all the required parameters from this window:</p>
+
+</blockquote>
+
+
+
+<blockquote>
+
+<p>&nbsp;</p>
+
+
+
+
+
+ <div Align="center">
+
+ <table x-use-null-cells
+
+		style="float: aligncenter;
+
+				width: 100%;
+
+				border-spacing: 0px;
+
+				border-spacing: 0px;"
+
+		cellspacing=0
+
+		width=100%>
+
+
+
+<tr style="width: 320px;">
+
+<td padding-left:
+
+	15px;
+
+	padding-top:
+
+	padding-right:
+
+	padding-bottom:
+
+	15px;&quot;>
+
+<p class="stile4"><img src="../Images/erlang.gif" style="width:320px; height:400px;" width="320" height="400" border="0" class="hcp1"></td>
+
+<td style="x-cell-content-align: top;
+
+			padding-left: 15px;
+
+			padding-top: 15px;
+
+			padding-right: 15px;
+
+			padding-bottom: 15px;"
+
+	valign=top>
+
+<p class="stile4" style="text-align: left;" Align="left">Click the drop down
+
+menu and choose the service time distribution among the following: </p>
+
+<ul>
+
+	
+
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="../../Define_class/distribution.html#constant">Constant</a></p></li>
+
+	
+
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="../../Define_class/distribution.html#erlang">Erlang</a> 
+
+ </p></li>
+
+	
+
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="../../Define_class/distribution.html#exponential">Exponential</a></p></li>
+
+	
+
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="../../Define_class/distribution.html#gamma">Gamma</a> 
+
+ </p></li>
+
+	
+
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="../../Define_class/distribution.html#hyperexp">Hyperexponential</a> 
+
+ </p></li>
+
+	
+
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="../../Define_class/distribution.html#normal">Normal</a> 
+
+ </p></li>
+
+	
+
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="../../Define_class/distribution.html#pareto">Pareto</a> 
+
+ </p></li>
+
+	
+
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="../../Define_class/distribution.html#poisson">Poisson</a> 
+
+ </p></li>
+
+	
+
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="../../Define_class/distribution.html#replayer">Replayer</a> 
+
+ </p></li>
+
+	
+
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="../../Define_class/distribution.html#studentT">StudentT</a> 
+
+ </p></li>
+
+	
+
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left;" Align="left"><a href="../../Define_class/distribution.html#uniform">Uniform</a> 
+
+ </p></li>
+
+</ul></td></tr>
+
+</table>
+
+</div>
+
+ <p>&nbsp;</p>
+
+</blockquote>
+
+
+
+<blockquote>
+
+<p class="stile4">A load dependent service time indicates that the amount of
+
+time the server spends with each customer depends upon the current 
+
+number of customers in the station. 
+
+A set of intervals for the number fo jobs in the station is specified,
+
+either by adding one range at a time via the 
+
+ <img src="../Images/add_range.gif" style="width:114px; height:20px;" width="114" height="20" border="0" class="hcp1">
+
+button or by specifying the total number at once.
+
+Each range must them be specified by its lower (From) and upper 
+
+(To) extremes.
+
+Each such range can be associated with different service times, as for 
+
+the distribution, the mean and the coefficient of variation, or a subset
+
+thereof.
+
+<br>
+
+To set the parameters of a Load Dependent service time, click the 
+
+<img src="../Images/edit.gif" style="width:65px; height:17px;" width="65" height="17" border="0" class="hcp1"> button and then specify the parameters
+
+for each added range.
+
+</p>
+
+</blockquote>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="../Images/load_dipendent.gif" style="width:364px; height:480px;" width="364" height="480" border="0" class="hcp1"></p>
+
+
+
+<p class="stile4" style="text-align: center;" Align="center">&nbsp;</p>
+
+
+
+<blockquote>
+
+<p class="stile4">For each customer number range you must specify the 
+
+following parameters:</p>
+
+
+
+<blockquote>
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Distribution: </em>
+
+you can choose among Pareto, Erlang, Exponential, Hyperexponential, Poisson, 
+
+ Uniform, Constant, Gamma and Normal distribution. </p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Mean: </em>
+
+the mean value of each distribution is specified in the &quot;Mean&quot; form
+
+by double clicking on it. 
+
+Insert a number or an arithmetic expression that will be evaluated with JFEP - Java Fast Expression Parser by Bertoli Marco. For 
+
+a complete list of the command supported by JFEP you can read the &quot;Help&quot; tab or see
+
+the official JFEP web site at http://jfep.sourceforge.net/
+
+ </p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">C: </em>
+
+The coefficient of variation of each distribution (when C exist) can be
+
+specified by double clicking on the &quot;C&quot; form.
+
+For example, in the previous picture two policies are defined:
+
+<br>
+
+
+
+From 1 to 4 jobs in the station, the server will behave according to 
+
+an Erlang distribution with mean = 1 and C = 0.5. For any number of jobs
+
+greater or equal to 5 in the station, the system will behave according to
+
+an Exponential distribution with mean = 1.</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">If you want to delete a range click <img src="../Images/delete.gif" style="width:16px; height:17px;" width="16" height="17" border="0" class="hcp1">.</p>
+
+</blockquote>
+
+</blockquote>
+
+
+
+</body>
+
+</html>
+

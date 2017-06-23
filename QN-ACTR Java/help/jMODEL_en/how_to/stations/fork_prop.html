@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Edit Fork properties</title>
+<link href="../../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile1 { color:#0000FF; }
+.Stile2 { color:#FF0000; }
+.Stile6 { color:#0000FF; font-style:italic; font-size:18pt; font-family:"Times New Roman" , Times, serif; }
+.Stile3 { color:#333333; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+</head>
+<body>
+<h1>Fork properties <img src="../../image/topology/edit/fork_icon.png" width="39" height="51" align="middle"></h1>
+<p>___________________</p>
+<p>&nbsp;</p>
+<p>A JSIM Fork station is simply a station where jobs are split   into tasks. No service is provided, therefore there is no service time   specification. Tasks are then routed along the Fork station outgoing links. </p>
+<p><img src="../../image/topology/edit/model1.png" width="265" height="161"></p>
+<p>Unlike classical queueing theory fork-join queues, a JSIM Fork   station is not associated with a join station automatically. Any combination of   server stations, finite regions, fork-join, routing stations, etc., is possibile   after a Fork station. This feature allows the modeling of very general parallel   behaviors, of which the traditional Fork-Join one is a special case. In JSIM the   classical queueing theory Fork-Join queue behavior is obtained by connecting the   Fork station to as many Server stations as the degree of parallelism requested,   with one task per outgoing link. Each Server station is then connected to a Join   station, where the job is recomposed.   
+<p>&nbsp;</p>
+<p>A Fork station is characterized by the forking degree, i.e., the   number of tasks routed on each one of its outgoing links, and the capacity,   i.e., the maximum number of jobs that can be served by the station   simultaneously. Therefore, the number of sibling tasks a job is split into is   given by the product of the number of outgoing links from the Fork station times   the forking degree. Note that a finite station capacity makes sense only when   there is a join station downstream from the fork station that can recompose the   split jobs. Otherwise, inconsistencies in the model and subsequent simulation   error, such as out-of-memory, may occur. No automatic checks are available at   the moment that can identify such critical conditions. Both the forking degree   and the capacity are section parameters to be specified in the model. As an   example, a Fork station with forking degree 1, connected to three Server   stations, would split a job into 3 sibling tasks (this is a traditional   Fork-Join like behavior). If no Join station is connected to any of the three   Servers, a warning message is displayed since the model could quickly saturate   due to the extra load (3 more jobs) created in addition to each job entering the   Fork station. </p>
+<p>&nbsp;</p>
+ <p class="Stile2">Set or change the properties:</p>
+ 
+<p>This station has two sections: fork and queue.</p>
+<p>&nbsp;</p>
+<p><em>Station Name</em>:  name of Fork used in the model.</p>
+<p>&nbsp;</p>
+<ul>
+  <li>
+    <p class="Stile6">Fork Section:</p>
+  </li>
+</ul>
+<p>In this section you can define the station   forking degree, i.e., the number of tasks created for each job arriving at the   fork station, and its capacity, i.e., the maximum number of of jobs that can be   in a fork-join section (when a join is present):  </p>
+<p align="center"><img src="../../image/topology/edit/fork1.png" width="409" height="221"></p>
+<p align="left"><EM class="Stile2">Forking   degree:</EM>it is the number of tasks that are routed on each outgoing link of   the fork station. Therefore, each job is split into (forking degree)*(number of   outgoing links) tasks. By default the forking degree is 1 and it can be modified   using this form:</p>
+<BLOCKQUOTE>
+  <p align="center"><img src="../../image/topology/edit/fork2.png" width="413" height="23"></p>
+</BLOCKQUOTE>
+<p><EM class="Stile2">Capacity:</EM> it is   the maximum number of jobs that can be served by a fork-jon   sectionsimultaneously. It makes sense only if there is a join station matching   the fork one. It can be finite, in which case once the limit is reached, jobs   wait in the queue of the fork station. A job is removed from the queue and   serviced (i.e., split into tasks) when a job is recomposed at the matching join   station and leaves it. Capacity is defined using the form below, after checking   the "Finite capacity..." box:</p>
+<BLOCKQUOTE>
+  <p align="center"><img src="../../image/topology/edit/fork3.png" width="395" height="60"></p>
+</BLOCKQUOTE>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<ul>
+  <li> <p class="Stile6">Queue Section:</span></li>
+</ul>
+<p>&nbsp;</p>
+<p>The Queue section allows the specification of the queueing   capacity (whether finite or infinite) and policy. Different classes may have   different policies associated with them. </p>
+<p><img src="../../image/topology/edit/fork_queue_sect.jpg"></p>
+<BLOCKQUOTE>
+  <p><EM class="Stile2">Capacity:</EM> a   station can accept any customer and let them wait in quue, in which case its   capacity is considered infinite, or it can only accept a finite number of   customers. In this case its capactiy is finite, with a length to be specified.</p>
+  <p>&nbsp;</p>
+  <p><EM class="Stile2">Queue policy:</EM> it is the algorithm used to decide which customer to serve next. A variety of   factors can contribute to the order in which customers are served, such as   arrival order, priorities associated with a class, the amount of service already   provided to customers, etc. <BR>
+In JSIM queueing disciplines based on arrival   order and priority are the only available, namely: </p>
+  <UL>
+    <LI><strong>FCFS:</strong> under the First Come   First Served queueing discipline, customers are served in the order in which   they arrive at the station. If the model is exported to MVA, the following   constraint is enforced in the exported model. Since all customer classes must   have the same average service time at a FCFS station, the total number of visits   to the station (Vc,k) is adjusted in order to comply with the constraint and at   the same time allow for distinct service demands (Dc,k).   
+    <LI><strong>FCFS (Priority):</strong> under this   policy, customers are ordered according to their arrival time but customers with   higher priority jump ahead of customers with lower priority (conventionally a <EM>small</EM> priority number = low priority). Customers with the same priority   are served FCFS.   
+    <LI><strong>LCFS:</strong> under the Last Come First   Served queueing discipline, an arriving job jumps ahead of the queue and will be   served first, unless other jobs arrive before the one currently in service   finishes. The LCFS discipline implemented in JSIM is not the preemptive-resume   type.   
+    <LI><strong>LCFS (Priority):</strong> under this   policy, the next customer to be served is one with the highest priority   (conventionally a <EM>small</EM> priority number = low priority), so an arriving   customer can only jump ahead of the queue of the other jobs with the equal or   smaller priority. Customers with the same priority are served LCFS. </LI>
+  </UL>
+  <p>&nbsp;</p>
+  <p><EM class="Stile2">Drop Rule:</EM> it is not active when infinite capacity is selected. For each class you can select a rule to apply when a job cannot enter the the station's queue since its capacity is exceeded, i.e., the queue is full. Please refer to <a href="../../definition/bas.html">this</a> topic for detailed informations. </p>
+</BLOCKQUOTE>
+</body>
+</html>

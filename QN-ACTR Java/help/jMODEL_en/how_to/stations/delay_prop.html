@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Edit delay properties</title>
+<link href="../../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile3 { color:#FF0000; }
+.Stile1 { color:#0000FF; }
+.Stile6 { color:#0000FF; font-style:italic; font-size:18pt; font-family:"Times New Roman" , Times, serif; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+</head>
+<body>
+<h1>Delay Properties <img src="../../image/topology/edit/delay2.png" alt="Delay icon" width="48" height="96" align="top"></h1>
+<p>_____________________</p>
+<p>&nbsp;</p>
+<p>Customers that arrive at this station are delayed for the amount   of time that defines the station service time. They do not experience any   queueing, since a delay station is modelled as a station with an infinite number   of servers with identical service time. Because customers never have to wait for   service, response time at delay stations is equal to service time, <EM>Ri =   Si</EM>. Furthermore, the queue length corresponds in this case to the number of   jobs receiving service since there is no waiting: <EM>Qi </EM>=<EM> RiXi = SiX =   Ui</EM>. The utilization of the delay center represents the average number of   jobs receiving service. <BR>
+Delay centers are used when it is necessary to force   some known average delay. A common application of delay centers is to model   transmission time of large amounts of data over a dedicated low speed   transmission line. </p>
+<p>&nbsp;</p>
+ <p class="Stile3">Set or change the properties:</p>
+ 
+<p>Double click on the icon representing the delay station to see the property panel:</p>
+<p>&nbsp;</p>
+<p><img src="../../image/topology/edit/delay_prop1.png" alt="Delay panel" > </p>
+<p><em>Station Name</em>: is the name of the station in the model</p>
+<p>&nbsp;</p>
+<ul>
+  <li><p class="Stile6">Service Section:</li>
+</ul>
+<p>Delay stations are infinite servers with identical service time, therefore they   only need the service time distribution. The infinite number of servers provides   for equal average response time for all jobs, as no job waits in queue for   service. <BR>
+In this section, the load dependent or independent nature of the   service time is also specified for each class in server stations.</p>
+<p>&nbsp;</p>
+<p>For each class, you must specify whether the service time is Load Dependent or   Load Independent using this menu: <img src="../../image/topology/edit/load_dipen_ind.gif" alt="load" width="109" height="71" align="top"></p>
+<p align="center">&nbsp;</p>
+<ul>
+  <li>
+    <p><em>Load Indipendent</em>:  A load independent service indicates that, regardless of the number of jobs that   are in the station, the system will serve all jobs following a fixed policy   modelled by the chosen statistical distribution. To choose the Distribution press the <img src="../../image/topology/edit/edit.png" alt="ed" width="55" height="23"> button and insert all neccesary parameters from this window:</p>
+  <table border="0" cellpadding="2" cellspacing="2" style="float: none;">
+    <tr>
+      <td><img src="../../image/topology/edit/distrib.png"></td>
+      <td><p>The following service time distributions are supported: </p>
+          <table width="20%" border="0" cellspacing="1" cellpadding="1">
+            <tr>
+              <td><ul>
+                  <li>
+                    <p>Constant</p>
+                  </li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><ul>
+                  <li>
+                    <p>Erlang</p>
+                  </li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><ul>
+                  <li>
+                    <p>Exponential</p>
+                  </li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><ul>
+                  <li>
+                    <p>HyperExponential</p>
+                  </li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><ul>
+                  <li>
+                    <p>Normal</p>
+                  </li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><ul>
+                  <li>
+                    <p>Pareto</p>
+                  </li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><ul>
+                  <li>
+                    <p>Poisson</p>
+                  </li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><ul>
+                  <li>
+                    <p>Replayer</p>
+                  </li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><ul>
+                  <li>
+                    <p>StudentT</p>
+                  </li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><ul>
+                  <li>
+                    <p>Uniform</p>
+                  </li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><ul>
+                  <li>
+                    <p>Gamma </p>
+                  </li>
+              </ul></td>
+            </tr>
+          </table>
+      <p>&nbsp;</p></td>
+    </tr>
+  </table>
+  </li>
+  <li>
+    <p><em>Load Dependent</em>: A load dependent service time indicates that the amount of time the server   spends with each customer depends upon the current number of customers in the   station. A set of intervals for the number fo jobs in the station is specified,   either by adding one range at a time via the <img src="../../image/topology/edit/add_range.png" alt="add" width="115" height="21"> button or by specifying the total number at once. Each range   must them be specified by its lower (From) and upper (To) extremes. Each such   range can be associated with different service times, as for the distribution,   the mean and the coefficient of variation, or a subset thereof. <BR>
+    To set the   parameters of a Load Dependent service time, click the  <img src="../../image/topology/edit/edit.png" alt="edit" width="55" height="23"> to edit the Service Time Distribution. This panel appearbutton and then specify the parameters for each added range: </p>
+  </li>
+</ul>
+<p align="center"><img src="../../image/topology/edit/delay_service2.png" width="307" height="317"></p>
+<BLOCKQUOTE>
+  <p>For each customer number range you must specify the following   parameters:</p>
+  <BLOCKQUOTE>
+    <p><EM>Distribution: </EM>you can choose among Pareto, Erlang, Exponential, Hyperexponential,   Poisson, Uniform, Constant, Gamma and Normal distribution. </p>
+    <p>&nbsp;</p>
+    <p><EM>Mean: </EM>the mean   value of each distribution is specified in the "Mean" form by double clicking on   it. Insert a number or an arithmetic expression that will be evaluated with JFEP   - Java Fast Expression Parser by Bertoli Marco. For a complete list of the   command supported by JFEP you can read the "Help" tab or see the official JFEP   web site at http://jfep.sourceforge.net/ </p>
+    <p>&nbsp;</p>
+    <p><EM>C: </EM>The   coefficient of variation of each distribution (when C exist) can be specified by   double clicking on the "C" form. For example, in the previous picture two   policies are defined: <BR>
+      From 1 to 4 jobs in the station, the server will   behave according to an Erlang distribution with mean = 1 and C = 0.5. For any   number of jobs greater or equal to 5 in the station, the system will behave   according to an Exponential distribution with mean = 1.</p>
+    <p>&nbsp;</p>
+    <p>If you want to delete a range click <img src="../../image/topology/edit/delete.png" width="17" height="17">.</p>
+  </BLOCKQUOTE>
+</BLOCKQUOTE>
+<p>&nbsp;</p>
+<ul>
+  <li p class="Stile6"> Routing Section:</li>
+</ul>
+<p>&nbsp;</p>
+<p>In the routing section, for every class defined, you can decide   how the completed jobs are routed to the other devices connected to station for   which the routing strategy is defined. </p>
+<p>&nbsp;</p>
+<p><span class="hcp2"><img src="../../image/topology/edit/routing_section.png" alt="routing_sect" width="409" height="86"></span></p>
+<p class="hcp2">&nbsp;</p>
+<p class="hcp2">For each class, select the algorithm you want to use for outgoing connections.</p>
+<p>&nbsp;</p>
+<table border="0.5" cellpadding="5" cellspacing="5">
+  <tr>
+    <td width="190" align="left" valign="top" class="Stile1"><ul>
+      <li>
+        <p>Random</p>
+      </li>
+    </ul></td>
+    <td width="901" class="hcp2"><p align="left">With this strategy, jobs are routed randomly to one of the stations connected to   the routing device. The outgoing links are selected with the same   probability.The figure illustrates the routing strategy with 3 output links. For   each link the probability to be selected is 1/3.</p>
+      <p align="left"><img src="../../image/routing/random.PNG" alt="5" width="168" height="129"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Round Robin </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this algorithm, jobs are cyclically routed to the outgoing links according   to a circular routing. As the figure shows, the first job is sent to the top   station, the second job is sent to the central station, and the third job is   sent to the bottom station. The next job would be sent to the top station again,   and so on.</p>
+        <p align="left"><img src="../../image/routing/round_robin.PNG" alt="6" width="165" height="86"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Probabilities </p>
+      </li>
+    </ul>
+    <p><img src="../../image/routing/prob1.png" alt="1" width="139" height="134"></p></td>
+    <td class="hcp2"><p align="left">With this algorithm, you can define the routing probability for each outgoing   link.The sum of all probabilities must equal 1. If the values provided do not   satisfy the constraint, JSIM automatically normalizes the values before the   simulation starts. This strategy requires that you define the probability foreach   output link via the panel on the bottom right of the window.</p>
+        <p align="left"><img src="../../image/routing/probability.PNG" alt="2" width="164" height="130"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Join the Shortest Queue (JSQ)</p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p>With this strategy, each job is routed to the device that has the smallest queue   length, i.e., number of jobs waiting, at the time the job leaves therouting   station. </p>
+      <p>The figure shows a case where the queue lenghts at the devices   are 3, 2, and 1 jobs, respectively, from top to bottom. The exitiing job will be   routed to the bottom station, since its queue is the shortest(1 job).</p>
+      <p align="left">&nbsp;</p>
+        <p align="left"><img src="../../image/routing/Q_length.PNG" alt="3" width="182" height="144"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Shortest R Time </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this algorithm, jobs are sent to the station where the average response   time for the job's class is the smallest at the moment a job leaves the routing   station.The figure shows that at the time of routing, the middle station has the   smallest average response time, R, so the job will be sent to it.</p>
+        <p align="left"><img src="../../image/routing/R_length.PNG" alt="4" width="203" height="143"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Least Utilization </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this strategy, the destination device is chosen as the one with the   smallest average utilization at the time routing is performed. In the example   depicted in the picture, the top station is the least utilized, so it will   receive the next job to leave the blue station.</p>
+        <p align="left"><img src="../../image/routing/utilization.PNG" alt="8" width="169" height="126"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Fastest Service </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this strategy, a job is routed to the device with the smallest average   service time, S, for the job's class. In the figure, the exiting job will be   routed to the top station since it service time is the minimum among the three.</p>
+        <p align="left"><img src="../../image/routing/S_time.PNG" alt="7" width="188" height="129"></p></td>
+  </tr>
+</table>
+<p></p>
+<p class="hcp2">&nbsp; </p>
+<p class="hcp2">&nbsp; </p>
+</body>
+</html>

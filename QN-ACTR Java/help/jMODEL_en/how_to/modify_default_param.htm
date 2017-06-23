@@ -1,0 +1,588 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" >
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<title>Modify default parameters</title>
+<link href="../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile8 { color:#FF0000; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com"><style title="hcp" type="text/css">
+<!--
+p.hcp1 { text-align:Center; }
+strong.hcp2 { font-weight:bold; }
+.Stile9 {font-size: 16pt}
+.Stile10 {color: #000000}
+-->
+</style>
+</head>
+<body>
+
+<h1 class="stile1">Modify default parameters</h1>
+
+
+
+<p class="stile2">____________</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p align="left" class="stile4">The simulator default settings as for Class, Station,
+
+Silumation, and Finite Capacity Region parameters, may be changed using the
+
+Define menu in the menu bar. Click the &quot;Default parameters&quot;
+<br>
+<p align="center">
+  <img src="Images/define1.png" alt="menu" width="406" height="97"></p>
+<p align="left" class="stile4">  or the <img src="Images/define2.png" alt="icon" width="25" height="25" class="hcp3"> &quot;Define default values of model parameters&quot; button.
+<blockquote>
+
+<p>&nbsp;</p>
+
+<p class="stile4">
+
+In JSIM all paramters have predefined, or default, values. Such values
+
+can be change to suit the user's most common modeling activities.
+
+Defaults can be modified for the following sections:
+<p class="stile4">&nbsp;</p>
+
+
+
+<ul>
+
+	<li class="kadov-p"><p><a href="modifying_default_parameters.htm#Class">Class 
+
+ Parameters</a></p></li>
+
+	
+
+	<li class="kadov-p"><p><a href="modifying_default_parameters.htm#Station">Station 
+
+ Parameters</a></p></li>
+
+	
+
+	<li class="kadov-p"><p><a href="modifying_default_parameters.htm#Simulation">Simulation 
+
+ Parameters</a></p></li>
+
+	
+
+	<li class="kadov-p"><p><a href="modifying_default_parameters.htm#FCR">Finite 
+
+ Capacity Region (FCR) Parameters</a></p></li>
+</ul>
+
+
+
+<p class="stile3">&nbsp;</p>
+
+
+
+<p class="stile3"><strong class="hcp1">Class Parameters<a name=Class
+
+	id=Class></a></strong></p>
+
+
+
+<p class="stile4">
+
+These settings define the default class parameters used when a new class
+
+is created. For detailed information about classes,
+
+see <a href="../Create_a_new_model/Step_1_-_Classes.htm">here</a>.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p Align="center" class="hcp2"><img src="Images/Class_Parameters.gif" alt="class" longdesc="Images/Class_Parameters.gif" style="width:294px; height:178px;" width="294" height="178" border="0" class="hcp3"></p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Name:</em> 
+
+the default name for each newly created class of customers is
+
+&quot;Class&quot;, followed by a progressive integer, starting from 1, 
+
+indicating how many classes you have created so far.
+
+It can be reset to any alphanumerical string, which will be followed
+
+by the same numbering scheme.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Type:</em>
+
+the default class type is Closed. If open classes are used more often, you
+
+may want to change to Open as default, so as to minimize the type changes in
+
+the class definition section.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Priority:</em>
+
+the deafault class priority is 0. Higher numbers correspond to higher 
+
+priority.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Population:</em>
+
+this parameter applies only to <em>closed classes</em>; the default value is 1,
+
+i.e., all closed classes are created with 1 customer in each of them.
+
+Change the value if you want larger populations by default in each closed class.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Distribution:</em>
+
+this parameter applies only to <em>open classes</em>; the default value is
+
+&quot;Exponential&quot; since it is the most popular distribution that 
+
+characterizes customer interarrival times at a system.
+
+Change it to any of the distributions available if most of your customer 
+
+interarrival times follow a non-exponential pattern.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile3"><strong class="hcp1">Station Parameters<a name=Station
+
+	id=Station></a></strong></p>
+
+
+
+<p class="stile4">
+
+These settings are general parameters for every type of station.
+
+For a detailed description of station types,
+
+see <a href="../Create_a_new_model/Step_2_-_Stations.htm">here</a></p>
+
+
+
+<p>&nbsp;</p>
+
+<p Align="center" class="hcp2"><img src="Images/Station_parameters.gif" alt="station" width="323" height="354"border="0" class="hcp3" longdesc="Images/Station_parameters.gif"></p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Name:</em>
+
+the default name of each newly created station is &quot;Station&quot;,
+
+followed by a progressive integer, starting from 1, indicating how many 
+
+classes you have created so far. It can be reset to any alphanumerical string,
+
+which will be followed by the same numbering scheme.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Type:</em>
+
+the default station type is &quot;Server&quot;, since this is the most popular
+
+type of station in performance models. Alternative types are
+
+<em>Server, Fork, Join, Routing, Delay</em>.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Queue Capacity:</em>
+
+this parameter applies only to <em>Server</em> and <em>Fork</em> station types;
+
+the default value is infinite, i.e., an infinite number can queue at such
+
+stations. It can be reset to finite, with a finite value specified, by
+
+checking out the Infinite checkbox.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Number of Servers:</em>
+
+this parameter applies only to <em>Server</em> stations; the default value is
+
+1, as most devices are single server. It can be changed to any finite value.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Queue Strategy:</em>
+
+this parameter applies only to <em>Server</em> and <em>Fork</em> station types;
+
+the default value is FCFS and can be changed to LCFS. In both cases, a priority
+
+version of the discipline is also available.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Service Distribution:</em>
+
+this parameter applies only to <em>Server</em> stations; the default value
+
+is Exponential, as it is the most popular when modeling device service time.
+
+It can be changed to any of the available distributions if most of the 
+
+devices modeled are non-exponential.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Delay Service
+
+Distribution:</em> 
+
+this parameter applies only to <em>Delay</em> stations; the default value
+
+is Exponential but i can be changed to any of th edistributions available.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Routing Strategy:</em>
+
+this parameter applies only to <em>Delay, Server, Join,</em> and
+
+<em>Routing</em> stiations; the default value is Random and it can be changed
+
+to any of the available routing startegies, namely Random, Round robin, 
+
+Probabilities, Shortest Q length, Shortest R time, Least utilization, and 
+
+Fastest service.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Drop Rule:</em>
+
+this parameter applies only to <em>Fork</em> stations. 
+
+When a finite capacity is defined, the default value of the Drop Rule 
+
+is Drop, i.e., all customers exceeding the station capacity are discarded.
+
+Two other policies are possible.
+
+When the capacity is infinite, the Drop Rule is disabled by default.
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Fork Capacity:</em> 
+
+this parameter applies only to <em>Fork</em> stations; the default value is
+
+infinite, i.e., no limit on the number of customers entering a Fork station
+
+exists. It can be changed to finite, by checking the blocking checkbox and 
+
+a finite number must then be specified.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Forking Degree:</em> 
+
+this parameter applies only to <em>Fork</em> stations; the default value is 1,
+
+i.e., one task is generated for each outgoing link of the Fork station. 
+
+It can be changed to any finite value, thus increasing the degree of parallelism
+
+a job has (and the number of tasks it is split into).</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile3"><strong class="hcp1">Simulation Parameters<a 
+
+ name=Simulation id=Simulation></a></strong></p>
+
+
+
+<p class="stile4">
+
+These parameters define the simulation behavior from a statistical point of
+
+view. For more information, see
+
+<a href="../Define_simulation_parameters/define_simulation_parameters.htm">
+
+here</a> for simulation parameters or
+
+<a href="../Modifying_default_parameters/Intervallo%20di%20confidenza%20e%20Relative%20Error">here</a> for Confidence Interval and Max Relative Error.</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+<p class="stile3" style="text-align: center;" Align="center"><img src="Images/Simulation_parameters.gif" alt="simulation" longdesc="Images/Simulation_parameters.gif" width="318" height="213" border="0" class="hcp3"></p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Confidence Interval Measure:</em> 
+
+this parameter is set by default at 90%, a commonly used value as it provides
+
+a good trade-off between results accuracy and simulation time; larger values
+
+will lead to more accurate results at the expenses of an increase in the
+
+time the simulation takes to complete, smaller values will achieve the opposite
+
+effect.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Max Relative Error Measure:</em> 
+
+this parameter is set by default at 10%; smaller values will increase results
+
+accuracy while bigger values allow for larger errors in the samples.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Simulation Seed:</em>
+
+this parameter is used to initialize the pseudo-random number generator; 
+
+it should be changed very cautiously, since the statistical quality of the
+
+sequence of pseudo-randomly generated numbers is affected by the seed choice.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Maximum Duration:</em>
+
+this parameter is set to infinite by default, so that even lengthy simulations
+
+can complete and satisfy even narrow confidence intervals; finite values
+
+(in seconds) may force termination before the end of the simulation.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Maximum Number of Samples:</em> 
+
+this parameter is set by default to 500,000; with a smaller number of samples
+
+it may not be possible to achieve the requested confidence interval, a larger 
+
+number may not necessarily increase the results accuracy and simply extend the
+
+simulation time.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Animation
+
+Update Interval</em> 
+
+this parameter indicates the time interval between consecutive graph updates
+
+on gthe screen; the default value is 2 sec, as it provides for a smooth 
+
+progression of the graphs on the screen. Larger values will make the 
+
+evolution of the simulation appear jerky.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Number of
+
+classes in queue animation:</em> 
+
+this parameter controls the number of classes for which graphs will be 
+
+plotted for the selected performance indices; by setting the default 
+
+value to 10, all classes are represented in most models. Graph animation
+
+is enabled by default but can be disabled.</p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile3"><strong class="hcp1">Finite Capacity Region 
+
+ (FCR) Parameters<a name=FCR id=FCR></a></strong></p>
+
+
+
+<p class="stile4">
+
+These parameters define the default values for newly created Finite Capacity
+
+regions.
+
+For information about Finite Capacity Regions, see
+
+<a href="../Create_a_new_model/Step_1_-_Classes.htm">here</a></p>
+
+
+
+<p>&nbsp;</p>
+
+<p Align="center" class="hcp2"><img src="Images/FCR_parameters.gif" alt="fcr" longdesc="Images/FCR_parameters.gif" style="width:299px; height:157px;" width="299" height="157" border="0" class="hcp3"></p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Name:</em>
+
+the default name of each newly created Finite Capacity Region is 
+
+&quot;FCRegion&quot;, followed by a progressive integer, starting from 1,
+
+indicating how many classes you have created so far. It can be reset to
+
+any alphanumerical string, which will be followed by the same numbering
+
+scheme.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Global Region Capacity:</em> 
+
+the default value of this parameter is infinite, i.e., there is no upper limit
+
+to the total number of customers allowed in the region; the value can be 
+
+changed to finite, and a number must be specified.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Region Capacity per Class:</em> 
+
+the default value of this parameter is infinite, i.e., there is no upper limit
+
+to the per class total number of customers allowed in  the region; the value 
+
+can be changed to finite and a number must be specified.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4"><em class="stile6" style="font-style: italic;">Drop:</em>
+
+the default value of this parameter is &quot;False&quot;, i.e., no customer 
+
+is ever discarded when arriving at the region; it can be changed to &quot;
+
+True&quot;, in which case customers in excess of the region capacity are
+
+discarded.</p>
+
+<p class="Stile8">&nbsp;</p>
+<p class="Stile10 Stile9"><strong>Reset to Default Parameters:</strong></p>
+<p>If you have modified the default parameter and you want to restore the original values press <img src="../image/DefaultParameter/reset.gif" width="45" height="25" alt="reset"> at the bottom of the panel.</p>
+<p>&nbsp;</p>
+</blockquote>
+
+
+
+</body>
+
+</html>
+

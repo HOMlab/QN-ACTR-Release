@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 FrameSet//EN" >
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=Windows-1252">
+<title>Define a Finite Capacity Region</title>
+<link href="../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile1 { font-size:14px; }
+.Stile2 { color:#FF0000; }
+.Stile3 { color:#0000FF; font-style:italic; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+</head>
+<body>
+<h1>Define a Finite Capacity Region</h1>
+<p>________________________________________</p>
+<p>&nbsp;</p>
+<p>A Finite Capacity Region is a region of the model where the number of customers is controlled.</p>
+<p>It is possible to define two types of FC region capacity constraints:</p>
+<ul class="Stile1">
+  <li>
+    <p><em>Shared</em>: an upper bound for the number of customers that are in the region, regardless of the classes they belongs to.</p>
+  </li>
+  <li>
+    <p><em>Dedicated</em>: an upper bound for the number of jobs for a specific customer class in the region</p>
+  </li>
+</ul>
+<p>At simulation-time, the most restrictive constraint is applied. For example consider a multiclass model with two classes (<em>Class1</em> and <em>Class2</em>) with  a <em>Shared</em> constraint of 100 customers, a <em>Deficated</em> constraint of 30 customers for <em>Class1</em> and no Dedicated contraint for <em>Class2</em>. If during the simulation the queue contains 30 customers belonging to <em>Class1</em> and 60 customers belonging to <em>Class2</em>, an incoming job of <em>Class1</em> will be rejected (as it's <em>Dedicated</em> constraint is violated) while an incoming job of <em>Class2</em> will be accepted (as it will not exceed the <em>Shared</em> constraint). If the initial state was 20 jobs of <em>Class1</em> and 80 jobs of <em>Class2</em> an incoming job will always be rejected, despite of its class, as it would violate the <em>Shared</em> constraint. </p>
+<p>&nbsp;</p>
+<p class="hcp1">How to define a FCR:</p>
+<ol>
+  <li>
+    <p>Select the stations to include in the region with the mouse: left-click with the mouse and hold it pressed  until all the elements are included. The station selected are framed in green, like in the example <img src="../image/FCR_pass1.gif" width="111" height="147" align="top"></p>
+  </li>
+  <li>
+    <p>select  the icon <img src="../image/topology/region.png" width="28" height="22"> and  the Finite Capacity Region will appear with a blue background. </p>
+  </li>
+  <li>
+    <p align="center"><img src="../image/FCR_pass2.gif" width="140" height="179" align="top"></p>
+  </li>
+  <li>
+    <p>double click on FCRegion to set the properties. The properties panel will appear: </p>
+  </li>
+</ol>
+<p align="center"><img src="../image/FCR/prop_panel.gif" width="366" height="253"> </p>
+<blockquote>
+  <p align="left" class="Stile2">Global Properties</p>
+</blockquote>
+<p align="left"><em>Region Name:</em> the name of the region created </p>
+<p align="left">&nbsp;</p>
+<p align="left"><em>Region Capacity</em>: max number of customers that can be in the region. Enable Infinite if you don't want a bound. </p>
+<p align="left">&nbsp;</p>
+<blockquote>
+  <p align="left" class="Stile2">Class Specific Properties</p>
+</blockquote>
+<p align="left">In the bottom  part of the panel theclass    specific properties can be defined. Here you    can define each class capacity as infinite or as defined, in same way stated above    for FCR capacity, and choose the dropping property of the class. </p>
+<p align="left" class="Stile3">&nbsp;</p>
+<p align="left"><span class="Stile3">Capacity:</span> maximum number of customers of that class into the FCR. </p>
+<p align="left"><span class="Stile3">Drop: </span>when the FCR is busy, and Drop is &quot;false&quot;, the incoming jobs are not dropped but are put into a temporary queue, until the FCR can accept them., otherwise they are dropped from the network. </p>
+<p align="center"><img src="define_FCR_clip_image002.gif" alt="r" width="341" height="116"></p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="center"><em>NOTE: is not possible to create nested or overlapping regions.</em></p>
+<p>&nbsp;</p>
+</body>
+</html>

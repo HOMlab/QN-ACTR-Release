@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>reading the results</title>
+<link href="../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile1 { color:#FF0000; }
+.Stile2 { color:#0000FF; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+</head>
+<body>
+<h1>How to read the Results</h1>
+<p>______________________________</p>
+<p>&nbsp;</p>
+<p>Two types of simulation results are available: single  simulation run and What-If Analysis run. </p>
+<p>&nbsp;</p>
+<ul>
+  <li class="Stile2">
+    <p>Results from a single simulation run: </p>
+  </li>
+</ul>
+<p>After the simulation, JSIMgraph will show a panel with several tabs corresponding to  the performance indices  previously selected.</p>
+<p>&nbsp;</p>
+<p>An example of the  windows follows:</p>
+<p><img src="../image/risult/window_general_ActiveWindow.png" width="557" height="359"> </p>
+<p>If there are more indices of the same type, for example one index referred to two or more different stations or different classes, you can see the graphs under the same tab.</p>
+<p>&nbsp;</p>
+<p>In each window, results for all the stations for which the   performance index is specified are listed. Numerical values and graphs are   given. <BR>
+  Successful results (i.e. if the confidence interval has been computed with the precision set by the user) are indicated by a checkmark sign on a green   bullet <img src="../image/risult/ic_ok.png" width="29" height="36" align="bottom">. <BR>
+  In case of errors or of early termination, a cross on a red bullet   <img src="../image/risult/ic_error.png" width="35" height="36" align="bottom"> indicates that the results obtained are not within the requested confidence   interval. <BR>
+In case of sintactically correct components that make no sense   from a modeling point of view, e.g., a station that is never visited by any   customer, a question mark on a yellow bullet <img src="../image/risult/ic_warn.png" width="32" height="32" align="bottom"> indicates that the simulator could   not compute the index for lack of measurements. </p>
+<p>
+<p>Values are available for:</p>
+<blockquote>
+  <p><em><span class="Stile1">Station Name</span>: </em>This is the name of the station for which the index is computed.</p>
+  <p>&nbsp;</p>
+  <p><span class="Stile1"><em>Class Name</em></span><em>: </em>This is the name of the class for which the index is computed at the station (it   could be "All", to mean All Classes). </p>
+  <p>&nbsp;</p>
+  <p><span class="Stile1"><em>Conf.In / Max Rel.Err.</em></span><em>: </em>This is the Confidence Interval and Maximum Relative Error of the computed   index.</p>
+  <p>&nbsp;</p>
+  <p><span class="Stile1"><em>Analyzed Samples</em></span><em>: </em>This is the number of samples used to compute the performance index.</p>
+  <p>&nbsp;</p>
+  <p><span class="Stile1"><em>Min</em></span><em>.: </em>This is the minimum value observed for the index. </p>
+  <p>&nbsp;</p>
+  <p><span class="Stile1"><em>Max</em></span><em>.: </em>This is the maximum value observed for the index. </p>
+  <p>&nbsp;</p>
+  <p><span class="Stile1"><em>Average Value</em></span><em>: </em>This is the computed average value of the index, usually the value of greater   interest.</p>
+</blockquote>
+<p>Click on graph to analyze it in detail.</p>
+<p>Each graph plotted by  the simulation engine, has the values of the corresponding index (blue line) with the Confidence Interval in red lines: </p>
+<p><img src="../image/risult/graph1.jpg" width="326" height="291"></p>
+<p>&nbsp;</p>
+<p>For more information see &quot;How to modify simulation parameters&quot; </p>
+<p>&nbsp;</p>
+<ul>
+  <li class="Stile2">
+    <p>Result from a What-If Analysis simulation run: </p>
+  </li>
+</ul>
+<p>At the end of a What-If analysis simulation run, a panel showing the statistical values of the indices, a graphical behavior of the indices with respect to the control variable of the What-if analysis and a table is shown. The panel shows a number of tabs corresponding to the number of indices you have inserted.</p>
+<p><img src="../example/webserver/result1.gif" alt="1" width="559" height="427"></p>
+<p>For each tab, i.e., each performance index, the results are grouped into three parts: </p>
+<blockquote>
+  <p>The first consists of the description of  the names of the index of the station and of the Class, the number of samples executed, the confidence interval and the maximum relative error applied and the minimum and maximum values of the index. </p>
+  <p>&nbsp;</p>
+  <p>The second is rappresented by a graph with a  grid to facilitate the reading and the X  and Y axes with their measure unit and scale. By default, on the graph are plotted the confidence interval range for all the executions with different values of the What-if analysis control variable, that can disabled through the checkbox.</p>
+  <p>&nbsp;</p>
+  <p>The third  part consists of a table showinf the results of each simulation run. The number of columns of the table corresponds to the number of steps executed. When the simulation engine cannot compute the confidence interval or the max relative error with the required probabilities, the values are written in red. </p>
+</blockquote>
+<p>The size of each plot can be enlarged by double-clicking on it. </p>
+</body>
+</html>

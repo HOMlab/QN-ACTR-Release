@@ -1,0 +1,33 @@
+4
+IP
+1
+1
+IP Address
+
+\d+.\d+.\d+.\d+
+
+
+Timestamp
+2
+1
+Timestamp of the visit as seen by the web server
+
+\d\d/\w\w\w/\d\d\d\d:\d\d:\d\d:\d\d
+
+
+Access request
+1
+1
+The request made
+"
+.+
+
+
+Bytes transferred
+0
+1
+The number of bytes transferred
+
+([+-])?\d+([.]\d+)?
+
+

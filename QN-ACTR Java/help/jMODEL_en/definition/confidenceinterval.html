@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Confidence Interval e Relative Error</title>
+<link href="../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile1 { font-size:12pt; }
+.Stile2 { font-size:18pt; }
+.Stile4 { font-size:24pt; font-style:italic; }
+.Stile6 { font-size:10pt; }
+.Stile7 { font-size:24pt; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+</head>
+<body>
+<h1 class="hcp2"><a name="confidenceinterval"></a>Confidence Interval</h1>
+<p class="hcp2">___________________________</p>
+<p class="hcp2">&nbsp;</p>
+<p class="hcp2">The confidence 
+  interval shown at the end of a simulation run contain the 
+  true value of the estimated index with 
+the selected probability </p>
+<p class="hcp2">(1 - &#945;) or, equivalently, if 
+  an experiment is repeated many times, in 
+  (1 - &#945; )100% of cases. Various difficulties 
+  in meeting theoretical assumptions 
+  can cause that the real rate of the confidence 
+  intervals containing the true parameter differs significantly from  (1 -&#945; ) . The robustness 
+  of the above methods of data collection 
+  and analysis is usually measured by 
+  the coverage of confidence intervals, defined 
+  as the frequency with which the intervals 
+  (X(n) - &#916;<span class="Stile1">x</span>, X(n) +  &#916;<span class="Stile1">x</span>) contain the true 
+  parameter <span class="Stile2">&#956;<span class="Stile1">x</span></span>, at a given confidence level 
+  (1 - &#945;), 0 &lt;&#945;&lt; 1.</p>
+<p class="hcp2">&nbsp;</p>
+<p class="hcp2"><img src="../image/confidenceInterval1.PNG" width="358" height="283"></p>
+<p class="hcp2"> The
+  coverage analysis can be applied only to 
+  systems with a theoretical well-known behaviour, 
+  since the value of<span class="Stile2"> &#956;<span class="Stile1">x </span></span>has to be 
+  known. Any analyzed method must be applied 
+  in a statistically significant number 
+  of repeated simulation experiments, usually 
+  200 or more replications, to determine   
+  the fraction of experiments producing the
+  final confidence intervals covering the true 
+mean value of the estimated parameter.</p>
+<h1 class="hcp2"><br> 
+  <a name="relativeerror"></a>Max Relative Error</h1>
+<p class="hcp2">_________________________</p>
+<p class="hcp2"> Let the true value of a quantity be <span class="Stile4">x</span> and the measured   or inferred value <span class="Stile4">x<span class="Stile6">0</span></span>. Then the relative error   is defined by:</p>
+<p class="hcp2">&nbsp;</p>
+<p class="hcp2"><img src="../image/confidence_relative/formula_relative_error.gif" width="172" height="81" align="middle"> where <img src="../image/confidence_relative/Xn_sum.gif" width="200" height="85" align="middle"></p>
+<p class="hcp2 Stile7"><span class="Stile2">&#956;<span class="Stile1">x</span></span> is the mean value.</p>
+<p class="hcp2 Stile7">The relative error is the sum of  the deviators between the sample values and the mean value, divided for the mean value. </p>
+</body>
+</html>

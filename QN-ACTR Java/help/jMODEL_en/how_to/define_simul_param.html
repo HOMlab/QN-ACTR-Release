@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Define Simulation Parameters</title>
+<link href="../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile1 { font-size:16pt; }
+.Stile2 { color:#FF0000; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+</head>
+<body>
+<h1>Define Simulation Parameters</h1>
+<p>______________________________________</p>
+<p>&nbsp;</p>
+<p>In the top section of this windows you can edit general   simulation parameters.</p>
+<p class="hcp2">&nbsp;</p>
+<p class="hcp2"><img src="../image/define_simParam1.png" width="520" height="232"></p>
+<h1 class="hcp2 Stile1">Simulation parameters:</h1>
+<ul>
+  <LI>
+    <p><EM class="Stile2">Simulation   Seed:</EM> <span class="hcp3 Stile2"><img src="../image/simParam/sim_seed.png" width="229" height="28"></span><br>
+    The simulation seed is a number used by the simulation engine to   generate pseudo-random numbers. As this numbers are pseudo-random, if you change   the seed, you will obtain a different sequence of pseudo-random numbers. If a   simulation is repeated using the same seed, the same sequence of pseudo-random   numbers will be generated, thus leading to identical results.</p>
+    <p>The default value is random, which indicates that the simulation   engine will pick a seed of its choice in a pseudo-random fashion each time it is   started; deselect "random" and insert a number if you want a custom   simulation.</p>
+    <p>&nbsp;</p>
+  <LI>
+    <p><EM class="Stile2">Maximum duration   (sec): </EM><span class="Stile2"><em><span class="hcp3 Stile2"><img src="../image/simParam/sim_maxDur.png" width="206" height="21"></span></em></span> <br>
+    It represents the maximum amount of time in seconds that the   simulation will run. If the simulation ends before the maximum duration, the   parameter is ignored and does not affect the results. The default value is   "infinite" deselect it and specify the preferred maximum time if you do not want   the simulation to run for a possibly very long time. In this case, the   simulation stops when the time limit is reached, although a solution may not be   available yet. </p>
+    <p>&nbsp;</p>
+  <LI>
+    <p><EM class="Stile2">Maximum number of samples:</EM> <span class="Stile2"><img src="../image/simParam/max_sample.png" width="152" height="21"><br>
+    </span>It is the greatest number of samples for each index that JSIM<em>Graph</em>   collects before ending the simulation. During a simulation, measurements can be   stopped in case of:</p>
+    <p>&nbsp;</p>
+    <p>- Success, if the results have reached the required Confidence   Interval and the Max Relative Error</p>
+    <p>- Failure, if the simulation has analyzed the maximum number of   samples but has not reached the required Confidence Interval or Max Relative   Error</p>
+    <p>- Failure, if timeout occurs before successfully calculating the   final results.</p>
+    <p>&nbsp;</p>
+    <p>The default value for the maximum number of samples is 500,000;   you may increase it (for a more accurate simulation) o decrease it (for a faster   simulation).</p>
+    <p>&nbsp;</p>
+  <LI>
+    <p><span class="Stile2"><EM>Representation   Interval (sec):</EM></span> <span class="Stile2"><img src="../image/simParam/rap_interval.png" width="220" height="21"></span><br>
+    This is the granularity at which results are plotted on the   screen, i.e., the time interval before a new point is added to the graphs, as   the simulation proceeds. A large value will make the simulation to proceed   slower, as the graphs are updated less often. Small values will provide an   impression of better "responsiveness" from the simulation, as graphs are updated   more frequently. Animation checkbox is used to enable or disable queue animation during the simulation process. </p>
+  </LI>
+</ul>
+<p class="hcp2 Stile1">&nbsp;</p>
+<h1 class="Stile1">Initial state: </h1>
+<p>Initial state is the model situation at time 0, typically   expressed by the number of customers in each station before starting the   simulation. <BR>
+  For closed customer classes, all jobs are initially allocated to   their reference station. You can modify this allocation, as long as the total   number of jobs remains the one defined in the Classes tab. <BR>
+  For open   customer classes, it is possible to initialize each station with any desired   number of jobs.</p>
+<p>The following table represents an example of an initial state of   a model with three stations and two classes.</p>
+<p class="hcp2">&nbsp;</p>
+<p class="hcp2"><img src="../image/simParam/initial_state.png" width="374" height="123"></p>
+</body>
+</html>

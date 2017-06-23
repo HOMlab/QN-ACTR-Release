@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shortcuts>
+	<programGroup defaultName="Java Modelling Tools" location="applications"/>
+	<shortcut name="JMT @jmt.version@" 
+	target="$INSTALL_PATH/runJMT.vbs" 
+	programGroup="yes" 
+	desktop="yes" 
+	applications="no" 
+	startMenu="no" 
+	startup="no" 
+	commandLine="" 
+	workingDirectory="$INSTALL_PATH" 
+	description="Launch Java Modelling Tools @jmt.version@" 
+	iconFile="$INSTALL_PATH/jmt.ico">
+	</shortcut>
+	
+	<shortcut name="JMT @jmt.version@ 1Gb Heap"
+	target="$INSTALL_PATH/runJMTmem.vbs" 
+	programGroup="yes" 
+	desktop="no" 
+	applications="no" 
+	startMenu="no" 
+	startup="no" 
+	commandLine="" 
+	workingDirectory="$INSTALL_PATH" 
+	description="Launch Java Modelling Tools @jmt.version@ allocating a maximum heap size of 1Gb" 
+	iconFile="$INSTALL_PATH/jmtMem.ico">
+	</shortcut>
+
+	<shortcut name="Uninstall JMT @jmt.version@" 
+	target="$INSTALL_PATH/removeJMT.vbs" 
+	programGroup="yes" 
+	desktop="no" 
+	applications="no" 
+	startMenu="no" 
+	startup="no" 
+	commandLine="" 
+	workingDirectory="$INSTALL_PATH" 
+	description="Uninstall Java Modelling Tools @jmt.version@"
+	iconFile="$INSTALL_PATH/uninst.ico">
+	</shortcut>
+</shortcuts>

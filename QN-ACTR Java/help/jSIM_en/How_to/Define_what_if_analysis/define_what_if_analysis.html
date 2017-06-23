@@ -1,0 +1,463 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+
+
+<html>
+
+
+
+
+
+
+
+
+
+
+
+<head>
+
+<title>Define what if analysis</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+
+<link href="../../default.css" rel="stylesheet" type="text/css"><style title="hcp" type="text/css">
+
+<!--
+
+img.hcp1 { border-style:none; }
+
+p.hcp2 { text-align:Center; }
+
+img.hcp3 { float:none; border-style:none; }
+
+td.hcp4 { padding-left:20px; padding-top:20px; padding-right:20px; padding-bottom:20px; }
+
+-->
+
+</style>
+
+</head>
+
+<body>
+
+<p class="stile1">Define What-If Analysis</p>
+
+
+
+<p class="stile2">_________________</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4">The parameters of a what-if analysis are defined using the
+
+<b>What-if-analysis</b> tab.
+
+</p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/whatif_tab.gif" style="width:185px; height:55px;" width="185" height="55" border="0" class="hcp1"></p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<blockquote><p class="stile4">A What-If Analysis consists of a series of simulations 
+
+in which one or more parameters are varied over a specified range. This 
+
+allows the observation of system behavior under a spectrum of conditions,
+
+unlike the single JSIM simulation run where the system is observed under 
+
+a specific set of configuration parameters.
+
+<br>
+
+By default the what-if-analysis is not enabled. It must be activated 
+
+explicitly and its parameters defined.
+
+</p>
+
+
+
+</blockquote>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<blockquote>
+
+<p class="stile3">Activating the What-If Analysis <a name=1 id=1></a></p> 
+
+
+
+<p class="stile4">After completing the definition of the model and selecting
+
+the <b>What-if analysis</b> tab, check the  
+
+&quot;Enable what-if analysis&quot; checkbox to activate it.</p>
+
+
+
+<p>&nbsp;</p>
+
+</blockquote>
+
+
+
+<p Align="center" class="hcp2"><img src="Images/enable_box.gif" x-maintain-ratio="TRUE" style="width:423px; height:68px;" width="423" height="68" border="0" class="hcp3"></p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<blockquote>
+
+<p class="stile3">Selecting the What-If Analysis Parameter <a name=2 id=2></a></p>
+
+
+
+<p class="stile4">After enabling the what-if analysis, it is possible to
+
+select the parameter to control the series of simulation runs using the 
+
+menu below: </p>
+
+</blockquote>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/type_selection.gif" x-maintain-ratio="TRUE" style="width:484px; height:123px;" width="484" height="123" border="0" class="hcp3"></p>
+
+
+
+<p class="stile4">&nbsp;</p>
+
+
+
+<blockquote>
+
+<p class="stile4">When you select a what-if analysis parameter, the bottom 
+
+ section of the window will change depending upon the parameter. 
+
+In the right portion a description is provided of the selected parameter and
+
+of the impact of its variation. In the left portion the details of the
+
+parameter range (From and To fields) and the number of executions 
+
+(Steps) on the range are provided.
+
+</p>
+
+
+
+<p class="stile4">The set of modifyable parameters depends upon the number
+
+and type of classes in the model:
+
+
+
+<ul>
+
+	
+
+<li class="stile4">In a single class model, you simply select
+
+the parameters you want to change during simulation.</li>
+
+	
+
+<li class="stile4">In a multiclass model, you select
+
+the parameter and specify whether you want to apply the variation
+
+to all classes or just to one class.</li>
+
+</ul>
+
+
+
+<p class="stile6">&nbsp;</p>
+
+
+
+<p class="stile6">Number of Customers (only for models with closed 
+
+ classes)<a name=customers id=customers></a></p>
+
+
+
+<p class="stile4">JSIM repeats the simulation changing the number of jobs 
+
+ in each run, starting from the number inserted in the &quot;From N&quot;
+
+field, to the value inserted in the &quot;To N&quot; field. The simulation
+
+is repeated &quot;Steps (n. of exec.)&quot; number of times.
+
+
+
+
+
+<p>&nbsp;</p>
+
+<p Align="center" class="hcp2"><img src="Images/customers.gif" style="width:369px; height:297px;" width="369" height="297" border="0" class="hcp1"></p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<p class="stile4">In the figure above a what-if analysis is planned on
+
+a single class model.
+
+<br>
+
+The initial value of the number of customers is not modifiable from this
+
+window, as it is part of the <b>Classes</b> tab.
+
+The final value is specified in the field &quot;To N&quot;. In this case, 
+
+with a final value of 20 and 6 Steps, simulations are run for 10, 12, 14,
+
+16, 18 and 20 customers, respectively. Only the customer number in the
+
+class selected in the &quot;Class&quot; (Chiusa, in the picture) will be
+
+changed. The remaining classes will keep
+
+their initial number of customers. The simulator makes sure that the 
+
+sum of the percentages of customers in various classes add up to 1,
+
+as shown in the &quot;Population mix&quot; table on the bottom of the window.
+
+<br>
+
+If the &quot;all-classes&quot; option is selected,
+
+the overall population is increased while keeping the relative proportion
+
+of jobs in the various classes constant. Because the number of customers in 
+
+each class can only be an integer number, only the population vectors with
+
+integer components can be considered. Therefore, the actual number of
+
+executions may be smaller than the one specified.
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile6">Population Mix: (only for models with two closed
+
+classes and possibly open ones) <a name=population id=population></a></p>
+
+
+
+<p class="stile4">The population mix describes the way the population is
+
+divided between the two class, i.e., the percentage of customers in each
+
+class over the total populatoin. Because of the complexity of the 
+
+underlying modeling, this type of analysis is possible only for models
+
+with two closed classes. Mixed class models can be analyzed too, as long as 
+
+there are two closed classes. Only the closed classes will be considered.
+<p align="center" class="stile4"><img src="Images/popmix.png" alt="population mix" width="257" height="112">
+<p align="center" class="stile4">
+
+<p align="left" class="stile4">  In order to allow for a complete analysis of the population mix, in 
+  
+  this case the initial value of the percentage of customers in one of the
+  
+  two classes, the one selected through the &quot;Class&quot; field, can
+  
+  be modified. Its default value is the ratio of the class population to 
+  
+  the total population of closed customers, defined in the <b>Class</b> tab. Both the final and the initial &beta; are numbers on the range [0-1].
+<p>&nbsp;</p>
+
+<p class="stile6">Arrival Rate: (only if there are open
+
+classes)<a name=arrival id=arrival></a></p>
+
+<p class="stile4">Arrival rate is the frequency at which jobs arrive 
+
+at a station during a period of time.
+
+<br>
+
+Similarly to the number of customers, the arrival rate can be changed
+
+for one specific open class or for all the open classes in the model.
+
+If a single class is selected, the final arrival rate and the number of
+
+steps must be specified. The initial arrival rate is specified in the 
+
+Arrival Rate section of the <b>Classes</b> tab and it is not modifiable here.
+
+<br>
+
+If the arrival rate is to be changed for all classes, the final value
+
+is expressed as a percentage, which is applied to all classes.
+
+</p>
+
+
+
+<p>&nbsp;</p>
+
+<p Align="center" class="hcp2"><img src="Images/ex1.gif" style="width:272px; height:134px;" width="272" height="134" border="0" class="hcp1"></p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<p class="stile4">The figure above shows the settings for a what-if analysis 
+
+on the arrival rate of all the open classes. The &quot;To&quot; field
+
+is seto to 150%, which means that for each class the final arrival rate
+
+will be one and a half times the initial value. 10 runs will be exectued 
+
+with equally spaced (in percentage) intermediate values. 
+
+</p>
+
+	
+
+<p>&nbsp;</p>
+
+<p class="stile6">Service time (for all types of
+
+classes)<a name=service id=service></a></p>
+
+
+
+<p class="stile4">Service Time is the time required by a customer class at
+
+each visit at a station. In this case, besides the final value and the
+
+number of runs to be executed, the station and the customer class (or
+
+all the classes) whose service time will be varied must be specified.
+
+</p>
+
+
+
+<p>&nbsp;</p>
+
+<p Align="center" class="hcp2"><img src="Images/ex2_service_time.gif" style="width:235px; height:105px;" width="235" height="105" border="0" class="hcp1"></p>
+
+<p>&nbsp;</p>
+
+
+
+<p class="stile4">The figure above shows the settings for a what-if 
+
+analysis of the service time of class Class1 at station Server1. 
+
+The service time distribution will not change. Only its average will be 
+
+modified to span the range defined by the intial value (specified in 
+
+the <b>Station Parameters</b> tab) and the final value specified here in
+
+the &quot;To&quot; field. 
+
+<br>
+
+If the &quot;All classes&quot; option is selected, the range of service
+
+time to explore is expressed in percetange, starting from the initial
+
+value specified at model definition (100%). The station where the 
+
+service time change is applied must be specified.
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile6">Seed (for all types of classes)<a name=seed id=seed></a></p>
+
+
+
+<p>&nbsp;</p>
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/sedd.gif" style="width:235px; height:18px;" width="235" height="18" border="0" class="hcp1"></p>
+<p class="stile4" style="text-align: center;" Align="center">&nbsp;</p>
+<p class="stile4">Unlike the previous cases, where the analysis is performed
+
+for a range of values of one of the model parameters in order to investigate
+
+the system behavior under a variety of conditions, a what-if analysis on the
+
+seed aims at evaluating the sensitivity of the simulation engine to numerical
+
+conditions, in particular to the initial value fed to the pseudo-random
+
+number generator, i.e., the seed.
+
+<br>
+
+The Simulation engine uses a pseudo-random number generator to generate
+
+the sequence of values used in each execution. By changing the seed, a different
+
+sequence of values is produced, thus leading to different numerical results.
+
+The first value is the one defined in the <b>Simulation Parameters</b> tab.
+
+In this panel, the number of executions is specified and the simulation
+
+engine generates as many pseudo-random seeds to be used in the executions.
+
+
+
+<p>&nbsp;</p>
+
+</blockquote>
+
+</body>
+
+</html>
+

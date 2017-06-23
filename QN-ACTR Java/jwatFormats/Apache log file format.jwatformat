@@ -1,0 +1,81 @@
+10
+IP
+1
+1
+IP Address
+
+\d+.\d+.\d+.\d+
+
+
+Username etc
+1
+1
+Only relevant when accessing password-protected content
+
+- -
+
+
+Timestamp
+2
+1
+Time stamp of the visit as seen by the web server
+[]
+\d\d/\w\w\w/\d\d\d\d:\d\d:\d\d:\d\d
+
+
+Access request
+1
+1
+The request made
+"
+.+
+
+
+Result status code
+0
+1
+The resulting status code
+
+([+-])?\d+([.]\d+)?
+
+
+Bytes transferred
+0
+1
+The number of bytes transferred
+
+([+-])?\d+([.]\d+)?
+
+
+Referrer URL 1
+1
+1
+The referring page
+
+[^\s]+
+
+
+Referrer URL 2
+1
+1
+The referring page
+"
+.+
+
+
+User Agent
+1
+1
+The user agent identifier
+"
+.+
+
+
+Referrer URL 3
+1
+1
+The referring page
+"
+.+
+
+

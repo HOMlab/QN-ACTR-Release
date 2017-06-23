@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Edit Server Properties</title>
+<link href="../../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile1 { color:#0000FF; }
+.Stile3 { color:#FF0000; }
+.Stile6 { color:#0000FF; font-style:italic; font-size:18pt; font-family:"Times New Roman" , Times, serif; }
+.Stile2 { color:#333333; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+</head>
+<body>
+<h1>Queueing Station Properties <img src="../../image/topology/edit/server_fig.png" width="90" height="54" align="top"></h1>
+<p>______________________</p>
+<p>&nbsp;</p>
+<p>The Queueing station is one of the most important components in a   queuing network model. Queueing stations represent the service facilities of the   system being modelled. A Queueing station provides the required service to its   customers. Queueing stations may have any (finite) number of servers. If all the   servers in the station are busy when a customer arrives at the station,   the arriving customer is put in a waiting queue until its turn to receive   service from the first available server is up. The queueing discipline decides   which customer is served next when a server becomes free. Therefore, the   response time at server stations includes service time and queuing time. <BR>
+Queueing stations may have more than one server. Their number is a parameter   to be specified (default is 1).</p>
+<p>&nbsp;</p>
+ <p class="Stile3">Set or change the properties:</p>
+<p>&nbsp;</p>
+<p>With a double click on the server icon you will see the property panel:</p>
+<p><img src="../../image/topology/edit/server1.png" width="461" height="140"> </p>
+<p>&nbsp;</p>
+<p><em>Station Name</em>:  name  you want to give to the server</p>
+<p>&nbsp;</p>
+<ul>
+  <li>
+    <p class="Stile6">Queue Section:</span>  
+  </li>
+</ul>
+<p>&nbsp;</p>
+<p>The Queue section allows the specification of the queueing   capacity (whether finite or infinite) and policy. Different classes may have   different policies associated with them. </p>
+<p><img src="../../image/topology/edit/fork_queue_sect.jpg" alt="d"></p>
+<BLOCKQUOTE>
+  <p><EM class="Stile3">Capacity:</EM> a   station can accept any customer and let them wait in quue, in which case its   capacity is considered infinite, or it can only accept a finite number of   customers. In this case its capactiy is finite, with a length to be specified.</p>
+  <p>&nbsp;</p>
+  <p><EM class="Stile3">Queue policy:</EM> it is the algorithm used to decide which customer to serve next. A variety of   factors can contribute to the order in which customers are served, such as   arrival order, priorities associated with a class, the amount of service already   provided to customers, etc. <BR>
+    In JSIM queueing disciplines based on arrival   order and priority are the only available, namely: </p>
+  <UL>
+    <LI><strong>FCFS:</strong> under the First Come   First Served queueing discipline, customers are served in the order in which   they arrive at the station. If the model is exported to MVA, the following   constraint is enforced in the exported model. Since all customer classes must   have the same average service time at a FCFS station, the total number of visits   to the station (Vc,k) is adjusted in order to comply with the constraint and at   the same time allow for distinct service demands (Dc,k).   
+    <LI><strong>FCFS (Priority):</strong> under this   policy, customers are ordered according to their arrival time but customers with   higher priority jump ahead of customers with lower priority (conventionally a <EM>small</EM> priority number = low priority). Customers with the same priority   are served FCFS.   
+    <LI><strong>LCFS:</strong> under the Last Come First   Served queueing discipline, an arriving job jumps ahead of the queue and will be   served first, unless other jobs arrive before the one currently in service   finishes. The LCFS discipline implemented in JSIM is not the preemptive-resume   type.   
+    <LI><strong>LCFS (Priority):</strong> under this   policy, the next customer to be served is one with the highest priority   (conventionally a <EM>small</EM> priority number = low priority), so an arriving   customer can only jump ahead of the queue of the other jobs with the equal or   smaller priority. Customers with the same priority are served LCFS. </LI>
+  </UL>
+  <p>&nbsp;</p>
+  <p><EM class="Stile3">Drop Rule:</EM> it is not active when infinite capacity is selected. For each class you can select a rule to apply when a job cannot enter the the station's queue since its capacity is exceeded, i.e., the queue is full. Please refer to <a href="../../definition/bas.html">this</a> topic for detailed informations. </p>
+</BLOCKQUOTE>
+<ul>
+  <li> 
+    <p class="Stile6">Service Section:</p>
+  </li>
+</ul>
+<p>This section allows the specification of the number of servers and the service time distribution.</p>
+<p align="center"><img src="../../image/topology/edit/server_section2.gif" width="398" height="230"></p>
+<p>&nbsp;</p>
+<p>The number of servers in a server station can be modified using   the corresponding input area:</p>
+<p align="center"><img src="../../image/topology/edit/server_numb.png" width="345" height="65"></p>
+<p>&nbsp;</p>
+<p>For each class, you must specify whether the service time is Load Dependent or   Load Independent using this menu: <img src="../../image/topology/edit/load_dipen_ind.gif" alt="load" width="109" height="71" align="top"></p>
+<p align="center">&nbsp;</p>
+<ul>
+  <li>
+    <p><em>Load Indipendent</em>:  A load independent service indicates that, regardless of the number of jobs that   are in the station, the system will serve all jobs following a fixed policy   modelled by the chosen statistical distribution. To choose the Distribution press the <img src="../../image/topology/edit/edit.png" alt="ed" width="55" height="23"> button and insert all neccesary parameters from this window:</p>
+    <table border="0" cellpadding="2" cellspacing="2" style="float: none;">
+      <tr>
+        <td><img src="../../image/topology/edit/distrib.png" alt="l"></td>
+        <td><p>The following service time distributions are supported: </p>
+            <table width="20%" border="0" cellspacing="1" cellpadding="1">
+              <tr>
+                <td><ul>
+                    <li>
+                      <p>Constant</p>
+                    </li>
+                </ul></td>
+              </tr>
+              <tr>
+                <td><ul>
+                    <li>
+                      <p>Erlang</p>
+                    </li>
+                </ul></td>
+              </tr>
+              <tr>
+                <td><ul>
+                    <li>
+                      <p>Exponential</p>
+                    </li>
+                </ul></td>
+              </tr>
+              <tr>
+                <td><ul>
+                    <li>
+                      <p>HyperExponential</p>
+                    </li>
+                </ul></td>
+              </tr>
+              <tr>
+                <td><ul>
+                    <li>
+                      <p>Normal</p>
+                    </li>
+                </ul></td>
+              </tr>
+              <tr>
+                <td><ul>
+                    <li>
+                      <p>Pareto</p>
+                    </li>
+                </ul></td>
+              </tr>
+              <tr>
+                <td><ul>
+                    <li>
+                      <p>Poisson</p>
+                    </li>
+                </ul></td>
+              </tr>
+              <tr>
+                <td><ul>
+                    <li>
+                      <p>Replayer</p>
+                    </li>
+                </ul></td>
+              </tr>
+              <tr>
+                <td><ul>
+                    <li>
+                      <p>StudentT</p>
+                    </li>
+                </ul></td>
+              </tr>
+              <tr>
+                <td><ul>
+                    <li>
+                      <p>Uniform</p>
+                    </li>
+                </ul></td>
+              </tr>
+              <tr>
+                <td><ul>
+                    <li>
+                      <p>Gamma </p>
+                    </li>
+                </ul></td>
+              </tr>
+            </table>
+          <p>&nbsp;</p></td>
+      </tr>
+    </table>
+  </li>
+  <li>
+    <p><em>Load Dependent</em>: A load dependent service time indicates that the amount of time the server   spends with each customer depends upon the current number of customers in the   station. A set of intervals for the number fo jobs in the station is specified,   either by adding one range at a time via the <img src="../../image/topology/edit/add_range.png" alt="add" width="115" height="21"> button or by specifying the total number at once. Each range   must them be specified by its lower (From) and upper (To) extremes. Each such   range can be associated with different service times, as for the distribution,   the mean and the coefficient of variation, or a subset thereof. <BR>
+      To set the   parameters of a Load Dependent service time, click the <img src="../../image/topology/edit/edit.png" alt="edit" width="55" height="23"> to edit the Service Time Distribution. This panel appearbutton and then specify the parameters for each added range: </p>
+  </li>
+</ul>
+<p align="center"><img src="../../image/topology/edit/delay_service2.png" alt="k" width="307" height="317"></p>
+<BLOCKQUOTE>
+  <p>For each customer number range you must specify the following   parameters:</p>
+  <BLOCKQUOTE>
+    <p><EM>Distribution: </EM>you can choose among Pareto, Erlang, Exponential, Hyperexponential,   Poisson, Uniform, Constant, Gamma and Normal distribution. </p>
+    <p>&nbsp;</p>
+    <p><EM>Mean: </EM>the mean   value of each distribution is specified in the "Mean" form by double clicking on   it. Insert a number or an arithmetic expression that will be evaluated with JFEP   - Java Fast Expression Parser by Bertoli Marco. For a complete list of the   command supported by JFEP you can read the "Help" tab or see the official JFEP   web site at http://jfep.sourceforge.net/ </p>
+    <p>&nbsp;</p>
+    <p><EM>C: </EM>The   coefficient of variation of each distribution (when C exist) can be specified by   double clicking on the "C" form. For example, in the previous picture two   policies are defined: <BR>
+      From 1 to 4 jobs in the station, the server will   behave according to an Erlang distribution with mean = 1 and C = 0.5. For any   number of jobs greater or equal to 5 in the station, the system will behave   according to an Exponential distribution with mean = 1.</p>
+    <p>&nbsp;</p>
+    <p>If you want to delete a range click <img src="../../image/topology/edit/delete.png" alt="l" width="17" height="17">.</p>
+  </BLOCKQUOTE>
+</BLOCKQUOTE>
+<p></p>
+<ul>
+  <li p class="Stile6"> Routing Section:</li>
+</ul>
+<p>&nbsp;</p>
+<p>In the routing section, for every class defined, you can decide   how the completed jobs are routed to the other devices connected to station for   which the routing strategy is defined. </p>
+<p>&nbsp;</p>
+<p><span class="hcp2"><img src="../../image/topology/edit/routing_section.png" alt="routing_sect" width="409" height="86"></span></p>
+<p class="hcp2">&nbsp;</p>
+<p class="hcp2">For each class, select the algorithm you want to use for outgoing connections.</p>
+<p>&nbsp;</p>
+<table border="0.5" cellpadding="5" cellspacing="5">
+  <tr>
+    <td width="190" align="left" valign="top" class="Stile1"><ul>
+      <li>
+        <p>Random</p>
+      </li>
+    </ul></td>
+    <td width="901" class="hcp2"><p align="left">With this strategy, jobs are routed randomly to one of the stations connected to   the routing device. The outgoing links are selected with the same   probability.The figure illustrates the routing strategy with 3 output links. For   each link the probability to be selected is 1/3.</p>
+        <p align="left"><img src="../../image/routing/random.PNG" alt="5" width="168" height="129"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Round Robin </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this algorithm, jobs are cyclically routed to the outgoing links according   to a circular routing. As the figure shows, the first job is sent to the top   station, the second job is sent to the central station, and the third job is   sent to the bottom station. The next job would be sent to the top station again,   and so on.</p>
+        <p align="left"><img src="../../image/routing/round_robin.PNG" alt="6" width="165" height="86"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Probabilities </p>
+      </li>
+    </ul>
+        <p><img src="../../image/routing/prob1.png" alt="1" width="139" height="134"></p></td>
+    <td class="hcp2"><p align="left">With this algorithm, you can define the routing probability for each outgoing   link.The sum of all probabilities must equal 1. If the values provided do not   satisfy the constraint, JSIM automatically normalizes the values before the   simulation starts. This strategy requires that you define the probability foreach   output link via the panel on the bottom right of the window.</p>
+        <p align="left"><img src="../../image/routing/probability.PNG" alt="2" width="164" height="130"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Join the Shortest Queue (JSQ) </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p>With this strategy, each job is routed to the device that has the smallest queue   length, i.e., number of jobs waiting, at the time the job leaves therouting   station. </p>
+        <p>The figure shows a case where the queue lenghts at the devices   are 3, 2, and 1 jobs, respectively, from top to bottom. The exitiing job will be   routed to the bottom station, since its queue is the shortest(1 job).</p>
+      <p align="left">&nbsp;</p>
+      <p align="left"><img src="../../image/routing/Q_length.PNG" alt="3" width="182" height="144"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Shortest R Time </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this algorithm, jobs are sent to the station where the average response   time for the job's class is the smallest at the moment a job leaves the routing   station.The figure shows that at the time of routing, the middle station has the   smallest average response time, R, so the job will be sent to it.</p>
+        <p align="left"><img src="../../image/routing/R_length.PNG" alt="4" width="203" height="143"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Least Utilization </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this strategy, the destination device is chosen as the one with the   smallest average utilization at the time routing is performed. In the example   depicted in the picture, the top station is the least utilized, so it will   receive the next job to leave the blue station.</p>
+        <p align="left"><img src="../../image/routing/utilization.PNG" alt="8" width="169" height="126"></p></td>
+  </tr>
+  <tr>
+    <td valign="top" class="Stile1"><ul>
+      <li>
+        <p>Fastest Service </p>
+      </li>
+    </ul></td>
+    <td class="hcp2"><p align="left">With this strategy, a job is routed to the device with the smallest average   service time, S, for the job's class. In the figure, the exiting job will be   routed to the top station since it service time is the minimum among the three.</p>
+        <p align="left"><img src="../../image/routing/S_time.PNG" alt="7" width="188" height="129"></p></td>
+  </tr>
+</table>
+</body>
+</html>

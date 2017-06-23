@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN" "http://java.sun.com/products/javahelp/toc_2_0.dtd">
+<toc version="2.0">
+ <tocitem text="Introduction to JSIM">
+  <tocitem text="Introduction to JSIM" target="introduction_to_jsim_introduction_to_jsim_html" />
+  </tocitem>
+ <tocitem text="Menu">
+  <tocitem text="Action menu" target="menu_action_menu_htm" />
+  <tocitem text="Define menu" target="menu_define_menu_htm" />
+  <tocitem text="File menu" target="menu_file_menu_htm" />
+  <tocitem text="Help menu" target="menu_help_menu_htm" />
+  <tocitem text="Simulation menu" target="menu_simulation_menu_htm" />
+  <tocitem text="Link Menu">
+   <tocitem text="About JSIM" target="menu_link_menu_about_jsim_htm" />
+   <tocitem text="Back" target="menu_link_menu_back_htm" />
+   <tocitem text="Default parameters" target="menu_link_menu_default_parameters_htm" />
+   <tocitem text="Export to JMVA" target="menu_link_menu_import_in_jmva_htm" />
+   <tocitem text="JSIM help" target="menu_link_menu_jsim_help_htm" />
+   <tocitem text="New" target="menu_link_menu_new_htm" />
+   <tocitem text="Next" target="menu_link_menu_next_htm" />
+   <tocitem text="Open" target="menu_link_menu_open_htm" />
+   <tocitem text="Pause" target="menu_link_menu_pause_htm" />
+   <tocitem text="Quit" target="menu_link_menu_quit_htm" />
+   <tocitem text="Results" target="menu_link_menu_results_htm" />
+   <tocitem text="Save" target="menu_link_menu_save_htm" />
+   <tocitem text="Save as" target="menu_link_menu_save_as_htm" />
+   <tocitem text="Start simulation" target="menu_link_menu_start_simulation_htm" />
+   <tocitem text="Stop" target="menu_link_menu_stop_htm" />
+   </tocitem>
+  </tocitem>
+ <tocitem text="How to">
+  <tocitem text="Create a new model">
+   <tocitem text="Defining a new model" target="how_to_create_a_new_model_defining_a_new_model_htm" />
+   <tocitem text="Step 1 - Classes" target="how_to_create_a_new_model_step_1_-_classes_htm" />
+   <tocitem text="Step 2 - Stations" target="how_to_create_a_new_model_step_2_-_stations_htm" />
+   <tocitem text="Step 3 - Connections" target="how_to_create_a_new_model_step_3_-_connections_htm" />
+   <tocitem text="Step 4 - Station parameters" target="how_to_create_a_new_model_step_4_-_station_parameters_htm" />
+   <tocitem text="Step 5 - Performance Indices" target="how_to_create_a_new_model_step_5_-_performance_indices_htm" />
+   <tocitem text="Step 6 - Reference stations" target="how_to_create_a_new_model_step_6_-_reference_stations_htm" />
+   <tocitem text="Step 7 - Finite Capacity Regions" target="how_to_create_a_new_model_step_7_-_finite_region_htm" />
+   <tocitem text="Step 8 - Simulation" target="how_to_create_a_new_model_step_8_-_simulation_htm" />
+   </tocitem>
+  <tocitem text="Define class">
+   <tocitem text="Define Classes" target="how_to_define_class_define_class_html" />
+   <tocitem text="Type of distribution" target="how_to_define_class_distribution_html" />
+   </tocitem>
+  <tocitem text="Define station">
+   <tocitem text="Define Stations" target="how_to_define_station_define_station_html" />
+   <tocitem text="sections">
+    <tocitem text="Fork section" target="how_to_define_station_sections_fork_section_html" />
+    <tocitem text="Queue section" target="how_to_define_station_sections_queue_section_html" />
+    <tocitem text="Routing section" target="how_to_define_station_sections_routing_section_html" />
+    <tocitem text="Service section" target="how_to_define_station_sections_service_section_html" />
+    </tocitem>
+   </tocitem>
+  <tocitem text="Define connection">
+   <tocitem text="Define Connections" target="how_to_define_connection_define_connection_htm" />
+   </tocitem>
+  <tocitem text="Define Station Parameters">
+   <tocitem text="Define station parameters" target="how_to_define_station_parameters_define_station_parameters_htm" />
+   </tocitem>
+  <tocitem text="Define performance indices">
+   <tocitem text="Define Performance Indices" target="how_to_define_performance_indices_define_performance_indices_html" />
+   <tocitem text="Performance indices" target="how_to_define_performance_indices_indices_html" />
+   </tocitem>
+  <tocitem text="Define Reference Station">
+   <tocitem text="Define Reference Stations" target="how_to_define_reference_station_define_reference_stations_htm" />
+   </tocitem>
+  <tocitem text="Define Finite Capacity Regions">
+   <tocitem text="Define Finite Capacity Regions" target="how_to_define_finite_capacity_region_define_finite_capacity_regions_htm" />
+   </tocitem>
+  <tocitem text="Define Simulation">
+   <tocitem text="Define Simulation Parameters" target="how_to_define_simulation_parameters_define_simulation_parameters_htm" />
+   </tocitem>
+  <tocitem text="Define what if analysis">
+   <tocitem text="Define what if analysis" target="how_to_define_what_if_analysis_define_what_if_analysis_html" />
+   </tocitem>
+  <tocitem text="Import in JMVA">
+   <tocitem text="import in JMVA" target="how_to_import_in_jmva_import_in_jmva_html" />
+   </tocitem>
+  <tocitem text="Modify default parameters">
+   <tocitem text="Modify default parameters" target="how_to_modify_default_parameters_modifying_default_parameters_htm" />
+   </tocitem>
+  <tocitem text="Modify the current model">
+   <tocitem text="Modify the current model" target="how_to_modify_the_current_model_modify_the_current_model_htm" />
+   </tocitem>
+  <tocitem text="Start simulation">
+   <tocitem text="Error and warning messages" target="how_to_start_simulation_error_warning_html" />
+   <tocitem text="Simulation Results" target="how_to_start_simulation_simulation_results_html" />
+   <tocitem text="Start Simulation" target="how_to_start_simulation_start_simulation_html" />
+   </tocitem>
+  </tocitem>
+ <tocitem text="Glossary and Notation">
+  <tocitem text="Bibliography" target="glossary_and_notation_bibliography_htm" />
+  <tocitem text="Glossary" target="glossary_and_notation_glossary_htm" />
+  <tocitem text="Model File Format" target="glossary_and_notation_file_jsim_format_htm" />
+  </tocitem>
+</toc>

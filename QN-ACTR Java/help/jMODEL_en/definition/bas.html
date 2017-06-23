@@ -1,0 +1,85 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+
+
+
+
+<head>
+<title>Drop Rule</title>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+<link rel="StyleSheet" href="../default.css">
+<link href="../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.stile1 { color:#0000ff; }
+li.kadov-cstile1 { color:#0000ff; }
+-->
+</style><style title="hcp" type="text/css">
+<!--
+img.hcp1 { border-style:none; }
+-->
+</style>
+</head>
+<body>
+<h1>Drop Rules </h1>
+
+<p>_______________</p>
+
+<p>&nbsp;</p>
+
+<p class="stile1">BAS Blocking (Blocking After Service):</p>
+
+<p>&nbsp; </p>
+
+<p>This method is used for station having a finite queue.</p>
+
+<p>When a job arrives to a station with a  queue completely filled, it can't 
+ be queued immediatly and it will be forced to wait in its origin station. The origin 
+ station won't be able to serve  other customers since it's still buisy and will be blocked.</p>
+
+<p>In the following figure, the job has just been served from the station i
+ and is routed to station j whose queue capacity is limited and completely filled. This job will wait in station i that is blocked and can't serve 
+ other jobs.</p>
+
+<p>The station i is blocked until the queue of station j have a free position 
+ for the incoming job. </p>
+
+<p><img src="../image/bas1.JPG" style="width:331px; height:109px;" width="331" height="109" border="0" class="hcp1"></p>
+
+<p>With this rule, you can have some deadlock in the network, when more 
+ stations can be blocked at the same time. </p>
+
+<p>&nbsp;</p>
+
+<p class="stile1">Waiting Queue(no drop):</p>
+
+<p class="stile1">&nbsp;</p>
+
+<p>The job that has just been served from the station i  is rooted to a 
+ temporary queue waiting that station j can accept it. </p>
+
+<p>This method doesn't block station i.</p>
+
+<p><img src="../image/bas2.jpg" style="width:377px; height:135px;" width="377" height="135" border="0" class="hcp1"></p>
+
+<p class="stile1">Drop: </p>
+
+<p>&nbsp;</p>
+
+<p>The job that can't be served by  station j whose queue capacity is limited and completely filled, is 
+ eliminated (dropped) from the model.</p>
+<p>This method doesn't block station i.</p>
+<p><img src="../image/bas_drop.JPG"
+		x-maintain-ratio=TRUE
+		style="border: none;
+				width: 331px;
+				height: 109px;
+				float: none;"
+		width=331
+		height=109
+		border=0></p>
+
+</body>
+</html>

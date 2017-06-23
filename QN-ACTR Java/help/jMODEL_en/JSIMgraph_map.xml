@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+
+<map version="1.0">
+  <mapID target="jsimgraph_htm" url="JSIMgraph.htm" />
+  <mapID target="menu_m_file_html" url="menu/m_file.html" />
+  <mapID target="menu_m_edit_html" url="menu/m_edit.html" />
+  <mapID target="menu_m_define_htm" url="menu/m_define.htm" />
+  <mapID target="menu_m_solve_htm" url="menu/m_solve.htm" />
+  <mapID target="menu_m_help_htm" url="menu/m_help.htm" />
+  <mapID target="how_to_create_new_model_new_model_html" url="how_to/create_new_model/new_model.html" />
+  <mapID target="how_to_create_new_model_step2_customer_class_html" url="how_to/create_new_model/step2_customer_class.html" />
+  <mapID target="how_to_create_new_model_step3_station_param_html" url="how_to/create_new_model/step3_station_param.html" />
+  <mapID target="how_to_create_new_model_ste4_perf_indices_html" url="how_to/create_new_model/ste4_perf_indices.html" />
+  <mapID target="how_to_create_new_model_ste5_reference_station_html" url="how_to/create_new_model/ste5_reference_station.html" />
+  <mapID target="how_to_create_new_model_step6_finite_region_html" url="how_to/create_new_model/step6_finite_region.html" />
+  <mapID target="how_to_create_new_model_step7_simulazion_html" url="how_to/create_new_model/step7_simulazion.html" />
+  <mapID target="how_to_define_cclass_html" url="how_to/define_cclass.html" />
+  <mapID target="definition_class_html" url="definition/class.html" />
+  <mapID target="definition_distribuzioni_html" url="definition/distribuzioni.html" />
+  <mapID target="how_to_define_pindices_html" url="how_to/define_pindices.html" />
+  <mapID target="definition_confidenceinterval_html" url="definition/confidenceinterval.html" />
+  <mapID target="definition_ind_htm" url="definition/ind.htm" />
+  <mapID target="how_to_define_simul_param_html" url="how_to/define_simul_param.html" />
+  <mapID target="how_to_define_what_if_analysis_html" url="how_to/define_what_if_analysis.html" />
+  <mapID target="how_to_define_fcr_html" url="how_to/define_fcr.html" />
+  <mapID target="how_to_define_network_topology_html" url="how_to/define_network_topology.html" />
+  <mapID target="how_to_stations_connect_elem_htm" url="how_to/stations/connect_elem.htm" />
+  <mapID target="how_to_stations_source_properties_htm" url="how_to/stations/source_properties.htm" />
+  <mapID target="how_to_stations_sink_properties_html" url="how_to/stations/sink_properties.html" />
+  <mapID target="how_to_stations_delay_prop_html" url="how_to/stations/delay_prop.html" />
+  <mapID target="how_to_stations_fork_prop_html" url="how_to/stations/fork_prop.html" />
+  <mapID target="how_to_stations_join_prop_html" url="how_to/stations/join_prop.html" />
+  <mapID target="how_to_stations_loadsplitter_prop_html" url="how_to/stations/loadsplitter_prop.html" />
+  <mapID target="how_to_stations_logger_prop_html" url="how_to/stations/logger_prop.html" />
+  <mapID target="how_to_stations_server_prop_html" url="how_to/stations/server_prop.html" />
+  <mapID target="how_to_modify_modify_simulation_parameters_html" url="how_to/modify/modify_simulation_parameters.html" />
+  <mapID target="how_to_modify_modify_station_parameters_html" url="how_to/modify/modify_station_parameters.html" />
+  <mapID target="how_to_modify_default_param_htm" url="how_to/modify_default_param.htm" />
+  <mapID target="definition_error_warning_html" url="definition/error_warning.html" />
+  <mapID target="definition_read_result_html" url="definition/read_result.html" />
+  <mapID target="export_image_export_as_image_html" url="export_image/export_as_image.html" />
+  <mapID target="how_to_exp_jmva_htm" url="how_to/exp_jmva.htm" />
+  <!--
+  <mapID target="webserver1_webserver_html" url="webserver1/webserver.html" />
+  <mapID target="webserver1_step1_html" url="webserver1/step1.html" />
+  <mapID target="webserver1_step2_html" url="webserver1/step2.html" />
+  <mapID target="webserver1_step3_html" url="webserver1/step3.html" />
+  <mapID target="webserver1_step4_html" url="webserver1/step4.html" />
+  <mapID target="webserver1_step5_html" url="webserver1/step5.html" />
+  <mapID target="webserver1_step6_html" url="webserver1/step6.html" />
+  <mapID target="webserver1_step7_html" url="webserver1/step7.html" />
+  <mapID target="webserver1_step8_html" url="webserver1/step8.html" />
+  -->
+  <mapID target="bibliography_htm" url="Bibliography.htm" />
+  <mapID target="glossary_htm" url="Glossary.htm" />
+  <mapID target="model_file_format_htm" url="Model_File_Format.htm" />
+  <mapID target="definition_bas_html" url="definition/bas.html" />
+  <mapID target="how_to_create_new_model_step1_create_network_html" url="how_to/create_new_model/step1_create_network.html" />
+</map>

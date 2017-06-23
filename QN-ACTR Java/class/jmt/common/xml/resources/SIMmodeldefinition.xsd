@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited by Bertoli Marco -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="sim">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="userClass" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="name" type="xs:string"
+							use="required" />
+						<xs:attribute name="type" type="xs:string"
+							use="required" />
+						<xs:attribute name="priority" type="xs:string"
+							use="required" />
+						<xs:attribute name="referenceSource"
+							type="xs:string" use="optional" />
+						<xs:attribute name="customers" type="xs:string"
+							use="optional" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="node" maxOccurs="unbounded" />
+				<xs:element name="measure" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="name" type="xs:string"
+							use="required" />
+						<xs:attribute name="alpha" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:double">
+									<xs:whiteSpace value="collapse" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="precision" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:double">
+									<xs:whiteSpace value="collapse" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="verbose" use="optional">
+							<xs:simpleType>
+								<xs:restriction base="xs:boolean">
+									<xs:whiteSpace value="collapse" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="type" type="xs:string"
+							use="required" />
+						<xs:attribute name="referenceNode"
+							type="xs:string" use="required" />
+						<xs:attribute name="referenceUserClass"
+							type="xs:string" use="required" />
+						<xs:attribute name="nodeType" type="xs:string"
+							use="optional" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="connection" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="source" type="xs:string"
+							use="required" />
+						<xs:attribute name="target" type="xs:string"
+							use="required" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="blockingRegion" minOccurs="0"
+					maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="regionNode"
+								maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension
+											base="xs:string">
+											<xs:attribute
+												name="nodeName" type="xs:string" use="required" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="globalConstraint">
+								<xs:complexType>
+									<xs:attribute name="maxJobs"
+										type="xs:double" use="required" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="classConstraint"
+								minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="jobClass"
+										type="xs:string" use="required" />
+									<xs:attribute name="maxJobsPerClass"
+										type="xs:double" use="required" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="classWeight" minOccurs="0"
+								maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="jobClass"
+										type="xs:string" use="required" />
+									<xs:attribute name="weight"
+										type="xs:double" use="required" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="dropRules" minOccurs="0"
+								maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="jobClass"
+										type="xs:string" use="required" />
+									<xs:attribute name="dropThisClass"
+										type="xs:boolean" use="required" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string"
+							use="required" />
+						<xs:attribute name="type" type="xs:string"
+							use="optional" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="preload" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<xs:element name="stationPopulations">
+								<xs:complexType>
+									<xs:sequence
+										maxOccurs="unbounded">
+										<xs:element
+											name="classPopulation">
+											<xs:complexType>
+												<xs:attribute
+													name="refClass" type="xs:string" use="required" />
+												<xs:attribute
+													name="population" type="xs:string" use="required" />
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="stationName"
+										type="xs:string" use="required" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required" />
+			<xs:attribute name="debug" type="xs:boolean" use="optional" />
+			<xs:attribute name="seed" type="xs:long" use="optional" />
+			<xs:attribute name="maxTime" type="xs:double"
+				use="optional" />
+			<xs:attribute name="polling" type="xs:double"
+				use="optional" />
+			<xs:attribute name="maxSamples" type="xs:int"
+				use="optional" />
+			<xs:attribute name="logPath" type="xs:string"
+				use="optional" />
+			<xs:attribute name="logDelimiter" type="xs:string"
+				use="optional" />
+			<xs:attribute name="logReplaceMode" type="xs:int"
+				use="optional" />
+			<xs:attribute name="logExecutionTimestamp" type="xs:boolean"
+				use="optional" />
+			<xs:attribute name="disableStatisticStop" type="xs:boolean"
+				use="optional" />
+			<xs:attribute name="logDecimalSeparator" type="xs:string"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="section">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="className" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="parameter">
+		<xs:complexType>
+			<xs:choice minOccurs="0">
+				<xs:sequence maxOccurs="unbounded">
+					<xs:element ref="refClass" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="subParameter"/>
+				</xs:sequence>
+				<xs:element ref="value"/>
+			</xs:choice>
+			<xs:attribute name="name" type="xs:string" use="optional"/>
+			<xs:attribute name="classPath" type="xs:string" use="required"/>
+			<xs:attribute name="array" type="xs:boolean" use="optional" default="false"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="node">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="section" minOccurs="0" maxOccurs="3"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="value" type="xs:string"/>
+	<xs:element name="subParameter">
+		<xs:complexType>
+			<xs:choice minOccurs="0">
+				<xs:element ref="subParameter" maxOccurs="unbounded"/>
+				<xs:element ref="value"/>
+			</xs:choice>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="classPath" type="xs:string" use="required"/>
+			<xs:attribute name="array" type="xs:boolean" use="optional" default="false"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="refClass" type="xs:string"/>
+</xs:schema>

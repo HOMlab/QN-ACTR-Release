@@ -1,0 +1,221 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+
+
+
+
+<head>
+<title>Error and warning messages</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+<link href="../../default.css" rel="stylesheet" type="text/css"><style title="hcp" type="text/css">
+<!--
+img.hcp1 { border-style:none; }
+ul.hcp2 { list-style:disc; }
+p.hcp3 { margin-left:48px; }
+p.hcp4 { margin-left:48px; x-cell-content-align:top; }
+-->
+</style>
+</head>
+<body>
+<p class="stile1">Error and Warning Messages</p>
+
+<p class="stile2">_________________</p>
+
+<p class="stile4">&nbsp;</p>
+
+<p class="stile4">When you start the simulation, JSIM analyses the model
+and if there are errors or inconsistencies, a diagnostic window will pop 
+up, describing the problems found.
+</p>
+
+<p>&nbsp;</p>
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/error_window.gif" style="width:443px; height:236px;" width="443" height="236" border="0" class="hcp1"> </p>
+
+<p>&nbsp;</p>
+
+<blockquote>
+<p class="stile4">
+In what follows, a list of common problems and the respective solutions
+are presented:
+</p>
+</blockquote>
+
+<p style="margin-left: 80px;">&nbsp;</p>
+
+<ul type="disc" class="hcp2">
+	
+	<li style="margin-left: -20px;" class="kadov-p"><p class="hcp3"><img src="Images/1.gif" style="width:255px; height:18px;" width="255" height="18" border="0" class="hcp1"><img src="Images/7.gif" style="width:225px; height:18px;" width="225" height="18" border="0" class="hcp1"></p></li>
+</ul>
+
+<p class="hcp4"><span class="stile4">
+This error occurs when the station (source or join) has not outgoing,
+or forward, links to any other station in the model.
+Only Sink stations do not have forward links. 
+To see how to connect two stations, see 
+<a href="../Create_a_new_model/Step_3_-_Connections.htm">Step3: Connections</a>. 
+
+<p>&nbsp;</p>
+<ul type="disc" class="hcp2">
+	
+	<li style="margin-left: -20px;" class="kadov-p"><p class="hcp3"><span class="stile4"><img src="Images/2.gif" style="width:233px; height:20px;" width="233" height="20" border="0" class="hcp1"></span></p></li>
+</ul>
+
+<p class="hcp4"><span class="stile4">
+Each sink station must have at least an incoming, or backward, link from
+other stations, for open class jobs to be able to leave the system.
+Only the Source station does not have a backward link.
+To see how to connect stations, see 
+<a href="../Create_a_new_model/Step_3_-_Connections.htm">Step 3: Connections</a>. 
+
+<p>&nbsp;</p>
+<ul type="disc" class="hcp2">
+	
+	<li style="margin-left: -20px;" class="kadov-p"><p class="hcp4"><span class="stile4"><img src="Images/3.gif" style="width:286px; height:15px;" width="286" height="15" border="0" class="hcp1"></span></p></li>
+</ul>
+
+<p class="hcp4"><span class="stile4">
+ For each class you must define a Reference Station that is used to compute
+the performance indices for the class. To see how to define a reference 
+ station, see
+<a href="../Create_a_new_model/Step_6_-_Reference_Stations.htm">Step 6:
+Reference Stations</a>.
+</p>
+
+
+<p>&nbsp;</p>
+<ul type="disc" class="hcp2">
+	
+	<li style="margin-left: -20px;" class="kadov-p"><p class="hcp4"><span class="stile4"><img src="Images/4.gif" style="width:270px; height:17px;" width="270" height="17" border="0" class="hcp1"></span></p></li>
+</ul>
+
+<p class="hcp4"><span class="stile4">
+This error occurs when you try to start the simulation but no performance 
+index is defined. Performance indices are defined through
+<a href="../Create_a_new_model/Step_5_-_Performance_indices.htm">Step 5: 
+Performance Indices</a>.
+
+
+<p>&nbsp;</p>
+<ul type="disc" class="hcp2">
+	
+	<li style="margin-left: -20px;" class="kadov-p"><p class="hcp3"><img src="Images/5.gif" style="width:206px; height:20px;" width="206" height="20" border="0" class="hcp1">
+<br>
+<img src="Images/9.gif" style="width:181px; height:18px;" width="181" height="18" border="0" class="hcp1"></p></li>
+</ul>
+
+<p class="hcp4"><span class="stile4">
+Fork and Join stations should be inserted together in the model. If you have 
+inserted only one of the two stations, when the simnulation is run JSIM will
+show a diagnostic message. Having a Fork without a Join is possible, although
+it may lead the system to saturate quickly, hence the Warning message.
+Having a Join without a Fork is a mistake, hence the Error message.
+The missing station must be added with the corresponding links,
+using 
+<a href="../Create_a_new_model/Step_2_-_Stations.htm">Step 2: Stations</a> 
+and 
+<a href="../Create_a_new_model/Step_3_-_Connections.htm">Step 3: Connections</a>,
+respectively.
+
+
+<p>&nbsp;</p>
+<ul type="disc" class="hcp2">
+	
+	<li style="margin-left: -20px;" class="kadov-p"><p class="hcp4"><span class="stile4"><img src="Images/6.gif" style="width:189px; height:17px;" width="189" height="17" border="0" class="hcp1"></span></p></li>
+</ul>
+
+<p class="hcp4"><span class="stile4">
+Customer classes are a mandatory parameter of a model. If you forget to define
+any, the simulator will raise an error.
+Add classes using 
+<a href="../Create_a_new_model/Step_1_-_Classes.htm">Step 1: Classes</a>. 
+
+
+<p>&nbsp;</p>
+<ul type="disc" class="hcp2">
+	
+	<li style="margin-left: -20px;" class="kadov-p"><p class="hcp4"><span class="stile4"><img src="Images/10.gif" height: 19px; border-style: none ; none ;&quot; style="width:382px; height:19px;" width="382" height="19" border="0" class="hcp1"></span></p></li>
+</ul>
+
+<p class="hcp4"><span class="stile4">
+In the definition of the model output, the same index has been added more
+than once for the same station and class.
+Multiple occurrences must be removed, using either
+<a href="../Create_a_new_model/Step_5_-_Performance_indices.htm">Step 5:
+Performance Indices</a> or
+<a href="../Define_performance_indices/define_performance_indices.html">Define
+performance indices</a>.
+
+<p>&nbsp;</p>
+
+<ul type="disc" class="hcp2">
+	
+	<li style="margin-left: -20px;" class="kadov-p"><p class="hcp4"><span class="stile4"><img src="Images/11.gif" style="width:403px; height:17px;" width="403" height="17" border="0" class="hcp1"></span></p></li>
+</ul>
+
+<p class="hcp4"><span class="stile4">
+Customers of closed classes keep circulating in the system. They may not
+visit a Sink station or a station that is connected on the outgoing link 
+only to the Sink, since this would cause them to leave the system.
+The station connections must be changed using 
+<a href="../Create_a_new_model/Step_3_-_Connections.htm">Step 3: Connections</a>.
+
+
+<p>&nbsp;</p>
+<ul type="disc" class="hcp2">
+	
+	<li style="margin-left: -20px;" class="kadov-p"><p class="hcp4"><span class="stile4"><img src="Images/12.gif" style="width:315px; height:25px;" width="315" height="25" border="0" class="hcp1"></span><a name=MVA></a></p></li>
+</ul>
+
+<p class="hcp4"><span class="stile4">
+When exporting a JSIM model to JMVA, a few constraints apply as for the 
+admissible routing strategies. Round Robin routing is not implemented in
+JMVA, so it will be automatically transformed into Random, if you click the 
+&quot;Continue&quot; button.
+Otherwise, you can change it using 
+<a href="../Create_a_new_model/Step_4_-_Station_parameters.htm">Step 4: Station
+Parameters</a>.
+
+
+<p>&nbsp;</p>
+<ul type="disc" class="hcp2">
+	
+	<li style="margin-left: -20px;" class="kadov-p"><p class="hcp4"><span class="stile4"><img src="Images/13.gif" height: 19px; border-style: none ; none ;&quot; style="width:350px; height:19px;" width="350" height="19" border="0" class="hcp1"></span><a name=MVA2></a></p></li>
+</ul>
+
+<p class="hcp4"><span class="stile4">
+When exporting a JSIM model to JMVA, a few constraints apply as for the 
+admissible service time distributions.
+A FCFS station must have exponentially distributed service time with the same
+mean for all the classes of customers that visit the station.
+If you click the &quot;Continue&quot; button, the station service time is 
+reset to the default value, the same for all classes.
+Otherwise, you can change it using
+<a href="../Create_a_new_model/Step_4_-_Station_parameters.htm">Step 4:
+Station Parameters</a>.
+
+
+<p>&nbsp;</p>
+<ul type="disc" class="hcp2">
+	
+	<li style="margin-left: -20px;" class="kadov-p"><p class="hcp4"><img src="Images/14.gif" style="width:336px; height:17px;" width="336" height="17" border="0" class="hcp1"></p></li>
+</ul>
+
+<p class="hcp4"><span class="stile4">
+When you add a new performance index, the station for which it is defined
+must be specified, otherwise the error message above appears.
+Specify the missing station using either
+<a href="../Create_a_new_model/Step_5_-_Performance_indices.htm">Step 5:
+Performance Indices</a> or
+<a href="../Define_performance_indices/define_performance_indices.html">Define
+performance indices</a>.
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+</body>
+</html>

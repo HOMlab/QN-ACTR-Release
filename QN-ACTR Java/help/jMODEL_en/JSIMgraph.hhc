@@ -1,0 +1,292 @@
+<html>
+<!-- Sitemap 1.0 -->
+<object type="text/site properties">
+  <param name="FrameName" value="bsscright">
+  <param name="SiteType" value="toc">
+  <param name="Image Width" value="16">
+</object>
+<ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="Introduction to JSIMgraph">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Introduction to JSIMgraph Tool">
+      <param name="Local" value="JSIMgraph.htm">
+    </object>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="Menù">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="File menù">
+      <param name="Local" value="menu/m_file.html">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Edit menù">
+      <param name="Local" value="menu/m_edit.html">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Define menù">
+      <param name="Local" value="menu/m_define.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Solve menù">
+      <param name="Local" value="menu/m_solve.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Help menù">
+      <param name="Local" value="menu/m_help.htm">
+    </object>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="How To">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Define New Model">
+      <param name="Local" value="how_to/create_new_model/new_model.html">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Step 1: Topology Network">
+        <param name="Local" value="how_to/create_new_model/step2_customer_class.html">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Step 2: Customer Classes">
+        <param name="Local" value="how_to/create_new_model/step2_customer_class.html">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Step 3:  Station Parameters">
+        <param name="Local" value="how_to/create_new_model/step3_station_param.html">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Step 4: Performance Indices">
+        <param name="Local" value="how_to/create_new_model/ste4_perf_indices.html">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Step 5: Reference Station">
+        <param name="Local" value="how_to/create_new_model/ste5_reference_station.html">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Step 6: Finite Capacity Region">
+        <param name="Local" value="how_to/create_new_model/step6_finite_region.html">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Step 7: Start Simulation">
+        <param name="Local" value="how_to/create_new_model/step7_simulazion.html">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Define Customer Classes">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Define Customer Classes">
+        <param name="Local" value="how_to/define_cclass.html">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Classes">
+        <param name="Local" value="definition/class.html">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Distributions">
+        <param name="Local" value="definition/distribuzioni.html">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Define Performance Indices">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Define Performance Indices">
+        <param name="Local" value="how_to/define_pindices.html">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Confidence Interval and  Relative Error">
+        <param name="Local" value="definition/confidenceinterval.html">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Performance Indices">
+        <param name="Local" value="definition/ind.htm">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Define Simulation Parameters">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Define Simulation Parameters">
+        <param name="Local" value="how_to/define_simul_param.html">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Define What-If Analysis">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Define What-if Analysis">
+        <param name="Local" value="how_to/define_what_if_analysis.html">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Define a Finite Capacity Region">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Define a Finite Capacity Region">
+        <param name="Local" value="how_to/define_fcr.html">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Define Network Topology">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Define Network Topology">
+        <param name="Local" value="how_to/define_network_topology.html">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Connect two Elements">
+        <param name="Local" value="how_to/stations/connect_elem.htm">
+      </object>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Stations Properties">
+      </object>
+      <ul>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Source">
+          <param name="Local" value="how_to/stations/source_properties.htm">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Sink">
+          <param name="Local" value="how_to/stations/sink_properties.html">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Delay ">
+          <param name="Local" value="how_to/stations/delay_prop.html">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Fork">
+          <param name="Local" value="how_to/stations/fork_prop.html">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Join">
+          <param name="Local" value="how_to/stations/join_prop.html">
+        </object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Loadsplitter">
+          <param name="Local" value="how_to/stations/loadsplitter_prop.html">
+        </object>
+	<li><object type="text/sitemap">
+	  <param name="Name" value="Logger">
+	  <param name="Local" value="how_to/stations/logger_prop.html">
+	</object>
+        <li><object type="text/sitemap">
+          <param name="Name" value="Server">
+          <param name="Local" value="how_to/stations/server_prop.html">
+        </object>
+        </ul>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Modify Simulation Parameters">
+      <param name="Local" value="how_to/modify/modify_simulation_parameters.html">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Modify Stations Parameters">
+      <param name="Local" value="how_to/modify/modify_station_parameters.html">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Modify Default Parameters">
+      <param name="Local" value="how_to/modify_default_param.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Error and Warning Messages">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Error and Warning Messages">
+        <param name="Local" value="definition/error_warning.html">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Read  Results">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Read the Results of the Simulation">
+        <param name="Local" value="definition/read_result.html">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Export as Image">
+    </object>
+    <ul>
+      <li><object type="text/sitemap">
+        <param name="Name" value="Export the Model as Image">
+        <param name="Local" value="export_image/export_as_image.html">
+      </object>
+      </ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Export in JMVA">
+      <param name="Local" value="how_to/exp_jmva.htm">
+    </object>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="Example: WebServer">
+    <param name="Local" value="webserver1/webserver.html">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Step1: Topology network">
+      <param name="Local" value="webserver1/step1.html">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Step 2: Customer Classes">
+      <param name="Local" value="webserver1/step2.html">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Step 3: Stations parameters">
+      <param name="Local" value="webserver1/step3.html">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Step 4: Performance index">
+      <param name="Local" value="webserver1/step4.html">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Step 5: Simulation parameters">
+      <param name="Local" value="webserver1/step5.html">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Step 6: What-if Analysis">
+      <param name="Local" value="webserver1/step6.html">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Step 7: Start the simualtion">
+      <param name="Local" value="webserver1/step7.html">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Step 8: See results">
+      <param name="Local" value="webserver1/step8.html">
+    </object>
+    </ul>
+  <li><object type="text/sitemap">
+    <param name="Name" value="Glossary and Notation">
+  </object>
+  <ul>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Bibliography">
+      <param name="Local" value="Bibliography.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Glossary">
+      <param name="Local" value="Glossary.htm">
+    </object>
+    <li><object type="text/sitemap">
+      <param name="Name" value="Model File Format">
+      <param name="Local" value="Model_File_Format.htm">
+    </object>
+    </ul>
+</ul>
+</html>

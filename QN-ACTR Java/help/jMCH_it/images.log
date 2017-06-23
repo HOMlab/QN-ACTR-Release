@@ -1,0 +1,187 @@
+This is TeX, Version 3.141592 (MiKTeX 2.3) (preloaded format=latex 2000.11.28)  15 APR 2004 11:33
+**./images.tex
+(./images.tex
+LaTeX2e <2001/06/01>
+Babel <v3.7h> and hyphenation patterns for english, french, german, ngerman, du
+mylang, nohyphenation, loaded.
+
+(C:\texmf\tex\latex\base\article.cls
+Document Class: article 2001/04/21 v1.4e Standard LaTeX document class
+(C:\texmf\tex\latex\base\size10.clo
+File: size10.clo 2001/04/21 v1.4e Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (C:\texmf\tex\latex\base\ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+) (C:\texmf\tex\latex\subfigure\subfigure.sty
+Package: subfigure 2002/07/30 v2.1.4 subfigure package
+\subfigtopskip=\skip43
+\subfigcapskip=\skip44
+\subfigcaptopadj=\dimen103
+\subfigbottomskip=\skip45
+\subfigcapmargin=\dimen104
+\subfiglabelskip=\skip46
+\c@subfigure=\count87
+\c@lofdepth=\count88
+\c@subtable=\count89
+\c@lotdepth=\count90
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(C:\texmf\tex\latex\subfigure\subfigure.cfg)
+\subfig@top=\skip47
+\subfig@bottom=\skip48
+) (C:\texmf\tex\latex\tools\varioref.sty
+Package: varioref 2001/09/04 v1.3c package for extended references (FMi)
+\c@vrcnt=\count91
+) (C:\texmf\tex\latex\float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count92
+\float@exts=\toks14
+\float@box=\box26
+\@float@everytoks=\toks15
+\@floatcapt=\box27
+) (C:\texmf\tex\latex\graphics\graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+(C:\texmf\tex\latex\graphics\keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks16
+) (C:\texmf\tex\latex\graphics\graphics.sty
+Package: graphics 2001/07/07 v1.0n Standard LaTeX Graphics (DPC,SPQR)
+(C:\texmf\tex\latex\graphics\trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+) (C:\texmf\tex\latex\00miktex\graphics.cfg
+File: graphics.cfg 2003/03/12 v1.1 MiKTeX 'graphics' configuration
+)
+Package graphics Info: Driver file: dvips.def on input line 80.
+(C:\texmf\tex\latex\graphics\dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen105
+\Gin@req@width=\dimen106
+) (C:\texmf\tex\latex\setspace\setspace.sty
+Package: setspace 2000/12/01 6.7 Contributed and Supported LaTeX2e package
+Package: `setspace' 6.7 <2000/12/01>
+) (C:\texmf\tex\latex\base\fontenc.sty
+Package: fontenc 2001/06/05 v1.94 Standard LaTeX package
+(C:\texmf\tex\latex\base\t1enc.def
+File: t1enc.def 2001/06/05 v1.94 Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 38.
+)) (C:\texmf\tex\latex\base\inputenc.sty
+Package: inputenc 2001/07/10 v0.99a Input encoding file 
+(C:\texmf\tex\latex\base\latin1.def
+File: latin1.def 2001/07/10 v0.99a Input encoding file 
+)) (C:\texmf\tex\latex\fancyhdr\fancyhdr.sty
+\headwidth=\dimen107
+) (C:\texmf\tex\latex\graphics\color.sty
+Package: color 1999/02/16 v1.0i Standard LaTeX Color (DPC)
+(C:\texmf\tex\latex\00miktex\color.cfg
+File: color.cfg 2003/03/08 v1.0 MiKTeX 'color' configuration
+)
+Package color Info: Driver file: dvips.def on input line 125.
+(C:\texmf\tex\latex\graphics\dvipsnam.def
+File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+)) (C:\texmf\tex\latex\base\alltt.sty
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+) (C:\texmf\tex\generic\Babel\babel.sty
+Package: babel 2001/03/01 v3.7h The Babel package
+(C:\texmf\tex\generic\Babel\italian.ldf
+Language: italian 2001/01/19 v1.2o Italian support from the babel system
+(C:\texmf\tex\generic\Babel\babel.def
+File: babel.def 2001/03/01 v3.7h Babel common definitions
+\babel@savecnt=\count93
+\U@D=\dimen108
+)
+
+Package babel Warning: No hyphenation patterns were loaded for
+(babel)                the language `Italian'
+(babel)                I will use the patterns loaded for \language=0 instead.
+
+\l@italian = a dialect from \language0
+Package babel Info: Making " an active character on input line 72.
+))
+\sizebox=\box28
+\lthtmlwrite=\write3
+(images.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 166.
+LaTeX Font Info:    ... okay on input line 166.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 166.
+LaTeX Font Info:    ... okay on input line 166.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 166.
+LaTeX Font Info:    ... okay on input line 166.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 166.
+LaTeX Font Info:    ... okay on input line 166.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 166.
+LaTeX Font Info:    ... okay on input line 166.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 166.
+LaTeX Font Info:    ... okay on input line 166.
+LaTeX Font Info:    Checking defaults for OT2/cmr/m/n on input line 166.
+LaTeX Font Info:    Try loading font information for OT2+cmr on input line 166.
+
+(C:\texmf\tex\latex\cyrillic\ot2cmr.fd
+File: ot2cmr.fd 2001/08/11 v3.2c Computer Modern Cyrillic font definitions
+)
+LaTeX Font Info:    ... okay on input line 166.
+
+latex2htmlLength hsize=349.0pt
+
+latex2htmlLength vsize=682.0pt
+
+latex2htmlLength hoffset=0.0pt
+
+latex2htmlLength voffset=0.0pt
+
+latex2htmlLength topmargin=0.0pt
+
+latex2htmlLength topskip=0.00003pt
+
+latex2htmlLength headheight=0.0pt
+
+latex2htmlLength headsep=0.0pt
+
+latex2htmlLength parskip=0.0pt plus 1.0pt
+
+latex2htmlLength oddsidemargin=53.0pt
+
+latex2htmlLength evensidemargin=53.0pt
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 196.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 196.
+l2hSize :tex2html_wrap_inline334:6.45676pt::0.0pt::5.49991pt.
+[1
+
+
+
+]
+l2hSize :tex2html_wrap_inline342:6.94444pt::0.0pt::6.33325pt.
+[2
+
+
+]
+l2hSize :tex2html_wrap_inline344:8.0pt::8.0pt::48.9733pt.
+[3
+
+
+] (images.aux) ) 
+Here is how much of TeX's memory you used:
+ 1987 strings out of 96052
+ 22092 string characters out of 1197190
+ 70757 words of memory out of 1074959
+ 4834 multiletter control sequences out of 35000
+ 4403 words of font info for 15 fonts, out of 500000 for 1000
+ 14 hyphenation exceptions out of 607
+ 26i,5n,43p,206b,223s stack positions out of 1500i,500n,5000p,200000b,32768s
+
+Output written on images.dvi (3 pages, 860 bytes).

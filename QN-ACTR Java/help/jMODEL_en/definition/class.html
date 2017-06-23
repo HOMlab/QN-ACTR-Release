@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN" >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Customers Classes</title>
+<link href="../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile1 { color:#FF0000; font-weight:bold; font-style:italic; }
+.Stile2 { color:#FF0000; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+</head>
+<body>
+<h1>Customer classes </h1>
+<p>The workload intensity is described by one of the following parameters:</p>
+<ul>
+  <li>
+    <p>&#955; the arrival rate (<em>for open models </em>)</p>
+  </li>
+  <li>
+    <p> N the population (<em>for closed models </em>)</p>
+  </li>
+</ul>
+<p>&nbsp;</p>
+<p class="hcp2">In <span class="Stile2">open models</span> the workload  intensity is specified by a parameter &#955;,
+indicating the rate at which requests (<em>customers)</em> arrive at the system. In those models there is an infinite stream of arriving customer and the customer population, i.e., the number of customers in execution, varies over time. Customers that have completed their execution leave the system. The class of customers of an open model is also to as <span class="Stile1">Open Class</span>.</p>
+<p class="hcp2">&nbsp;</p>
+<p>In <span class="Stile2">closed models</span> the workload  intensity is specified by a parameter N, indicating
+      the average number of  jobs (customers) in execution.  In these models the  population is fixed, i.e., N is kept constant. Customers that
+      have completed their service are considered as if they left the model and
+  have been replaced immediately by a new customer. The class of customers in execution in a closed model is also referred as <span class="Stile1">Closed Class</span>. </p>
+<p>&nbsp;</p>
+<p class="hcp2">Multiple class models consist of N customer classes, each of which has 
+  its own workload intensity and its own service 
+demand at each center. Within each class, the customers are indistinguishable,i.e., statistically equal. Models in which the customers belongs to the two types of classes open and closed are referred to as<span class="Stile2"> mixed models</span>. </p>
+<p class="hcp2">&nbsp;</p>
+<p class="hcp2">The parameters defining the two types of classes are:</p>
+<ul>
+  <li>
+    <p><span class="Stile1">Open Classes</span>: priority, interarrival time distribution, reference station, service time distributions to the stations </p>
+  </li>
+  <li>
+    <p><span class="Stile1">Closed Classes</span>: priority, population value, reference station, service time distributions to the stations</p>
+  </li>
+</ul>
+<p>&nbsp;</p>
+<p><a href="../how_to/define_cclass.html">How to define Customer Classes</a></p>
+<p class="hcp2"></p>
+</body>
+</html>

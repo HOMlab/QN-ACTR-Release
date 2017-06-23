@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>error and warnong message</title>
+<link href="../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile1 { color:#FF0000; }
+.Stile2 { color:#DBE01F; }
+-->
+</style>
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+</head>
+<body>
+<h1>Error and Warning Diagnostic Messages</h1>
+<p>_____________________________________</p>
+<p>&nbsp;</p>
+<p>JSIM<em>graph</em> analyses  the network  before starting the effective execution of the simulation. If any errors or warnings are found, the following window with their description is shown. </p>
+<p>&nbsp;</p>
+<p><img src="../image/error_window.png" width="443" height="236"> </p>
+<p>&nbsp;</p>
+<p>Click on the error or warning message to open the panel when you can modify the bad properties or change the network. </p>
+<p>In the following table you can see some common problems with their solution:</p>
+<p>&nbsp;</p>
+<table border="0" cellspacing="4" cellpadding="3" style="float: none;">
+  <tr>
+    <td valign="top"><p><em>&quot;StationX is not forward linked&quot;</em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>This error occurs when the station (source or join) has not   outgoing, or forward, links to any other station in the model. Only Sink   stations do not have forward links. </p>    </td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;StationX is not backward linked&quot; </em></p></td>
+    <td valign="top" class="Stile1"><p>Error</p></td>
+    <td valign="top" class="hcp2"><p>Each  station must have at least an incoming, or   backward, link from other stations, for open class jobs to be able to leave the   system. Only the Source station does not have a backward link.</p>    </td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;No reference station defined for ClassX&quot; </em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>For each class you must define a Reference Station that is used to estimate system throughput measure. Click on this error to open and set the missing reference station. </p>    </td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;No performance indices defined&quot; </em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>This error occurs when you try to start the simulation but no   performance index is defined. See also &quot;<a href="../how_to/define_pindices.html">How to define performance indices</a>&quot;.</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;Fork found but no join&quot; </em></p>
+    <p>&nbsp;</p>
+    <p><em>&quot;Join without fork&quot;</em></p></td>
+    <td valign="top"><p class="Stile2">Warning</p>
+    <p>&nbsp;</p>
+    <p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>Fork and Join stations should be inserted together in the   model. If you have inserted only one of the two stations, when the simnulation   is run JSIM will show a diagnostic message. Having a Fork without a Join is   possible, although it may lead the system to saturate quickly, hence the Warning   message. Having a Join without a Fork is a mistake, hence the Error message. The   missing station must be added with the corresponding links, see section &quot;<a href="../how_to/define_network_topology.html">How to define a network topology</a>&quot; for details. </p>    </td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;SourceX without open classes associated&quot; </em></p></td>
+    <td valign="top" class="Stile2"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>Insert in the network a Source only if you have an open class. If you have only a closed class, the source cannot be defined. But if you have open and closed classes you have to define a Source and a Sink in the network. This error appears when you have  built a model with a source but without  open customer classes. </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;No classes defined&quot; </em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>Customer classes are a mandatory parameter of a model. If you   forget to define any, the simulator will raise an error.  See &quot;<a href="../how_to/create_new_model/step2_customer_class.html">step 2</a>&quot; or &quot;<a href="../how_to/define_cclass.html">How to define Customer classes</a>&quot;.</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;A performance index is defined more than once&quot; </em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>In the definition of the model output, the same index has   been added more than once for the same station and class. Multiple occurrences   must be removed.</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;Close class ClassX routed to station Served0 linked only to  sink&quot; </em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>Customers of closed classes keep circulating in the system.   They may not visit a Sink station or a station that is connected on the outgoing   link only to the Sink, since this would cause them to leave the system. The   station connections must be changed.</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;Undefined station in performance index&quot; </em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>When a new performance index is defined, a connected station should also be selected.Click on Performance Index from Define menu and select the correct station. </p>    </td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;No station defined&quot; </em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>You have to insert   at least one station in the model.</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;Open class found but no source defined&quot; </em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>When an open customer class is defined, a Source and a Sink must be added to the network (to generate and collect the jobs). Add a source to the network. </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;Closed class ClassX at station Server0 is routed to a sink with p=1&quot; </em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>In the routing section of station Server0, the routing probability of a closed class job to a sink is one. This is an error because jobs cannot leave a closed model. Add an other link to connect the station with other components of the network and set the new routing probabilities.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;Open classes were found but no sink have been defined&quot; </em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>When an open customer class is defined, a Source and a Sink must be added to the network (to generate and collect the jobs). Add a sink to the network. </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;Sink without open classes&quot; </em></p></td>
+    <td valign="top"><p class="Stile1">Error</p></td>
+    <td valign="top" class="hcp2"><p>A sink is only used to collect customers of open classes. This means that a sink without any closed class is useless.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;More than one sink defined, measures may not be accurate&quot; </em></p></td>
+    <td valign="top"><p class="Stile2">Warning</p></td>
+    <td valign="top" class="hcp2"><p>The evaluation of System Throughput performance index may be inaccurate with multiple sinks. We recommand to use one sink only. </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;What-if analysis model modified&quot; </em></p></td>
+    <td valign="top"><p class="Stile2">Warning</p></td>
+    <td valign="top" class="hcp2"><p>One What-if analysis has been defined but after the model has been modified adding a station. The analysis may not work properly. Redefine the What-if Analysis </p>
+      </td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>Finite Capacity Region &quot;RegionX  is empty</em></p></td>
+    <td valign="top" class="Stile1"><p>Error</p></td>
+    <td valign="top" class="hcp2"><p>You have defined a Finite Capacity Region that is empty. A Finite Capacity Region must contain least one station. </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>Preloading of stations inside a finite capacity region is not supported</em></p></td>
+    <td valign="top" class="Stile1"><p>Error</p></td>
+    <td valign="top" class="hcp2"><p>This error appears because you have defined some initial states for the stations in the Finite Capacity Region. All Stations in a FCR must have initial state equal to 0 otherwise this error will appear. Preloading is not supported in FCR.</p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p><a name="JMVA"/>When you try to Export  model defined with JSIM to JMVA some additional errors can apper due to the assumptions that must hold in order to apply the MVA algorythm.</p>
+<table border="0" cellpadding="3" cellspacing="4">
+  <tr>
+    <td valign="top"><p><em>&quot;XXX&quot; routing strategy in ClassX for Source is not allowed. This was considered as RandomRouting&quot; </em></p></td>
+    <td valign="top"><p class="Stile2">Warning</p></td>
+    <td valign="top" class="hcp2"><p>A few constraints apply   as for the admissible routing strategies. Round Robin routing is not implemented   in JMVA, so it will be automatically transformed into Random, if you click the   "Continue" button. Otherwise, you can change it following the link. </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;A state dependent routing strategy was found&quot; </em></p></td>
+    <td valign="top"><p class="Stile2">Warning</p></td>
+    <td valign="top" class="hcp2"><p>You have defined a Routing strategy that doesn't  match the one of the BCMP theorem. Click on the warning message and choose  if you want to convert all non state indipendent routing strategies to Random routing or  change the routing strategy manually. </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;ServerX with non valid service time distribution&quot; </em></p></td>
+    <td valign="top"><p class="Stile1"><span class="Stile2">Warning</span></p></td>
+    <td valign="top" class="hcp2"><p>You have defined a service time distribution not accepted by MVA. Modify the service time distribution to an exponential one. If &quot;Continue&quot; button is pressed, this distribution is considered as an Exponential with the same mean value of the original one. </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>&quot;What-if analysis not avaible&quot; </em></p></td>
+    <td valign="top" class="Stile2"><p class="Stile2">Warning</p></td>
+    <td valign="top" class="hcp2"><p>When you have defined a WIA and you want to export the model in JMVA, this error appears because the JMVA can't support WIA. If &quot;Continue&quot; button is pressed, WIA is ignored. </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>Different per-class queueing strategy found at StationX </em></p></td>
+    <td valign="top" class="Stile1"><p class="Stile2">Warning</p></td>
+    <td valign="top" class="hcp2"><p>This error appears during the export in JMVA because you have defined, for the stationX, a queue strategy different for the various classes. To export in JMVA, all queue strategies must be equal for all the classes. If &quot;Continue&quot; button is pressed, each queue strategy is considered as &quot;Processor Sharing&quot; </p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>Non uniform service strategy inside FCFS station StationX </em></p></td>
+    <td valign="top" class="Stile2"><p>Warning</p></td>
+    <td valign="top" class="hcp2"><p>A few constraints apply   as for the admissible service time distributions. A FCFS station must have   exponentially distributed service time with the same mean for all the classes of   customers that visit the station. If you click the "Continue" button, this issue is ignored.</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><em>Non exponential service time inside FCFS station StationX </em></p></td>
+    <td valign="top"><p class="Stile2">Warning</p></td>
+    <td valign="top" class="hcp2"><p>A few constraints apply   as for the admissible service time distributions. A FCFS station must have   exponentially distributed service time with the same mean for all the classes of   customers that visit the station. If you click the "Continue" button, this issue is ignored.</p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

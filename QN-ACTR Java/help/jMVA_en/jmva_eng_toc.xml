@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc version="1.0">
+ <tocitem text="Menu">
+  <tocitem text="File menu" target="menu_file_menu_htm" />
+  <tocitem text="Action menu" target="menu_action_menu_htm" />
+  <tocitem text="Help menu" target="menu_help_menu_htm" />
+  </tocitem>
+ <tocitem text="How to...">
+  <tocitem text="Insert a new model">
+   <tocitem text="Defining a new model" target="how_to_insert_a_new_model_defining_a_new_model_htm" />
+   <tocitem text="Step 1 - Classes" target="how_to_insert_a_new_model_step_1_-__htm" />
+   <tocitem text="Step 2 - Stations" target="how_to_insert_a_new_model_step_2_-_stations_htm" />
+   <tocitem text="Step 3 - Service demands (D)" target="how_to_insert_a_new_model_step_3_-_service_times_htm" />
+   <tocitem text="Step 3a - Service demands" target="how_to_insert_a_new_model_step_3a_-_service_demands_htm" />
+   <tocitem text="Step 3b - Service times and Visits" target="how_to_insert_a_new_model_step_3b_-_service_times_and_visits_htm" />
+   <tocitem text="Step 4 - Comment" target="how_to_insert_a_new_model_step_4_-_comments_htm" />
+   <tocitem text="End - Model Resolution" target="how_to_insert_a_new_model_end_-_confirmation_of_data_entered_htm" />
+   </tocitem>
+  <tocitem text="Modifing the current model">
+   <tocitem text="Modify the current model" target="how_to_modifing_the_current_model_modify_the_current_model_htm" />
+   </tocitem>
+  </tocitem>
+ <tocitem text="Glossary and Notation">
+  <tocitem text="Bibliography" target="glossary_and_notation_bibliography_htm" />
+  <tocitem text="Glossary" target="glossary_and_notation_glossary_htm" />
+  <tocitem text="Model File Format" target="glossary_and_notation_file_mva_format_htm" />
+  </tocitem>
+</toc>

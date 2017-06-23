@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<installation version="1.0">
+	<variables>
+		<!-- This automatically checks the "Create Desktop Shortcuts" button. Default value is "False". -->
+		<variable name="DesktopShortcutCheckboxEnabled" value="true"/>
+	</variables>
+	<!-- 
+        The info section.
+         -->
+	<info>
+		<appname>Java Modelling Tools</appname>
+		<appversion>@{jmt.version} version</appversion>
+		<!--
+		<authors>
+			<author name="Bertoli Marco"/>
+			<author name="Brambilla Davide"/>
+			<author name="Cattai Massimo"/>
+			<author name="Conti Andrea"/>
+			<author name="D'Aquino Francesco"/>
+			<author name="Dall'Orso Federico"/>
+			<author name="Di Mauro Ernesto"/>
+			<author name="Frontera Fabrizio"/>
+			<author name="Fumagalli Claudio"/>
+			<author name="Granata Federico"/>
+			<author name="Omini Stefano"/>
+			<author name="Radaelli Francesco"/>
+			<author name="Rizzo Cascio Fabio"/>
+			<author name="Zanzottera Andrea"/>
+
+			<author name="Marco Bertoli" email="bertoli@elet.polimi.it"/>
+		</authors>
+		-->
+		<url>http://jmt.sourceforge.net/</url>
+		<javaversion>1.5</javaversion>
+		<run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
+	</info>
+	<!-- 
+        The gui preferences indication.
+        Sets the installer window to 800x600. It will be able to change the size.
+    -->
+	<guiprefs width="800" height="600" resizable="yes"/>
+	<!-- 
+        The locale section.
+        Asks here to include the English and Italian langpacks.
+    -->
+	<locale>
+		<langpack iso3="eng"/>
+		<!-- 
+		<langpack iso3="ita"/>
+		<langpack iso3="deu"/>
+		<langpack iso3="fra"/>
+		<langpack iso3="spa"/>
+		-->
+	</locale>
+	
+	<!-- 
+        The resources section.
+        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+    -->
+	<resources>
+		<res id="LicencePanel.licence" src="License.txt"/>
+		<res id="HTMLInfoPanel.info" src="ReadMe.html"/>
+		<res id="Installer.image" src="PolitecnicoLogo.jpg"/>
+		<res id="shortcutSpec.xml" src="shortcutSpec.xml"/>
+		<res id="Unix_shortcutSpec.xml" src="Unix_shortcutSpec.xml"/>
+	</resources>
+	<native type="izpack" name="ShellLink.dll"/>
+	<native type="izpack" name="ShellLink_x64.dll" />
+	<!-- 
+        The panels section.
+        We indicate here which panels we want to use. The order will be respected.
+    -->
+	<panels>
+		<panel classname="HelloPanel"/>
+		<panel classname="HTMLInfoPanel"/>
+		<panel classname="LicencePanel"/>
+		<panel classname="TargetPanel"/>
+	<!--	<panel classname="PacksPanel"/>	-->
+		<panel classname="ShortcutPanel"/>
+		<panel classname="InstallPanel"/>
+		<panel classname="SimpleFinishPanel"/>
+	</panels>
+	<!-- 
+        The packs section.
+        We specify here our packs.
+    -->
+	<packs>
+		<pack name="jmt" required="yes">
+			<description>The Java Modelling Tools core files.</description>
+			<fileset dir="" targetdir="$INSTALL_PATH">
+				<include name="License.txt"/>
+				<include name="PolitecnicoLogo.jpg"/>
+				<include name="ReadMe.html"/>
+				<include name="*.ico"/>
+				<include name="*.png"/>
+				<include name="lib/**/*"/> 
+				<include name="examples/**/*"/>
+				<include name="manuals/**/*"/>
+<!--				<include name="xml/**/*"/> -->
+				<include name="license/**/*"/>
+				<include name="jwatFormats/**/*"/>
+				<include name="JMT.jar"/>
+				<include name="*.vbs"/>								
+			</fileset>
+		</pack>
+	</packs>
+</installation>
+

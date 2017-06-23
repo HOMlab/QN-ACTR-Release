@@ -1,0 +1,173 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+
+
+
+
+<head>
+<title>Define simulation parameters</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+<link href="../../default.css" rel="stylesheet" type="text/css"><style title="hcp" type="text/css">
+<!--
+p.hcp1 { text-align:Center; }
+-->
+</style>
+</head>
+<body>
+<p class="stile1">Define Simulation Parameters</p>
+
+<p class="stile2">_________________</p>
+
+<p>&nbsp;</p>
+
+<p>The <a href="define_simulation_parameters.htm#parameters">Simulation 
+ Parameters</a> and <a href="define_simulation_parameters.htm#state">Initial 
+ State</a> of the model are defined using the <b>Simulation</b> tab.</p>
+
+<p>&nbsp;</p>
+
+<p style="text-align: center; margin-left: 0px;" Align="center"><img src="Images/sim_tabs.gif"
+	x-maintain-ratio=TRUE
+	style="border: none;
+		float: none;
+		width: 474px;
+		height: 41px;
+		border-style: none;"
+		width=474
+		height=41
+		border=0></p>
+
+<p>&nbsp;</p>
+
+<p class="stile3">Simulation parameters:<a name=parameters
+										id=parameters></a></p>
+
+<blockquote>
+<p class="stile4">In the top section of this windows you can edit general
+simulation parameters.</p>
+</blockquote>
+
+<p Align="center" class="hcp1"><img src="Images/first_section.gif"
+	x-maintain-ratio=TRUE
+	style="width: 432px;
+		height: 183px;
+		float: none;
+		border-style: none;
+		border-style: none;"
+	width=432
+	height=183
+	border=0></p>
+
+<p Align="center" class="hcp1">&nbsp;</p>
+
+<ol>
+	
+<li class="kadov-p-cstile4">
+<p class="stile4"><em class="stile6" style="font-style: italic;">Simulation Seed:</em> 
+ The simulation seed is a number used by the simulation engine to generate
+pseudo-random numbers. As this numbers are pseudo-random, if you change the
+seed, you will obtain a different sequence of pseudo-random numbers.
+If a simulation is repeated using the same seed, the same sequence of
+pseudo-random numbers will be generated, thus leading to identical 
+results.</p>
+	
+<p class="stile4">The default value is random, which indicates that the
+simulation engine will pick a seed of its choice in a pseudo-random fashion
+each time it is started; deselect &quot;random&quot; and insert a number if
+you want a custom simulation.</p>
+	
+<p>&nbsp;</p>
+</li>
+	
+<li class="kadov-p-cstile4">
+<p class="stile4"><em class="stile6" style="font-style: italic;">Maximum duration (sec):</em> 
+It represents the maximum amount of time in seconds that the simulation will
+run. If the simulation ends before the maximum duration, the parameter is 
+ignored and does not affect the results.
+The default value is &quot;infinite&quot; deselect it and specify the 
+preferred maximum time if you do not want the simulation to run for a possibly 
+very long time. In this case, the simulation stops when the time limit
+is reached, although a solution may not be available yet.
+</p>
+	
+<p>&nbsp;</p>
+</li>
+	
+<li class="kadov-p"><p><em class="stile6" style="font-style: italic;">Maximum
+number of samples:</em> <span class="stile4">
+It is the greatest number of samples for each index that JSIM collects before
+ending the simulation. During a simulation, measurements can be stopped
+in case of:</span></p></li>
+	
+	<p>&nbsp;</p>
+	
+<p class="stile4">- Success, if the results have reached the required 
+ Confidence Interval and the Max Relative Error</p>
+	
+<p class="stile4">- Failure, if the simulation has analyzed the maximum 
+ number of samples but has not reached the required Confidence Interval
+or Max Relative Error</p>
+	
+<p class="stile4">- Failure, if timeout occurs before successfully
+calculating the final results.</p>
+	
+	<p>&nbsp;</p>
+	
+<p class="stile4">The default value for the maximum number of samples is
+500,000; you may increase it (for a more accurate simulation) o decrease it
+(for a faster simulation).</p>
+	
+	<p>&nbsp;</p>
+	
+<li class="kadov-p-cstile4"><p class="stile4"><em class="stile6" style="font-style: italic;">Representation 
+ Interval (sec):</em>
+This is the granularity at which results are plotted on the screen,
+i.e., the time interval before a new point is added to the graphs, as the
+simulation proceeds. 
+A large value will make the simulation to proceed slower, as the graphs 
+are updated less often. 
+Small values will provide an impression of 
+better &quot;responsiveness&quot; from the 
+simulation, as graphs are updated more frequently.
+</p></li>
+	
+	<p>&nbsp;</p>
+</ol>
+
+<p class="stile3">Initial state:<a name=state id=state></a></p>
+
+<blockquote>
+<p class="stile4">Initial state is the model situation at time 0, typically
+expressed by the number of customers in each station before starting 
+the simulation.
+<br>
+For closed customer classes, all jobs are initially allocated to
+their reference station. You can modify this allocation, as long as 
+the total number of jobs remains the one defined in the
+<a href="../Define_class/define_class.html#closed">Classes</a> tab. 
+<br>
+For open customer classes, it is possible to initialize each station with 
+any desired number of jobs.</p>
+
+<p class="stile4">The following table represents an example of an initial 
+ state of a model with three stations and two classes.</p>
+
+<p class="stile4">&nbsp;</p>
+
+<p Align="center" class="hcp1"><img src="Images/bottom_section.gif"
+	style="width: 333px;
+		height: 76px;
+		border-style: none;
+		border-style: none;"
+		width=333
+		height=76
+	border=0></p>
+
+<p class="hcp21">&nbsp;</p>
+</blockquote>
+
+</body>
+</html>

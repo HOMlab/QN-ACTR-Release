@@ -1,0 +1,104 @@
+body { 
+      font-family:arial; 
+      background-color:#ffffff;  }
+h1 { 
+    font-weight:bold; 
+    font-size:24.0pt; 
+    x-next-type:h1; 
+    font-family:"times new roman"  , serif; 
+    color:#0000cc;  }
+li.kadov-h1 { 
+             font-weight:bold; 
+             font-size:24.0pt; 
+             font-family:"times new roman"  , serif; 
+             color:#0000ff;  }
+h2 { 
+    font-weight:bold; 
+    font-size:16.0pt;  }
+li.kadov-h2 { 
+             font-weight:bold; 
+             font-size:16.0pt;  }
+h3 { 
+    font-weight:bold; 
+    font-size:14.0pt;  }
+li.kadov-h3 { 
+             font-weight:bold; 
+             font-size:14.0pt;  }
+h4 { 
+    font-weight:bold; 
+    font-size:16.0pt;  }
+li.kadov-h4 { 
+             font-weight:bold; 
+             font-size:16.0pt;  }
+h5 { 
+    font-weight:bold; 
+    font-size:10.0pt;  }
+li.kadov-h5 { 
+             font-weight:bold; 
+             font-size:10.0pt;  }
+h6 { 
+    font-weight:bold; 
+    font-size:8.0pt;  }
+li.kadov-h6 { 
+             font-weight:bold; 
+             font-size:8.0pt;  }
+p { 
+   font-family:"times new roman"  , times, serif; 
+   font-size:16.0pt; 
+   margin-top:1pt; 
+   margin-bottom:1pt;  }
+p.hcp1 { 
+        color:#000080; 
+        font-family:"times new roman"  , serif;  }
+p.hcp2 { 
+        font-family:"times new roman"  , serif; 
+        font-size:16pt;  }
+p.hcp3 { 
+        font-family:"times new roman"  , serif; 
+        font-size:16pt;  }
+li.kadov-p { 
+            font-size:16.0pt; 
+            margin-top:0pt; 
+            margin-bottom:0pt;  }
+a.expandspot { 
+              color:#008000; 
+              cursor:hand; 
+              font-style:italic; 
+              x-text-underline:off; 
+              x-text-overline:off; 
+              x-text-line-through:off; 
+              text-decoration:none none none;  }
+table { 
+       border:none; 
+       float:left; 
+       border-spacing:6px;  }
+span.expandtext { 
+                 font-style:italic; 
+                 font-weight:normal; 
+                 color:#ff0000;  }
+a.dropspot { 
+            cursor:hand; 
+            color:#008000; 
+            font-style:italic; 
+            x-text-underline:off; 
+            x-text-overline:off; 
+            x-text-line-through:off; 
+            text-decoration:none none none;  }
+a.glossterm { 
+             color:#800000; 
+             cursor:hand; 
+             font-style:italic; 
+             x-text-underline:off; 
+             x-text-overline:off; 
+             x-text-line-through:off; 
+             text-decoration:none none none;  }
+span.glosstext { 
+                font-style:italic; 
+                font-weight:normal; 
+                color:#0000ff;  }
+ol { 
+    margin-top:0px; 
+    margin-bottom:0px;  }
+ul { 
+    margin-top:0px; 
+    margin-bottom:0px;  }

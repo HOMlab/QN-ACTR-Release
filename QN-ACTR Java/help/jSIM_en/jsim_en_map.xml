@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+
+<map version="1.0">
+  <mapID target="introduction_to_jsim_introduction_to_jsim_html" url="Introduction_to_JSim/introduction_to_jsim.html" />
+  <mapID target="menu_action_menu_htm" url="Menu/action_menu.htm" />
+  <mapID target="menu_define_menu_htm" url="Menu/define_menu.htm" />
+  <mapID target="menu_file_menu_htm" url="Menu/file_menu.htm" />
+  <mapID target="menu_help_menu_htm" url="Menu/help_menu.htm" />
+  <mapID target="menu_simulation_menu_htm" url="Menu/simulation_menu.htm" />
+  <mapID target="menu_link_menu_about_jsim_htm" url="Menu/Link_Menu/About_JSIM.htm" />
+  <mapID target="menu_link_menu_back_htm" url="Menu/Link_Menu/Back.htm" />
+  <mapID target="menu_link_menu_default_parameters_htm" url="Menu/Link_Menu/Default_parameters.htm" />
+  <mapID target="menu_link_menu_import_in_jmva_htm" url="Menu/Link_Menu/Import_in_JMVA.htm" />
+  <mapID target="menu_link_menu_jsim_help_htm" url="Menu/Link_Menu/Jsim_help.htm" />
+  <mapID target="menu_link_menu_new_htm" url="Menu/Link_Menu/New.htm" />
+  <mapID target="menu_link_menu_next_htm" url="Menu/Link_Menu/Next.htm" />
+  <mapID target="menu_link_menu_open_htm" url="Menu/Link_Menu/Open.htm" />
+  <mapID target="menu_link_menu_pause_htm" url="Menu/Link_Menu/Pause.htm" />
+  <mapID target="menu_link_menu_quit_htm" url="Menu/Link_Menu/Quit.htm" />
+  <mapID target="menu_link_menu_results_htm" url="Menu/Link_Menu/Results.htm" />
+  <mapID target="menu_link_menu_save_htm" url="Menu/Link_Menu/Save.htm" />
+  <mapID target="menu_link_menu_save_as_htm" url="Menu/Link_Menu/Save_as.htm" />
+  <mapID target="menu_link_menu_start_simulation_htm" url="Menu/Link_Menu/Start_simulation.htm" />
+  <mapID target="menu_link_menu_stop_htm" url="Menu/Link_Menu/Stop.htm" />
+  <mapID target="how_to_create_a_new_model_defining_a_new_model_htm" url="How_to/Create_a_new_model/defining_a_new_model.htm" />
+  <mapID target="how_to_create_a_new_model_step_1_-_classes_htm" url="How_to/Create_a_new_model/Step_1_-_Classes.htm" />
+  <mapID target="how_to_create_a_new_model_step_2_-_stations_htm" url="How_to/Create_a_new_model/Step_2_-_Stations.htm" />
+  <mapID target="how_to_create_a_new_model_step_3_-_connections_htm" url="How_to/Create_a_new_model/Step_3_-_Connections.htm" />
+  <mapID target="how_to_create_a_new_model_step_4_-_station_parameters_htm" url="How_to/Create_a_new_model/Step_4_-_Station_parameters.htm" />
+  <mapID target="how_to_create_a_new_model_step_5_-_performance_indices_htm" url="How_to/Create_a_new_model/Step_5_-_Performance_indices.htm" />
+  <mapID target="how_to_create_a_new_model_step_6_-_reference_stations_htm" url="How_to/Create_a_new_model/Step_6_-_Reference_Stations.htm" />
+  <mapID target="how_to_create_a_new_model_step_7_-_finite_region_htm" url="How_to/Create_a_new_model/Step_7_-_Finite_Region.htm" />
+  <mapID target="how_to_create_a_new_model_step_8_-_simulation_htm" url="How_to/Create_a_new_model/step_8_-_simulation.htm" />
+  <mapID target="how_to_define_class_define_class_html" url="How_to/Define_class/define_class.html" />
+  <mapID target="how_to_define_class_distribution_html" url="How_to/Define_class/distribution.html" />
+  <mapID target="how_to_define_station_define_station_html" url="How_to/Define_station/define_station.html" />
+  <mapID target="how_to_define_station_sections_fork_section_html" url="How_to/Define_station/sections/fork_section.html" />
+  <mapID target="how_to_define_station_sections_queue_section_html" url="How_to/Define_station/sections/queue_section.html" />
+  <mapID target="how_to_define_station_sections_routing_section_html" url="How_to/Define_station/sections/routing_section.html" />
+  <mapID target="how_to_define_station_sections_service_section_html" url="How_to/Define_station/sections/service_section.html" />
+  <mapID target="how_to_define_connection_define_connection_htm" url="How_to/Define_Connection/Define_Connection.htm" />
+  <mapID target="how_to_define_station_parameters_define_station_parameters_htm" url="How_to/Define_station_parameters/Define_station_parameters.htm" />
+  <mapID target="how_to_define_performance_indices_define_performance_indices_html" url="How_to/Define_performance_indices/define_performance_indices.html" />
+  <mapID target="how_to_define_performance_indices_indices_html" url="How_to/Define_performance_indices/indices.html" />
+  <mapID target="how_to_define_reference_station_define_reference_stations_htm" url="How_to/Define_Reference_Station/Define_Reference_Stations.htm" />
+  <mapID target="how_to_define_finite_capacity_region_define_finite_capacity_regions_htm" url="How_to/Define_Finite_Capacity_Region/Define_Finite_Capacity_Regions.htm" />
+  <mapID target="how_to_define_simulation_parameters_define_simulation_parameters_htm" url="How_to/Define_simulation_parameters/define_simulation_parameters.htm" />
+  <mapID target="how_to_define_what_if_analysis_define_what_if_analysis_html" url="How_to/Define_what_if_analysis/define_what_if_analysis.html" />
+  <mapID target="how_to_import_in_jmva_import_in_jmva_html" url="How_to/Import_in_JMVA/import_in_jmva.html" />
+  <mapID target="how_to_modify_default_parameters_modifying_default_parameters_htm" url="How_to/Modify_default_parameters/modifying_default_parameters.htm" />
+  <mapID target="how_to_modify_the_current_model_modify_the_current_model_htm" url="How_to/Modify_the_current_model/modify_the_current_model.htm" />
+  <mapID target="how_to_start_simulation_error_warning_html" url="How_to/Start_simulation/error_warning.html" />
+  <mapID target="how_to_start_simulation_simulation_results_html" url="How_to/Start_simulation/simulation_results.html" />
+  <mapID target="how_to_start_simulation_start_simulation_html" url="How_to/Start_simulation/start_simulation.html" />
+  <mapID target="glossary_and_notation_bibliography_htm" url="Glossary_and_Notation/bibliography.htm" />
+  <mapID target="glossary_and_notation_glossary_htm" url="Glossary_and_Notation/glossary.htm" />
+  <mapID target="glossary_and_notation_file_jsim_format_htm" url="Glossary_and_Notation/file_jsim_format.htm" />
+  <mapID target="RemoteUrl3b92797c" url="http://jmt.sourceforge.net/JMVA.html" />
+</map>

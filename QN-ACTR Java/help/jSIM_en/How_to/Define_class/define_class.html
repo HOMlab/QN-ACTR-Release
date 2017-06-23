@@ -1,0 +1,234 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+
+<head>
+<title>Define Classes</title>
+<meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252">
+<meta name="generator" content="RoboHelp by eHelp Corporation www.ehelp.com">
+<link href="../../default.css" rel="stylesheet" type="text/css"><style title="hcp" type="text/css">
+<!--
+img.hcp1 { float:none; border-style:none; vertical-align:baseline; }
+img.hcp2 { border-style:none; vertical-align:baseline; }
+img.hcp3 { border-style:none; vertical-align:top; }
+img.hcp4 { float:none; border-style:none; }
+-->
+</style>
+</head>
+<body>
+<p class="stile1">Define Classes</p>
+
+<p class="stile2">_________________</p>
+
+<p class="stile4">&nbsp;</p>
+
+<p class="stile4">Customer classes identify different customer behavior
+and characteristics, such as the type (closed or open), the size of the 
+customer population (for closed classes) or the interarrival time distribution
+(for open classes). 
+<br>
+They can be set using the <b>Classes</b> tab during the creation of a new
+model.</p>
+
+<p class="stile4">&nbsp;</p>
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/define_class1.gif" name="immagini1" x-maintain-ratio="TRUE" style="width:440px; height:386px;" width="440" height="386" border="0" Align="bottom" class="hcp1"></p>
+
+<p class="stile4">&nbsp;</p>
+
+<p class="stile3">Adding a Class <a name=Add></a></p>
+<p class="stile4">&nbsp;</p>
+
+<blockquote>
+<p class="stile4">Classes must be explicitly added to the model, either one at
+a time by clicking the <img src="Images/button_addClass.gif" name="immagini2" style="width:115px; height:22px;" width="115" height="22" border="0" Align="bottom" class="hcp2"> button, or by  
+selecting directly the final number of classes desired in the form
+<img src="Images/button_NClass.gif" name="immagini3" style="width:113px; height:23px;" width="113" height="23" border="0" Align="bottom" class="hcp2">. 
+The newly added classes will be listed with deafult parameters.
+<br>
+Double click on the default name (ClassN) to change it. 
+<br>
+Each new class has a priority in the system.
+A smaller number indicates a lower priority. Default value is 0 
+and it can be changed by double clicking on the corresponding area.
+</p>
+
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p class="stile3">Defining the Class Type: Open Classes<a name=Open></a></p>
+
+<p class="stile4">&nbsp;</p>
+
+<blockquote>
+<p class="stile4">After adding a class and possibly changing its name
+and priority,
+you must choose the type of customers comprising the class. Classes
+are created Closed by default, so if you want an Open class, select
+the type Open in the menu</p>
+
+<p class="stile4">&nbsp;</p>
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/type_class.gif" name="immagini5" style="width:80px; height:69px;" width="80" height="69" border="0" Align="top" class="hcp3">
+
+<p class="stile4">&nbsp;</p>
+<p class="stile4"> The class characteristics looks like this now</p>
+
+<p class="stile4">&nbsp;</p>
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/open_class1.gif" name="immagini4" x-maintain-ratio="TRUE" style="width:444px; height:46px;" width="444" height="46" border="0" Align="bottom" class="hcp1"></p>
+
+
+<p class="stile4">&nbsp;</p>
+<p class="stile4">Open classes describe customer populations that vary 
+during time, therefore they are best characterized by the probability
+distribution of the interarrival time, rather than by a constant 
+number of customers.
+The default Interarrival Time Distribution is exp(1) (Exponential Distribution 
+ with &#955; =1).
+<br>
+To change the Interarrival Time Distribution click the Edit button</p>
+
+<p class="stile4">&nbsp;</p>
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/arrival_time_distribution1.gif" name="immagini6" style="width:216px; height:38px;" width="216" height="38" border="0" Align="top" class="hcp3"> </p>
+
+<p class="stile4" style="margin-bottom: 0cm;">&nbsp;</p>
+
+<p class="stile4" style="margin-bottom: 0cm;">The following window will appear</p>
+</blockquote>
+
+<blockquote>
+
+ <div Align="center">
+ <table x-use-null-cells
+		style="float: aligncenter;
+				width: 100%;
+				border-spacing: 0px;
+				border-spacing: 0px;"
+		cellspacing=0
+		width=100%>
+
+<tr style="width: 320px;">
+<td padding-left:
+	15px;
+	padding-top:
+	padding-right:
+	padding-bottom:
+	15px;&quot;>
+<p class="stile4"><img src="../Define_station/Images/erlang.gif"
+					style="width: 320px;
+							height: 400px;
+							border-style: none;
+							border-style: none;"
+					width=320
+					height=400
+					border=0></td>
+<td style="x-cell-content-align: top;
+			padding-left: 15px;
+			padding-top: 15px;
+			padding-right: 15px;
+			padding-bottom: 15px;"
+	valign=top>
+<p class="stile4" style="text-align: left;" Align="left">Click on the 
+Selected Distribution drop down menu to choose from any of the following
+distributions: </p>
+<ul>
+	
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="distribution.html#constant">Constant</a></p></li>
+	
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="distribution.html#erlang">Erlang</a><a href="distribution.html#erlang"> </a></p></li>
+	
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="distribution.html#exponential">Exponential</a></p></li>
+	
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="distribution.html#gamma">Gamma 
+ </a></p></li>
+	
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="distribution.html#hyperexp">Hyperexponential</a></p></li>
+	
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="distribution.html#normal">Normal 
+ </a></p></li>
+	
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="distribution.html#pareto">Pareto 
+ </a></p></li>
+	
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="distribution.html#poisson">Poisson 
+ </a></p></li>
+	
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="distribution.html#replayer">Replayer 
+ </a></p></li>
+	
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left; margin-bottom: 0cm;" Align="left"><a href="distribution.html#studentt">StudentT 
+ </a></p></li>
+	
+	<li class="kadov-p-cstile4"><p class="stile4" style="text-align: left;" Align="left"><a href="distribution.html#uniform">Uniform 
+ </a></p></li>
+</ul></td></tr>
+</table>
+</div>
+ <p>&nbsp;</p>
+</blockquote>
+
+<blockquote>
+<p class="stile4">In each case, it is possible to configure the distribution
+parameters as you wish, or use the default values. Parameters that are related
+among each other are automatically adjusted if one is modified (for example,
+the figure shows how for an Erlang distribution, if you set the 
+(alfa, r) pair, the (mean, c) pair is automatically adjusted to the correct
+value). 
+<br>
+The Replayer distribution allows you to provide data traces from files.
+<br>
+Click OK when you are done to return to Class parameters definition.
+</p>
+
+
+<p class="stile4">&nbsp;</p>
+<p class="stile4">The final step in defining a class is the definition of
+the Reference Station, i.e., that station in the model with respect to which
+the performance indices will be computed. For Open classes there is no
+choice since the Source station is the unchangeable default Reference Station
+used to compute System Throughput for all the Open classes.
+
+<p>&nbsp;</p>
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/reference_open1.gif" x-maintain-ratio="TRUE" style="width:368px; height:177px;" width="368" height="177" border="0" class="hcp4"></p>
+
+<p>&nbsp;</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p class="stile3">Defining the Class Type: Closed Classes<a name=Closed></a></p>
+
+<blockquote>
+<p>&nbsp;</p>
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/closed_class1.gif" name="immagini9" x-maintain-ratio="TRUE" style="width:414px; height:44px;" width="414" height="44" border="0" Align="bottom" class="hcp1"></p>
+
+<p>&nbsp;</p>
+
+<p class="stile4">Classes are created Closed by default, so there is not
+need to change the Type. Priority can be changed as in the Open class case.
+The population size is the parameter that characterizes a Closed class.
+It is fixed and does not change for the entire life of the system.
+By default is 1 and it can be changed by clicking on the corresponding
+area in the class properties matrix.<p>
+
+<p class="stile4">The final step is to define a Reference Station for the 
+class that will be used to compute the performance indices selected for
+the class. Use the Reference Station tab menu to select the Station.
+All stations but the sink can be 
+used as reference station for a closed class.</p>
+
+<p>&nbsp;</p>
+
+<p class="stile4" style="text-align: center;" Align="center"><img src="Images/reference_closed1.gif" x-maintain-ratio="TRUE" style="width:364px; height:216px;" width="364" height="216" border="0" class="hcp4"></p>
+
+
+</blockquote>
+
+<p>&nbsp;</p>
+
+</body>
+</html>

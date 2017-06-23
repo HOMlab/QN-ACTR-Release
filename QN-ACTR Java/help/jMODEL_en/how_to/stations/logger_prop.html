@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Edit Join properties</title>
+<link href="../../default.css" rel="stylesheet" type="text/css"><style type="text/css">
+<!--
+.Stile1 { color:#0000FF; }
+.Stile2 { color:#FF0000; }
+.Stile6 { color:#0000FF; font-style:italic; font-size:18pt; font-family:"Times New Roman" , Times, serif; }
+-->
+</style>
+<meta name="generator" content="Notepad">
+<meta name="author" content="Michael Fercu">
+</head>
+<body>
+<h1>Logger Properties <img src="../../image/topology/edit/logger_icon.gif" width="41" height="52" align="middle"></h1>
+<p>_______________________</p>
+<p>&nbsp;</p>
+<p>A logging station (a.k.a logger) reads information flowing through it and writes it to a file. &nbsp; In the simplest way, it is a tool to understand and debug &nbsp;the traffic flow moving through the interesting part(s) of the model. &nbsp; For convenience, the station works like a <A HREF="loadsplitter_prop.html">routing</A> station.</p>
+<br><br>
+Simply place the logger station into the model, choose the parameter and trace the data as it passes through the model.  By default
+<BR>
+<p>&nbsp;</p>
+<B><p class="Stile2">Set or change properties:</p></B>
+<p>The logger is a simple tool to place and use.  Double-click opens the configuration dialog:
+<p><img src="../../image/topology/edit/logger_editFull_sm.png" ></p>
+<BR>
+<p>The configuration properties of the Logger Section:<BR>
+<UL>
+<LI><B>Logging Options:</B>
+<UL>
+<LI>The Logfile's name <font color="gray">to use, either individual or merged (Logger0.csv or global.csv, respectively).</FONT>
+<LI>The information to log (fields): Logger Name, Job Arrival Time (simulation units), unique Job ID, defined Class ID, Interarrival time of same class, Interarrival time of any class.  These fields are found in the next section.
+</UL>
+<LI><B>Logfile Options:</B></LI>
+<UL>
+<LI>Browse button<font color="gray">: allows changing the directory where logfiles are stored.</FONT>
+<LI>Overwrite <font color="gray"> method to use when the logfile exists, and a new simulation needs to overwrite the file.  Replace overwrites the file, append adds data to the end of the file.</FONT>
+<LI>Delimiter <font color="gray">chooses the character to separate between .</FONT>
+</UL>
+<LI><B>Status</B><font color="gray"> displays the path and file-status of the logfile that is going to be written.</FONT>
+</UL></p>
+<BR>
+<p>The configuration properties of the Routing Section are described in the <A HREF="loadsplitter_prop.html">Routing Station</A>????.<BR>
+<BR>
+<B><p class="Stile2">Operation:</p></B>
+
+<p>Once the logger is configured, running a simulation produces a logfile with the chosen fields. An example of logfile output:</p>
+<code>
+LOGGERNAME;TIMESTAMP;JOBID;JOBCLASS;TIMEELAPSED_SAMECLASS;TIMEELAPSED_ANYCLASS<BR>
+Logger0;0.199;1;Class0;0.000;0.199<BR>
+Logger0;0.559;2;Class0;0.341;0.341<BR>
+</code>
+<p>&nbsp;</p>
+<B><p class="Stile2">Fields:</p></B>
+<p>As messages pass through the logger from one station to another, the logger can log the following information about the messages:</p>
+
+<UL>
+<LI class="Stile6"> Logger Name</li><font color="gray">, the name of the logger where the message occured. (e.g. Logger0)</FONT><BR>
+<LI class="Stile6"> Job arrival time<font color="gray">, this timestamp marks the current simulation time from start of simulation (not seconds).</FONT><BR>
+<LI class="Stile6"> Job ID<font color="gray">, the auto-generated unique sequence number of the message (e.g. 1,2,3...).</FONT><BR>
+<LI class="Stile6"> Class ID<font color="gray">, the name of "customer class" of message (e.g. Class0).</FONT><BR>
+<LI class="Stile6"> Interarrival time (same class)<font color="gray">, is a time difference between when the same customer class passes through the logger.</FONT><BR>
+<LI class="Stile6"> Interarrival time (any class)<font color="gray">, is a time difference between when any other message passes through the logger.</FONT><BR>
+</UL>
+<BR><BR>
+
+</body>
+</html>
