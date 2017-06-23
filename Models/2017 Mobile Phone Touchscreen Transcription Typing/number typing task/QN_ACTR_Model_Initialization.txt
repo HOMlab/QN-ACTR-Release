@@ -1,0 +1,784 @@
+;; 2017 Mobile Phone Touchscreen Transcription Typing - number typing tasks
+;; comment symbols are ; and #| ... |#, same as ACT-R (Lisp)
+;; For questions and comments, please send to Shi Cao (shi.cao@uwaterloo.ca).
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Task definition ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+(use_task_dbt_template   
+:method    	discrete_display_feedback_two_stages_method
+:response_terminates_display  	nil	;;t by default  
+
+:reinitialize_intentional_module_before_each_trial  t
+:reset_vision_module_before_each_trial t  
+)
+
+(add_trials_from_discrete_display_feedback_two_stages_method
+	:add_number_of_days		1
+	:add_number_of_blocks_per_day   1
+	:add_number_of_trials_per_block   80			;; how many trials to run. 
+	:display_and_response_duration   		(10) 		;; (-1.0) by default   ; duration of each trial, 10 second as in the human study
+
+;; full random numbers for each trial
+	( :item_type   display_item_visual_text
+	:visual_text   ( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0")
+	:display_item_screen_location_x  (90)	
+	:display_item_screen_location_y  (165)
+	:text_randomization	with_replacement
+	)
+	( :item_type   display_item_visual_text
+	:visual_text   ( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0")
+	:display_item_screen_location_x  (100)	
+	:display_item_screen_location_y  (165)
+	:text_randomization	with_replacement
+	)
+	( :item_type   display_item_visual_text
+	:visual_text   ( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0")
+	:display_item_screen_location_x  (110)	
+	:display_item_screen_location_y  (165)
+	:text_randomization	with_replacement
+	)
+( :item_type   display_item_visual_text
+	:visual_text   ( "-")
+	:display_item_screen_location_x  (125)	
+	:display_item_screen_location_y  (165)
+	)
+
+	( :item_type   display_item_visual_text
+	:visual_text   ( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0")
+	:display_item_screen_location_x  (140)	
+	:display_item_screen_location_y  (165)
+	:text_randomization	with_replacement
+	)
+        ( :item_type   display_item_visual_text
+	:visual_text   ( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0")
+	:display_item_screen_location_x  (150)	
+	:display_item_screen_location_y  (165)
+	:text_randomization	with_replacement
+	)
+	( :item_type   display_item_visual_text
+	:visual_text   ( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0")
+	:display_item_screen_location_x  (160)	
+	:display_item_screen_location_y  (165)
+	:text_randomization	with_replacement
+	)
+( :item_type   display_item_visual_text
+	:visual_text   ( "-")
+	:display_item_screen_location_x  (175)	
+	:display_item_screen_location_y  (165)
+	)
+
+        ( :item_type   display_item_visual_text
+	:visual_text   ( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0")
+	:display_item_screen_location_x  (190)	
+	:display_item_screen_location_y  (165)
+	:text_randomization	with_replacement
+	)
+        ( :item_type   display_item_visual_text
+	:visual_text   ( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0")
+	:display_item_screen_location_x  (200)	
+	:display_item_screen_location_y  (165)
+	:text_randomization	with_replacement
+	)
+        ( :item_type   display_item_visual_text
+	:visual_text   ( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0")
+	:display_item_screen_location_x  (210)	
+	:display_item_screen_location_y  (165)
+	:text_randomization	with_replacement
+	)
+        ( :item_type   display_item_visual_text
+	:visual_text   ( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0")
+	:display_item_screen_location_x  (220)	
+	:display_item_screen_location_y  (165)
+	:text_randomization	with_replacement
+	)
+
+
+;; display the buttons
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "send"  )
+	:button_click_event	send_tapped
+	:display_item_screen_location_x  (526) 
+	:display_item_screen_location_y  (491) 	
+	:display_item_width		(164)	;; (20) by default
+	:display_item_height		(64)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "1"  )
+	:button_click_event	1_tapped
+	:display_item_screen_location_x  (30) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "2"  )
+	:button_click_event	2_tapped
+	:display_item_screen_location_x  (93) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "3"  )
+	:button_click_event	3_tapped
+	:display_item_screen_location_x  (156) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "4"  )
+	:button_click_event	4_tapped
+	:display_item_screen_location_x  (219) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "5"  )
+	:button_click_event	5_tapped
+	:display_item_screen_location_x  (282) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "6"  )
+	:button_click_event	6_tapped
+	:display_item_screen_location_x  (345) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "7"  )
+	:button_click_event	7_tapped
+	:display_item_screen_location_x  (408) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "8"  )
+	:button_click_event	8_tapped
+	:display_item_screen_location_x  (471) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "9"  )
+	:button_click_event	9_tapped
+	:display_item_screen_location_x  (534) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "0"  )
+	:button_click_event	0_tapped
+	:display_item_screen_location_x  (597) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+)  
+
+(use_predefined_model_setup		touch_screen_typing)  ; this will trigger specific codes, to see them, search for "touch_screen_typing" in the java codes
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Mind definition ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+;;
+;; For task-specific knowledge in the model, including declarative chunks, production rules, and parameters,
+;;
+;;
+
+(sgp :v t :show-focus t )
+(sgp :visual-finst-span 20)     ;; use a large enough number to allow vision module to scan all the number without rescanning old ones
+(start-right-hand-at-touch-screenXY 228 711)  ;; move-hand-touch use right hand
+
+(chunk-type goal-mobile-typing state typing-letter)
+(chunk-type digit-series  d1 d2 d3 d4)            ; store each chunk of digits, e.g., a phone number with three chunks xxx-xxx-xxxx, for the first two chunks with only 3 digits, d4 will be "-"
+
+(add-dm 
+	(type-number-goal isa goal-mobile-typing state start)
+)
+
+(goal-focus type-number-goal)
+
+
+;;reading a single-digit at a time.
+
+#|
+the flow of production rules:
+
+ create-imaginal-chunk
+ find-unattended-digit
+ attend-digit
+ encode-digit-d1  or d2  or d3  (go back to find-unattended-digit) , or d4 (continue to typing-digit-start-d1)
+ typing-digit-start-d1, d2, d3, or d4
+ find-key-1~0 or send
+ attend-key-and-move-finger  
+ tap
+ type-next-digit-xx, (go back to typing-digit-start-d2, d3, d4) or (continue to read-next-digit-group)
+ read-next-digit-group , (go back to find-unattended-digit)
+ or tap-send, (go back to create-imaginal-chunk)
+ or trial-done
+
+|#
+
+(P create-imaginal-chunk
+   =goal>
+      ISA         goal-mobile-typing
+      state       start
+   ?imaginal>
+	buffer	empty
+   ?imaginal>
+	state   free
+ ==>
+   +imaginal>
+	isa	digit-series
+)
+
+(P find-unattended-digit 
+   =goal>
+      ISA         goal-mobile-typing
+      state       start
+   ?imaginal>
+	- buffer	empty
+ ==>
+   +visual-location>
+      ISA         visual-location
+      :attended    nil	
+	screen-y	lowest   ;; first consider screen-y
+	screen-x	lowest
+
+   =goal>
+      state       find-location
+)
+
+(P attend-digit 
+   =goal>
+      ISA         goal-mobile-typing
+      state       find-location
+   =visual-location>
+      ISA         visual-location   
+   ?visual>
+      state        free   
+==>
+   +visual>
+      ISA         move-attention
+      screen-pos  =visual-location
+   =goal>
+      state       attend
+)
+
+
+(P encode-digit-d1 
+   =goal>
+      ISA         goal-mobile-typing
+      state       attend
+   =visual>
+      ISA         text
+      value       =num
+   =imaginal>
+	isa	digit-series	
+	d1	nil
+==>
+   =goal>
+      state       start
+   =imaginal>
+	d1	=num
+   +visual> 
+      isa clear   ;;disable re-encoding, -visual> or strict harvesting can clear visual buffer, but cannot clear last attended info to disable re-encoding.
+)
+
+(P encode-digit-d2  
+   =goal>
+      ISA         goal-mobile-typing
+      state       attend
+   =visual>
+      ISA         text
+      value       =num
+   =imaginal>
+	isa	digit-series	
+	- d1	nil
+	d2	nil
+==>
+   =goal>
+      state       start
+   =imaginal>
+	d2	=num
+   +visual> 
+      isa clear   ;;disable re-encoding, -visual> or strict harvesting can clear visual buffer, but cannot clear last attended info to disable re-encoding.
+)
+
+(P encode-digit-d3  
+   =goal>
+      ISA         goal-mobile-typing
+      state       attend
+   =visual>
+      ISA         text
+      value       =num
+   =imaginal>
+	isa	digit-series	
+	- d2	nil
+	d3	nil
+==>
+   =goal>
+      state       start
+   =imaginal>
+	d3	=num
+   +visual> 
+      isa clear   ;;disable re-encoding, -visual> or strict harvesting can clear visual buffer, but cannot clear last attended info to disable re-encoding.
+)
+
+(P encode-digit-d4   
+   =goal>
+      ISA         goal-mobile-typing
+      state       attend
+   =visual>
+      ISA         text
+      value       =num
+   =imaginal>
+	isa	digit-series	
+	- d3	nil
+	d4	nil
+==>
+   =goal>
+      state       typing-start
+   =imaginal>
+	d4	=num
+   +visual> 
+      isa clear   ;;disable re-encoding, -visual> or strict harvesting can clear visual buffer, but cannot clear last attended info to disable re-encoding.
+)
+
+
+(p typing-digit-start-d1  
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing-start
+   =imaginal>
+	isa	digit-series	
+	d1	=num
+==>
+   =imaginal>  ;; prevent strict harvesting
+   =goal>
+	state 		typing
+	typing-letter	=num
+)
+
+(p typing-digit-start-d2 
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing-start
+   =imaginal>
+	isa	digit-series	
+	d1	nil
+	d2	=num
+==>
+   =imaginal>  ;; prevent strict harvesting
+   =goal>
+	state 		typing
+	typing-letter	=num
+)
+
+(p typing-digit-start-d3 
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing-start
+   =imaginal>
+	isa	digit-series	
+	d2	nil
+	d3	=num
+==>
+   =imaginal>  ;; prevent strict harvesting
+   =goal>
+	state 		typing
+	typing-letter	=num
+)
+
+(p typing-digit-start-d4  
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing-start
+   =imaginal>
+	isa	digit-series	
+	d3	nil
+	d4	=num
+==>
+   =imaginal>  ;; prevent strict harvesting
+   =goal>
+	state 		typing
+	typing-letter	=num
+)
+
+
+(P find-key-1
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"1"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	30
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-2
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"2"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	93
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-3
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"3"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	156
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-4
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"4"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	219
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-5
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"5"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	282
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-6
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"6"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	345
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-7
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"7"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	408
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-8
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"8"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	471
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-9
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"9"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	534
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-0
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"0"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	597
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-send
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"send"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	526
+	screen-y	491
+
+   =goal>
+      state       find-key-location
+)
+
+(P attend-key-and-move-finger   
+   =goal>
+      ISA         goal-mobile-typing
+      state       find-key-location
+   =visual-location>
+      ISA         visual-location   
+   ?visual>
+      state        free   
+
+    ?manual>                 
+      preparation  free 
+
+==>
+   +visual>
+      ISA         move-attention
+      screen-pos  =visual-location
+    +manual>
+      isa      move-hand-touch
+      hand	right
+      loc      =visual-location
+   =goal>
+      state       tap
+)
+
+(p tap
+   
+    =goal>
+      isa      goal-mobile-typing
+     state    tap
+
+;; here, don't need to check for ?manual> state, because QN mechanism allows the motor module to queue +manual> actions.
+
+==>
+
+  +manual>
+	
+	isa tap
+    
+        hand right
+
+        finger index
+
+  =goal>
+
+	state key-tapped
+
+   +visual-location>
+      ISA         visual-location
+	kind	text		 
+      	screen-x	282         ;; a solution for hand reset to default home location in read-next-digit-group
+	screen-y	711
+)
+
+
+
+(p type-next-digit-d2 
+   =goal>
+      ISA         goal-mobile-typing
+      state       key-tapped
+      typing-letter	=num
+   =imaginal>
+	isa	digit-series	
+	d1	=num
+==>
+   =imaginal>
+	d1	nil
+   =goal>
+      state       typing-start
+      typing-letter	nil
+)
+
+(p type-next-digit-d3
+   =goal>
+      ISA         goal-mobile-typing
+      state       key-tapped
+      typing-letter	=num
+   =imaginal>
+	isa	digit-series	
+	d1	nil
+	d2	=num
+==>
+   =imaginal>
+	d2	nil
+   =goal>
+      state       typing-start
+      typing-letter	nil
+)
+
+(p type-next-digit-d4
+   =goal>
+      ISA         goal-mobile-typing
+      state       key-tapped
+      typing-letter	=num
+   =imaginal>
+	isa	digit-series	
+	d1	nil
+	d2	nil
+	d3	=num
+	- d4	"-"
+==>
+   =imaginal>
+	d3	nil
+   =goal>
+      state       typing-start
+      typing-letter	nil
+)
+
+(p read-next-digit-group  
+   =goal>
+      ISA         goal-mobile-typing
+      state       key-tapped
+      typing-letter	=num
+   =imaginal>
+	isa	digit-series	
+	d1	nil
+	d2	nil
+	d3	=num
+	d4	"-"
+
+;; here, don't need to check for ?manual> state, because QN mechanism allows the motor module to queue +manual> actions.
+
+   =visual-location>
+      ISA         visual-location  
+
+==>
+   =imaginal>
+	d3	nil
+	d4	nil
+
+   =goal>
+      state       start
+
+    +manual>
+      isa      move-hand-touch
+      hand	right
+      loc      =visual-location
+)
+
+(p tap-send
+   =goal>
+      ISA         goal-mobile-typing
+      state       key-tapped
+      typing-letter	=num
+   =imaginal>
+	isa	digit-series	
+	d1	nil
+	d2	nil
+	d3	nil
+	d4	=num
+==>
+   =imaginal>
+	d4	nil
+   =goal>
+      state       typing
+      typing-letter	"send"
+)
+
+
+(p trial-done
+   =goal>
+      ISA         goal-mobile-typing
+      state       key-tapped
+      typing-letter	"send"
+   =imaginal>
+	isa	digit-series	
+==>
+   =imaginal>
+	d1	nil
+	d2	nil
+	d3	nil
+	d4	nil
+   -goal>
+)
+
+
+
+

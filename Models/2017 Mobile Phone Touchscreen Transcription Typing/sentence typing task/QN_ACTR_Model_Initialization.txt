@@ -1,0 +1,1856 @@
+;; 2017 Mobile Phone Touchscreen Transcription Typing - sentence typing tasks
+;; comment symbols are ; and #| ... |#, same as ACT-R (Lisp)
+;; For questions and comments, please send to Shi Cao (shi.cao@uwaterloo.ca).
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Task definition ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+(use_task_dbt_template   
+:method    	discrete_display_feedback_two_stages_method
+:response_terminates_display  	nil	;;t by default  
+
+:reinitialize_intentional_module_before_each_trial  t
+:reset_vision_module_before_each_trial t  
+)
+
+(add_trials_from_discrete_display_feedback_two_stages_method
+	:add_number_of_days		1
+	:add_number_of_blocks_per_day   1
+	:add_number_of_trials_per_block   80			;; how many trials to run. 
+	:display_and_response_duration   		(20) 		;; (-1.0) by default   ; duration of each trial, 20 second estimated to be able to complete sentence typing
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( 
+
+"my watch fell in the water.\n"
+"prevailing wind from the east.\n"
+"never too rich and never too thin.\n"
+"breathing is difficult.\n"
+"I can see the rings on Saturn.\n"
+"physics and chemistry are hard.\n"
+"my bank account is overdrawn.\n"
+"elections bring out the best.\n"
+"we are having spaghetti.\n"
+"time to go shopping.\n"
+"a problem with the engine.\n"
+"elephants are afraid of mice.\n"
+"my favorite place to visit.\n"
+"three two one zero blast off.\n"
+"my favorite subject is psychology.\n"
+"circumstances are unacceptable.\n"
+"watch out for low flying objects.\n"
+"if at first you do not succeed.\n"
+"please provide your date of birth.\n"
+"we run the risk of failure.\n"
+"prayer in schools offends some.\n"
+"he is just like everyone else.\n"
+"great disturbance in the force.\n"
+"love means many things.\n"
+"you must be getting old.\n"
+"the world is a stage.\n"
+"can I skate with sister today.\n"
+"neither a borrower nor a lender be.\n"
+"one heck of a question.\n"
+"question that must be answered.\n"
+"beware the ides of March.\n"
+"double double toil and trouble.\n"
+"the power of denial.\n"
+"I agree with you.\n"
+"do not say anything.\n"
+"play it again Sam.\n"
+"the force is with you.\n"
+"you are not a jedi yet.\n"
+"an offer you cannot refuse.\n"
+"are you talking to me.\n"
+"yes you are very smart.\n"
+"all work and no play.\n"
+"hair gel is very greasy.\n"
+"Valium in the economy size.\n"
+"the facts get in the way.\n"
+"the dreamers of dreams.\n"
+"did you have a good time.\n"
+"space is a high priority.\n"
+"you are a wonderful example.\n"
+"do not squander your time.\n"
+"do not drink too much.\n"
+"take a coffee break.\n"
+"popularity is desired by all.\n"
+"the music is better than it sounds.\n"
+"starlight and dewdrop.\n"
+"the living is easy.\n"
+"fish are jumping.\n"
+"the cotton is high.\n"
+"drove my chevy to the levee.\n"
+"but the levee was dry.\n"
+"I took the rover from the shop.\n"
+"movie about a nutty professor.\n"
+"come and see our new car.\n"
+"coming up with killer sound bites.\n"
+"I am going to a music lesson.\n"
+"the opposing team is over there.\n"
+"soon we will return from the city.\n"
+"I am wearing a tie and a jacket.\n"
+"the quick brown fox jumped.\n"
+"all together in one big pile.\n"
+"wear a crown with many jewels.\n"
+"there will be some fog tonight.\n"
+"I am allergic to bees and peanuts.\n"
+"he is still on our team.\n"
+"the dow jones index has risen.\n"
+"my preferred treat is chocolate.\n"
+"the king sends you to the tower.\n"
+"we are subjects and must obey.\n"
+"mom made her a turtleneck.\n"
+"goldilocks and the three bears.\n"
+"we went grocery shopping.\n"
+"the assignment is due today.\n"
+"what you see is what you get.\n"
+"for your information only.\n"
+"a quarter of a century.\n"
+"the store will close at ten.\n"
+"head shoulders knees and toes.\n"
+"vanilla flavored ice cream.\n"
+"frequently asked questions.\n"
+"round robin scheduling.\n"
+"information super highway.\n"
+"my favorite web browser.\n"
+"the laser printer is jammed.\n"
+"all good boys deserve fudge.\n"
+"the second largest country.\n"
+"call for more details.\n"
+"just in time for the party.\n"
+"have a good weekend.\n"
+"video camera with a zoom lens.\n"
+"what a monkey sees a monkey will do.\n"
+"that is very unfortunate.\n"
+"the back yard of our house.\n"
+"this is a very good idea.\n"
+"reading week is just about here.\n"
+"our fax number has changed.\n"
+"thank you for your help.\n"
+"no exchange without a bill.\n"
+"the early bird gets the worm.\n"
+"buckle up for safety.\n"
+"this is too much to handle.\n"
+"protect your environment.\n"
+"world population is growing.\n"
+"the library is closed today.\n"
+"Mary had a little lamb.\n"
+"teaching services will help.\n"
+"we accept personal checks.\n"
+"this is a non profit organization.\n"
+"user friendly interface.\n"
+"healthy food is good for you.\n"
+"hands on experience with a job.\n"
+"this watch is too expensive.\n"
+"the postal service is very slow.\n"
+"communicate through email.\n"
+"the capital of our nation.\n"
+"travel at the speed of light.\n"
+"I do not fully agree with you.\n"
+"gas bills are sent monthly.\n"
+"earth quakes are predictable.\n"
+"life is but a dream.\n"
+"take it to the recycling depot.\n"
+"sent this by registered mail.\n"
+"fall is my favorite season.\n"
+"a fox is a very smart animal.\n"
+"the kids are very excited.\n"
+"parking lot is full of trucks.\n"
+"my bike has a flat tire.\n"
+"do not walk too quickly.\n"
+"a duck quacks to ask for food.\n"
+"limited warranty of two years.\n"
+"the four seasons will come.\n"
+"the sun rises in the east.\n"
+"it is very windy today.\n"
+"do not worry about this.\n"
+"dashing through the snow.\n"
+"want to join us for lunch.\n"
+"stay away from strangers.\n"
+"accompanied by an adult.\n"
+"see you later alligator.\n"
+"make my day you sucker.\n"
+"I can play much better now.\n"
+"she wears too much makeup.\n"
+"my bare face in the wind.\n"
+"batman wears a cape.\n"
+"I hate baking pies.\n"
+"lydia wants to go home.\n"
+"win first prize in the contest.\n"
+"freud wrote of the ego.\n"
+"I do not care if you do that.\n"
+"always cover all the bases.\n"
+"nobody cares anymore.\n"
+"can we play cards tonight.\n"
+"get rid of that immediately.\n"
+"I watched blazing saddles.\n"
+"the sum of the parts.\n"
+"they love to yap about nothing.\n"
+"peek out the window.\n"
+"be home before midnight.\n"
+"he played a pimp in that movie.\n"
+"I skimmed through your proposal.\n"
+"he was wearing a sweatshirt.\n"
+"no more war no more bloodshed.\n"
+"toss the ball around.\n"
+"I will meet you at noon.\n"
+"I want to hold your hand.\n"
+"the children are playing.\n"
+"superman never wore a mask.\n"
+"I listen to the tape everyday.\n"
+"he is shouting loudly.\n"
+"correct your diction immediately.\n"
+"seasoned golfers love the game.\n"
+"he cooled off after she left.\n"
+"my dog sheds his hair.\n"
+"join us on the patio.\n"
+"these cookies are so amazing.\n"
+"I can still feel your presence.\n"
+"the dog will bite you.\n"
+"a most ridiculous thing.\n"
+"where did you get that tie.\n"
+"what a lovely red jacket.\n"
+"do you like to shop on Sunday.\n"
+"I spilled coffee on the carpet.\n"
+"the largest of the five oceans.\n"
+"shall we play a round of cards.\n"
+"olympic athletes use drugs.\n"
+"my mother makes good cookies.\n"
+"do a good deed to someone.\n"
+"quick there is someone knocking.\n"
+"flashing red light means stop.\n"
+"sprawling subdivisions are bad.\n"
+"where did I leave my glasses.\n"
+"on the way to the cottage.\n"
+"a lot of chlorine in the water.\n"
+"do not drink the water.\n"
+"my car always breaks in the winter.\n"
+"santa claus got stuck.\n"
+"public transit is much faster.\n"
+"zero in on the facts.\n"
+"make up a few more phrases.\n"
+"my fingers are very cold.\n"
+"rain rain go away.\n"
+"bad for the environment.\n"
+"universities are too expensive.\n"
+"the price of gas is high.\n"
+"the winner of the race.\n"
+"we drive on parkways.\n"
+"we park in driveways.\n"
+"go out for some pizza and beer.\n"
+"effort is what it will take.\n"
+"where can my little dog be.\n"
+"if you were not so stupid.\n"
+"not quite so smart as you think.\n"
+"do you like to go camping.\n"
+"this person is a disaster.\n"
+"the imagination of the nation.\n"
+"universally understood to be wrong.\n"
+"listen to five hours of opera.\n"
+"an occasional taste of chocolate.\n"
+"victims deserve more redress.\n"
+"the protesters blocked all traffic.\n"
+"the acceptance speech was boring.\n"
+"work hard to reach the summit.\n"
+"a little encouragement is needed.\n"
+"stiff penalty for staying out late.\n"
+"the pen is mightier than the sword.\n"
+"exceed the maximum speed limit.\n"
+"in sharp contrast to your words.\n"
+"this leather jacket is too warm.\n"
+"consequences of a wrong turn.\n"
+"this mission statement is baloney.\n"
+"you will loose your voice.\n"
+"every apple from every tree.\n"
+"are you sure you want this.\n"
+"the fourth edition was better.\n"
+"this system of taxation.\n"
+"beautiful paintings in the gallery.\n"
+"a yard is almost as a meter.\n"
+"we missed your birthday.\n"
+"coalition governments never work.\n"
+"destruction of the rain forest.\n"
+"I like to play tennis.\n"
+"acutely aware of her good looks.\n"
+"you want to eat your cake.\n"
+"machinery is too complicated.\n"
+"a glance in the right direction.\n"
+"I just cannot figure this out.\n"
+"please follow the guidelines.\n"
+"an airport is a very busy place.\n"
+"mystery of the lost lagoon.\n"
+"is there any indication of this.\n"
+"the chamber makes important decisions.\n"
+"this phenomenon will never occur.\n"
+"obligations must be met first.\n"
+"valid until the end of the year.\n"
+"file all complaints in writing.\n"
+"tickets are very expensive.\n"
+"a picture is worth many words.\n"
+"this camera takes nice photographs.\n"
+"it looks like a shack.\n"
+"the dog buried the bone.\n"
+"the daring young man.\n"
+"this equation is too complicated.\n"
+"express delivery is very fast.\n"
+"I will put on my glasses.\n"
+"a touchdown in the last minute.\n"
+"the treasury department is broke.\n"
+"a good response to the question.\n"
+"well connected with people.\n"
+"the bathroom is good for reading.\n"
+"the generation gap gets wider.\n"
+"chemical spill took forever.\n"
+"prepare for the exam in advance.\n"
+"interesting observation was made.\n"
+"bank transaction was not registered.\n"
+"your etiquette needs some work.\n"
+"we better investigate this.\n"
+"stability of the nation.\n"
+"house with new electrical panel.\n"
+"our silver anniversary is coming.\n"
+"the presidential suite is very busy.\n"
+"the punishment should fit the crime.\n"
+"sharp cheese keeps the mind sharp.\n"
+"the registration period is over.\n"
+"you have my sympathy.\n"
+"the objective of the exercise.\n"
+"historic meeting without a result.\n"
+"very reluctant to enter.\n"
+"good at addition and subtraction.\n"
+"six daughters and seven sons.\n"
+"a thoroughly disgusting thing to say.\n"
+"sign the withdrawal slip.\n"
+"relations are very strained.\n"
+"the minimum amount of time.\n"
+"a very traditional way to dress.\n"
+"the aspirations of a nation.\n"
+"medieval times were very hard.\n"
+"a security force of eight thousand.\n"
+"there are winners and losers.\n"
+"the voters turfed him out.\n"
+"pay off a mortgage for a house.\n"
+"the collapse of the Roman empire.\n"
+"did you see that spectacular explosion.\n"
+"keep receipts for all your expenses.\n"
+"the assault took six months.\n"
+"get your priorities in order.\n"
+"traveling requires a lot of fuel.\n"
+"longer than a football field.\n"
+"a good joke deserves a good laugh.\n"
+"the union will go on strike.\n"
+"never mix religion and politics.\n"
+"interactions between men and women.\n"
+"where did you get such a silly idea.\n"
+"it should be sunny tomorrow.\n"
+"a psychiatrist will help you.\n"
+"you should visit a doctor.\n"
+"you must make an appointment.\n"
+"the fax machine is broken.\n"
+"players must know all the rules.\n"
+"a dog is the best friend of a man.\n"
+"would you like to come to my house.\n"
+"February has an extra day.\n"
+"do not feel too bad about it.\n"
+"this library has many books.\n"
+"construction makes traveling difficult.\n"
+"he called seven times.\n"
+"that is a very odd question.\n"
+"a feeling of complete exasperation.\n"
+"we must redouble our efforts.\n"
+"no kissing in the library.\n"
+"that agreement is rife with problems.\n"
+"vote according to your conscience.\n"
+"my favourite sport is racketball.\n"
+"sad to hear that news.\n"
+"the gun discharged by accident.\n"
+"one of the poorest nations.\n"
+"the algorithm is too complicated.\n"
+"your presentation was inspiring.\n"
+"that land is owned by the government.\n"
+"burglars never leave their business card.\n"
+"the fire blazed all weekend.\n"
+"if diplomacy does not work.\n"
+"please keep this confidential.\n"
+"the rationale behind the decision.\n"
+"the cat has a pleasant temperament.\n"
+"our housekeeper does a thorough job.\n"
+"her majesty visited our country.\n"
+"handicapped persons need consideration.\n"
+"these barracks are big enough.\n"
+"sing the gospel and the blues.\n"
+"he underwent triple bypass surgery.\n"
+"the ropes of a new organization.\n"
+"peering through a small hole.\n"
+"rapidly running short on words.\n"
+"it is difficult to concentrate.\n"
+"give me one spoonful of coffee.\n"
+"two or three cups of coffee.\n"
+"just like it says on the can good.\n"
+"companies announce a merger.\n"
+"electric cars need big fuel cells.\n"
+"the plug does not fit the socket.\n"
+"drugs should be avoided.\n"
+"the most beautiful sunset.\n"
+"we dine out on the weekends.\n"
+"get aboard the ship is leaving.\n"
+"the water was monitored daily.\n"
+"he watched in astonishment.\n"
+"a big scratch on the tabletop.\n"
+"salesmen must make their monthly quota.\n"
+"saving that child was an heroic effort.\n"
+"granite is the hardest of all rocks.\n"
+"bring the offenders to justice.\n"
+"every Saturday he folds the laundry.\n"
+"careless driving results in a fine.\n"
+"microscopes make small things look big.\n"
+"a coupon for a free sample.\n"
+"fine but only in moderation.\n"
+"a subject one can really enjoy.\n"
+"important for political parties.\n"
+"that sticker needs to be validated.\n"
+"the fire raged for an entire month.\n"
+"one never takes too many precautions.\n"
+"we have enough witnesses.\n"
+"labour unions know how to organize.\n"
+"people blow their horn a lot.\n"
+"a correction had to be published.\n"
+"I like baroque and classical music.\n"
+"the proprietor was unavailable.\n"
+"be discreet about your meeting.\n"
+"meet tomorrow in the lavatory.\n"
+"suburbs are sprawling up everywhere.\n"
+"shivering is one way to keep warm.\n"
+"dolphins leap high out of the water.\n"
+"try to enjoy your maternity leave.\n"
+"the ventilation system is broken.\n"
+"dinosaurs have been extinct for ages.\n"
+"an inefficient way to heat a house.\n"
+"the bus was very crowded.\n"
+"an injustice is committed every day.\n"
+"the coronation was very exciting.\n"
+"look in the syllabus for the course.\n"
+"rectangular objects have four sides.\n"
+"prescription drugs require a note.\n"
+"the insulation is not working.\n"
+"nothing finer than discovering a treasure.\n"
+"our life expectancy has increased.\n"
+"the cream rises to the top.\n"
+"the high waves will swamp us.\n"
+"the treasurer must balance her books.\n"
+"completely sold out of that.\n"
+"the location of the crime.\n"
+"the chancellor was very boring.\n"
+"the accident scene is a shrine for fans.\n"
+"a tumor is OK provided it is benign.\n"
+"please take a bath this month.\n"
+"rent is paid at the beginning of the month.\n"
+"for murder you get a long prison sentence.\n"
+"a much higher risk of getting cancer.\n"
+"quit while you are ahead.\n"
+"knee bone is connected to the thigh bone.\n"
+"safe to walk the streets in the evening.\n"
+"luckily my wallet was found.\n"
+"one hour is allotted for questions.\n"
+"so you think you deserve a raise.\n"
+"they watched the entire movie.\n"
+"good jobs for those with education.\n"
+"jumping right out of the water.\n"
+"the trains are always late.\n"
+"sit at the front of the bus.\n"
+"do you prefer a window seat.\n"
+"the food at this restaurant.\n"
+"Canada has ten provinces.\n"
+"the elevator door appears to be stuck.\n"
+"raindrops keep falling on my head.\n"
+"spill coffee on the carpet.\n"
+"an excellent way to communicate.\n"
+"with each step forward.\n"
+"faster than a speeding bullet.\n"
+"wishful thinking is fine.\n"
+"nothing wrong with his style.\n"
+"arguing with the boss is futile.\n"
+"taking the train is usually faster.\n"
+"what goes up must come down.\n"
+"be persistent to win a strike.\n"
+"presidents drive expensive cars.\n"
+"the stock exchange dipped.\n"
+"why do you ask silly questions.\n"
+"that is a very nasty cut.\n"
+"what to do when the oil runs dry.\n"
+"learn to walk before you run.\n"
+"insurance is important for bad drivers.\n"
+"traveling to conferences is fun.\n"
+"do you get nervous when you speak.\n"
+"pumping helps if the roads are slippery.\n"
+"parking tickets can be challenged.\n"
+"apartments are too expensive.\n"
+"find a nearby parking spot.\n"
+"gun powder must be handled with care.\n"
+"just what the doctor ordered.\n"
+"a rattle snake is very poisonous.\n"
+"weeping willows are found near water.\n"
+"I cannot believe I ate the whole thing.\n"
+"the biggest hamburger I have ever seen.\n"
+"gamblers eventually loose their shirts.\n"
+"exercise is good for the mind.\n"
+"irregular verbs are the hardest to learn.\n"
+"they might find your comment offensive.\n"
+"tell a lie and your nose will grow.\n"
+"an enlarged nose suggests you are a liar.\n"
+"lie detector tests never work.\n"
+"do not lie in court or else.\n"
+"most judges are very honest.\n"
+"only an idiot would lie in court.\n"
+"important news always seems to be late.\n"
+"please try to be home before midnight.\n"
+"if you come home late the doors are locked.\n"
+"dormitory doors are locked at midnight.\n"
+"staying up all night is a bad idea.\n"
+"you are a capitalist pig.\n"
+"motivational seminars make me sick.\n"
+"questioning the wisdom of the courts.\n"
+"rejection letters are discouraging.\n"
+"the first time he tried to swim.\n"
+"that referendum asked a silly question.\n"
+"a steep learning curve in riding a unicycle.\n"
+"a good stimulus deserves a good response.\n"
+"everybody looses in custody battles.\n"
+"put garbage in an abandoned mine.\n"
+"employee recruitment takes a lot of effort.\n"
+"experience is hard to come by.\n"
+"everyone wants to win the lottery.\n"
+"the picket line gives me the chills.\n"
+     
+
+)
+
+	:display_item_screen_location_x  (90)	;; when :as_paragraph	t,  this location means the lefttop corner of the paragraph
+	:display_item_screen_location_y  (165)
+	:as_paragraph	t	;; nil by default, if set to t, the :visual_text will be further divided into words, and each word will have its own visual item on the display
+	:text_randomization	without_replacement
+	)
+
+
+
+
+;; display the buttons
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "send"  )
+	:button_click_event	send_tapped
+	:display_item_screen_location_x  (726)             ;; it is moved a little to the right, so that it will not be left of any sentence
+	:display_item_screen_location_y  (491) 	
+	:display_item_width		(164)	;; (20) by default
+	:display_item_height		(64)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "1"  )
+	:button_click_event	1_tapped
+	:display_item_screen_location_x  (30) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "2"  )
+	:button_click_event	2_tapped
+	:display_item_screen_location_x  (93) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "3"  )
+	:button_click_event	3_tapped
+	:display_item_screen_location_x  (156) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "4"  )
+	:button_click_event	4_tapped
+	:display_item_screen_location_x  (219) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "5"  )
+	:button_click_event	5_tapped
+	:display_item_screen_location_x  (282) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "6"  )
+	:button_click_event	6_tapped
+	:display_item_screen_location_x  (345) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "7"  )
+	:button_click_event	7_tapped
+	:display_item_screen_location_x  (408) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "8"  )
+	:button_click_event	8_tapped
+	:display_item_screen_location_x  (471) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "9"  )
+	:button_click_event	9_tapped
+	:display_item_screen_location_x  (534) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "0"  )
+	:button_click_event	0_tapped
+	:display_item_screen_location_x  (597) 
+	:display_item_screen_location_y  (711) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+
+
+
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "q"  )
+	:button_click_event	q_tapped
+	:display_item_screen_location_x  (30) 
+	:display_item_screen_location_y  (796) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "w"  )
+	:button_click_event	w_tapped
+	:display_item_screen_location_x  (93) 
+	:display_item_screen_location_y  (796) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "e"  )
+	:button_click_event	e_tapped
+	:display_item_screen_location_x  (156) 
+	:display_item_screen_location_y  (796) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "r"  )
+	:button_click_event	r_tapped
+	:display_item_screen_location_x  (219) 
+	:display_item_screen_location_y  (796) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "t"  )
+	:button_click_event	t_tapped
+	:display_item_screen_location_x  (282) 
+	:display_item_screen_location_y  (796) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "y"  )
+	:button_click_event	y_tapped
+	:display_item_screen_location_x  (345) 
+	:display_item_screen_location_y  (796) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "u"  )
+	:button_click_event	u_tapped
+	:display_item_screen_location_x  (408) 
+	:display_item_screen_location_y  (796) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "i"  )
+	:button_click_event	i_tapped
+	:display_item_screen_location_x  (471) 
+	:display_item_screen_location_y  (796) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "o"  )
+	:button_click_event	o_tapped
+	:display_item_screen_location_x  (534) 
+	:display_item_screen_location_y  (796) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "p"  )
+	:button_click_event	p_tapped
+	:display_item_screen_location_x  (597) 
+	:display_item_screen_location_y  (796) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+
+
+
+
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "a"  )
+	:button_click_event	a_tapped
+	:display_item_screen_location_x  (61) 
+	:display_item_screen_location_y  (881) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "s"  )
+	:button_click_event	s_tapped
+	:display_item_screen_location_x  (124) 
+	:display_item_screen_location_y  (881) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "d"  )
+	:button_click_event	d_tapped
+	:display_item_screen_location_x  (187) 
+	:display_item_screen_location_y  (881) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "f"  )
+	:button_click_event	f_tapped
+	:display_item_screen_location_x  (250) 
+	:display_item_screen_location_y  (881) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "g"  )
+	:button_click_event	g_tapped
+	:display_item_screen_location_x  (313) 
+	:display_item_screen_location_y  (881) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "h"  )
+	:button_click_event	h_tapped
+	:display_item_screen_location_x  (376) 
+	:display_item_screen_location_y  (881) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "j"  )
+	:button_click_event	j_tapped
+	:display_item_screen_location_x  (439) 
+	:display_item_screen_location_y  (881) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "k"  )
+	:button_click_event	k_tapped
+	:display_item_screen_location_x  (502) 
+	:display_item_screen_location_y  (881) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "l"  )
+	:button_click_event	l_tapped
+	:display_item_screen_location_x  (565) 
+	:display_item_screen_location_y  (881) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+
+
+
+
+
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "z"  )
+	:button_click_event	z_tapped
+	:display_item_screen_location_x  (86) 
+	:display_item_screen_location_y  (966) 	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "x"  )
+	:button_click_event	x_tapped
+	:display_item_screen_location_x  (149) 
+	:display_item_screen_location_y  (966)	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "c"  )
+	:button_click_event	c_tapped
+	:display_item_screen_location_x  (212) 
+	:display_item_screen_location_y  (966)	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "v"  )
+	:button_click_event	v_tapped
+	:display_item_screen_location_x  (275) 
+	:display_item_screen_location_y  (966)	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "b"  )
+	:button_click_event	b_tapped
+	:display_item_screen_location_x  (338) 
+	:display_item_screen_location_y  (966)	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "n"  )
+	:button_click_event	n_tapped
+	:display_item_screen_location_x  (401) 
+	:display_item_screen_location_y  (966)	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "m"  )
+	:button_click_event	m_tapped
+	:display_item_screen_location_x  (464) 
+	:display_item_screen_location_y  (966)	
+	:display_item_width		(50)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "back"  )
+	:button_click_event	back_tapped
+	:display_item_screen_location_x  (542) 
+	:display_item_screen_location_y  (966)	
+	:display_item_width		(80)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+
+
+
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "space"  )			
+	:button_click_event	space_tapped
+	:display_item_screen_location_x  (318) 		;; this is key center x
+	:display_item_screen_location_y  (1051) 	;; this is key center y
+	:display_item_width		(450)	;; (20) by default
+	:display_item_height		(72)	;; (20) by default
+	)
+
+
+
+
+
+)  
+
+(use_predefined_model_setup		touch_screen_typing)  ; this will trigger specific codes, to see them, search for "touch_screen_typing" in the java codes
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Mind definition ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+;;
+;; For task-specific knowledge in the model, including declarative chunks, production rules, and parameters,;;
+;;
+
+(sgp :v t :show-focus t )
+
+(sgp :visual-finst-span 100 ) ;; how long a finst marker will remain on a location.  It is measured in seconds and default to 3.0.  Here, simply use an arbitrary big number to make sure it is big enough for reading the sentence. 
+(sgp :visual-num-finsts 100 ) ;; how many finsts are available to the vision module.  It can be set to any positive number and defaults to 4. Here, simply use an arbitrary big number to make sure it is big enough for reading the sentence. 
+
+(start-right-hand-at-touch-screenXY 228 711)  ;; move-hand-touch use right hand
+
+(chunk-type goal-mobile-typing state  typing-letter  remaining-letters   done)
+
+(chunk-type copying-span word1  word2)    ;; in this case, assume copying-span is 2 words 
+
+(add-dm 
+	(type-sentence-goal isa goal-mobile-typing state pre-start)
+)
+
+(goal-focus type-sentence-goal)
+
+
+;; following rules used in desktop keyboard typing method and the touchscreen number typing model
+
+(P create-imaginal-chunk   ; creat a mental representation for the temporary storage of the sentence to be typed.
+   =goal>
+      ISA         goal-mobile-typing
+      state       pre-start
+      done        nil
+==>
+   +imaginal>
+	isa   copying-span        
+   =goal>
+      state       start
+)
+
+(P find-unattended-word
+   =goal>
+      ISA         goal-mobile-typing
+      state       start
+      done        nil
+   =imaginal>
+	isa   copying-span
+ ==>
+   =imaginal>   ;; prevent strict harvesting
+   +visual-location>
+      ISA         visual-location
+      :attended    nil
+	screen-y	lowest
+	screen-x	lowest
+
+   =goal>
+      state       find-location
+)
+
+
+
+(P attend-word
+   =goal>
+      ISA         goal-mobile-typing
+      state       find-location
+   =visual-location>
+      ISA         visual-location
+   
+   ?visual>
+      state        free
+   
+==>
+   +visual>
+      ISA         move-attention
+      screen-pos  =visual-location
+   =goal>
+      state       attend
+)
+
+
+
+(P encode-word1
+   =goal>
+      ISA         goal-mobile-typing
+      state       attend
+   =visual>
+      ISA         text
+      value       =letters		;; with quotation marks e.g., "test "
+
+   =visual>
+      ISA         text
+      - value       "." 		;; not the end
+
+   =imaginal>
+	isa   copying-span
+        word1    nil
+==>
+!bind! =letters (replace-space-in-string  =letters  _ )          ;; "_" is used in the system to represent space
+   =goal>
+      state       start
+      remaining-letters      =letters  
+
+   =imaginal>
+        word1    =letters
+   +visual> 
+      isa clear   ;;disable re-encoding, -visual> or strict harvesting can clear visual buffer, but cannot clear last attended info to disable re-encoding.
+)
+
+
+(P encode-word2
+   =goal>
+      ISA         goal-mobile-typing
+      state       attend
+      remaining-letters      =previous-letters  	
+   =visual>
+      ISA         text
+      value       =letters		;; with quotation marks e.g., "test "
+
+   =visual>
+      ISA         text
+      - value       "." 		;; not the end
+
+   =imaginal>
+	isa   copying-span
+        - word1    nil
+	word2   nil
+==>
+!bind! =letters (replace-space-in-string  =letters  _ )    ;; "_" is used in the system to represent space
+!bind! =letters (combine-two-strings-with-quotation-marks  =previous-letters  =letters)    ;; this is the current way to read individual words from the sentence visual text object.
+
+   =goal>
+      state       respond
+      remaining-letters      =letters
+   =imaginal>
+        word2    =letters
+   +visual> 
+      isa clear   ;;disable re-encoding, -visual> or strict harvesting can clear visual buffer, but cannot clear last attended info to disable re-encoding.
+)
+
+
+(P all-encoded-1   ; all-encoded case 1
+   =goal>
+      ISA         goal-mobile-typing
+      state       attend
+      remaining-letters      nil
+
+   =visual>
+      ISA         text
+      value       "." 		;; the end
+
+==>
+   =goal>
+      state       respond
+      remaining-letters     "."
+
+   +visual> 
+      isa clear   ;;disable re-encoding, -visual> or strict harvesting can clear visual buffer, but cannot clear last attended info to disable re-encoding.
+)
+
+
+(P all-encoded-2   ; all-encoded case 2
+   =goal>
+      ISA         goal-mobile-typing
+      state       attend
+      remaining-letters      =previous-letters 
+
+   =visual>
+      ISA         text
+      value       "." 		;; the end
+
+==>
+!bind! =letters (combine-two-strings-with-quotation-marks  =previous-letters  ".")
+
+   =goal>
+      state       respond
+      remaining-letters      =letters
+
+   +visual> 
+      isa clear   ;;disable re-encoding, -visual> or strict harvesting can clear visual buffer, but cannot clear last attended info to disable re-encoding.
+)
+
+
+
+(p typing-letter-start
+   =goal>
+      ISA         goal-mobile-typing
+      state       respond
+      remaining-letters	  =letters    ;; not nil	
+
+   =goal>
+      ISA         goal-mobile-typing
+      - remaining-letters	  "_"	
+
+==>
+!bind! =letters (remove-quotation-marks  =letters )        ;; this is the current way to obtain individual letters from a word
+!bind! =first ( add-quotation-marks (get-char-from-string  =letters  1) )
+!bind! =rest  ( add-quotation-marks (get-tail-from-string  =letters  2) )
+   =goal>
+	state 		typing
+	typing-letter	=first
+	remaining-letters =rest	
+)
+
+
+(p typing-letter-start-space		;; when there is only a space left to type ; this is the typing-letter-start space version
+   =goal>
+      ISA         goal-mobile-typing
+      state       respond
+      remaining-letters	  "_"	
+==>
+   =goal>
+	state 		typing
+	typing-letter	"_"
+	remaining-letters nil	
+)
+
+
+
+(p read-next-word-group
+   =goal>
+      ISA         goal-mobile-typing
+      state       respond
+      remaining-letters	  nil	
+      done        nil
+
+   =imaginal>
+	isa   copying-span
+==>
+   =goal>
+	state 		start    ; start finding next word
+
+   =imaginal>
+	word1  nil
+	word2  nil
+)
+
+
+
+
+(P find-key-1
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"1"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	30
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-2
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"2"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	93
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-3
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"3"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	156
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-4
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"4"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	219
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-5
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"5"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	282
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-6
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"6"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	345
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-7
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"7"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	408
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-8
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"8"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	471
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-9
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"9"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	534
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-0
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"0"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	597
+	screen-y	711
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-q
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"q"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	30
+	screen-y	796
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-w
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"w"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	93
+	screen-y	796
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-e
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"e"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	156
+	screen-y	796
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-r
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"r"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	219
+	screen-y	796
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-t
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"t"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	282
+	screen-y	796
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-y
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"y"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	345
+	screen-y	796
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-u
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"u"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	408
+	screen-y	796
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-i
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"i"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	471
+	screen-y	796
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-o
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"o"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	534
+	screen-y	796
+
+   =goal>
+      state       find-key-location
+)
+
+(P find-key-p
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"p"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	597
+	screen-y	796
+
+   =goal>
+      state       find-key-location
+)
+
+
+
+(P find-key-a
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"a"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	61
+	screen-y	881
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-s
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"s"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	124
+	screen-y	881
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-d
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"d"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	187
+	screen-y	881
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-f
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"f"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	250
+	screen-y	881
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-g
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"g"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	313
+	screen-y	881
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-h
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"h"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	376
+	screen-y	881
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-j
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"j"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	439
+	screen-y	881
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-k
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"k"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	502
+	screen-y	881
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-l
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"l"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	565
+	screen-y	881
+
+   =goal>
+      state       find-key-location
+)
+
+
+
+(P find-key-z
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"z"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	86
+	screen-y	966
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-x
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"x"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	149
+	screen-y	966
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-c
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"c"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	212
+	screen-y	966
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-v
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"v"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	275
+	screen-y	966
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-b
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"b"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	338
+	screen-y	966
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-n
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"n"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	401
+	screen-y	966
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-m
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"m"
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	464
+	screen-y	966
+
+   =goal>
+      state       find-key-location
+)
+
+
+(P find-key-space
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"_"             ; _ represents space key
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		         ; without this line, it may match to an oval of the text button
+      	screen-x	318
+	screen-y	1051
+
+   =goal>
+      state       find-key-location
+)
+
+
+
+(P find-key-send
+   =goal>
+      ISA         goal-mobile-typing
+      state       typing
+      typing-letter	"."
+ ==>
+   +visual-location>
+      ISA         visual-location
+	kind	text		;; without this line, it may match to an oval of the text button
+      	screen-x	726
+	screen-y	491
+
+   =goal>
+      state       find-key-location
+      typing-letter      nil
+      remaining-letters  nil           ; so can move on to the next word
+      done        t
+)
+
+
+
+
+
+(P attend-key-and-move-finger
+   =goal>
+      ISA         goal-mobile-typing
+      state       find-key-location
+   =visual-location>
+      ISA         visual-location   
+   ?visual>
+      state        free   
+
+    ?manual>                 
+      preparation  free 
+
+==>
+   +visual>
+      ISA         move-attention
+      screen-pos  =visual-location
+    +manual>
+      isa      move-hand-touch
+      hand	right
+      loc      =visual-location
+   =goal>
+      state       tap
+)
+
+
+
+(p tap
+   
+    =goal>
+      isa      goal-mobile-typing
+      state    tap
+
+==>
+
+  +manual>
+	
+	isa tap
+    
+        hand right
+
+        finger index
+
+  =goal>
+
+	state respond
+
+   +visual-location>
+      ISA         visual-location
+	kind	text		 
+      	screen-x	282         ;; a solution for finger reset to default location
+	screen-y	711
+)
+
+
+
+
+
+
+
+
