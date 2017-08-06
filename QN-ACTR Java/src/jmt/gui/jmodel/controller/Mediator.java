@@ -804,6 +804,71 @@ public class Mediator implements GuiInterface {
 
 	}
 
+	/**
+	 * Opens a model from a data file.
+	 * Almost the same as openModel(),
+	 * except that it loads model directly from file name
+	 * <br> Author: Yelly
+	 */
+	public void openModel_simple_test() {
+	  
+	  //System.out.println("Mediator.java openModel");
+	  
+		isReleased = true;
+		if (checkForSave("<html>Save changes before opening a saved model?</html>")) {
+			return;
+		}
+		JMODELModel tmpmodel = new JMODELModel();
+		int state = modelLoader.loadModelByFilename(tmpmodel, openedArchive);
+		
+		//System.out.println("Mediator.java openModel");
+		
+		if (state == ModelLoader.SUCCESS || state == ModelLoader.WARNING) {
+			resetMouseState();
+			// Avoid checkForSave again...
+			if (model != null) {
+				model.resetSaveState();
+			}
+			newModel();
+			// At this point loading was successful, so substitutes old model
+			// with loaded one
+			model = tmpmodel;
+			this.populateGraph();
+			setSelect.setEnabled(true);
+			componentBar.clickButton(setSelect);
+			openedArchive = modelLoader.getSelectedFile();
+			// commented out by Yelly
+			//mainWindow.updateTitle(openedArchive.getName());
+			// Removes selection
+			graph.clearSelection();
+			// If model contains results, enable Results Window
+			if (model.containsSimulationResults()) {
+				if (model.isParametricAnalysisEnabled()) {
+					this.setResultsWindow(new PAResultsWindow(model.getParametricAnalysisModel(), (PAResultsModel) model.getSimulationResults()));
+					showResults.setEnabled(true);
+				} else {
+					this.setResultsWindow(new ResultsWindow(model.getSimulationResults()));
+					showResults.setEnabled(true);
+				}
+			}
+			model.resetSaveState();
+			
+			
+	    //QN-Java
+	    zoomIn.setEnabled(true);
+	    zoomOut.setEnabled(true);
+			
+			System.gc();
+		} else if (state == ModelLoader.FAILURE) {
+			showErrorMessage(modelLoader.getFailureMotivation());
+		}
+		// Shows warnings if any
+		if (state == ModelLoader.WARNING) {
+			new WarningWindow(modelLoader.getLastWarnings(), mainWindow, modelLoader.getInputFileFormat(), CommonConstants.JSIM).show();
+		}
+
+	}
+
 	public void closeModel() {
 		// Checks if there's an old graph to save
 		if (checkForSave("<html>Save changes before closing?</html>")) {
@@ -1537,14 +1602,16 @@ public class Mediator implements GuiInterface {
 		}
 		Vector forwardConnections;
 		// Shows connections
-		for (Object station : stations) {
+		// commented out by Yelly,
+		// not know about the consequences yet
+		/*for (Object station : stations) {
 			forwardConnections = model.getForwardConnections(station);
 			for (int j = 0; j < forwardConnections.size(); j++) {
 				// Forces connection as it's already present into data structure
 				connect(cells.get(station), cells.get(forwardConnections.get(j)), true);
 			}
 
-		}
+		}*/
 		// Now adds blocking regions
 		Vector regions = model.getRegionKeys();
 		for (int i = 0; i < regions.size(); i++) {
@@ -2273,11 +2340,12 @@ public class Mediator implements GuiInterface {
 					parent = resultsWindow;
 				}
 
-				int resultValue = JOptionPane.showConfirmDialog(parent, "This operation will overwrite old simulation results." + "Continue anyway?",
+				// commented out by Yelly
+				/*int resultValue = JOptionPane.showConfirmDialog(parent, "This operation will overwrite old simulation results." + "Continue anyway?",
 						"JMT - Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				if (resultValue == JOptionPane.NO_OPTION) {
 					return;
-				}
+				}*/
 			}
 			// Asks for confirmation if a logger-file exists (and has existing data) [MF08 0.7.4 (Marco Bertoli)]
 			String[] ln = model.getLoggerNameList();
@@ -2343,11 +2411,13 @@ public class Mediator implements GuiInterface {
 			// Correct eventual problems on preloading for closed classes
 			model.manageJobs();
 			mc = new ModelChecker(model, model, model, model, false);
-			pw = new JModelProblemsWindow(mainWindow, mc, this);
+			// Yelly commented out warning window
+			/*pw = new JModelProblemsWindow(mainWindow, mc, this);
 			if (!mc.isEverythingOkNormal()) {
 				pw.show();
-			}
-			if (mc.isEverythingOkNormal() || ((!mc.isEverythingOkNormal()) && (pw.continued()))) {
+			}*/
+			//if (mc.isEverythingOkNormal() || ((!mc.isEverythingOkNormal()) && (pw.continued()))) {
+			if (mc.isEverythingOkNormal() || (!mc.isEverythingOkNormal())) {
 				if (!model.isParametricAnalysisEnabled()) {
 					try {
 						// Removes previous ResultsWindow
