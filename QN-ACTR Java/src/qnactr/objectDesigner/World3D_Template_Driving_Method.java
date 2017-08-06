@@ -59,6 +59,24 @@ public class World3D_Template_Driving_Method {
 	private DatagramSocket sendSocket;
 	private DatagramSocket receiveSocket;
 	
+	// added by Yelly,
+	// for parsing receiving msg from OpenDS
+	private final int MSG_PARTS = 5;
+	
+	private final int OPENDS_CLOCK = 0;
+	private final int NEAR_POINT_ANGLE = 1;
+	private final int FAR_POINT_ANGLE = 2;
+	private final int FAR_POINT_DISTANCE = 3;
+	private final int SPEED = 4;
+	
+	private String msg_prefix[] = {
+			"QNModel [OpenDSClock=",
+			"nearPointAngle=",
+			"farPointAngle=",
+			"farPointDistance=",
+			"speed="
+	};
+	
 	public  World3D_Template_Driving_Method(QnactrSimulation Sim){
 		sim = Sim;
 		
@@ -157,6 +175,41 @@ public class World3D_Template_Driving_Method {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+	}
+	
+	// for OpenDS
+	public void sendControlToOpenDS(){
+		
+		//debug
+		//torcsControlAccelerator = 0.5;
+		//		
+		String str = "QNClock: " + Double.toString( GlobalUtilities.round(SimSystem.clock(),3) ) + ", "; //in second
+		str += "Accelerator: " + torcsControlAccelerator + ", ";  //0-1
+		str += "Brake: " + torcsControlBrake + ", ";  //0-1
+		str += "Steering: " + torcsControlSteerAngleDegree + ", ";  //steering angle in degree
+				
+		byte buffer[] = new byte[bufferSizetoTORCS];
+		buffer = str.getBytes(); 
+		
+		DatagramPacket packet;
+		
+		try {
+			packet = new DatagramPacket(buffer, buffer.length, InetAddress.getLocalHost(), UDPQNtoTORCSPort);
+			sendSocket.send(packet);	
+			Thread.sleep(1);			
+		} 
+		catch (UnknownHostException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}		
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 		
+		catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		
 	}
 	
@@ -202,6 +255,54 @@ public class World3D_Template_Driving_Method {
 	    torcsPerceptEarly.farPointAngleDegree = farPointAngleDegree;
 	    torcsPerceptEarly.farPointDistanceMeter = farPointDistanceMeter;
 	    torcsPerceptEarly.speed = speedmps;
+		
+	}
+	
+	public void receivePerceptEarlyFromOpenDS(){
+		
+		byte buffer[] = new byte[bufferSizefromTORCS]; 
+		DatagramPacket packet = new DatagramPacket(buffer, buffer.length); 
+		try {
+			receiveSocket.receive(packet);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+				
+		String receivedString = new String(packet.getData());
+		System.out.println("receivePerceptEarlyFromTORCS Message received from TORCS: " + receivedString); 
+		double OpenDSClockSecond = 0.0;
+		double nearPointAngleDegree = 0.0;
+		double farPointAngleDegree = 0.0;
+		double farPointDistanceMeter = 0.0;
+		double speedmps = 0.0;
+		
+		String[] tokens = receivedString.split("; "); // Yelly's using ';' instead of ',' to avoid possible ',' appearing in useful value in the package
+		
+		if(tokens.length != this.MSG_PARTS) {
+			System.err.println("wrong msg format received from OpenDS");
+		}
+		else {
+			OpenDSClockSecond = Double.parseDouble(tokens[OPENDS_CLOCK].substring(this.msg_prefix[this.OPENDS_CLOCK].length()));
+			nearPointAngleDegree = Double.parseDouble(tokens[this.NEAR_POINT_ANGLE].substring(this.msg_prefix[this.NEAR_POINT_ANGLE].length()));
+			farPointAngleDegree = Double.parseDouble(tokens[this.FAR_POINT_ANGLE].substring(this.msg_prefix[this.FAR_POINT_ANGLE].length()));
+			farPointDistanceMeter = Double.parseDouble(tokens[this.FAR_POINT_DISTANCE].substring(this.msg_prefix[this.FAR_POINT_DISTANCE].length()));
+			int endInd = tokens[this.SPEED].indexOf(']');
+			speedmps = Double.parseDouble(tokens[this.SPEED].substring(this.msg_prefix[this.SPEED].length(), endInd));
+		}
+	    
+	    System.out.print("OpenDSClock:"+OpenDSClockSecond);    
+	    System.out.print("\tnearPointAngleDegree:"+nearPointAngleDegree);
+	    System.out.print("\tfarPointAngleDegree:"+farPointAngleDegree);
+	    System.out.print("\tfarPointDistanceMeter:"+farPointDistanceMeter);
+	    System.out.println("\tspeedmps:"+speedmps);
+	    
+	    torcsPerceptEarly.TORCSClock = OpenDSClockSecond;
+	    torcsPerceptEarly.nearPointAngleDegree = nearPointAngleDegree;
+	    torcsPerceptEarly.farPointAngleDegree = farPointAngleDegree;
+	    torcsPerceptEarly.farPointDistanceMeter = farPointDistanceMeter;
+	    torcsPerceptEarly.speed = speedmps; 
+	    
 		
 	}
 

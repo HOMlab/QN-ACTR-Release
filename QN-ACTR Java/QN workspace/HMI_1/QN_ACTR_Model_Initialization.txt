@@ -1,0 +1,139 @@
+;; QN_ACTR_Model_Initialization driving test TORCS
+;; QN-ACTR, Sample Driving (Modeling driving)
+;; For questions and comments, please send to Shi Cao (shicao@umich.edu).
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Task definition ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+(use_world3d_template   
+	:method    	driving    ;; the refresh rate will be syncronized to TORCS (about 50 Hz, 20 ms each cycle)
+)
+
+(use_predefined_model_setup		model_drive_torcs)
+;; the model will be connected with TORCS. Road and scenario settings are done in TORCS.
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Mind definition ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+;; driving-control based on Salvucci (2006) driving model with two-point visual-motor control
+
+(chunk-type drive-control	;; both lateral and longitudinal controls 
+        lane  			;; target driving lane, 0 for center lane, -1 for 1st on the left, 1 for 1st on the right
+	na-old			;; near angle old (degree)
+	na-new			;; near angle new (degree)	
+	fa-old			;; far angle old  (degree)
+	fd-old			;; far point distance (m)
+	time-old
+	speed-old		;; in m/ s/s
+
+	stage			 
+)
+
+
+
+(add-dm
+ (driving isa drive-control 
+	lane		0
+	na-old		0
+	na-new		0
+	fa-old		0
+        fd-old          0	;; because far distance is determined by speed * far-time
+	time-old	0
+	speed-old	0	;; use initial speed
+	stage		1
+ )
+
+)
+
+
+
+(p drive-control-attend-near
+   =goal>
+      isa drive-control
+      lane =lane
+      stage 1
+
+==>
+   +visual-location>
+      isa  visual-location-world3d-driving
+      kind near-point
+      lane =lane   
+   =goal>
+      stage 2	
+)
+
+(p drive-control-process-near-attend-far
+   =goal>
+      isa drive-control
+      lane 	=lane
+      na-new    =na-1
+      stage 	2
+   =visual-location>
+      isa  visual-location-world3d-driving
+      kind near-point
+      angle   =na-2
+
+
+==>
+   =goal>
+      na-old 	=na-1      
+      na-new    =na-2
+      stage     3
+   +visual-location>
+      isa visual-location-world3d-driving
+      kind far-point		;;this far point will include both road far points and car far points
+      lane =lane		;;here may find both far-road point and far-car point, use the closest one
+)
+
+
+(p drive-control-process-far
+   =goal>
+      isa drive-control      
+      lane =lane
+      na-old 	=na-old
+      na-new    =na-new
+      fa-old    =fa-1
+      fd-old    =fd-1
+      speed-old =v-1
+      time-old  =time-1
+      stage     3
+   =visual-location>
+      isa 	visual-location-world3d-driving
+      kind 	far-point
+      angle	=fa-2
+      distance 	=fd-2
+   ?visual>
+      state 	free
+ 
+   ?manual>
+      state   free
+
+==>
+!bind! =time-2 (get-clock-time)     ;; the short-cut way  
+!bind! =v-2  (world3d-driving-get-velocity)   ;; the short-cut way 
+   =goal>
+      fa-old =fa-2
+      fd-old =fd-2
+      speed-old =v-2
+      time-old =time-2
+      stage     1
+   +visual>
+      isa         move-attention 		;;note here as in Salvucci's model, near and far angle is not computed from visual but use visual-location only. this +visual> is used for showing eye movement, in fact as a side effect. info processing is not affected by visual prepare, encoding and eye movement speed
+      screen-pos  =visual-location
+   +manual>
+      isa	world3d-driving-two-point-visual-manual-steer
+      na-old 	=na-old
+      na-new    =na-new
+      fa-old    =fa-1     
+      fa-new    =fa-2
+      time-old  =time-1
+      time-new  =time-2
+
+!eval! (world3d-driving-accelerate-brake   =fd-1   =fd-2  =v-1  =v-2    =time-1      =time-2  ) 	;;currently no module for this, just !eval! as Salvucci's model
+)
+
+
+(goal-focus driving)
+

@@ -8559,8 +8559,14 @@ public class ServerLogics {
         		  World3D_Template_Driving_Method the_method_3 = null;
 	              if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method_3 = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();        		  
         		  
-	              the_method_3.sendControlToTORCS();
-	              the_method_3.receivePerceptEarlyFromTORCS();
+	              if(false) {
+		              the_method_3.sendControlToTORCS();
+		              the_method_3.receivePerceptEarlyFromTORCS();
+	              }
+	              else {
+		              the_method_3.sendControlToOpenDS();
+		              the_method_3.receivePerceptEarlyFromOpenDS();
+	              }
         		  
 	              double cycleTime =  the_method_3.getTorcsPercept().TORCSClock - SimSystem.clock();
 	              
