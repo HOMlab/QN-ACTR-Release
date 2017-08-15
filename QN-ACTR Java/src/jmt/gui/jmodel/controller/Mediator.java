@@ -1,4 +1,4 @@
-/**
+﻿/**
   * Copyright (C) 2007, Laboratorio di Valutazione delle Prestazioni - Politecnico di Milano
 
   * This program is free software; you can redistribute it and/or modify
@@ -1402,7 +1402,7 @@ public class Mediator implements GuiInterface {
 				// Adds edge for removal
 				edges.addAll(DefaultGraphModel.getEdges(graphmodel, new Object[] { cells[i] }));
 				// Giuseppe De Cicco & Fabio Granara
-				// quando vado a eliminare un nodo, a cui �collegato un arco,
+				// quando vado a eliminare un nodo, a cui ï¿½collegato un arco,
 				// vado ad incrementare o diminuire il contatore per il
 				// pulsanteAGGIUSTATUTTO
 				// Iterator iter = edges.iterator();
@@ -1807,7 +1807,7 @@ public class Mediator implements GuiInterface {
 		int oldPointX = 0;
 		int oldPointY = 0;
 		boolean inGroup = false;
-		// Il flag �stato creato per capire sapere se e' una block regione e
+		// Il flag ï¿½stato creato per capire sapere se e' una block regione e
 		// quindi utilizzare
 		// il vecchio metodo oppure se e' una cella quindi flag=true allora uso
 		// il nuovo
@@ -1877,7 +1877,7 @@ public class Mediator implements GuiInterface {
 					// &&((JmtEdge)overlapping[j]).intersects((EdgeView)(graph.getGraphLayoutCache()).getMapping(overlapping[j],
 					// false),
 					// GraphConstants.getBounds(((JmtCell)cell).getAttributes())))
-					// System.out.println("Intersect �TRUE");
+					// System.out.println("Intersect ï¿½TRUE");
 
 					// Puts last to last corner of overlapping cells
 					if (overlapping[j] instanceof JmtCell && overlapping[j] != cell && inGroup) {
@@ -2731,8 +2731,9 @@ public class Mediator implements GuiInterface {
 	 * Shows results window and forces show results button to be selected
 	 */
 	public void showResultsWindow() {
-		showResults.setSelected(true);
-		showResultsWindow(true);
+		//Shi Cao commented out. Don't need to show JMT default results in QN-ACTR.
+		//showResults.setSelected(true);
+		//showResultsWindow(true);
 	}
 
 	/**
