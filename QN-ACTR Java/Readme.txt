@@ -13,14 +13,13 @@ Quick start:
    Browse and select the build.xml from the QN-ACTR Java folder. Finish.
    You should see the project in your project explorer or navigator window.
 
-5. To start simulation, run jmt.gui.jmodel.mainGui.MainWindow.java under src from the project explorer or navigator.
+5. Specify a model in QN_ACTR_Model_Initialization.txt under \QN workspace\HMI_1. A model setup assistant is provided (\QN workspace\QN-ACTR Model Setup Assistant\MSA_QN-ACTR.exe). If creating a model using this assistant, copy created QN_ACTR_Model_Initialization.txt to \QN workspace\HMI_1.
+
+6. To start simulation, run jmt.gui.jmodel.mainGui.MainWindow.java under src from the project explorer or navigator.
    
-6. In the JSIMgraph window, open (File -> Open) a QN framework in folder \QN workspace\QN frameworks (e.g., Framework one HMI.jsimg)
+7. If need to repeat the simulation immediately, click green play button on the panel to start simulation (or Solve -> Simulate).
 
-7. Specify a model in QN_ACTR_Model_Initialization.txt under \QN workspace\HMI_1. A model setup assistant is provided (\QN workspace\QN-ACTR Model Setup Assistant\MSA_QN-ACTR.exe). If creating a model using this assistant, copy created QN_ACTR_Model_Initialization.txt to \QN workspace\HMI_1.
-
-8. Click green play button on the panel to start simulation (or Solve -> Simulate).
-
+8. Close or stop the java application.
 
 FAQ:
 
