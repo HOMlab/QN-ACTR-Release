@@ -135,6 +135,10 @@ public class MainWindow extends JMTFrame {
 		if(QnactrSimulation.taskVisualization2DEnable)QnactrSimulation.createAndShowTaskVisualization2DViewerGUI();
 		if(QnactrSimulation.taskVisualization3DEnable)QnactrSimulation.createAndShowTaskVisualization3DViewerGUI();
 		
+		// added by Yelly, 
+		// to skip all selection steps to simplify tests
+		mediator.openModel_simple_test();
+		mediator.startSimulation();
 	}
 
 	/** Sets the new Graph inside the scroll panel.

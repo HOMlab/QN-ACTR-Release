@@ -305,6 +305,139 @@ public class ModelLoader {
 		return dialog.getSelectedFile();
 	}
 
+	/**
+	 * added by Yelly
+	 * Almost the same as loadModel(),
+	 * except that this methods load model from the filename, while the above one load through selection on a gui window
+	 */
+	public int loadModelByFilename(Object modelData, File file) {
+		warnings.clear();
+		
+
+		
+		String QN_frameworks_folder_path = GlobalUtilities.getQNJProjectURI().getPath() + "QN%20workspace/QN%20frameworks/";
+
+//	    System.out.println(  QN_frameworks_folder_path  );
+
+		file = new File(QN_frameworks_folder_path +  "Framework one HMI.jsimg");		
+		
+		
+
+		try {
+			if (defaultFilter == JMODEL || defaultFilter == JSIM) {
+				StoredResultsModel srm;
+				// Handles loading of JSIM/JMODEL models
+				switch (getXmlFileType(file.getAbsolutePath())) {
+					case XML_SIM:
+						XMLReader.loadModel(file, (CommonModel) modelData);
+						fileFormat = CommonConstants.SIMENGINE;
+						break;
+					case XML_ARCHIVE:
+						XMLArchiver.loadModel((CommonModel) modelData, file);
+						fileFormat = CommonConstants.JSIM;
+						break;
+					case XML_MVA:
+						ExactModel tmp = new ExactModel();
+						tmp.loadDocument(xmlutils.loadXML(file));
+						warnings.addAll(ModelConverter.convertJMVAtoJSIM(tmp, (CommonModel) modelData));
+						fileFormat = CommonConstants.JMVA;
+						break;
+					case XML_JABA:
+						//TODO implement bridge JABA --> JSIM
+						failureMotivation = FAIL_CONVERSION + "JABA.";
+						fileFormat = CommonConstants.JABA;
+						return FAILURE;
+					case XML_RES_SIM:
+						srm = new StoredResultsModel();
+						XMLResultsReader.loadModel(srm, file);
+						((CommonModel) modelData).setSimulationResults(srm);
+						warnings.add("Loaded file contained simulation results only. Associated queuing network model is not available. "
+								+ "Results can be shown by selecting \"Show Results\" icon.");
+						fileFormat = CommonConstants.SIMENGINE;
+						break;
+					case XML_RES_GUI:
+						srm = new StoredResultsModel();
+						XMLResultsReader.loadGuiModel(srm, file);
+						((CommonModel) modelData).setSimulationResults(srm);
+						warnings.add("Loaded file contained simulation results only. Associated queuing network model is not available. "
+								+ "Results can be shown by selecting \"Show Results\" icon.");
+						fileFormat = CommonConstants.SIMENGINE;
+						break;
+					default:
+						failureMotivation = FAIL_UNKNOWN;
+						return FAILURE;
+				}
+			} else if (defaultFilter == JMVA) {
+				// Handles loading of JMVA models
+				CommonModel tmp = new CommonModel();
+				switch (getXmlFileType(file.getAbsolutePath())) {
+					case XML_SIM:
+						XMLReader.loadModel(file, tmp);
+						warnings.addAll(ModelConverter.convertJSIMtoJMVA(tmp, (ExactModel) modelData));
+						fileFormat = CommonConstants.SIMENGINE;
+						break;
+					case XML_ARCHIVE:
+						XMLArchiver.loadModel(tmp, file);
+						warnings.addAll(ModelConverter.convertJSIMtoJMVA(tmp, (ExactModel) modelData));
+						fileFormat = CommonConstants.JSIM;
+						break;
+					case XML_JABA:
+						//TODO implement bridge JABA --> JMVA
+						failureMotivation = FAIL_CONVERSION + "JABA.";
+						fileFormat = CommonConstants.JABA;
+						return FAILURE;
+					case XML_MVA:
+						((ExactModel) modelData).loadDocument(xmlutils.loadXML(file));
+						fileFormat = CommonConstants.JMVA;
+						break;
+					case XML_RES_SIM:
+					case XML_RES_GUI:
+						// This is silly to be opened in JMVA...
+						failureMotivation = FAIL_CONVERSION + "JSIM or JMODEL.";
+						fileFormat = CommonConstants.SIMENGINE;
+						return FAILURE;
+					default:
+						failureMotivation = FAIL_UNKNOWN;
+						return FAILURE;
+				}
+			} else if (defaultFilter == JABA) {
+				// Handles loading of JABA models
+				switch (getXmlFileType(file.getAbsolutePath())) {
+					case XML_SIM:
+						//TODO implement bridge JSIM --> JABA
+					case XML_ARCHIVE:
+						//TODO implement bridge JSIM --> JABA
+						failureMotivation = FAIL_CONVERSION + "JSIM or JMODEL.";
+						return FAILURE;
+					case XML_MVA:
+						//TODO implement bridge JMVA --> JABA
+						failureMotivation = FAIL_CONVERSION + "JMVA.";
+						return FAILURE;
+					case XML_JABA:
+						((JabaModel) modelData).loadDocument(xmlutils.loadXML(file));
+						break;
+					case XML_RES_SIM:
+					case XML_RES_GUI:
+						// This is silly to be opened in JABA...
+						failureMotivation = FAIL_CONVERSION + "JSIM or JMODEL.";
+						return FAILURE;
+					default:
+						failureMotivation = FAIL_UNKNOWN;
+						return FAILURE;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			failureMotivation = e.getClass().getName() + ": " + e.getMessage();
+			return FAILURE;
+		}
+		// If no warnings were found, report success
+		if (warnings.size() > 0) {
+			return WARNING;
+		} else {
+			return SUCCESS;
+		}
+	}
 	// --------------------------------------------------------------------------------------------
 
 	// --- Methods used to save models ------------------------------------------------------------
