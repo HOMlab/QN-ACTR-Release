@@ -63,8 +63,8 @@ public class QnactrSimulation
   public static JFrame frameTaskVisualization3DViewer;
   public static TaskVisualization3D taskVisualization3D; 
   
-  final public static int simulatedWindowDefaultSizeX = 633;  
-  final public static int simulatedWindowDefaultSizeY = 1200;
+  final public static int simulatedWindowDefaultSizeX = 1350;  
+  final public static int simulatedWindowDefaultSizeY = 750;
   final public static int taskVisualization2DExtendSizeX = 120;
   final public static int taskVisualization2DExtendSizeY = 280;
   
@@ -81,10 +81,10 @@ public class QnactrSimulation
   
   ///////////// SETUP Begin///////////////////
   public static boolean entitiesViewerEnable = false; // true or false
-  public static boolean taskVisualization2DEnable = false;
+  public static boolean taskVisualization2DEnable = true;
   public static boolean taskVisualization3DEnable = false;
     
-  public static double simSpeedFactor = -1; // -1 or any number < 0 means as fast as possible, larger number means faster simulation. N times normal speed.
+  public static double simSpeedFactor = 1; // -1 or any number < 0 means as fast as possible, larger number means faster simulation. N times normal speed.
   public static boolean computeUtilization = true;
   
   ///////////// SETUP end ////////////////////

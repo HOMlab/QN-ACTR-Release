@@ -18022,7 +18022,7 @@ return return_tuple;
 	      if(!the_result_list.contains(a_son_name)){
 	        the_result_list.add(a_son_name);
 	      }
-	      //and call this function with each soné—‚ä½ºå�¨é�ŽæŸ¥æ‚°é”Ÿçµ¥ame and the current result list.
+	      //and call this function with each sonÃ©â€”â€šÃ¤Â½ÂºÃ¥ï¿½Â¨Ã©ï¿½Å½Ã¦Å¸Â¥Ã¦â€šÂ°Ã©â€�Å¸Ã§ÂµÂ¥ame and the current result list.
 	      the_result_list = sim.funs.ProgramUtilitiesFun__Add_Sons_And_Sons_Of_A_Father_Rule_Into_ListString(a_son_name, the_result_list);
 	    }
 	    
@@ -18858,7 +18858,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	              }
 	              LinkedList<String> parameter_list = sim.funs.ParametersFun__Remove_A_List_From_Initialization_Lists	(a_list);  // the first () is poped out without () from the list
 	              
-	              if(parameter_name.equals( ":visual_text") || parameter_name.equals(":word")){ //special handling. ( "para1  word1" )   should be one String rather than two: é—‚ä½ºå�¨é�ŽèŒ¬ç²­é¡¡îœ¸a1 and word1é—‚ä½ºå�¨é�Žå©šå¹�é”Ÿï¿½
+	              if(parameter_name.equals( ":visual_text") || parameter_name.equals(":word")){ //special handling. ( "para1  word1" )   should be one String rather than two: Ã©â€”â€šÃ¤Â½ÂºÃ¥ï¿½Â¨Ã©ï¿½Å½Ã¨Å’Â¬Ã§Â²Â­Ã©Â¡Â¡Ã®Å“Â¸a1 and word1Ã©â€”â€šÃ¤Â½ÂºÃ¥ï¿½Â¨Ã©ï¿½Å½Ã¥Â©Å¡Ã¥Â¹ï¿½Ã©â€�Å¸Ã¯Â¿Â½
 	                parameter_list = sim.funs.ProgramUtilitiesFun__Combine_Quotation_In_LinkedList_String		(parameter_list);	
 	              } //end of special handling.
 	              
@@ -19450,7 +19450,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      //initialize source lists storing the user-defined information for trials // these source lists must not be changed.
 	      //these are defined by item_type.equals( "display_item_visual_text" )
 	      LinkedList<String> keywords_with_LinkedListString_values = new LinkedList<String> ();
-	      keywords_with_LinkedListString_values.addLast(":visual_text");                              //these three share the same random method, have a random method ":text_randomizationé—‚ä½ºå�¨é�Žå�‰ç«Ÿé�‡ãˆ¡æ™¸é–¿ç‡‚æ‹·	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
+	      keywords_with_LinkedListString_values.addLast(":visual_text");                              //these three share the same random method, have a random method ":text_randomizationÃ©â€”â€šÃ¤Â½ÂºÃ¥ï¿½Â¨Ã©ï¿½Å½Ã¥ï¿½â€°Ã§Â«Å¸Ã©ï¿½â€¡Ã£Ë†Â¡Ã¦â„¢Â¸Ã©â€“Â¿Ã§â€¡â€šÃ¦â€¹Â·	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
 	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
 	      keywords_with_LinkedListString_values.addLast(":feedback_to_each_visual_text");             //these three share the same random method, No random method
 	      keywords_with_LinkedListString_values.addLast(":display_item_screen_location_x");
@@ -19648,7 +19648,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      //initialize source lists storing the user-defined information for trials // these source lists must not be changed.
 	      //these are defined by item_type.equals( "display_item_visual_text_button" )
 	      LinkedList<String> keywords_with_LinkedListString_values = new LinkedList<String> ();
-	      keywords_with_LinkedListString_values.addLast(":visual_text");                              //these three share the same random method, have a random method ":text_randomizationé—‚ä½ºå�¨é�Žå�‰ç«Ÿé�‡ãˆ¡æ™¸é–¿ç‡‚æ‹·	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
+	      keywords_with_LinkedListString_values.addLast(":visual_text");                              //these three share the same random method, have a random method ":text_randomizationÃ©â€”â€šÃ¤Â½ÂºÃ¥ï¿½Â¨Ã©ï¿½Å½Ã¥ï¿½â€°Ã§Â«Å¸Ã©ï¿½â€¡Ã£Ë†Â¡Ã¦â„¢Â¸Ã©â€“Â¿Ã§â€¡â€šÃ¦â€¹Â·	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
 	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
 	      keywords_with_LinkedListString_values.addLast(":feedback_to_each_visual_text");             //these three share the same random method, No random method
 	      keywords_with_LinkedListString_values.addLast(":display_item_screen_location_x");
@@ -19840,10 +19840,10 @@ If the string is invalid or there is no current model then a warning is printed 
 	      
 	      
 	      LinkedList<String> keywords_with_LinkedListString_values = new LinkedList<String> ();
-	      keywords_with_LinkedListString_values.addLast(":start_point_screen_location_x");            //these six share the same random method, have a random method ":text_randomizationéˆ¥æº¾ï¿½ï¿½
-	      keywords_with_LinkedListString_values.addLast(":start_point_screen_location_y");            //these six share the same random method, have a random method ":text_randomizationéˆ¥æº¾ï¿½ï¿½
-	      keywords_with_LinkedListString_values.addLast(":end_point_screen_location_x");              //these six share the same random method, have a random method ":text_randomizationéˆ¥æº¾ï¿½ï¿½
-	      keywords_with_LinkedListString_values.addLast(":end_point_screen_location_y");              //these six share the same random method, have a random method ":text_randomizationéˆ¥æº¾ï¿½ï¿½
+	      keywords_with_LinkedListString_values.addLast(":start_point_screen_location_x");            //these six share the same random method, have a random method ":text_randomizationÃ©Ë†Â¥Ã¦ÂºÂ¾Ã¯Â¿Â½Ã¯Â¿Â½
+	      keywords_with_LinkedListString_values.addLast(":start_point_screen_location_y");            //these six share the same random method, have a random method ":text_randomizationÃ©Ë†Â¥Ã¦ÂºÂ¾Ã¯Â¿Â½Ã¯Â¿Â½
+	      keywords_with_LinkedListString_values.addLast(":end_point_screen_location_x");              //these six share the same random method, have a random method ":text_randomizationÃ©Ë†Â¥Ã¦ÂºÂ¾Ã¯Â¿Â½Ã¯Â¿Â½
+	      keywords_with_LinkedListString_values.addLast(":end_point_screen_location_y");              //these six share the same random method, have a random method ":text_randomizationÃ©Ë†Â¥Ã¦ÂºÂ¾Ã¯Â¿Â½Ã¯Â¿Â½
 	      keywords_with_LinkedListString_values.addLast(":correct_response");     //these six share the same random method, NO random method
 	      keywords_with_LinkedListString_values.addLast(":feedback_content");             //these six share the same random method, No random method
 	      
@@ -20971,6 +20971,11 @@ If the string is invalid or there is no current model then a warning is printed 
 	public  void TaskTemplateFun__Initialize_Predefined_Model_Setup (){
 	  	  
 	  switch (sim.vars.programGlobalVar__Use_Predefined_Model_Setup){
+	  	case "emr_model_demo":
+	    {
+	      //nothing to initialize
+	      break;
+	    }
 	    case "experiment_driving_and_comprehension":
 	    {
 	      

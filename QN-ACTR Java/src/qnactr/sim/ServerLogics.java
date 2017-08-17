@@ -6827,8 +6827,7 @@ public class ServerLogics {
             Hashtable dynamic_items = sim.funs.TaskTemplateFun__Get_Current_Dynamic_Items();
             String event_name = Entity.Entity_Type;
             
-            // predefined model setup: bst-learn sample 
-            
+            // predefined model setup: bst-learn sample             
             // bst-learn sample predefined model setup
             if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "sample_bst_learn_model_in_actr" ) ){
               switch (event_name){
@@ -6894,6 +6893,41 @@ public class ServerLogics {
                 }
               }
             } //end of bst-learn sample predefined model setup
+            
+            
+            
+            
+            // predefined model setup: emr_model_demo             
+            else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "emr_model_demo" ) ){
+            	            	
+              switch (event_name){
+                        
+              case "5000units_clicked" :{         	
+            	  
+            	  
+            	  System.out.println("5000units_clicked");
+  
+              	
+                break;
+              }
+              
+              
+                case "placeneworderTextInput_clicked" :{
+                	//TODO //sim.vars.visualDisplay.  focusTextInput, use a visual button type to serve as a text input box. 
+                	//add a flag boolean in visualDisplay to record the current mode, this will allow all following keyboard typing before enter key, to be used as input to the text box, the text is stored as the text of the button type.
+                	
+                  break;
+                }
+                default:{
+                  System.out.println("Dynamic Events Beginning Effect has undefine event_name: " + event_name);
+                  break;
+                }
+              }
+            } //end of emr_model_demo
+            
+            
+            
+            
             
             
             // predefined model setup: dual-task sample, typing_and_reading_comprehension
@@ -7956,8 +7990,8 @@ public class ServerLogics {
 	//                  
 	//                  String LeftButtonMean = PluginFunctions.GetExperimentSpecificsTrialDetailsParameterValue(PluginFunctions.ExperimentSpecifics_SubjectNum.ToString(), "1", "LeftButtonMean"); //all search for session 1, because all sessions have the same key assignment.
 	//                  String key_instruction = "";
-	//                  if (LeftButtonMean.equals( "Yes") && language.equals( "CH")) key_instruction = "左边的键代表\"相同\"; 右边的键代表\"不同\"";
-	//                  else if (LeftButtonMean.equals( "No") && language.equals( "CH")) key_instruction = "左边的键代表\"不同\"; 右边的键代表\"相同\"";
+	//                  if (LeftButtonMean.equals( "Yes") && language.equals( "CH")) key_instruction = "å·¦è¾¹çš„é”®ä»£è¡¨\"ç›¸å�Œ\"; å�³è¾¹çš„é”®ä»£è¡¨\"ä¸�å�Œ\"";
+	//                  else if (LeftButtonMean.equals( "No") && language.equals( "CH")) key_instruction = "å·¦è¾¹çš„é”®ä»£è¡¨\"ä¸�å�Œ\"; å�³è¾¹çš„é”®ä»£è¡¨\"ç›¸å�Œ\"";
 	//                  else if (LeftButtonMean.equals( "Yes") && language.equals( "EN")) key_instruction = "The left key is for \"same\"; the right key is for \"different\"";
 	//                  else if (LeftButtonMean.equals( "No") && language.equals( "EN")) key_instruction = "The left key is for \"different\"; the right key is for \"same\"";
 	//                  

@@ -1,0 +1,13 @@
+In this demo, the display shown in screenshot 1.png is represented.
+
+The model will try to find a button showing 5000 units for the dose, and then click it. 
+
+In trace.txt file, between different runs of the simulation, the model will randomly search the visual area. 
+Sometimes it will find the 5000 unit button at the first try, but sometimes it will try mulitple times looking at different buttond. 
+
+When the 5000 unit button is clicked, the java console will display "5000units_clicked".
+
+Search this line of source code in the ServerLogics.java will lead to the code area for System.out.println("5000units_clicked");
+
+
+

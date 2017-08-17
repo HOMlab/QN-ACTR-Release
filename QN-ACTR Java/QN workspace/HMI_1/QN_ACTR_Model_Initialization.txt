@@ -1,0 +1,327 @@
+;;
+;; In this section, we specify the visual display features. That means, what's on the screen.
+;;
+
+(use_predefined_model_setup  emr_model_demo)   ;; this allows extra codes to be linked to this model in the java source code. can search emr_model_demo in java.
+
+(use_task_dbt_template   
+	:method    	discrete_display_feedback_two_stages_method
+	:response_terminates_display  	nil	;;t by default
+	:reset_all_modules_before_each_day    t	;;nil by default
+)
+
+(add_trials_from_discrete_display_feedback_two_stages_method
+	:add_number_of_days		1
+	:add_number_of_blocks_per_day   1
+	:add_number_of_trials_per_block   1
+
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "King, Krakow")
+	:item_name	patient_name
+	:hide		nil
+	:display_item_screen_location_x  (66)
+	:display_item_screen_location_y  (87)
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "Patient Summary"  )
+	:button_click_event	patientsummary_clicked	
+	:display_item_screen_location_x  (55)
+	:display_item_screen_location_y  (200) 	
+	:display_item_height		(18)	;; (20) by default
+	:display_item_width		(100)	;; (20) by default
+	)
+
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "Chart Review"  )
+	:button_click_event	chartreview_clicked	
+	:display_item_screen_location_x  (55)
+	:display_item_screen_location_y  (225) 	
+	:display_item_height		(20)	;; (20) by default
+	:display_item_width		(100)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "Results Review"  )
+	:button_click_event	resultsreview_clicked	
+	:display_item_screen_location_x  (55)
+	:display_item_screen_location_y  (250) 	
+	:display_item_height		(20)	;; (20) by default
+	:display_item_width		(100)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "Synopsis"  )
+	:button_click_event	synopsis_clicked	
+	:display_item_screen_location_x  (55)
+	:display_item_screen_location_y  (275) 	
+	:display_item_height		(20)	;; (20) by default
+	:display_item_width		(100)	;; (20) by default
+	)
+
+
+
+
+	( :item_type   display_item_visual_text_button   ;; serve as a text input box
+	:visual_text   	(  "Place new order (text input)"  )
+	:button_click_event	placeneworderTextInput_clicked	
+	:display_item_screen_location_x  (1065)
+	:display_item_screen_location_y  (230) 	
+	:display_item_height		(20)	;; (20) by default
+	:display_item_width		(320)	;; (20) by default
+	)
+
+
+
+
+
+	( :item_type   display_item_visual_text_button   ;; serve as a window space
+	:visual_text   	(  "heparin (porcine) injection"  )
+	:display_item_screen_location_x  (510)
+	:display_item_screen_location_y  (490) 	
+	:display_item_height		(500)	;; (20) by default
+	:display_item_width		(760)	;; (20) by default
+	)
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "Reference Links: ... ...")
+	:display_item_screen_location_x  (233)
+	:display_item_screen_location_y  (325)
+	)	
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "Report: ... ...")
+	:display_item_screen_location_x  (210)
+	:display_item_screen_location_y  (357)
+	)	
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "Dose:")
+	:display_item_screen_location_x  (190)
+	:display_item_screen_location_y  (425)
+	)
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "Route:")
+	:display_item_screen_location_x  (192)
+	:display_item_screen_location_y  (473)
+	)
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "Frequency:")
+	:display_item_screen_location_x  (206)
+	:display_item_screen_location_y  (497)
+	)
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "Admin. Inst.:")
+	:display_item_screen_location_x  (200)
+	:display_item_screen_location_y  (626)
+	)
+
+
+
+
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "60 Units/kg"  )
+	:button_click_event	60unitskg_clicked	
+	:display_item_screen_location_x  (525)
+	:display_item_screen_location_y  (425) 	
+	:display_item_height		(18)	;; (20) by default
+	:display_item_width		(115)	;; (20) by default
+	)
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "70 Units/kg"  )
+	:button_click_event	70unitskg_clicked	
+	:display_item_screen_location_x  (645)
+	:display_item_screen_location_y  (425) 	
+	:display_item_height		(18)	;; (20) by default
+	:display_item_width		(115)	;; (20) by default
+	)
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "80 Units/kg"  )
+	:button_click_event	80unitskg_clicked	
+	:display_item_screen_location_x  (765)
+	:display_item_screen_location_y  (425) 	
+	:display_item_height		(18)	;; (20) by default
+	:display_item_width		(115)	;; (20) by default
+	)
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "5,000 Units"  )
+	:button_click_event	5000units_clicked	
+	:display_item_screen_location_x  (525)
+	:display_item_screen_location_y  (447) 	
+	:display_item_height		(18)	;; (20) by default
+	:display_item_width		(115)	;; (20) by default
+	)
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "9,000 Units"  )
+	:button_click_event	9000units_clicked	
+	:display_item_screen_location_x  (645)
+	:display_item_screen_location_y  (447) 	
+	:display_item_height		(18)	;; (20) by default
+	:display_item_width		(115)	;; (20) by default
+	)
+
+
+)  
+
+
+
+
+
+
+
+
+
+
+
+
+;;
+;; Here, define task-specific knowledge in the model, including declarative chunks, production rules, and parameters,
+;;
+;;
+
+
+(sgp :v t :show-focus t :trace-detail high)    ;; these three parameter settings will allow trace.txt output and show a red circle representing eye fixation in the visualization.
+
+
+(chunk-type heparin-order dose  state)      ;; define the type of order for heparin, with only one attribute dose to be specified.
+
+(add-dm 				;; add chunks to declarative memory
+	(demo-goal isa heparin-order  dose  "5,000 Units" state start)
+)
+
+(start-hand-at-mouse)
+
+(goal-focus demo-goal)
+
+
+;;
+;; For task-specific knowledge in the model, including declarative chunks, production rules, and parameters,
+;;
+;;
+
+
+
+(p find-next-dose-button
+    =goal>
+      isa      heparin-order
+      dose     =dose
+      state     start
+
+   ==>
+
+    +visual-location>
+      isa      visual-location
+      kind     oval			;; oval represents button
+      :attended nil 			;; this mean to look for something has not been recently attended.
+	> screen-x 120      
+	< screen-x 900			;; within the area of the heparin order window.
+	> screen-y 230      
+	< screen-y 740
+
+    =goal>
+      state looking-for-button
+)
+
+
+
+(p attend-button
+    =goal>
+      isa      heparin-order
+      state    looking-for-button
+    =visual-location>
+      isa      visual-location
+      kind     oval
+    ?visual>
+      state    free
+==>
+   
+    =goal>
+      state    attending-button
+    +visual>
+      isa move-attention
+      screen-pos =visual-location
+
+    =visual-location>
+)
+
+
+
+
+(p encode-button-target-not-found
+    =goal>
+      isa      heparin-order
+      state    attending-button
+      dose     =dose
+    =visual>
+      isa      oval
+      - value 	=dose 
+   ==>
+
+    =goal>
+      state    start)
+
+
+(p encode-button-target-found
+    =goal>
+      isa      heparin-order
+      state    attending-button
+      dose     =dose
+    =visual>
+      isa      oval
+      value 	=dose 
+   ==>
+
+    =goal>
+      state    prepare-mouse)
+
+
+
+
+(p move-mouse
+    =goal>
+      isa      heparin-order
+      state    prepare-mouse
+    =visual-location>
+      isa      visual-location
+
+    ?visual>
+      state   free
+    ?manual>
+      state   free
+==>
+    =visual-location>
+
+    +visual>
+      isa      move-attention
+      screen-pos =visual-location
+    =goal>
+      state    move-mouse
+    +manual>
+      isa      move-cursor
+      loc      =visual-location
+    )
+
+(p click-mouse
+    =goal>
+      isa      heparin-order
+      state    move-mouse
+    ?manual>
+      state    free
+==>
+    =goal>
+      state    wait-for-click
+
+    +manual>
+      isa      click-mouse)
+
+
+
+
