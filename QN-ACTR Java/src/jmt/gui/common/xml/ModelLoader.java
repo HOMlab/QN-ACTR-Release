@@ -312,8 +312,16 @@ public class ModelLoader {
 	 */
 	public int loadModelByFilename(Object modelData, File file) {
 		warnings.clear();
+		
 
-		file = new File("D:\\Program Files\\eclipse-workspace\\QN-ACTR-Release\\QN-ACTR Java\\QN workspace\\QN frameworks\\Framework one HMI.jsimg");
+		
+		String QN_frameworks_folder_path = GlobalUtilities.getQNJProjectURI().getPath() + "QN%20workspace/QN%20frameworks/";
+
+//	    System.out.println(  QN_frameworks_folder_path  );
+
+		file = new File(QN_frameworks_folder_path +  "Framework one HMI.jsimg");		
+		
+		
 
 		try {
 			if (defaultFilter == JMODEL || defaultFilter == JSIM) {
