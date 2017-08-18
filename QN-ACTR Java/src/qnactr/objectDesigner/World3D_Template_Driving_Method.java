@@ -7,10 +7,9 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.swing.JOptionPane;
 
 import qnactr.sim.GlobalUtilities;
 import qnactr.sim.QnactrSimulation;
@@ -61,20 +60,24 @@ public class World3D_Template_Driving_Method {
 	
 	// added by Yelly,
 	// for parsing receiving msg from OpenDS
-	private final int MSG_PARTS = 5;
+	HashMap<String, CriticalElement> criticalElements = new HashMap<String, CriticalElement>();
+    
+	private final int MSG_PARTS = 6;
 	
 	private final int OPENDS_CLOCK = 0;
 	private final int NEAR_POINT_ANGLE = 1;
 	private final int FAR_POINT_ANGLE = 2;
 	private final int FAR_POINT_DISTANCE = 3;
 	private final int SPEED = 4;
+	private final int CRITICAL_ELEMENTS = 5;
 	
 	private String msg_prefix[] = {
 			"QNModel [OpenDSClock=",
 			"nearPointAngle=",
 			"farPointAngle=",
 			"farPointDistance=",
-			"speed="
+			"speed=",
+			"criticalElements={"
 	};
 	
 	public  World3D_Template_Driving_Method(QnactrSimulation Sim){
@@ -270,7 +273,7 @@ public class World3D_Template_Driving_Method {
 		} 
 				
 		String receivedString = new String(packet.getData());
-		System.out.println("receivePerceptEarlyFromTORCS Message received from TORCS: " + receivedString); 
+		//System.out.println("receivePerceptEarlyFromTORCS Message received from TORCS: " + receivedString); 
 		double OpenDSClockSecond = 0.0;
 		double nearPointAngleDegree = 0.0;
 		double farPointAngleDegree = 0.0;
@@ -287,8 +290,39 @@ public class World3D_Template_Driving_Method {
 			nearPointAngleDegree = Double.parseDouble(tokens[this.NEAR_POINT_ANGLE].substring(this.msg_prefix[this.NEAR_POINT_ANGLE].length()));
 			farPointAngleDegree = Double.parseDouble(tokens[this.FAR_POINT_ANGLE].substring(this.msg_prefix[this.FAR_POINT_ANGLE].length()));
 			farPointDistanceMeter = Double.parseDouble(tokens[this.FAR_POINT_DISTANCE].substring(this.msg_prefix[this.FAR_POINT_DISTANCE].length()));
-			int endInd = tokens[this.SPEED].indexOf(']');
-			speedmps = Double.parseDouble(tokens[this.SPEED].substring(this.msg_prefix[this.SPEED].length(), endInd));
+			speedmps = Double.parseDouble(tokens[this.SPEED].substring(this.msg_prefix[this.SPEED].length()));
+			
+			int endInd = tokens[this.CRITICAL_ELEMENTS].indexOf('}');
+			String element_str = tokens[this.CRITICAL_ELEMENTS].substring(this.msg_prefix[this.CRITICAL_ELEMENTS].length(), endInd);
+			int eqInd, typeEqInd, typeCommaInd, contentEqInd, contentCommaInd, visibleEqInd, visibleCommaInd, lastInd;
+			if(element_str.length()>0) {
+				while(true) {
+					eqInd = element_str.indexOf("=");
+					typeEqInd = element_str.indexOf("=", eqInd+1);
+					typeCommaInd = element_str.indexOf(",", typeEqInd+1);
+					contentEqInd = element_str.indexOf("=", typeCommaInd+1);
+					contentCommaInd = element_str.indexOf(",", contentEqInd+1);
+					visibleEqInd = element_str.indexOf("=", contentCommaInd+1);
+					visibleCommaInd = element_str.indexOf(",", visibleEqInd+1);
+					
+					String element_name = element_str.substring(0, eqInd);
+					String element_type = element_str.substring(typeEqInd+1, typeCommaInd);
+					String element_content = element_str.substring(contentEqInd+1, contentCommaInd);
+					boolean element_visible = (element_str.substring(visibleEqInd+1, visibleCommaInd).equals("true"))?true:false;
+					
+					if(this.criticalElements.containsKey(element_name)) {
+						this.criticalElements.get(element_name).setVisible(element_visible);
+					}
+					else {
+						this.criticalElements.put(element_name, new CriticalElement(element_type, element_content, element_visible));
+					}
+					
+					lastInd = element_str.indexOf("], ");
+					if(lastInd!=-1) element_str = element_str.substring(lastInd+3);
+					else break;
+				}
+			}
+			//speedmps = Double.parseDouble(tokens[this.SPEED].substring(this.msg_prefix[this.SPEED].length(), endInd));
 		}
 	    
 	    System.out.print("OpenDSClock:"+OpenDSClockSecond);    
@@ -296,6 +330,7 @@ public class World3D_Template_Driving_Method {
 	    System.out.print("\tfarPointAngleDegree:"+farPointAngleDegree);
 	    System.out.print("\tfarPointDistanceMeter:"+farPointDistanceMeter);
 	    System.out.println("\tspeedmps:"+speedmps);
+	    System.out.println("\tcriticalElements:"+criticalElements);
 	    
 	    torcsPerceptEarly.TORCSClock = OpenDSClockSecond;
 	    torcsPerceptEarly.nearPointAngleDegree = nearPointAngleDegree;
