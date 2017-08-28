@@ -294,7 +294,9 @@ public class World3D_Template_Driving_Method {
 			
 			int endInd = tokens[this.CRITICAL_ELEMENTS].indexOf('}');
 			String element_str = tokens[this.CRITICAL_ELEMENTS].substring(this.msg_prefix[this.CRITICAL_ELEMENTS].length(), endInd);
-			int eqInd, typeEqInd, typeCommaInd, contentEqInd, contentCommaInd, visibleEqInd, visibleCommaInd, lastInd;
+			System.out.println("element_str: " +element_str);
+			int eqInd, typeEqInd, typeCommaInd, contentEqInd, contentCommaInd, frontVisibilityEqInd, frontVisibilityCommaInd, backVisibilityEqInd, backVisibilityCommaInd, 
+				leftBackVisibilityEqInd, leftBackVisibilityCommaInd, rightBackVisibilityEqInd, rightBackVisibilityCommaInd, lastInd;
 			if(element_str.length()>0) {
 				while(true) {
 					eqInd = element_str.indexOf("=");
@@ -302,19 +304,31 @@ public class World3D_Template_Driving_Method {
 					typeCommaInd = element_str.indexOf(",", typeEqInd+1);
 					contentEqInd = element_str.indexOf("=", typeCommaInd+1);
 					contentCommaInd = element_str.indexOf(",", contentEqInd+1);
-					visibleEqInd = element_str.indexOf("=", contentCommaInd+1);
-					visibleCommaInd = element_str.indexOf(",", visibleEqInd+1);
+					frontVisibilityEqInd = element_str.indexOf("=", contentCommaInd+1);
+					frontVisibilityCommaInd = element_str.indexOf(",", frontVisibilityEqInd+1);
+					backVisibilityEqInd = element_str.indexOf("=", contentCommaInd+1);
+					backVisibilityCommaInd = element_str.indexOf(",", frontVisibilityEqInd+1);
+					leftBackVisibilityEqInd = element_str.indexOf("=", contentCommaInd+1);
+					leftBackVisibilityCommaInd = element_str.indexOf(",", frontVisibilityEqInd+1);
+					rightBackVisibilityEqInd = element_str.indexOf("=", contentCommaInd+1);
+					rightBackVisibilityCommaInd = element_str.indexOf(",", frontVisibilityEqInd+1);
 					
 					String element_name = element_str.substring(0, eqInd);
 					String element_type = element_str.substring(typeEqInd+1, typeCommaInd);
 					String element_content = element_str.substring(contentEqInd+1, contentCommaInd);
-					boolean element_visible = (element_str.substring(visibleEqInd+1, visibleCommaInd).equals("true"))?true:false;
+					boolean element_front_visibility = (element_str.substring(frontVisibilityEqInd+1, frontVisibilityCommaInd).equals("true"))?true:false;
+					boolean element_back_visibility = (element_str.substring(backVisibilityEqInd+1, backVisibilityCommaInd).equals("true"))?true:false;
+					boolean element_leftBack_visibility = (element_str.substring(leftBackVisibilityEqInd+1, leftBackVisibilityCommaInd).equals("true"))?true:false;
+					boolean element_rightBack_visibility = (element_str.substring(rightBackVisibilityEqInd+1, rightBackVisibilityCommaInd).equals("true"))?true:false;
 					
-					if(this.criticalElements.containsKey(element_name)) {
-						this.criticalElements.get(element_name).setVisible(element_visible);
+					if(this.criticalElements.containsKey(element_name)) {// change visibility
+						this.criticalElements.get(element_name).setFront_visibility(element_front_visibility); 
+						this.criticalElements.get(element_name).setBack_visibility(element_back_visibility); 
+						this.criticalElements.get(element_name).setLeftBack_visibility(element_leftBack_visibility); 
+						this.criticalElements.get(element_name).setRightBack_visibility(element_rightBack_visibility); 
 					}
 					else {
-						this.criticalElements.put(element_name, new CriticalElement(element_type, element_content, element_visible));
+						this.criticalElements.put(element_name, new CriticalElement(element_type, element_content, element_front_visibility, element_back_visibility, element_leftBack_visibility, element_rightBack_visibility));
 					}
 					
 					lastInd = element_str.indexOf("], ");
@@ -429,13 +443,11 @@ public class World3D_Template_Driving_Method {
 	  double delta_steer_angle = this.Steer_Factor_Delta_Far_Angle * delta_far_angle + this.Steer_Factor_Delta_Near_Angle * delta_near_angle + this.Steer_Factor_Near_Angle * near_angle_used * delta_time;
 	  
 	  //Simulation.Model.PrintOutput(near_angle_old + " " + near_angle_new + ",  " + far_angle_old + " " + far_angle_new);
-	  
 	 
 	  //reduce delta_steer_angle at the very beginning of simulation, avoid a very big steering 
 	  double earlyStartMaxDegree = 5.0;
 	  if ( SimSystem.clock() < 1.0 &&  near_angle_old == 0.0 && far_angle_old == 0.0 && Math.abs(delta_steer_angle) > earlyStartMaxDegree ) delta_steer_angle = Math.signum(delta_steer_angle) *  earlyStartMaxDegree;
 	  //
-	  
 	  return delta_steer_angle;
 	}
 
