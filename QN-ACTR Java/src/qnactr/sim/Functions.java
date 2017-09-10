@@ -1885,7 +1885,11 @@ public class Functions {
 			for (j = 3; j < The_Chunk_Spec.length; j+=2){ //start from j = 3, if there is any, after ISA Chunk_type. 
 				String first_descritpor = The_Chunk_Spec[j];
 				if (slot_names.contains(first_descritpor) ==false){ // the defined chunk type must have the slot name
-					System.out.println("ChunkFun__Make_Chunk_From_Descritption: " + sim.funs.ProgramUtilitiesFun__StringArray_To_String_Show_Empty(The_Chunk_Spec) + ". Chunk type " + chunk_type + " does not have the slot: " + first_descritpor);
+					System.out.println("slot_names of chunk_type:" + chunk_type + "are:");
+					for(String str: slot_names) {
+						System.out.print(str + ";");
+					}
+					System.out.println("\nChunkFun__Make_Chunk_From_Descritption: " + sim.funs.ProgramUtilitiesFun__StringArray_To_String_Show_Empty(The_Chunk_Spec) + ". Chunk type " + chunk_type + " does not have the slot: " + first_descritpor);
 					return null;
 				}
 			
@@ -1984,19 +1988,25 @@ public class Functions {
 	}
 	
 	public void ChunkFun__Print_Chunk(Chunk temp_Chunk){
-		
-		ProgramUtilitiesFun__Output_Trace_Txt(" ");
-		ProgramUtilitiesFun__Output_Trace_Txt(temp_Chunk.Chunk_Name + ", Last-Retrieval-Activation: " + temp_Chunk.Activation + ", base_level: " + temp_Chunk.base_level + ", permanent_noise: " +  temp_Chunk.permanent_noise+", creation time: " + temp_Chunk.Creation_Time );
-		ProgramUtilitiesFun__Output_Trace_Txt("             , Number_Of_Presentations: " + temp_Chunk.Number_Of_Presentations +  ", last presentation time: " + temp_Chunk.Last_Presentation_Time);
-		ProgramUtilitiesFun__Output_Trace_Txt("             , references: " + sim.funs.ProgramUtilitiesFun__LinkedListDouble_To_String(temp_Chunk.Presentation_Time_References));
-		ProgramUtilitiesFun__Output_Trace_Txt(temp_Chunk.Chunk_Name);
-		ProgramUtilitiesFun__Output_Trace_Txt( "   ISA        " + temp_Chunk.Chunk_Type);
-
+		// commented out by Yelly
+//		ProgramUtilitiesFun__Output_Trace_Txt(" ");
+//		ProgramUtilitiesFun__Output_Trace_Txt(temp_Chunk.Chunk_Name + ", Last-Retrieval-Activation: " + temp_Chunk.Activation + ", base_level: " + temp_Chunk.base_level + ", permanent_noise: " +  temp_Chunk.permanent_noise+", creation time: " + temp_Chunk.Creation_Time );
+//		ProgramUtilitiesFun__Output_Trace_Txt("             , Number_Of_Presentations: " + temp_Chunk.Number_Of_Presentations +  ", last presentation time: " + temp_Chunk.Last_Presentation_Time);
+//		ProgramUtilitiesFun__Output_Trace_Txt("             , references: " + sim.funs.ProgramUtilitiesFun__LinkedListDouble_To_String(temp_Chunk.Presentation_Time_References));
+//		ProgramUtilitiesFun__Output_Trace_Txt(temp_Chunk.Chunk_Name);
+//		ProgramUtilitiesFun__Output_Trace_Txt( "   ISA        " + temp_Chunk.Chunk_Type);
+		// change to output in the console
+		System.out.println("");
+		System.out.println(temp_Chunk.Chunk_Name + ", Last-Retrieval-Activation: " + temp_Chunk.Activation + ", base_level: " + temp_Chunk.base_level + ", permanent_noise: " +  temp_Chunk.permanent_noise+", creation time: " + temp_Chunk.Creation_Time );
+		System.out.println("             , Number_Of_Presentations: " + temp_Chunk.Number_Of_Presentations +  ", last presentation time: " + temp_Chunk.Last_Presentation_Time);
+		System.out.println(temp_Chunk.Chunk_Name);
+		System.out.println( "   ISA        " + temp_Chunk.Chunk_Type);
 		
 		Iterator<Entry<String, String>> itrSlot = temp_Chunk.Slot.entrySet().iterator();
 		while ( itrSlot.hasNext() ){  // get every element
       Entry<String, String> currentEntry1 = itrSlot.next();
       ProgramUtilitiesFun__Output_Trace_Txt( "   " + currentEntry1.getKey() + "       " + currentEntry1.getValue());
+		System.out.println("   " + currentEntry1.getKey() + "       " + currentEntry1.getValue());
     }
 	}
 	
@@ -3241,9 +3251,8 @@ public class Functions {
 		//don't merge these
 		List<String> do_no_merge = new ArrayList<String> ();
 		do_no_merge.add("visual-location-world3d-driving");
-
-
-
+		do_no_merge.add("visual-location-world3d-driving-criticalelement");
+		
 		if(do_no_merge.contains( The_Chunk.Chunk_Type ) ) return;
 
 		//
@@ -5121,6 +5130,8 @@ return return_string;
 	        case "add-quotation-marks":
 	        case "remove-quotation-marks":
 	        case "unity-tangtang-update-status":
+	        case "world3d-driving-report-criticalelement-sign":
+	        case "world3d-driving-report-criticalelement-vehicle":
 	        { //accept only 1 parameter.
 	          if ( content_list.size() < 1 ) { //nothing there, error
 	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 1 parameter, not: " + input_string );
@@ -5221,6 +5232,17 @@ return return_string;
 			          
 		              return null;
 		              //break;
+	            }
+
+	            case "world3d-driving-report-criticalelement-sign":
+	            {
+	            	System.out.println("The model is looking at a sign with content:" + para_1);
+		              return null;
+	            }
+	            case "world3d-driving-report-criticalelement-vehicle":
+	            {
+	            	System.out.println("The model is looking at a vehicle with color:" + para_1);
+		              return null;
 	            }
 	            
 	            default:{
@@ -12114,19 +12136,21 @@ return return_string;
 	  
 	  ProductionModuleFun__Clear_Imaginal_Buffer_Request();
 	  
-	  Entity Temp_Entity = sim.funs.createEntity( "Imaginary Module" , "Execution", "Imaginary Module", "Add Imaginal", 0.0);
-//	  Entity Temp_Entity = new Entity();  
-//	  Temp_Entity.ID = "8"; //Imaginal Module
-//	  Temp_Entity.Time = (double) SimSystem.clock();
-//	  Temp_Entity.Tag = Entity_Number; //give it an entity number, init. 1
-//	  Entity_Number++;
-//	  Temp_Entity.From = "Execution"; //tag from and to
-//	  Temp_Entity.To = "Imaginary Module";
-//	  Temp_Entity.Entity_Type = "Add Imaginal";    // +imaginal>
+	  //Entity Temp_Entity = sim.funs.createEntity( "Imaginary Module" , "Execution", "Imaginary Module", "Add Imaginal", 0.0);
+	  
+	  // below changed by Yelly
+	  Entity Temp_Entity = new Entity();  
+	  Temp_Entity.ID = "8"; //Imaginal Module
+	  Temp_Entity.Time = (double) SimSystem.clock();
+	  //Temp_Entity.Tag = Entity_Number; //give it an entity number, init. 1
+	  //Entity_Number++;
+	  Temp_Entity.From = "Execution"; //tag from and to
+	  Temp_Entity.To = "Imaginary Module";
+	  Temp_Entity.Entity_Type = "Add Imaginal";    // +imaginal>
 	  // parameters: ISA (slot_0), chunk_type(slot_0), slot_name_1, slot_value_1, slot_name_2, slot_value_2, ... for nil value, put ""
 	  
 	  //define-chunk, +imaginal> will not specify chunk_name, so it does not have a name.
-	  Temp_Entity.Chunk = sim.funs.ChunkFun__Define_Chunk( sim.funs.ChunkFun__Make_Chunk_From_Descritption(The_Chunk_Spec_Request));
+	  //Temp_Entity.Chunk = sim.funs.ChunkFun__Define_Chunk( sim.funs.ChunkFun__Make_Chunk_From_Descritption(The_Chunk_Spec_Request));
 	  
 	  
 	  
@@ -12815,7 +12839,7 @@ return return_string;
 	public  void ProductionModuleFun__Clear_Visual_Location_Buffer_Request(){
 	 
 	  if (!sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk.Chunk_Type.equals("")){ //if  buffer is not empty
-	    if( sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk.Chunk_Type.equals( "visual-location-world3d-driving")){
+	    if( sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk.Chunk_Type.equals( "visual-location-world3d-driving") || sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk.Chunk_Type.equals( "visual-location-world3d-driving-criticalelement")){
 	      //don't merge world3d location	
 	    }
 	    else
@@ -15489,30 +15513,42 @@ return return_string;
 	}
 	
 	public  void ProductionModuleFun__Print_A_Production(Production_Rule the_rule){
-	  
+	  // all console outputs are added by Yelly -  for ease of debugging
 	  sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "      ");
 	  sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "(Production rule P: " + the_rule.Rule_Name);
-	  if(!the_rule.Compilation_Note_For_New_Rule.equals( "" )) sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "\"" + the_rule.Compilation_Note_For_New_Rule +  "\"" );
+		System.out.println( "      ");
+		System.out.println( "(Production rule P: " + the_rule.Rule_Name);
+	  
+	  if(!the_rule.Compilation_Note_For_New_Rule.equals( "" )) {
+		  sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "\"" + the_rule.Compilation_Note_For_New_Rule +  "\"" );
+			System.out.println( "\"" + the_rule.Compilation_Note_For_New_Rule +  "\"" );
+	  }
 	  
 	  if (sim.vars.centralParametersModule.Use_Procedural_Resources) {
 	    sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "Compilation father: " + the_rule.Compilation_Father );
 	    sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "Compilation sons: " + sim.funs.ProgramUtilitiesFun__LinkedListString_To_String_Show_Empty(the_rule.Compilation_Sons) );
-	  }
+
+		System.out.println( "Compilation father: " + the_rule.Compilation_Father );
+		System.out.println( "Compilation sons: " + sim.funs.ProgramUtilitiesFun__LinkedListString_To_String_Show_Empty(the_rule.Compilation_Sons) );
+	}
 	  
 	  Enumeration enum_condition_item = Collections.enumeration((the_rule).Condition);
 	  while (enum_condition_item.hasMoreElements()){
 	    Production_Rule_Condition_Action_Item currentItem = (Production_Rule_Condition_Action_Item)enum_condition_item.nextElement();
 	    if( (currentItem.Type).charAt(0) == '!' ) { // !name! special
 	      sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "   " + currentItem.Type + "\t" + currentItem.Buffer_Name);
+			System.out.println( "   " + currentItem.Type + "\t" + currentItem.Buffer_Name);
 	      //ignore slots
 	      continue;
 	    } //
 	    //else, normal condition
 	    
 	    sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "   " + currentItem.Type + currentItem.Buffer_Name + ">");
+		System.out.println( "   " + currentItem.Type + currentItem.Buffer_Name + ">");
 	    String isa_type = (String)currentItem.Slot.get("isa");
 	    if (isa_type != null){
 	      sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("      isa	" +  isa_type ); //print isa type first.
+			System.out.println("      isa	" +  isa_type );
 	    }	
 	    
 	    
@@ -15521,6 +15557,7 @@ return return_string;
 	      Entry<String, String> currentEntry = itrSlot.next();
 	      if(!currentEntry.getKey().equals( "isa" ) ){ //ignore isa type here.
 	        sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "      " + currentEntry.getKey() + "	" + currentEntry.getValue());
+			System.out.println("      " + currentEntry.getKey() + "	" + currentEntry.getValue());
 	      }
 	    }
 	  }
@@ -15530,14 +15567,17 @@ return return_string;
 	    Production_Rule_Condition_Action_Item currentItem = (Production_Rule_Condition_Action_Item)enum_action_item.nextElement();
 	    if( currentItem.Type.charAt(0) == '!' ) { // !name! special
 	      sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "   " + currentItem.Type + "\t" + currentItem.Buffer_Name);
+			System.out.println( "   " + currentItem.Type + "\t" + currentItem.Buffer_Name);
 	      continue;
 	    } //
 	    //else, normal condition
 	    
 	    sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "   " + currentItem.Type + currentItem.Buffer_Name + ">");
+		System.out.println("   " + currentItem.Type + currentItem.Buffer_Name + ">");
 	    String isa_type = (String)currentItem.Slot.get("isa");
 	    if (isa_type != null){
 	      sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("      isa	" +  isa_type); //print isa type first.
+			System.out.println("      isa	" +  isa_type);
 	    }
 	    
 	    
@@ -15554,13 +15594,16 @@ return return_string;
 	      String value = (String)currentItem.Slot.get(key);
 	      if( !key.equals( "isa") ){ //ignore isa type here.
 	        sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "      " +  key + "	" + value);
+			System.out.println("      " +  key + "	" + value);
 	      }
 	    }
 	    
 	  }
 	  sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( ")");
+		System.out.println( ")");
 	  if (sim.vars.centralParametersModule.Use_Procedural_Resources) {
 	    sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( "Actions: " +    the_rule.Num_Low_Level_Requests);
+		System.out.println("Actions: " +    the_rule.Num_Low_Level_Requests);
 	    String each_action = "    ";
 	    if( the_rule.Num_Aural_Action > 0 ) each_action +=  ", aural: " + the_rule.Num_Aural_Action;
 	    if( the_rule.Num_Aural_Location_Action > 0 ) each_action +=  ", aural-location: " + the_rule.Num_Aural_Location_Action;
@@ -15572,10 +15615,13 @@ return return_string;
 	    if( the_rule.Num_Visual_Location_Action > 0 ) each_action +=  ", visual-location: " + the_rule.Num_Visual_Location_Action;
 	    if( the_rule.Num_Vocal_Action > 0 ) each_action +=  ", vocal: " + the_rule.Num_Vocal_Action;
 	    sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( each_action );
+		System.out.println(each_action);
 	  }
 	  sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( the_rule.Condition_Part_Goal_X_Reference ) ;
+		System.out.println(the_rule.Condition_Part_Goal_X_Reference);
 	  UtilityModuleFun__Print_Utility_For_A_Rule(the_rule.Rule_Name);
 	  sim.funs.ProgramUtilitiesFun__Output_Trace_Txt( " " );
+		System.out.println( " " );
 	}
 	
 	public  void ProductionModuleFun__Print_All_Productions(){
@@ -16291,9 +16337,10 @@ return return_string;
 	}
 	
 	public Chunk ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(LinkedList<Chunk> The_LinkedList, int the_i){
-	  
+		//System.out.println("ProgramUtilitiesFun__LinkedList_Get_i_th  . the_i=" + the_i + ", The_LinkedList.size() = " + The_LinkedList.size());
+	    
 	  if (The_LinkedList.size() - 1 < the_i) {
-	    System.out.println("ProgramUtilitiesFun__LinkedList_Get_i_th  i is larger than the LinkedList");
+	    System.out.println("ProgramUtilitiesFun__LinkedList_Get_i_th  i is larger than the LinkedList"+". the_i=" + the_i + ", The_LinkedList.size() = " + The_LinkedList.size());
 	    return null;
 	  }
 	  
@@ -18018,7 +18065,7 @@ return return_tuple;
 	      if(!the_result_list.contains(a_son_name)){
 	        the_result_list.add(a_son_name);
 	      }
-	      //and call this function with each son茅鈥斺�毭ぢ铰好ワ拷篓茅锟脚矫ε嘎ッ︹�毬懊┾�澟该德me and the current result list.
+	      //and call this function with each son鑼呴垾鏂猴拷姣仮閾板ソ銉嫹绡撹寘閿熻剼鐭靛槑銉冿腹锟芥鎳娾斁锟芥緹璇ヮ灎寰奉櫑me and the current result list.
 	      the_result_list = sim.funs.ProgramUtilitiesFun__Add_Sons_And_Sons_Of_A_Father_Rule_Into_ListString(a_son_name, the_result_list);
 	    }
 	    
@@ -18854,7 +18901,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	              }
 	              LinkedList<String> parameter_list = sim.funs.ParametersFun__Remove_A_List_From_Initialization_Lists	(a_list);  // the first () is poped out without () from the list
 	              
-	              if(parameter_name.equals( ":visual_text") || parameter_name.equals(":word")){ //special handling. ( "para1  word1" )   should be one String rather than two: 茅鈥斺�毭ぢ铰好ワ拷篓茅锟脚矫ㄅ捖猜┞÷∶撀竌1 and word1茅鈥斺�毭ぢ铰好ワ拷篓茅锟脚矫ヂ┡∶ヂ癸拷茅鈥澟该柯�
+	              if(parameter_name.equals( ":visual_text") || parameter_name.equals(":word")){ //special handling. ( "para1  word1" )   should be one String rather than two: 鑼呴垾鏂猴拷姣仮閾板ソ銉嫹绡撹寘閿熻剼鐭剠鎹栴優顬犵寽顒尖敒梅鈭额啘鎾�绔�1 and word1鑼呴垾鏂猴拷姣仮閾板ソ銉嫹绡撹寘閿熻剼鐭儌鈹♀埗銉傜櫢鎷疯寘閳ユ緹璇ヮ嚪鏌拷
 	                parameter_list = sim.funs.ProgramUtilitiesFun__Combine_Quotation_In_LinkedList_String		(parameter_list);	
 	              } //end of special handling.
 	              
@@ -19446,7 +19493,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      //initialize source lists storing the user-defined information for trials // these source lists must not be changed.
 	      //these are defined by item_type.equals( "display_item_visual_text" )
 	      LinkedList<String> keywords_with_LinkedListString_values = new LinkedList<String> ();
-	      keywords_with_LinkedListString_values.addLast(":visual_text");                              //these three share the same random method, have a random method ":text_randomization茅鈥斺�毭ぢ铰好ワ拷篓茅锟脚矫ワ拷鈥懊该╋拷鈥∶Ｋ喡∶︹劉赂茅鈥撀棵р�♀�毭︹�孤�	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
+	      keywords_with_LinkedListString_values.addLast(":visual_text");                              //these three share the same random method, have a random method ":text_randomization鑼呴垾鏂猴拷姣仮閾板ソ銉嫹绡撹寘閿熻剼鐭儻鎷烽垾鎳婎灎顐傝鈺嬫嫹閳モ埗锛枴鈭讹腹鍔夎祩鑼呴垾鎾�妫笛�锟解檧锟芥锔癸拷瀛わ拷	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
 	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
 	      keywords_with_LinkedListString_values.addLast(":feedback_to_each_visual_text");             //these three share the same random method, No random method
 	      keywords_with_LinkedListString_values.addLast(":display_item_screen_location_x");
@@ -19644,7 +19691,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      //initialize source lists storing the user-defined information for trials // these source lists must not be changed.
 	      //these are defined by item_type.equals( "display_item_visual_text_button" )
 	      LinkedList<String> keywords_with_LinkedListString_values = new LinkedList<String> ();
-	      keywords_with_LinkedListString_values.addLast(":visual_text");                              //these three share the same random method, have a random method ":text_randomization茅鈥斺�毭ぢ铰好ワ拷篓茅锟脚矫ワ拷鈥懊该╋拷鈥∶Ｋ喡∶︹劉赂茅鈥撀棵р�♀�毭︹�孤�	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
+	      keywords_with_LinkedListString_values.addLast(":visual_text");                              //these three share the same random method, have a random method ":text_randomization鑼呴垾鏂猴拷姣仮閾板ソ銉嫹绡撹寘閿熻剼鐭儻鎷烽垾鎳婎灎顐傝鈺嬫嫹閳モ埗锛枴鈭讹腹鍔夎祩鑼呴垾鎾�妫笛�锟解檧锟芥锔癸拷瀛わ拷	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
 	      keywords_with_LinkedListString_values.addLast(":correct_response_to_each_visual_text");     //these three share the same random method, NO random method
 	      keywords_with_LinkedListString_values.addLast(":feedback_to_each_visual_text");             //these three share the same random method, No random method
 	      keywords_with_LinkedListString_values.addLast(":display_item_screen_location_x");
@@ -19836,10 +19883,10 @@ If the string is invalid or there is no current model then a warning is printed 
 	      
 	      
 	      LinkedList<String> keywords_with_LinkedListString_values = new LinkedList<String> ();
-	      keywords_with_LinkedListString_values.addLast(":start_point_screen_location_x");            //these six share the same random method, have a random method ":text_randomization茅藛楼忙潞戮茂驴陆茂驴陆
-	      keywords_with_LinkedListString_values.addLast(":start_point_screen_location_y");            //these six share the same random method, have a random method ":text_randomization茅藛楼忙潞戮茂驴陆茂驴陆
-	      keywords_with_LinkedListString_values.addLast(":end_point_screen_location_x");              //these six share the same random method, have a random method ":text_randomization茅藛楼忙潞戮茂驴陆茂驴陆
-	      keywords_with_LinkedListString_values.addLast(":end_point_screen_location_y");              //these six share the same random method, have a random method ":text_randomization茅藛楼忙潞戮茂驴陆茂驴陆
+	      keywords_with_LinkedListString_values.addLast(":start_point_screen_location_x");            //these six share the same random method, have a random method ":text_randomization鑼呰棝妤煎繖娼炴埉鑼傞┐闄嗚寕椹撮檰
+	      keywords_with_LinkedListString_values.addLast(":start_point_screen_location_y");            //these six share the same random method, have a random method ":text_randomization鑼呰棝妤煎繖娼炴埉鑼傞┐闄嗚寕椹撮檰
+	      keywords_with_LinkedListString_values.addLast(":end_point_screen_location_x");              //these six share the same random method, have a random method ":text_randomization鑼呰棝妤煎繖娼炴埉鑼傞┐闄嗚寕椹撮檰
+	      keywords_with_LinkedListString_values.addLast(":end_point_screen_location_y");              //these six share the same random method, have a random method ":text_randomization鑼呰棝妤煎繖娼炴埉鑼傞┐闄嗚寕椹撮檰
 	      keywords_with_LinkedListString_values.addLast(":correct_response");     //these six share the same random method, NO random method
 	      keywords_with_LinkedListString_values.addLast(":feedback_content");             //these six share the same random method, No random method
 	      
@@ -22181,7 +22228,6 @@ If the string is invalid or there is no current model then a warning is printed 
 	}
 	
 	public  void TaskTemplateFun__Update_DriverCar_Steer_And_Wheel_With_Delta_Steer (double the_delta_steer_degree){
-		
 		if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 	  		  World3D_Template_Driving_Method the_method = null;
 	            if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
@@ -23523,6 +23569,7 @@ If the string is invalid or there is no current model then a warning is printed 
 //VisionModuleFun
 	
 	public int VisionModuleFun__Find_The_Visicon_ID_By_Visicon_Name(String the_visicon_name){
+		//System.out.println("VisionModuleFun__Find_The_Visicon_ID_By_Visicon_Name, the_visicon_name: " + the_visicon_name);
 	  Enumeration enum_chunk = Collections.enumeration(sim.vars.visualDisplay.Visicon);
 	  int i = 0 ;
 	  while(enum_chunk.hasMoreElements()){
@@ -23712,6 +23759,48 @@ If the string is invalid or there is no current model then a warning is printed 
 	}
 	
 	public Chunk VisionModuleFun__Find_Visicon_By_Location(Chunk visual_location){
+		//System.out.println("VisionModuleFun__Find_Visicon_By_Location");
+		// added by Yelly
+		// return the vision chunk for critical element
+		// place it and return at the very beginning because the former driving model just return empty chunk as near point and far point does not have neccessary visual representation
+		if(visual_location.Slot.containsKey("kind")) {
+			String kind = sim.funs.ChunkFun__Get_Chunk_Slot_Value(visual_location, "kind");
+			//System.out.println("VisionModuleFun__Find_Visicon_By_Location, visual_location kind: " + kind);
+			if(kind.equals("critical-element")) {
+				Chunk visiconChunk = null;
+
+	    		CriticalElement focusing = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).critical_element_focusing;
+	    		if(focusing == null) {
+	    			System.err.println("VisionModuleFun__Find_Visicon_By_Location for a chosen critical element while the element doesn't exist");
+	    			return new Chunk();
+	    		}
+	    		else if(focusing.type.equals("vehicle")) {
+	    			visiconChunk  = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-vehicle",  "screen-pos", visual_location.Chunk_Name, "color", focusing.content});
+	    		}
+	    		else if(focusing.type.equals("sign")) {
+	    			visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-sign",  "screen-pos", visual_location.Chunk_Name, "content", focusing.content});
+	    		}
+	    		else {
+	    			System.err.println("unspecified type of critical element");
+	    			return new Chunk();
+	    		}
+	    		
+                // for critical elements, add visicon here
+                // copied from "Visual Display Onset" part
+                Chunk temp_chunk = sim.funs.ChunkFun__Chunk_Clone(visiconChunk);
+                temp_chunk.Creation_Time = SimSystem.clock();
+                sim.vars.visualDisplay.Visicon.addLast(temp_chunk);
+	    		
+	    		return visiconChunk;
+	    	}
+			else if(kind.equals("near-point") || kind.equals("far-point")) {
+				// in driving model, near point/far point don't have visicon representation, 
+				// so I just let it return empty chunk
+			    return new Chunk();
+			}
+		}
+		
+		
 	  
 
 	  // TODO support for phrase, word from vision.lisp:1490
@@ -23740,10 +23829,12 @@ If the string is invalid or there is no current model then a warning is printed 
 	  // return featlis-to-focus (location, feat-lis)
 	  //if(Feat_Lis.Count > 0) return VisionModuleFun__Feat_Lis_To_Focus(visual_location, Feat_Lis);
 	  // return the closest Object to the location
+	  System.out.println("hhhhhhhhhhhhhhhh");
 	  double dist = VisionModuleFun__Distance((Chunk)sim.vars.centralParametersModule.Chunks.get((String)Feat_Lis.get(0).Slot.get("screen-pos")), visual_location);
 	  ArrayList<Chunk> closest = new ArrayList<Chunk>();
 	  closest.add(Feat_Lis.get(0));
 	  for (Chunk feat : Feat_Lis) {
+		//ChunkFun__Print_Chunk(feat);
 	    double cur_dist = VisionModuleFun__Distance((Chunk)sim.vars.centralParametersModule.Chunks.get((String)feat.Slot.get("screen-pos")), visual_location);
 	    if(cur_dist < dist) {
 	      dist = cur_dist;
@@ -23800,7 +23891,6 @@ If the string is invalid or there is no current model then a warning is printed 
 	    
 	    if(kind.equals( "near-point")){
 	    	
-	    	
 	    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
 	    		String lane = (String)the_chunk_spec.Slot.get("lane");
@@ -23811,9 +23901,6 @@ If the string is invalid or there is no current model then a warning is printed 
 			      }
 	    		return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "near-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving",  "distance", Double.toString(near_point_ahead_distance), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getTorcsPercept().nearPointAngleDegree)     });
 			}
-	    	    	
-	    	
-	    	
 			else{
 		      World3D_DriverCar the_driver_car = ((World3D_DriverCar)sim.vars.world3DTemplate.World.Objects.get(((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).DriverCar_World3D_ID  ));
 		      String driver_on_road_id =  the_driver_car.Vehicle_Basic.On_Road_World3D_ID;
@@ -23847,7 +23934,6 @@ If the string is invalid or there is no current model then a warning is printed 
 		      //currently don't have World3D Object for near point, because Salvucci's model don't +visual at any near point.
 	    	}
 	    } // end of kind near-point
-	    
 	    else if (kind.equals( "far-point")){
 	    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
@@ -23861,8 +23947,6 @@ If the string is invalid or there is no current model then a warning is printed 
 			      Chunk return_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "far-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving",  "distance", Double.toString(the_method.getTorcsPercept().farPointDistanceMeter), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getTorcsPercept().farPointAngleDegree)   });
 			      return return_chunk;	    		
 			}
-	    	
-	    	
 			else{
 		      World3D_DriverCar the_driver_car = ((World3D_DriverCar)sim.vars.world3DTemplate.World.Objects.get(  ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).DriverCar_World3D_ID  ));
 		      String driver_on_road_id =  the_driver_car.Vehicle_Basic.On_Road_World3D_ID;
@@ -24028,7 +24112,6 @@ If the string is invalid or there is no current model then a warning is printed 
 	      
 	    	}
 	    } //end of far point
-	    
 	    else if (kind.equals( "customized-local-point")){
 	      String name = sim.funs.ChunkFun__Get_Chunk_Slot_Value(the_chunk_spec, "name");
 	      if( name.charAt(0) == '"') name = name.substring(1);
@@ -24075,23 +24158,63 @@ If the string is invalid or there is no current model then a warning is printed 
 	      int lane_num = the_point_pointer.On_Road_Lane;
 	      return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "customized-point-" + point_world3d_id , "isa", "visual-location-world3d-driving",  "distance", Double.toString(distance), "kind",kind, "lane",Double.toString(lane_num),  "angle", Double.toString(customized_point_angle)   });
 	      
-	      
-	      
-	      
-	    } //end of customized-local-point
-	    
+	    }     //end of customized-local-point
 	    else if (kind.equals( "vehicle-a")){ //dummy-visual-location-point-vehicle-a
 	      
 	      return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "customized-point-dummy-visual-location-point-vehicle-a" , "isa", "visual-location-world3d-driving",  "distance", "0.0" , "kind", "vehicle-a", "lane", "0",  "angle", "0.0"   });
 	      
 	    }
-	    
-	    
 	    else {
 	      System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has undefined kind: "+ kind);
 	     
 	      return null;
 	    }
+	  }
+	  else if(visual_location_isa.equals( "visual-location-world3d-driving-criticalelement")) {
+		    if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) ) {
+			      System.out.println("Error! add location isa visual-location-world3d-driving need needs sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method");
+			    
+			      return null;
+			    }
+			    if( !the_chunk_spec.Slot.containsKey("kind") ){
+			      System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has no 'kind' key");
+			     
+			      return null;
+			    }
+			    String kind = (String)the_chunk_spec.Slot.get("kind");
+			    
+			    if(kind.equals( "critical-element")) { // added by Yelly: Get a visible critical element
+			    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
+			    		World3D_Template_Driving_Method theMethod = (World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object;
+			    		CriticalElement chosenCE = theMethod.critical_element_focusing;
+			    		double chosen_critical_element_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
+			    		/*String lane = (String)the_chunk_spec.Slot.get("lane");
+					    if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
+					      System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec 'lane' is not integer but: " + lane);
+					      return null;
+					    }*/
+					      
+					    String viewArea = "";
+					    viewArea = theMethod.chooseFocusingCriticalElement(viewArea);
+					    if(theMethod.critical_element_focusing == null)	{
+					    	//System.out.println("after chooseFocusingCriticalElement, focusing on no critical element");
+					    	return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving-criticalelement",  "kind",kind, "viewarea", viewArea, "state", "nonexist"});
+					    }
+					    else {
+					    	//System.out.println("after chooseFocusingCriticalElement, focusing on critical element:" +  " critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) + ", isa" + "visual-location-world3d-driving-criticalelement" + ", kind" + kind + ", viewarea" + viewArea + ", state" + "exist");
+					    	return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving-criticalelement",  "kind",kind, "viewarea", viewArea, "state", "exist"});}	    	
+					    }
+					else{
+						//TODO: actually I don't know what to do because this is not for our experiment  
+						return null;
+					}
+			    	
+			    }
+			    else {
+				      System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has undefined kind: "+ kind);
+				     
+				      return null;
+				}
 	  }
 	  else{
 	    System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has undefined visual_location_isa: "+ visual_location_isa);
@@ -24725,7 +24848,6 @@ If the string is invalid or there is no current model then a warning is printed 
 	  }
 	  
 	  
-	  
 	  if (Matched_Chunk_Number == 0) return new Chunk();
 	  else if (Matched_Chunk_Number == 1){
 	    Chunk the_matched_chunk_pointer = ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer( visual_location_chunk_list,  Matched_Chunk_Index[0] );
@@ -24738,11 +24860,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    //System.out.println(Matched_Chunk_Number + " " + rand_int);
 	    Chunk the_matched_chunk_pointer = ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer( visual_location_chunk_list,  Matched_Chunk_Index[rand_int] );
 	    return sim.funs.ChunkFun__Chunk_Clone(the_matched_chunk_pointer);
-	  }
-	  
-	  
-	  
-	  
+	  }	  
 	  
 	}
 	

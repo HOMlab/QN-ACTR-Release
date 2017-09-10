@@ -1,12 +1,12 @@
 package qnactr.objectDesigner;
 
 public class CriticalElement {
-	String type; // "vehicle" or "sign"
-	String content; // color for car, content for sign
-	boolean front_visibility; // whether this element is within drivers front visible area
-	boolean back_visibility; // whether this element is visible in back(center) mirror
-	boolean leftBack_visibility; // whether this element is visible in left-back mirror
-	boolean rightBack_visibility; // whether this element is visible in right-back mirror
+	public String type; // "vehicle" or "sign"
+	public String content; // color for car, content for sign
+	public boolean front_visibility; // whether this element is within drivers front visible area
+	public boolean back_visibility; // whether this element is visible in back(center) mirror
+	public boolean leftBack_visibility; // whether this element is visible in left-back mirror
+	public boolean rightBack_visibility; // whether this element is visible in right-back mirror
 	
 	public String getType() {
 		return type;

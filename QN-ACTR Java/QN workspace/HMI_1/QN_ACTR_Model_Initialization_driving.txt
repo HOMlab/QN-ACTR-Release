@@ -31,12 +31,6 @@
 	stage			 
 )
 
-(chunk-type world3d-driving-criticalelement-vehicle screen-pos color)
-(chunk-type world3d-driving-criticalelement-sign screen-pos content)
-(chunk-type world3d-driving-criticalelement-vehicle-img screen-pos color)
-(chunk-type world3d-driving-criticalelement-sign-img screen-pos content)
-(chunk-type visual-location-world3d-driving-criticalelement kind viewarea state :attended) ;;mind use lowercase
-
 
 
 (add-dm
@@ -124,7 +118,7 @@
       fd-old =fd-2
       speed-old =v-2
       time-old =time-2
-      stage     4
+      stage     1
    +visual>
       isa         move-attention 		;;note here as in Salvucci's model, near and far angle is not computed from visual but use visual-location only. this +visual> is used for showing eye movement, in fact as a side effect. info processing is not affected by visual prepare, encoding and eye movement speed
       screen-pos  =visual-location
@@ -140,81 +134,5 @@
 !eval! (world3d-driving-accelerate-brake   =fd-1   =fd-2  =v-1  =v-2    =time-1      =time-2  ) 	;;currently no module for this, just !eval! as Salvucci's model
 )
 
-(p attend-criticalelement
-    =goal>
-      isa drive-control  
-      stage    4
-   ==>
-    =goal>
-      stage    5
-   +visual-location>
-      isa visual-location-world3d-driving-criticalelement
-      kind critical-element		
-)
-
-(p attend-criticalelement-detected
-    =goal>
-      isa drive-control  
-      stage    5
-    =visual-location>
-      isa visual-location-world3d-driving-criticalelement
-      kind critical-element
-	state exist
-    ?visual>
-     state     free
-   ==>
-    +visual>               
-      isa      move-attention
-      screen-pos =visual-location
-    =goal>
-      stage    6
-)
-
-(p attend-criticalelement-detect-failure
-    =goal>
-      isa drive-control  
-      stage    5
-    =visual-location>
-      isa visual-location-world3d-driving-criticalelement
-      kind critical-element
-	state nonexist
-   ==>
-    =goal>
-      stage    1
-)
-
-(p read-criticalelement-vehicle
-    =goal>
-      isa drive-control  
-      stage    6
-    =visual>
-      isa      world3d-driving-criticalelement-vehicle
-      color    =col
-
-==>
-    +imaginal>
-      isa      world3d-driving-criticalelement-vehicle-img
-      color    =col
-    =goal>
-      stage    1
-!eval! (world3d-driving-report-criticalelement-vehicle  =col) 
-)
-
-(p read-criticalelement-sign
-    =goal>
-      isa drive-control  
-      stage    6
-    =visual>
-      isa      world3d-driving-criticalelement-sign
-      content    =cont
-
-==>
-    +imaginal>
-      isa      world3d-driving-criticalelement-sign-img
-      content    =cont
-    =goal>
-      stage    1
-!eval! (world3d-driving-report-criticalelement-sign  =cont) 
-)
 
 (goal-focus driving)

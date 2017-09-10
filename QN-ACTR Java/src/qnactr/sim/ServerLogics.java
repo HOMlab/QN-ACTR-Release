@@ -175,10 +175,6 @@ public class ServerLogics {
             
             //Scenario Events, cast delayed events to the delayed events server
             
-            
-            
-            
-            
             break;
             
           case Ending:
@@ -233,8 +229,6 @@ public class ServerLogics {
 
             GlobalUtilities.popUpMessage("NOTICE! declarativeModule.Merge less than optimal set in Event_00_Set_QN_Parameters");
             */
-            
-            
             
             sim.vars.intentionalModule.Multitasking_Schedule_Method = "threaded-cognition"; // = "threaded-cognition"; //or "" for ACT-R before threaded cognition (need :er t for random)  // = "goal-adaptation"; is not done
             //GlobalUtilities.popUpMessage("NOTICE! sim.vars.intentionalModule.Multitasking_Schedule_Method  set to  threaded-cognition in Event_00_Set_QN_Parameters");
@@ -391,15 +385,9 @@ public class ServerLogics {
               sim.vars.productionModule.Processor_High_Level_Max_Capacity = 0;
             }
             
-            
             sim.vars.programGlobalVar__Event_Priority_Table.put("Vision Module Trigger Loop", 1 );
             sim.vars.programGlobalVar__Event_Priority_Table.put("Trigger Buffer Loop", 10 );
             //end of necessary global parameters
-            
-            
-
-
-
 
             ///////////
             /// ////// task specific parameter setting
@@ -630,736 +618,673 @@ public class ServerLogics {
 
             sim.funs.MotorModuleFun__Home_Hands(); //by default, position hands at keyboard default location
 
-
-
-            
-            
             //Event_03_Load_QN_ACTR_Model_Initialization
             //System.out.println("Clock " + SimSystem.clock() + ", Event_03_Load_QN_ACTR_Model_Initialization");
             
             sim.funs.ParametersFun__Load_QN_ACTR_Model_Initialization();
 
-          //after setting the :seed parameter, determine whether to randomize the seed for display item randomness.
-          if( sim.vars.centralParametersModule.Randomize_Seed_For_Display_Sequence ) {
+	         //after setting the :seed parameter, determine whether to randomize the seed for display item randomness.
+	         if( sim.vars.centralParametersModule.Randomize_Seed_For_Display_Sequence ) {
+	        	 sim.vars.programGlobalVar__Rand1_Seed1 = GlobalUtilities.randomInteger(1, 2147483562); // [1, 2147483562]
+	            sim.vars.programGlobalVar__Rand1_Seed2 = GlobalUtilities.randomInteger(1, 2147483398); // [1, 2147483398]
+	            //System.out.println("Rand1_Seed1: " + sim.vars.programGlobalVar__Rand1_Seed1 + " Rand1_Seed2: " + sim.vars.programGlobalVar__Rand1_Seed2);
+	         }
 
-            sim.vars.programGlobalVar__Rand1_Seed1 = GlobalUtilities.randomInteger(1, 2147483562); // [1, 2147483562]
-            sim.vars.programGlobalVar__Rand1_Seed2 = GlobalUtilities.randomInteger(1, 2147483398); // [1, 2147483398]
-            //System.out.println("Rand1_Seed1: " + sim.vars.programGlobalVar__Rand1_Seed1 + " Rand1_Seed2: " + sim.vars.programGlobalVar__Rand1_Seed2);
-          }
 
+	         //Event_04a_Initialize_Trial_Display_Response_List_From_Template
+	         //System.out.println("Clock " + SimSystem.clock() + ", Event_04a_Initialize_Trial_Display_Response_List_From_Template");
+	          
+		     //old //aa_Altmann_Study1_Initialize_Trial_List();
+	
+	         sim.funs.TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template();
 
-          
-          
-          
-          //Event_04a_Initialize_Trial_Display_Response_List_From_Template
-          //System.out.println("Clock " + SimSystem.clock() + ", Event_04a_Initialize_Trial_Display_Response_List_From_Template");
-          
-        //old //aa_Altmann_Study1_Initialize_Trial_List();
-
-          sim.funs.TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template();
-
-          /*
-          //here different methods can be used to initialize the trials of the task
-          //if single discrete task template is used
-          if(sim.vars.taskTemplate.Method.equals( "single_discrete_task_visual_display"))TaskTemplateFun__Obsolete_Initialize_Single_Discrete_Task_Visual_Display_Template_Trial_List();
-          */
-
-          /*
-          //if keyboard_single_key_per_trial is used
-          if(sim.vars.taskTemplate.Response.equals( "keyboard_single_key_per_trial"))
-          {}
-          */
-
-          //write/output the initialized experiment trial parameter list to external file: Experiment_Trial_Parameter_List.txt
-          if(sim.vars.taskTemplate.Output_Initialized_Experiment_Trial_Parameter_List_To_Experiment_Trial_Parameter_List_Txt.equals( "yes")){
-            sim.funs.ProgramUtilitiesFun__Clear_Experiment_Trial_Parameter_List();
-            sim.funs.ProgramUtilitiesFun__Output_Initialized_Experiment_Trial_Parameter_List_To_Experiment_Trial_Parameter_List_Txt();
-          }
+	          /*
+	          //here different methods can be used to initialize the trials of the task
+	          //if single discrete task template is used
+	          if(sim.vars.taskTemplate.Method.equals( "single_discrete_task_visual_display"))TaskTemplateFun__Obsolete_Initialize_Single_Discrete_Task_Visual_Display_Template_Trial_List();
+	          */
+	
+	          /*
+	          //if keyboard_single_key_per_trial is used
+	          if(sim.vars.taskTemplate.Response.equals( "keyboard_single_key_per_trial"))
+	          {}
+	          */
+	
+	          //write/output the initialized experiment trial parameter list to external file: Experiment_Trial_Parameter_List.txt
+	         if(sim.vars.taskTemplate.Output_Initialized_Experiment_Trial_Parameter_List_To_Experiment_Trial_Parameter_List_Txt.equals( "yes")){
+	            sim.funs.ProgramUtilitiesFun__Clear_Experiment_Trial_Parameter_List();
+	            sim.funs.ProgramUtilitiesFun__Output_Initialized_Experiment_Trial_Parameter_List_To_Experiment_Trial_Parameter_List_Txt();
+	          }
 
           
           
-          //Event_04b_Load_Customized_Trial_Display_Response_List_From_File
-          //System.out.println("Clock " + SimSystem.clock() + ", Event_04b_Load_Customized_Trial_Display_Response_List_From_File");
+	          //Event_04b_Load_Customized_Trial_Display_Response_List_From_File
+	          //System.out.println("Clock " + SimSystem.clock() + ", Event_04b_Load_Customized_Trial_Display_Response_List_From_File");
+	          
+	        //Event_04b is only meaningful when the external trial parameter file is not made by Event_04a but by users; however, it does no harm if the external file is made by Event_04a using templates. It just wastes time.
+	
+	        //load external file: Experiment_Trial_Parameter_List.txt as the experiment trial parameter list in sim.vars.centralParametersModule.Experiment_Trial_Parameter_List
+	          //ToDo
+	
+	
+	          //also need to: From sim.vars.centralParametersModule.Experiment_Trial_Parameter_List, make sim.vars.centralParametersModule.Experiment_Trial_Display_Item_List, which will be used in display codes.
+	          
+	
+	
+	          //Event_05_World3D_Initialization
+	          //System.out.println("Clock " + SimSystem.clock() + ", Event_05_World3D_Initialization");
+	          
+	          Hashtable additional_objects = new Hashtable();
+	          //first round
+	          
+	          Iterator<Entry<String, Object>>itr_Objects = sim.vars.world3DTemplate.World.Objects.entrySet().iterator();
+	          while (itr_Objects.hasNext()){
+	        	  Entry<String, Object> an_object = itr_Objects.next();
+	        	  if(an_object.getValue() instanceof World3D_DriverCar){
+		            //get the start-on road ID
+		            World3D_DriverCar driver_car = (World3D_DriverCar)an_object.getValue();
+		            String start_on_road_name = driver_car.Start_Road_Name;
+		            World3D_Road the_start_road = new World3D_Road();
+		            boolean road_found = false;
+		            
+		            Iterator<Entry<String, Object>>itr_Objects2 = sim.vars.world3DTemplate.World.Objects.entrySet().iterator();
+		            while (itr_Objects2.hasNext()){
+		              //            foreach(DictionaryEntry an_object2 in  sim.vars.world3DTemplate.World.Objects){
+		              Entry<String, Object> an_object2 = itr_Objects2.next();
+		              if( (an_object2.getValue() instanceof World3D_Road) && ((World3D_Road)an_object2.getValue()).Name.equals( start_on_road_name)){
+		                road_found = true;
+		                the_start_road = (World3D_Road)an_object2.getValue();
+		              }
+		            }
+		            if(!road_found){
+		              System.out.println("Error! Event_05_World3D_Initialization cannot find road with name: " + start_on_road_name + " for driver_car.");
+		              SimSystem.abort();
+		            }
+		            driver_car.Start_Road_World3D_ID = the_start_road.World3D_ID;
+            
+            
+		            World3D_Template_Driving_Method the_method = null;
+		            if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
+		        
+		            //#region sp-driv   
+		            if(the_method != null && (the_method.Who_Drive.toLowerCase().equals( "model-6dof-speed") || the_method.Who_Drive.toLowerCase().equals( "human-6dof-speed" )) ){ 
+		              driver_car.Vehicle_Basic.On_Road_World3D_ID = driver_car.Start_Road_World3D_ID;
+		              driver_car.Vehicle_Basic.Loc_X = (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob1;
+		              driver_car.Vehicle_Basic.Loc_Y = (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob2;
+		              driver_car.Vehicle_Basic.Loc_Z = (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob3;
+		              driver_car.Vehicle_Basic.Pitch = (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob4;
+		              driver_car.Vehicle_Basic.Yaw =  (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob5;
+		              driver_car.Vehicle_Basic.Roll =   (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob6;
+		            }
+		            //#endregion    
+		            else{ //normal driving
+		              sim.funs.TaskTemplateFun__World3D_Reset_DriverCar_To_Start_Position(driver_car);
+		            }
+		            
+		            /*
+		            if(driver_car.Start_Distance>= 0.0){  // key for normal start
+		              Three_Tuple global_parameters = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(driver_car.Start_Road_World3D_ID, driver_car.Start_Distance, driver_car.Start_Lane_Num * the_start_road.Lane_Width, 0.0   ); //start on the center of a lane, and with heading angle same as the road.
+		              
+		              //initializae vehicle basic
+		              driver_car.Vehicle_Basic.Angle_Between_Road_Direction = 0.0;
+		              driver_car.Vehicle_Basic.Distance_From_Start = driver_car.Start_Distance;
+		              driver_car.Vehicle_Basic.Distance_Lateral_To_Center_Lane_Center = driver_car.Start_Lane_Num * the_start_road.Lane_Width;
+		              driver_car.Vehicle_Basic.Lane_Num = driver_car.Start_Lane_Num;
+		              
+		              
+		              driver_car.Vehicle_Basic.Loc_X = (double)global_parameters.Ob1;
+		              driver_car.Vehicle_Basic.Loc_Y = 0.0; //current does not support altitude
+		              driver_car.Vehicle_Basic.Loc_Z = (double)global_parameters.Ob2;
+		              driver_car.Vehicle_Basic.Pitch = 0.0;
+		              driver_car.Vehicle_Basic.Roll = 0.0;
+		              driver_car.Vehicle_Basic.Yaw = (double)global_parameters.Ob3;
+		              
+		              
+		              
+		            }
+		            else{ // driver_car.Start_Distance < 0 is the key for global initialization, 6DOF use customized data
+		              Three_Tuple local_info = sim.funs.ProgramUtilitiesFun__World3D_Global_Loc_And_Angle_To_Local( driver_car.Vehicle_Basic.On_Road_World3D_ID, driver_car.Vehicle_Basic.Loc_X, driver_car.Vehicle_Basic.Loc_Z  , driver_car.Vehicle_Basic.Yaw, 0.0);
+		              driver_car.Start_Distance = (double)local_info.Ob1;
+		              driver_car.Vehicle_Basic.Distance_From_Start = (double)local_info.Ob1;
+		              driver_car.Vehicle_Basic.Distance_Lateral_To_Center_Lane_Center = (double)local_info.Ob2;
+		              driver_car.Vehicle_Basic.Angle_Between_Road_Direction = (double)local_info.Ob3;
+		            }
+		            */
+	        	  } //end of World3D_DriverCar
+	        	  else if(an_object.getValue() instanceof World3D_OtherCar){
+		            //get the start-on road ID
+		            World3D_OtherCar other_car = (World3D_OtherCar)an_object.getValue();
+		            String start_on_road_name = other_car.Start_Road_Name;
+		            World3D_Road the_start_road = new World3D_Road();
+		            boolean road_found = false;
+		            
+		            Iterator<Entry<String, Object>>itr_Objects2 = sim.vars.world3DTemplate.World.Objects.entrySet().iterator();
+		            while (itr_Objects2.hasNext()){
+		              Entry<String, Object> an_object2 = itr_Objects2.next();
+		              if( (an_object2.getValue() instanceof World3D_Road) && ((World3D_Road)an_object2.getValue()).Name.equals( start_on_road_name)){
+		                road_found = true;
+		                the_start_road = (World3D_Road)an_object2.getValue();
+		              }
+		            }
+		            if(!road_found){
+		              System.out.println("Error! Event_05_World3D_Initialization cannot find road with name: " + start_on_road_name + " for driver_car.");
+		              SimSystem.abort();
+		            }
+		            
+		            other_car.Start_Road_World3D_ID = the_start_road.World3D_ID;
+		            
+		            sim.funs.TaskTemplateFun__World3D_Reset_OtherCar_To_Start_Position(other_car);		            
+		          } //end of World3D_OtherCar
+		          else if (an_object.getValue() instanceof World3D_Road){
+		            //nothing, waiting for driver car to get its on road world3d ID
+		          } //end of World3D_Road
+		          else{
+		            System.out.println("Error! Event_05_World3D_Initialization has undefined world3d object type");  
+		            SimSystem.abort();
+		          }
+	          } //end of first round
+
+	          //second round
           
-        //Event_04b is only meaningful when the external trial parameter file is not made by Event_04a but by users; however, it does no harm if the external file is made by Event_04a using templates. It just wastes time.
+	          itr_Objects = sim.vars.world3DTemplate.World.Objects.entrySet().iterator();
+	          while (itr_Objects.hasNext()){
+	        	  Entry<String, Object> an_object = itr_Objects.next();
 
-        //load external file: Experiment_Trial_Parameter_List.txt as the experiment trial parameter list in sim.vars.centralParametersModule.Experiment_Trial_Parameter_List
-          //ToDo
+	        	  if (an_object.getValue() instanceof World3D_Road){ //identify driver-on road, and add far points objects
+		              //add far point object for the driving start on road
+		              World3D_Road a_road = (World3D_Road)an_object.getValue();
+		              World3D_DriverCar the_driver_car = sim.funs.TaskTemplateFun__Get_World3D_DriverCar_Object();
+		              if(a_road.Name.equals( the_driver_car.Start_Road_Name)){
+		                //create three far point object for the center lane
+		                //lane 0, center
+		                World3D_Point a_point = new World3D_Point();
+		                a_point.Distance_From_Start = the_driver_car.Start_Distance;
+		                a_point.Distance_Lateral_To_Center_Lane_Center = 0.0;
+		                a_point.On_Road_Lane = 0;
+		                a_point.On_Road_World3D_ID = a_road.World3D_ID;
+		                a_point.Type = "far-point-lane-center";
+		                
+		                String world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
+		                sim.vars.world3DTemplate.World.Object_Num ++;
+		                a_point.World3D_ID = world3d_id;
+		                additional_objects.put(world3d_id, a_point.clone() );
+		                
+		                
+			             //lane 0, left
+			             a_point = new World3D_Point();
+			             a_point.Distance_From_Start = the_driver_car.Start_Distance;
+			             a_point.Distance_Lateral_To_Center_Lane_Center = 0.0 - a_road.Lane_Width / 2.0;
+			             a_point.On_Road_Lane = 0;
+			             a_point.On_Road_World3D_ID = a_road.World3D_ID;
+			             a_point.Type = "far-point-lane-left";
+			              
+			             world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
+			             sim.vars.world3DTemplate.World.Object_Num ++;
+			             a_point.World3D_ID = world3d_id;
+			             additional_objects.put(world3d_id, a_point.clone() );
+			                
+			             //lane 0, right
+			             a_point = new World3D_Point();
+			             a_point.Distance_From_Start = the_driver_car.Start_Distance;
+			             a_point.Distance_Lateral_To_Center_Lane_Center = 0.0 + a_road.Lane_Width / 2.0;
+			             a_point.On_Road_Lane = 0;
+			             a_point.On_Road_World3D_ID = a_road.World3D_ID;
+			             a_point.Type = "far-point-lane-right";
+			              
+			             world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
+			             sim.vars.world3DTemplate.World.Object_Num ++;
+			             a_point.World3D_ID = world3d_id;
+			             additional_objects.put(world3d_id, a_point.clone() );
+			              
+			             int i;
+			             for (i = 1; i <= a_road.Lane_Num_Left; i ++){ //add far point lane left for the left lanes if there is any
+			               //lane -1 * i, center
+			               a_point = new World3D_Point();
+			               a_point.Distance_From_Start = the_driver_car.Start_Distance;
+			               a_point.Distance_Lateral_To_Center_Lane_Center = -1 * i * a_road.Lane_Width ;
+			               a_point.On_Road_Lane = -1 * i;
+			               a_point.On_Road_World3D_ID = a_road.World3D_ID;
+			               a_point.Type = "far-point-lane-center";
+			                
+			               world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
+			               sim.vars.world3DTemplate.World.Object_Num ++;
+			               a_point.World3D_ID = world3d_id;
+			               additional_objects.put(world3d_id, a_point.clone() );
+			                
+			               //lane -1 * i, left
+			               a_point = new World3D_Point();
+			               a_point.Distance_From_Start = the_driver_car.Start_Distance;
+			               a_point.Distance_Lateral_To_Center_Lane_Center = -1 * i * a_road.Lane_Width - a_road.Lane_Width / 2.0;
+			               a_point.On_Road_Lane = -1 * i;
+			               a_point.On_Road_World3D_ID = a_road.World3D_ID;
+			               a_point.Type = "far-point-lane-left";
+			                
+			               world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
+			               sim.vars.world3DTemplate.World.Object_Num ++;
+			               a_point.World3D_ID = world3d_id;
+			               additional_objects.put(world3d_id, a_point.clone() );
+			              }
+			              
+			              for (i = 1; i <= a_road.Lane_Num_Right; i ++){ //add far point lane right for the right lanes if there is any
+			                //lane 1 * i, center
+			                a_point = new World3D_Point();
+			                a_point.Distance_From_Start = the_driver_car.Start_Distance;
+			                a_point.Distance_Lateral_To_Center_Lane_Center = 1 * i * a_road.Lane_Width ;
+			                a_point.On_Road_Lane = 1 * i;
+			                a_point.On_Road_World3D_ID = a_road.World3D_ID;
+			                a_point.Type = "far-point-lane-center";
+			                
+			                world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
+			                sim.vars.world3DTemplate.World.Object_Num ++;
+			                a_point.World3D_ID = world3d_id;
+			                additional_objects.put(world3d_id, a_point.clone() );
+			                
+			                
+			                //lane i, right
+			                a_point = new World3D_Point();
+			                a_point.Distance_From_Start = the_driver_car.Start_Distance;
+			                a_point.Distance_Lateral_To_Center_Lane_Center = 1 * i * a_road.Lane_Width + a_road.Lane_Width / 2.0;
+			                a_point.On_Road_Lane = 1 * i;
+			                a_point.On_Road_World3D_ID = a_road.World3D_ID;
+			                a_point.Type = "far-point-lane-right";
+			                
+			                world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
+			                sim.vars.world3DTemplate.World.Object_Num ++;
+			                a_point.World3D_ID = world3d_id;
+			                additional_objects.put(world3d_id, a_point.clone() );
+			              }
+		              }
+		          } //end of World3D_Road
+	          } //end of second round
+		      //add any additional objects
+		      sim.funs.ProgramUtilitiesFun__Hashtable_Add_OR_Set_Value_From_Another_Hashtable( sim.vars.world3DTemplate.World.Objects, additional_objects);
 
+		        //#region Customized World3D objects
+		
+		        /*  
+		          #region Space 1D speed control driving demo
+		          
+		          //add target point
+		          World3D_Point a_point_2 = new World3D_Point();
+		          World3D_DriverCar the_driver_car_pointer = sim.funs.TaskTemplateFun__Get_World3D_DriverCar_Object();
+		          a_point_2.Type = "customized-local-point";
+		          a_point_2.Name = "End_Point"; // to mark the point for Production Rule knowledge.
+		          //World3D_DriverCar the_driver_car = (TaskTemplateFun__Get_World3D_DriverCar_Object()).Vehicle_Basic.On_Road_World3D_ID;
+		          //the_driver_car.Vehicle_Basic.On_Road_World3D_ID;
+		          a_point_2.On_Road_World3D_ID = the_driver_car_pointer.Vehicle_Basic.On_Road_World3D_ID;
+		
+		          a_point_2.Distance_From_Start = 1000.0;
+		          a_point_2.Distance_Lateral_To_Center_Lane_Center = 0.0;
+		          a_point_2.Color = Color.LightYellow;
+		          a_point_2.Size_X = 10.0; // diameter in meters
+		          a_point_2.Size_Y = 10.0; 
+		          a_point_2.Size_Z = 10.0; 
+		
+		          a_point_2.World3D_ID = sim.vars.world3DTemplate.World.Object_Num.ToString(); //start from 0
+		          sim.vars.world3DTemplate.World.Object_Num ++;
+		          sim.vars.world3DTemplate.World.Objects.put(a_point_2.World3D_ID, a_point_2  );
+		          
+		          //add ruler lines
+		          World3D_Line_Segment a_line_seg = new World3D_Line_Segment();
+		          double ruler_line_distance_limit = 1500.0;
+		          
+		          double distance ;
+		          //for short lines
+		          for ( distance = 50.0; distance < ruler_line_distance_limit ; distance += 100.0 ){
+		            a_line_seg.Type = "customized-local-line-segment";
+		            a_line_seg.On_Road_World3D_ID = the_driver_car_pointer.Vehicle_Basic.On_Road_World3D_ID;
+		            a_line_seg.P1_Distance_From_Start = distance;
+		            a_line_seg.P2_Distance_From_Start = distance; 
+		            a_line_seg.P1_Distance_Lateral_To_Center_Lane_Center = -25.0;
+		            a_line_seg.P2_Distance_Lateral_To_Center_Lane_Center =  25.0;
+		            a_line_seg.Color = Color.LightGray;
+		            
+		            Three_Tuple p1_global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(a_line_seg.On_Road_World3D_ID, a_line_seg.P1_Distance_From_Start, a_line_seg.P1_Distance_Lateral_To_Center_Lane_Center, 0.0);
+		            a_line_seg.P1_Loc_X = (double)p1_global_para.Ob1;
+		            a_line_seg.P1_Loc_Z = (double)p1_global_para.Ob2;
+		            
+		            Three_Tuple p2_global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(a_line_seg.On_Road_World3D_ID, a_line_seg.P2_Distance_From_Start, a_line_seg.P2_Distance_Lateral_To_Center_Lane_Center, 0.0);
+		            a_line_seg.P2_Loc_X = (double)p2_global_para.Ob1;
+		            a_line_seg.P2_Loc_Z = (double)p2_global_para.Ob2;
+		            
+		            a_line_seg.World3D_ID = sim.vars.world3DTemplate.World.Object_Num.ToString(); //start from 0
+		            sim.vars.world3DTemplate.World.Object_Num ++;
+		            sim.vars.world3DTemplate.World.Objects.put(a_line_seg.World3D_ID, a_line_seg.Clone()  );
+		          }
+		          
+		          
+		          //for long lines
+		          for ( distance = 0.0; distance < ruler_line_distance_limit ; distance += 100.0 ){
+		            a_line_seg.Type = "customized-local-line-segment";
+		            a_line_seg.On_Road_World3D_ID = the_driver_car_pointer.Vehicle_Basic.On_Road_World3D_ID;
+		            a_line_seg.P1_Distance_From_Start = distance;
+		            a_line_seg.P2_Distance_From_Start = distance; 
+		            a_line_seg.P1_Distance_Lateral_To_Center_Lane_Center = -100.0;
+		            a_line_seg.P2_Distance_Lateral_To_Center_Lane_Center =  100.0;
+		            a_line_seg.Color = Color.Gray;
+		            
+		            Three_Tuple p1_global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(a_line_seg.On_Road_World3D_ID, a_line_seg.P1_Distance_From_Start, a_line_seg.P1_Distance_Lateral_To_Center_Lane_Center, 0.0);
+		            a_line_seg.P1_Loc_X = (double)p1_global_para.Ob1;
+		            a_line_seg.P1_Loc_Z = (double)p1_global_para.Ob2;
+		            
+		            Three_Tuple p2_global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(a_line_seg.On_Road_World3D_ID, a_line_seg.P2_Distance_From_Start, a_line_seg.P2_Distance_Lateral_To_Center_Lane_Center, 0.0);
+		            a_line_seg.P2_Loc_X = (double)p2_global_para.Ob1;
+		            a_line_seg.P2_Loc_Z = (double)p2_global_para.Ob2;
+		            
+		            a_line_seg.World3D_ID = sim.vars.world3DTemplate.World.Object_Num.ToString(); //start from 0
+		            sim.vars.world3DTemplate.World.Object_Num ++;
+		            sim.vars.world3DTemplate.World.Objects.put(a_line_seg.World3D_ID, a_line_seg.Clone()  );
+		          }
+		
+		          #endregion
+		        */
+		        //#endregion
+		      if( sim.vars.world3DTemplate.Method_Object != null ){
+		        if (sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) {
+		          sim.funs.VisionModuleFun__Update_World3D_Driving_Method_Visible_Objects();
+		        }
+		      }
+		      //System.out.println("Event_05_World3D_Initialization DONE");
+		      
+		        //Event_06_Animator_Initialization
+		        //System.out.println("Clock " + SimSystem.clock() + ", Event_06_Animator_Initialization");
+		        
+		      //World3D_DriverCar driver_car = sim.funs.TaskTemplateFun__Get_World3D_DriverCar_Object();
+		      //System.out.println("Event_06_Animator_Initialization " +  driver_car.Vehicle_Basic.Distance_From_Start);
+		
+		      //Animator initialization
+		      if(sim.vars.animatorModule.Show_Animator){  //display hand default resting places
+		    	  String[] hands = new String[] {"left", "right" };
+	
+		    	  ArrayList<String> hands_list = sim.funs.ProgramUtilitiesFun__StringArray_To_ArrayListString (hands);
+	
+		    	  String[] fingers = new String[] {"thumb", "index" , "middle", "ring", "pinkie" };
+		    	  List<String> fingers_list = sim.funs.ProgramUtilitiesFun__StringArray_To_ArrayListString (fingers);
+	
+		    	  for( String hand : hands_list){
+		    		  for (String finger : fingers_list){
+		    			  if(hand.equals("left") && sim.vars.motorModule.Left_Hand.Object_Type_In_Hand.equals("touchscreen")) continue;
+		    			  if(hand.equals("right") && sim.vars.motorModule.Right_Hand.Object_Type_In_Hand.equals("touchscreen")) continue;
+	
+		    			  Two_Tuple finger_resting_location = sim.funs.MotorModuleFun__Get_Finger_Resting_Location( hand , finger );
+		    			  String rest_on_key = sim.funs.DeviceModuleFun__Keyboard_Location_To_Key ( (int) finger_resting_location.Ob1, (int) finger_resting_location.Ob2);
+		    			  sim.funs.AnimatorModuleFun__Set_Finger_Rest_On_A_Place(hand, finger,rest_on_key);
+		    		  }
+		    	  }
+		      }
 
-          //also need to: From sim.vars.centralParametersModule.Experiment_Trial_Parameter_List, make sim.vars.centralParametersModule.Experiment_Trial_Display_Item_List, which will be used in display codes.
+		      //Animator3D initialization
+		      if(sim.vars.animator3DModule.Show_Animator3D ){
+		        itr_Objects = sim.vars.world3DTemplate.World.Objects.entrySet().iterator();
+		        while(itr_Objects.hasNext()){
+		          Entry<String, Object> an_object = itr_Objects.next();
+		
+		          if(an_object.getValue() instanceof World3D_DriverCar){
+		            World3D_DriverCar driver_car = (World3D_DriverCar)an_object.getValue();
+		            World3D_Road the_start_road = (World3D_Road)sim.vars.world3DTemplate.World.Objects.get(driver_car.Start_Road_World3D_ID);
+		            
+		            
+		            //System.out.println("TODO Event_06_Animator_Initialization Animator3D DriverCar ObjectProperties");
+		            //probably here just need to set the Java3D view location
+		            
+		            
+		//            ObjectProperties properties = new ObjectProperties();
+		//            properties.ModelID = sim.vars.animator3DModule.DriverCar_Model_ID;
+		//            properties.ScaleX = sim.vars.animator3DModule.DriverCar_Shade_Scale_X;
+		//            properties.ScaleZ = sim.vars.animator3DModule.DriverCar_Shade_Scale_Z;
+		//            
+		//            properties.X = driver_car.Vehicle_Basic.Loc_X;
+		//            properties.Y = driver_car.Vehicle_Basic.Loc_Y + driver_car.Vehicle_Basic.Camera_Height;
+		//            properties.Z = driver_car.Vehicle_Basic.Loc_Z;
+		//            properties.Pitch = driver_car.Vehicle_Basic.Pitch;
+		//            properties.Yaw = driver_car.Vehicle_Basic.Yaw;
+		//            properties.Roll = driver_car.Vehicle_Basic.Roll;
+		//            
+		//            String ojbect_id = (String)Animator3D.Create3DObject(properties);
+		//            driver_car.Vehicle_Basic.Animator3D_Object_ID = ojbect_id;
+		
+		      //Animator3D.Hide(ojbect_id );      
+		
+		            //in Java version, currently only assume driver car start at (0, 0, 0)
+		            QnactrSimulation.taskVisualization3D.viewTranslationY(driver_car.Vehicle_Basic.Camera_Height);
+		            
+		//            Animator3D.AttachCameraToObject(driver_car.Vehicle_Basic.Animator3D_Object_ID);
+		          } //end of World3D_DriverCar
+		          else if(an_object.getValue() instanceof World3D_OtherCar){
+		            World3D_OtherCar other_car = (World3D_OtherCar)an_object.getValue();
+		            World3D_Road the_start_road = (World3D_Road)sim.vars.world3DTemplate.World.Objects.get(other_car.Start_Road_World3D_ID);
+		            
+		//TODO 
+		            System.out.println("TODO Event_06_Animator_Initialization Animator3D OtherCar ObjectProperties");
+		//            ObjectProperties properties = new ObjectProperties();
+		//            properties.ModelID = sim.vars.animator3DModule.OtherCar_Model_ID;
+		//            properties.X = other_car.Vehicle_Basic.Loc_X;
+		//            properties.Y = other_car.Vehicle_Basic.Loc_Y ;
+		//            properties.Z = other_car.Vehicle_Basic.Loc_Z;
+		//            properties.Pitch = other_car.Vehicle_Basic.Pitch;
+		//            properties.Yaw = other_car.Vehicle_Basic.Yaw;
+		//            properties.Roll = other_car.Vehicle_Basic.Roll;
+		//            properties.ScaleX = sim.vars.animator3DModule.OtherCar_Scale;
+		//            properties.ScaleY = sim.vars.animator3DModule.OtherCar_Scale;
+		//            properties.ScaleZ = sim.vars.animator3DModule.OtherCar_Scale;
+		//            
+		//            String ojbect_id = (String)Animator3D.Create3DObject(properties);
+		//            Animator3D.SetColor( ojbect_id, Color.Blue ) ;
+		//            other_car.Vehicle_Basic.Animator3D_Object_ID = ojbect_id;
+		      //System.out.println("Event_06_Animator_Initialization other_car: " + properties.X + " " + properties.Y + " " + properties.Z);
+		          } //end of World3D_OtherCar
+		          else if (an_object.getValue() instanceof World3D_Road){
+		            // visualize all lanes for all fragments
+		            World3D_Road road = (World3D_Road) an_object.getValue();
+		            ArrayList<Double> fragment_distance_points = new ArrayList<Double>();
+		            
+		            Iterator <Entry <Double,World3D_Road_Fragment> > itr_Fragments = road.Fragments.entrySet().iterator();
+		            while (itr_Fragments.hasNext()){
+		              Entry<Double, World3D_Road_Fragment> an_entry = itr_Fragments.next();
+		              fragment_distance_points.add( (double)an_entry.getKey() );
+		            }
+		            Collections.sort(  fragment_distance_points  );
+		            
+		            Iterator <Double> itr_fragment_distance_points = fragment_distance_points.iterator();
+		            while(itr_fragment_distance_points.hasNext()){
+		              Double fragment_start_distance = itr_fragment_distance_points.next();
+		              World3D_Road_Fragment a_fragment = (World3D_Road_Fragment)road.Fragments.get(fragment_start_distance);
+		              double center_start_x = a_fragment.Start_Loc_X;
+		              double center_start_z = a_fragment.Start_Loc_Z;
+		              double center_end_x = a_fragment.End_Loc_X;
+		              double center_end_z = a_fragment.End_Loc_Z;
+		              double start_angle_radian = a_fragment.Start_Heading_Angle / 180.0 * Math.PI;
+		              double end_angle_radian = ( a_fragment.Start_Heading_Angle + a_fragment.Turn_Angle ) / 180.0 * Math.PI;
+		              
+		              double start_x_offset = road.Lane_Width/2.0 * Math.cos(start_angle_radian); 
+		              double start_z_offset = road.Lane_Width/2.0 * Math.sin(start_angle_radian); //an angle, in radians
+		                
+		              double center_lane_left_edge_start_x = center_start_x - start_x_offset; 
+		              double center_lane_left_edge_start_z = center_start_z + start_z_offset;
+		              double center_lane_right_edge_start_x = center_start_x + start_x_offset; 
+		              double center_lane_right_edge_start_z = center_start_z - start_z_offset;
+		              
+		              double end_x_offset = road.Lane_Width/2.0 * Math.cos(end_angle_radian);
+		              double end_z_offset = road.Lane_Width/2.0 * Math.sin(end_angle_radian);
+		              
+		              double center_lane_left_edge_end_x = center_end_x - end_x_offset; 
+		              double center_lane_left_edge_end_z = center_end_z + end_z_offset;
+		              double center_lane_right_edge_end_x = center_end_x + end_x_offset; 
+		              double center_lane_right_edge_end_z = center_end_z - end_z_offset;
+		             
+		              if(!road.hide){ // add center lane lelft edge
+		                
+		          //#region experiment_driving_and_comprehension                 
+		                
+		                if(sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals(  "experiment_driving_and_comprehension")){
+		                  LinkedList<String> animator3d_IDs = sim.funs.AnimatorModuleFun__Animator3D_Add_Dashed_Line_XZ_Plane( center_lane_left_edge_start_x, center_lane_left_edge_start_z,     center_lane_left_edge_end_x, center_lane_left_edge_end_z  );
+		                  if(animator3d_IDs.size() > 0){
+		                    for(String an_id : animator3d_IDs){
+		                      a_fragment.Animator3D_IDs.put("0_left" + "_dashed_" + an_id, an_id );
+		                      //hide end points in AnimatorModuleFun__Animator3D_Add_Dashed_Line_XZ_Plane
+		                    }
+		                  }
+		                }
+		          //#endregion      
+		                else{ 
+		//                  System.out.println("TODO Event_06_Animator_Initialization Animator3D");
+		//                  String center_left_edge_animator3d_id = Animator3D.Create3DLine(center_lane_left_edge_start_x, 0.0, center_lane_left_edge_start_z,     center_lane_left_edge_end_x, 0.0, center_lane_left_edge_end_z );
+		//                  a_fragment.Animator3D_IDs.put("0_left", center_left_edge_animator3d_id );
+		//                  Animator3D.Hide3DLineEndPoint(center_left_edge_animator3d_id);
+		                  QnactrSimulation.taskVisualization3D.draw3DLine(center_lane_left_edge_start_x, -0.0, center_lane_left_edge_start_z,     center_lane_left_edge_end_x, -0.0, center_lane_left_edge_end_z ); //X Z the same, Y need to be additive inversed
+		                  
+		                  
+		                }
+		              }
+		              
+		              if(!road.hide){ // add center lane right edge
+		//                System.out.println("TODO Event_06_Animator_Initialization Animator3D");
+		//                String center_right_edge_animator3d_id = Animator3D.Create3DLine(center_lane_right_edge_start_x, 0.0, center_lane_right_edge_start_z,   center_lane_right_edge_end_x, 0.0, center_lane_right_edge_end_z);
+		//                a_fragment.Animator3D_IDs.put("0_right", center_right_edge_animator3d_id);
+		//                Animator3D.Hide3DLineEndPoint(center_right_edge_animator3d_id);
+		                QnactrSimulation.taskVisualization3D.draw3DLine(center_lane_right_edge_start_x, -0.0, center_lane_right_edge_start_z,   center_lane_right_edge_end_x, -0.0, center_lane_right_edge_end_z); //X Z the same, Y need to be additive inversed
+		              }
+		              
+		              if( road.Lane_Num_Left > 0 ){
+		                int i;
+		                for(i = 1 ; i <= road.Lane_Num_Left ; i++) {
+		                  double the_lane_left_edge_start_x = center_start_x - (1 + 2*i) * start_x_offset; 
+		                  double the_lane_left_edge_start_z = center_start_z + (1 + 2*i) * start_z_offset;
+		                  //double the_lane_right_edge_start_x = center_start_x + (1 + 2*i) * start_x_offset; 
+		                  //double the_lane_right_edge_start_z = center_start_z - (1 + 2*i) * start_z_offset;
+		                  
+		                  double the_lane_left_edge_end_x = center_end_x - (1 + 2*i) * end_x_offset; 
+		                  double the_lane_left_edge_end_z = center_end_z + (1 + 2*i) * end_z_offset;
+		                  //double the_lane_right_edge_end_x = center_end_x + (1 + 2*i) * end_x_offset; 
+		                  //double the_lane_right_edge_end_z = center_end_z - (1 + 2*i) * end_z_offset;
+		                  
+		                  if(!road.hide){
+		//                    System.out.println("TODO Event_06_Animator_Initialization Animator3D");
+		//                    String the_left_edge_animator3d_id = Animator3D.Create3DLine(the_lane_left_edge_start_x, 0.0, the_lane_left_edge_start_z,     the_lane_left_edge_end_x, 0.0, the_lane_left_edge_end_z );
+		//                    a_fragment.Animator3D_IDs.put("-" + i.ToString() + "_left", the_left_edge_animator3d_id );
+		//                    Animator3D.Hide3DLineEndPoint(the_left_edge_animator3d_id);
+		                    
+		                    QnactrSimulation.taskVisualization3D.draw3DLine(the_lane_left_edge_start_x, -0.0, the_lane_left_edge_start_z,     the_lane_left_edge_end_x, -0.0, the_lane_left_edge_end_z ); //X Z the same, Y need to be additive inversed
+		                  }
+		                  //String the_right_edge_animator3d_id = Animator3D.Create3DLine(the_lane_right_edge_start_x, 0.0, the_lane_right_edge_start_z,   the_lane_right_edge_end_x, 0.0, the_lane_right_edge_end_z);
+		                  //a_fragment.Animator3D_IDs.put(?? + "_right", the_right_edge_animator3d_id);   
+		                }
+		              }//end of adding left other lanes
+		              
+		              if (road.Lane_Num_Right > 0){
+		                int i;
+		                for(i = 1 ; i <= road.Lane_Num_Left ; i++) {
+		                  //double the_lane_left_edge_start_x = center_start_x - (1 + 2*i) * start_x_offset; 
+		                  //double the_lane_left_edge_start_z = center_start_z + (1 + 2*i) * start_z_offset;
+		                  double the_lane_right_edge_start_x = center_start_x + (1 + 2*i) * start_x_offset; 
+		                  double the_lane_right_edge_start_z = center_start_z - (1 + 2*i) * start_z_offset;
+		                  
+		                  //double the_lane_left_edge_end_x = center_end_x - (1 + 2*i) * end_x_offset; 
+		                  //double the_lane_left_edge_end_z = center_end_z + (1 + 2*i) * end_z_offset;
+		                  double the_lane_right_edge_end_x = center_end_x + (1 + 2*i) * end_x_offset; 
+		                  double the_lane_right_edge_end_z = center_end_z - (1 + 2*i) * end_z_offset;
+		                  
+		                  //String the_left_edge_animator3d_id = Animator3D.Create3DLine(the_lane_left_edge_start_x, 0.0, the_lane_left_edge_start_z,     the_lane_left_edge_end_x, 0.0, the_lane_left_edge_end_z );
+		                  //a_fragment.Animator3D_IDs.put(?? + "_left", the_left_edge_animator3d_id );
+		                  
+		                  if(!road.hide){
+		//                    System.out.println("TODO Event_06_Animator_Initialization Animator3D");
+		//                    String the_right_edge_animator3d_id = Animator3D.Create3DLine(the_lane_right_edge_start_x, 0.0, the_lane_right_edge_start_z,   the_lane_right_edge_end_x, 0.0, the_lane_right_edge_end_z);
+		//                    a_fragment.Animator3D_IDs.put(i.ToString() + "_right", the_right_edge_animator3d_id); 
+		//                    Animator3D.Hide3DLineEndPoint(the_right_edge_animator3d_id);
+		                    QnactrSimulation.taskVisualization3D.draw3DLine(the_lane_right_edge_start_x, -0.0, the_lane_right_edge_start_z,   the_lane_right_edge_end_x, -0.0, the_lane_right_edge_end_z ); //X Z the same, Y need to be additive inversed
+		                   }
+		                }
+		              }//end of adding right other lanes
+		            }
+		          } //end of World3D_Road
           
-
-
-          //Event_05_World3D_Initialization
-          //System.out.println("Clock " + SimSystem.clock() + ", Event_05_World3D_Initialization");
+		          else if(an_object.getValue() instanceof World3D_Point){
+		        	  World3D_Point the_point = (World3D_Point)an_object.getValue();
+	            
+		        	  if (the_point.Type.equals( "customized-local-point")){
+	//TODO
+		        		  System.out.println("TODO Event_06_Animator_Initialization ObjectProperties");
+	              
+		//              ObjectProperties properties = new ObjectProperties();
+		//              properties.ModelID = sim.vars.animator3DModule.Point_Model_ID;
+		//              
+		//              Three_Tuple global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(the_point.On_Road_World3D_ID, the_point.Distance_From_Start, the_point.Distance_Lateral_To_Center_Lane_Center, 0.0);
+		//              the_point.Loc_X = (double) global_para.Ob1;
+		//              the_point.Loc_Z = (double) global_para.Ob2;
+		//                    
+		//              properties.X = the_point.Loc_X;
+		//              properties.Y = the_point.Loc_Y - the_point.Size_Y / 2.0;  // Loc_Y should be 0 as initially. Animator3D by default put the object's bottom at Y = 0 level, so this sets Y at 0.
+		//              properties.Z = the_point.Loc_Z;
+		//              
+		//              double size_factor = 1.0 / 3.0 ; // for Sphere3Foot object
+		//              
+		//              properties.ScaleX = the_point.Size_X * size_factor ;
+		//              properties.ScaleY = the_point.Size_Y * size_factor ;
+		//              properties.ScaleZ = the_point.Size_Z * size_factor ;
+		//              
+		//              String ojbect_id = (String)Animator3D.Create3DObject(properties);
+		//              Animator3D.SetColor( ojbect_id, the_point.Color ) ;
+		//              the_point.Animator3D_Object_ID = ojbect_id;
+		        	  }
+		        	  else if(the_point.Type.length() >= 9 && the_point.Type.substring(0,9).equals( "far-point")){
+	//TODO
+		        		  System.out.println("TODO Event_06_Animator_Initialization ObjectProperties");
+	              
+	//              ObjectProperties properties = new ObjectProperties();
+	//              properties.ModelID = sim.vars.animator3DModule.Point_Model_ID;
+	//              
+	//              Three_Tuple global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(the_point.On_Road_World3D_ID, the_point.Distance_From_Start, the_point.Distance_Lateral_To_Center_Lane_Center, 0.0);
+	//              the_point.Loc_X = (double) global_para.Ob1;
+	//              the_point.Loc_Z = (double) global_para.Ob2;
+	//                    
+	//              properties.X = the_point.Loc_X;
+	//              properties.Y = the_point.Loc_Y;  // should be 0 as initially, Animator3D by default put the object's bottom at Y = 0 level, so this far-point's bottom is at Y = 0 level.
+	//              properties.Z = the_point.Loc_Z;
+	//              
+	//              properties.ScaleX = sim.vars.animator3DModule.Far_Point_Scale;
+	//              properties.ScaleY = sim.vars.animator3DModule.Far_Point_Scale;
+	//              properties.ScaleZ = sim.vars.animator3DModule.Far_Point_Scale;
+	//              
+	//              String ojbect_id = (String)Animator3D.Create3DObject(properties);
+	//              Animator3D.SetColor( ojbect_id, Color.Red ) ;
+	//              the_point.Animator3D_Object_ID = ojbect_id;
+		        	  }
+		            else{
+		              System.out.println("Error! Event_06_Animator_Initialization has undefined Point type: " + the_point.Type);
+		              SimSystem.abort();
+		            }
+		          } //end of World3D_Point
           
-          Hashtable additional_objects = new Hashtable();
-          //first round
-          
-          Iterator<Entry<String, Object>>itr_Objects = sim.vars.world3DTemplate.World.Objects.entrySet().iterator();
-          while (itr_Objects.hasNext()){
-
-          Entry<String, Object> an_object = itr_Objects.next();
-          if(an_object.getValue() instanceof World3D_DriverCar){
-            //get the start-on road ID
-            World3D_DriverCar driver_car = (World3D_DriverCar)an_object.getValue();
-            String start_on_road_name = driver_car.Start_Road_Name;
-            World3D_Road the_start_road = new World3D_Road();
-            boolean road_found = false;
-            
-            Iterator<Entry<String, Object>>itr_Objects2 = sim.vars.world3DTemplate.World.Objects.entrySet().iterator();
-            while (itr_Objects2.hasNext()){
-              //            foreach(DictionaryEntry an_object2 in  sim.vars.world3DTemplate.World.Objects){
-              Entry<String, Object> an_object2 = itr_Objects2.next();
-              if( (an_object2.getValue() instanceof World3D_Road) && ((World3D_Road)an_object2.getValue()).Name.equals( start_on_road_name)){
-                road_found = true;
-                the_start_road = (World3D_Road)an_object2.getValue();
-              }
-            }
-            if(!road_found){
-              System.out.println("Error! Event_05_World3D_Initialization cannot find road with name: " + start_on_road_name + " for driver_car.");
-              SimSystem.abort();
-            }
-            driver_car.Start_Road_World3D_ID = the_start_road.World3D_ID;
-            
-            
-            World3D_Template_Driving_Method the_method = null;
-            if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
-        
-            //#region sp-driv   
-            if(the_method != null && (the_method.Who_Drive.toLowerCase().equals( "model-6dof-speed") || the_method.Who_Drive.toLowerCase().equals( "human-6dof-speed" )) ){ 
-              driver_car.Vehicle_Basic.On_Road_World3D_ID = driver_car.Start_Road_World3D_ID;
-              driver_car.Vehicle_Basic.Loc_X = (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob1;
-              driver_car.Vehicle_Basic.Loc_Y = (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob2;
-              driver_car.Vehicle_Basic.Loc_Z = (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob3;
-              driver_car.Vehicle_Basic.Pitch = (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob4;
-              driver_car.Vehicle_Basic.Yaw =  (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob5;
-              driver_car.Vehicle_Basic.Roll =   (double)sim.vars.spaceDrivingVar__Self_Initiatial_Location_And_Rotation.Ob6;
-            }
-        //#endregion    
-            
-            else{ //normal driving
-              sim.funs.TaskTemplateFun__World3D_Reset_DriverCar_To_Start_Position(driver_car);
-            }
-            
-            /*
-            if(driver_car.Start_Distance>= 0.0){  // key for normal start
-              Three_Tuple global_parameters = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(driver_car.Start_Road_World3D_ID, driver_car.Start_Distance, driver_car.Start_Lane_Num * the_start_road.Lane_Width, 0.0   ); //start on the center of a lane, and with heading angle same as the road.
-              
-              //initializae vehicle basic
-              driver_car.Vehicle_Basic.Angle_Between_Road_Direction = 0.0;
-              driver_car.Vehicle_Basic.Distance_From_Start = driver_car.Start_Distance;
-              driver_car.Vehicle_Basic.Distance_Lateral_To_Center_Lane_Center = driver_car.Start_Lane_Num * the_start_road.Lane_Width;
-              driver_car.Vehicle_Basic.Lane_Num = driver_car.Start_Lane_Num;
-              
-              
-              driver_car.Vehicle_Basic.Loc_X = (double)global_parameters.Ob1;
-              driver_car.Vehicle_Basic.Loc_Y = 0.0; //current does not support altitude
-              driver_car.Vehicle_Basic.Loc_Z = (double)global_parameters.Ob2;
-              driver_car.Vehicle_Basic.Pitch = 0.0;
-              driver_car.Vehicle_Basic.Roll = 0.0;
-              driver_car.Vehicle_Basic.Yaw = (double)global_parameters.Ob3;
-              
-              
-              
-            }
-            else{ // driver_car.Start_Distance < 0 is the key for global initialization, 6DOF use customized data
-              Three_Tuple local_info = sim.funs.ProgramUtilitiesFun__World3D_Global_Loc_And_Angle_To_Local( driver_car.Vehicle_Basic.On_Road_World3D_ID, driver_car.Vehicle_Basic.Loc_X, driver_car.Vehicle_Basic.Loc_Z  , driver_car.Vehicle_Basic.Yaw, 0.0);
-              driver_car.Start_Distance = (double)local_info.Ob1;
-              driver_car.Vehicle_Basic.Distance_From_Start = (double)local_info.Ob1;
-              driver_car.Vehicle_Basic.Distance_Lateral_To_Center_Lane_Center = (double)local_info.Ob2;
-              driver_car.Vehicle_Basic.Angle_Between_Road_Direction = (double)local_info.Ob3;
-            }
-            */
-            
-            
-            
-          } //end of World3D_DriverCar
-          
-          
-          else if(an_object.getValue() instanceof World3D_OtherCar){
-            //get the start-on road ID
-            World3D_OtherCar other_car = (World3D_OtherCar)an_object.getValue();
-            String start_on_road_name = other_car.Start_Road_Name;
-            World3D_Road the_start_road = new World3D_Road();
-            boolean road_found = false;
-            
-            Iterator<Entry<String, Object>>itr_Objects2 = sim.vars.world3DTemplate.World.Objects.entrySet().iterator();
-            while (itr_Objects2.hasNext()){
-              Entry<String, Object> an_object2 = itr_Objects2.next();
-              if( (an_object2.getValue() instanceof World3D_Road) && ((World3D_Road)an_object2.getValue()).Name.equals( start_on_road_name)){
-                road_found = true;
-                the_start_road = (World3D_Road)an_object2.getValue();
-              }
-            }
-            if(!road_found){
-              System.out.println("Error! Event_05_World3D_Initialization cannot find road with name: " + start_on_road_name + " for driver_car.");
-              SimSystem.abort();
-            }
-            
-            other_car.Start_Road_World3D_ID = the_start_road.World3D_ID;
-            
-            sim.funs.TaskTemplateFun__World3D_Reset_OtherCar_To_Start_Position(other_car);
-            
-            
-            
-            
-          } //end of World3D_OtherCar
-          else if (an_object.getValue() instanceof World3D_Road){
-            //nothing, waiting for driver car to get its on road world3d ID
-          } //end of World3D_Road
-          
-          else{
-            System.out.println("Error! Event_05_World3D_Initialization has undefined world3d object type");  
-            SimSystem.abort();
-          }
-
-        } //end of first round
-
-        //second round
-          
-          itr_Objects = sim.vars.world3DTemplate.World.Objects.entrySet().iterator();
-          while (itr_Objects.hasNext()){
-            Entry<String, Object> an_object = itr_Objects.next();
-
-            if (an_object.getValue() instanceof World3D_Road){ //identify driver-on road, and add far points objects
-              //add far point object for the driving start on road
-              World3D_Road a_road = (World3D_Road)an_object.getValue();
-              World3D_DriverCar the_driver_car = sim.funs.TaskTemplateFun__Get_World3D_DriverCar_Object();
-              if(a_road.Name.equals( the_driver_car.Start_Road_Name)){
-                //create three far point object for the center lane
-                //lane 0, center
-                World3D_Point a_point = new World3D_Point();
-                a_point.Distance_From_Start = the_driver_car.Start_Distance;
-                a_point.Distance_Lateral_To_Center_Lane_Center = 0.0;
-                a_point.On_Road_Lane = 0;
-                a_point.On_Road_World3D_ID = a_road.World3D_ID;
-                a_point.Type = "far-point-lane-center";
-                
-                String world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
-                sim.vars.world3DTemplate.World.Object_Num ++;
-                a_point.World3D_ID = world3d_id;
-                additional_objects.put(world3d_id, a_point.clone() );
-                
-                
-              //lane 0, left
-              a_point = new World3D_Point();
-              a_point.Distance_From_Start = the_driver_car.Start_Distance;
-              a_point.Distance_Lateral_To_Center_Lane_Center = 0.0 - a_road.Lane_Width / 2.0;
-              a_point.On_Road_Lane = 0;
-              a_point.On_Road_World3D_ID = a_road.World3D_ID;
-              a_point.Type = "far-point-lane-left";
-              
-              world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
-              sim.vars.world3DTemplate.World.Object_Num ++;
-              a_point.World3D_ID = world3d_id;
-              additional_objects.put(world3d_id, a_point.clone() );
-                
-              //lane 0, right
-              a_point = new World3D_Point();
-              a_point.Distance_From_Start = the_driver_car.Start_Distance;
-              a_point.Distance_Lateral_To_Center_Lane_Center = 0.0 + a_road.Lane_Width / 2.0;
-              a_point.On_Road_Lane = 0;
-              a_point.On_Road_World3D_ID = a_road.World3D_ID;
-              a_point.Type = "far-point-lane-right";
-              
-              world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
-              sim.vars.world3DTemplate.World.Object_Num ++;
-              a_point.World3D_ID = world3d_id;
-              additional_objects.put(world3d_id, a_point.clone() );
-              
-              int i;
-              for (i = 1; i <= a_road.Lane_Num_Left; i ++){ //add far point lane left for the left lanes if there is any
-                //lane -1 * i, center
-                a_point = new World3D_Point();
-                a_point.Distance_From_Start = the_driver_car.Start_Distance;
-                a_point.Distance_Lateral_To_Center_Lane_Center = -1 * i * a_road.Lane_Width ;
-                a_point.On_Road_Lane = -1 * i;
-                a_point.On_Road_World3D_ID = a_road.World3D_ID;
-                a_point.Type = "far-point-lane-center";
-                
-                world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
-                sim.vars.world3DTemplate.World.Object_Num ++;
-                a_point.World3D_ID = world3d_id;
-                additional_objects.put(world3d_id, a_point.clone() );
-                
-                //lane -1 * i, left
-                a_point = new World3D_Point();
-                a_point.Distance_From_Start = the_driver_car.Start_Distance;
-                a_point.Distance_Lateral_To_Center_Lane_Center = -1 * i * a_road.Lane_Width - a_road.Lane_Width / 2.0;
-                a_point.On_Road_Lane = -1 * i;
-                a_point.On_Road_World3D_ID = a_road.World3D_ID;
-                a_point.Type = "far-point-lane-left";
-                
-                world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
-                sim.vars.world3DTemplate.World.Object_Num ++;
-                a_point.World3D_ID = world3d_id;
-                additional_objects.put(world3d_id, a_point.clone() );
-              }
-              
-              for (i = 1; i <= a_road.Lane_Num_Right; i ++){ //add far point lane right for the right lanes if there is any
-                //lane 1 * i, center
-                a_point = new World3D_Point();
-                a_point.Distance_From_Start = the_driver_car.Start_Distance;
-                a_point.Distance_Lateral_To_Center_Lane_Center = 1 * i * a_road.Lane_Width ;
-                a_point.On_Road_Lane = 1 * i;
-                a_point.On_Road_World3D_ID = a_road.World3D_ID;
-                a_point.Type = "far-point-lane-center";
-                
-                world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
-                sim.vars.world3DTemplate.World.Object_Num ++;
-                a_point.World3D_ID = world3d_id;
-                additional_objects.put(world3d_id, a_point.clone() );
-                
-                
-                //lane i, right
-                a_point = new World3D_Point();
-                a_point.Distance_From_Start = the_driver_car.Start_Distance;
-                a_point.Distance_Lateral_To_Center_Lane_Center = 1 * i * a_road.Lane_Width + a_road.Lane_Width / 2.0;
-                a_point.On_Road_Lane = 1 * i;
-                a_point.On_Road_World3D_ID = a_road.World3D_ID;
-                a_point.Type = "far-point-lane-right";
-                
-                world3d_id = Integer.toString(sim.vars.world3DTemplate.World.Object_Num); //start from 0
-                sim.vars.world3DTemplate.World.Object_Num ++;
-                a_point.World3D_ID = world3d_id;
-                additional_objects.put(world3d_id, a_point.clone() );
-              }
-            }
-          } //end of World3D_Road
-        } //end of second round
-        //add any additional objects
-        sim.funs.ProgramUtilitiesFun__Hashtable_Add_OR_Set_Value_From_Another_Hashtable( sim.vars.world3DTemplate.World.Objects, additional_objects);
-
-
-
-        //#region Customized World3D objects
-
-        /*  
-          #region Space 1D speed control driving demo
-          
-          //add target point
-          World3D_Point a_point_2 = new World3D_Point();
-          World3D_DriverCar the_driver_car_pointer = sim.funs.TaskTemplateFun__Get_World3D_DriverCar_Object();
-          a_point_2.Type = "customized-local-point";
-          a_point_2.Name = "End_Point"; // to mark the point for Production Rule knowledge.
-          //World3D_DriverCar the_driver_car = (TaskTemplateFun__Get_World3D_DriverCar_Object()).Vehicle_Basic.On_Road_World3D_ID;
-          //the_driver_car.Vehicle_Basic.On_Road_World3D_ID;
-          a_point_2.On_Road_World3D_ID = the_driver_car_pointer.Vehicle_Basic.On_Road_World3D_ID;
-
-          a_point_2.Distance_From_Start = 1000.0;
-          a_point_2.Distance_Lateral_To_Center_Lane_Center = 0.0;
-          a_point_2.Color = Color.LightYellow;
-          a_point_2.Size_X = 10.0; // diameter in meters
-          a_point_2.Size_Y = 10.0; 
-          a_point_2.Size_Z = 10.0; 
-
-          a_point_2.World3D_ID = sim.vars.world3DTemplate.World.Object_Num.ToString(); //start from 0
-          sim.vars.world3DTemplate.World.Object_Num ++;
-          sim.vars.world3DTemplate.World.Objects.put(a_point_2.World3D_ID, a_point_2  );
-          
-          
-
-
-          //add ruler lines
-          World3D_Line_Segment a_line_seg = new World3D_Line_Segment();
-          double ruler_line_distance_limit = 1500.0;
-          
-          double distance ;
-          //for short lines
-          for ( distance = 50.0; distance < ruler_line_distance_limit ; distance += 100.0 ){
-            a_line_seg.Type = "customized-local-line-segment";
-            a_line_seg.On_Road_World3D_ID = the_driver_car_pointer.Vehicle_Basic.On_Road_World3D_ID;
-            a_line_seg.P1_Distance_From_Start = distance;
-            a_line_seg.P2_Distance_From_Start = distance; 
-            a_line_seg.P1_Distance_Lateral_To_Center_Lane_Center = -25.0;
-            a_line_seg.P2_Distance_Lateral_To_Center_Lane_Center =  25.0;
-            a_line_seg.Color = Color.LightGray;
-            
-            Three_Tuple p1_global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(a_line_seg.On_Road_World3D_ID, a_line_seg.P1_Distance_From_Start, a_line_seg.P1_Distance_Lateral_To_Center_Lane_Center, 0.0);
-            a_line_seg.P1_Loc_X = (double)p1_global_para.Ob1;
-            a_line_seg.P1_Loc_Z = (double)p1_global_para.Ob2;
-            
-            Three_Tuple p2_global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(a_line_seg.On_Road_World3D_ID, a_line_seg.P2_Distance_From_Start, a_line_seg.P2_Distance_Lateral_To_Center_Lane_Center, 0.0);
-            a_line_seg.P2_Loc_X = (double)p2_global_para.Ob1;
-            a_line_seg.P2_Loc_Z = (double)p2_global_para.Ob2;
-            
-            a_line_seg.World3D_ID = sim.vars.world3DTemplate.World.Object_Num.ToString(); //start from 0
-            sim.vars.world3DTemplate.World.Object_Num ++;
-            sim.vars.world3DTemplate.World.Objects.put(a_line_seg.World3D_ID, a_line_seg.Clone()  );
-          }
-          
-          
-          //for long lines
-          for ( distance = 0.0; distance < ruler_line_distance_limit ; distance += 100.0 ){
-            a_line_seg.Type = "customized-local-line-segment";
-            a_line_seg.On_Road_World3D_ID = the_driver_car_pointer.Vehicle_Basic.On_Road_World3D_ID;
-            a_line_seg.P1_Distance_From_Start = distance;
-            a_line_seg.P2_Distance_From_Start = distance; 
-            a_line_seg.P1_Distance_Lateral_To_Center_Lane_Center = -100.0;
-            a_line_seg.P2_Distance_Lateral_To_Center_Lane_Center =  100.0;
-            a_line_seg.Color = Color.Gray;
-            
-            Three_Tuple p1_global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(a_line_seg.On_Road_World3D_ID, a_line_seg.P1_Distance_From_Start, a_line_seg.P1_Distance_Lateral_To_Center_Lane_Center, 0.0);
-            a_line_seg.P1_Loc_X = (double)p1_global_para.Ob1;
-            a_line_seg.P1_Loc_Z = (double)p1_global_para.Ob2;
-            
-            Three_Tuple p2_global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(a_line_seg.On_Road_World3D_ID, a_line_seg.P2_Distance_From_Start, a_line_seg.P2_Distance_Lateral_To_Center_Lane_Center, 0.0);
-            a_line_seg.P2_Loc_X = (double)p2_global_para.Ob1;
-            a_line_seg.P2_Loc_Z = (double)p2_global_para.Ob2;
-            
-            a_line_seg.World3D_ID = sim.vars.world3DTemplate.World.Object_Num.ToString(); //start from 0
-            sim.vars.world3DTemplate.World.Object_Num ++;
-            sim.vars.world3DTemplate.World.Objects.put(a_line_seg.World3D_ID, a_line_seg.Clone()  );
-          }
-
-          #endregion
-        */
-
-
-
-
-        //#endregion
-
-
-
-
-        if( sim.vars.world3DTemplate.Method_Object != null ){
-          if (sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) {
-            sim.funs.VisionModuleFun__Update_World3D_Driving_Method_Visible_Objects();
-          }
-        }
-
-        //System.out.println("Event_05_World3D_Initialization DONE");
-        
-        
-        
-        //Event_06_Animator_Initialization
-        //System.out.println("Clock " + SimSystem.clock() + ", Event_06_Animator_Initialization");
-        
-      //World3D_DriverCar driver_car = sim.funs.TaskTemplateFun__Get_World3D_DriverCar_Object();
-      //System.out.println("Event_06_Animator_Initialization " +  driver_car.Vehicle_Basic.Distance_From_Start);
-
-      //Animator initialization
-      if(sim.vars.animatorModule.Show_Animator){  //display hand default resting places
-        String[] hands = new String[] {"left", "right" };
-        
-        ArrayList<String> hands_list = sim.funs.ProgramUtilitiesFun__StringArray_To_ArrayListString (hands);
-        
-        String[] fingers = new String[] {"thumb", "index" , "middle", "ring", "pinkie" };
-        List<String> fingers_list = sim.funs.ProgramUtilitiesFun__StringArray_To_ArrayListString (fingers);
-        
-        for( String hand : hands_list){
-          for (String finger : fingers_list){
-        	  if(hand.equals("left") && sim.vars.motorModule.Left_Hand.Object_Type_In_Hand.equals("touchscreen")) continue;
-        	  if(hand.equals("right") && sim.vars.motorModule.Right_Hand.Object_Type_In_Hand.equals("touchscreen")) continue;
-        	  
-            Two_Tuple finger_resting_location = sim.funs.MotorModuleFun__Get_Finger_Resting_Location( hand , finger );
-            String rest_on_key = sim.funs.DeviceModuleFun__Keyboard_Location_To_Key ( (int) finger_resting_location.Ob1, (int) finger_resting_location.Ob2);
-            sim.funs.AnimatorModuleFun__Set_Finger_Rest_On_A_Place(hand, finger,rest_on_key);
-          }
-        }
-      }
-
-      //Animator3D initialization
-      if(sim.vars.animator3DModule.Show_Animator3D ){
-        itr_Objects = sim.vars.world3DTemplate.World.Objects.entrySet().iterator();
-        while(itr_Objects.hasNext()){
-          Entry<String, Object> an_object = itr_Objects.next();
-
-          if(an_object.getValue() instanceof World3D_DriverCar){
-            World3D_DriverCar driver_car = (World3D_DriverCar)an_object.getValue();
-            World3D_Road the_start_road = (World3D_Road)sim.vars.world3DTemplate.World.Objects.get(driver_car.Start_Road_World3D_ID);
-            
-            
-            //System.out.println("TODO Event_06_Animator_Initialization Animator3D DriverCar ObjectProperties");
-            //probably here just need to set the Java3D view location
-            
-            
-//            ObjectProperties properties = new ObjectProperties();
-//            properties.ModelID = sim.vars.animator3DModule.DriverCar_Model_ID;
-//            properties.ScaleX = sim.vars.animator3DModule.DriverCar_Shade_Scale_X;
-//            properties.ScaleZ = sim.vars.animator3DModule.DriverCar_Shade_Scale_Z;
-//            
-//            properties.X = driver_car.Vehicle_Basic.Loc_X;
-//            properties.Y = driver_car.Vehicle_Basic.Loc_Y + driver_car.Vehicle_Basic.Camera_Height;
-//            properties.Z = driver_car.Vehicle_Basic.Loc_Z;
-//            properties.Pitch = driver_car.Vehicle_Basic.Pitch;
-//            properties.Yaw = driver_car.Vehicle_Basic.Yaw;
-//            properties.Roll = driver_car.Vehicle_Basic.Roll;
-//            
-//            String ojbect_id = (String)Animator3D.Create3DObject(properties);
-//            driver_car.Vehicle_Basic.Animator3D_Object_ID = ojbect_id;
-
-      //Animator3D.Hide(ojbect_id );      
-
-            //in Java version, currently only assume driver car start at (0, 0, 0)
-            QnactrSimulation.taskVisualization3D.viewTranslationY(driver_car.Vehicle_Basic.Camera_Height);
-            
-//            Animator3D.AttachCameraToObject(driver_car.Vehicle_Basic.Animator3D_Object_ID);
-          } //end of World3D_DriverCar
-          
-          else if(an_object.getValue() instanceof World3D_OtherCar){
-            World3D_OtherCar other_car = (World3D_OtherCar)an_object.getValue();
-            World3D_Road the_start_road = (World3D_Road)sim.vars.world3DTemplate.World.Objects.get(other_car.Start_Road_World3D_ID);
-            
-//TODO 
-            System.out.println("TODO Event_06_Animator_Initialization Animator3D OtherCar ObjectProperties");
-//            ObjectProperties properties = new ObjectProperties();
-//            properties.ModelID = sim.vars.animator3DModule.OtherCar_Model_ID;
-//            properties.X = other_car.Vehicle_Basic.Loc_X;
-//            properties.Y = other_car.Vehicle_Basic.Loc_Y ;
-//            properties.Z = other_car.Vehicle_Basic.Loc_Z;
-//            properties.Pitch = other_car.Vehicle_Basic.Pitch;
-//            properties.Yaw = other_car.Vehicle_Basic.Yaw;
-//            properties.Roll = other_car.Vehicle_Basic.Roll;
-//            properties.ScaleX = sim.vars.animator3DModule.OtherCar_Scale;
-//            properties.ScaleY = sim.vars.animator3DModule.OtherCar_Scale;
-//            properties.ScaleZ = sim.vars.animator3DModule.OtherCar_Scale;
-//            
-//            String ojbect_id = (String)Animator3D.Create3DObject(properties);
-//            Animator3D.SetColor( ojbect_id, Color.Blue ) ;
-//            other_car.Vehicle_Basic.Animator3D_Object_ID = ojbect_id;
-      //System.out.println("Event_06_Animator_Initialization other_car: " + properties.X + " " + properties.Y + " " + properties.Z);
-          } //end of World3D_OtherCar
-          
-          else if (an_object.getValue() instanceof World3D_Road){
-            // visualize all lanes for all fragments
-            World3D_Road road = (World3D_Road) an_object.getValue();
-            ArrayList<Double> fragment_distance_points = new ArrayList<Double>();
-            
-            Iterator <Entry <Double,World3D_Road_Fragment> > itr_Fragments = road.Fragments.entrySet().iterator();
-            while (itr_Fragments.hasNext()){
-              Entry<Double, World3D_Road_Fragment> an_entry = itr_Fragments.next();
-              fragment_distance_points.add( (double)an_entry.getKey() );
-            }
-            Collections.sort(  fragment_distance_points  );
-            
-            Iterator <Double> itr_fragment_distance_points = fragment_distance_points.iterator();
-            while(itr_fragment_distance_points.hasNext()){
-              Double fragment_start_distance = itr_fragment_distance_points.next();
-              World3D_Road_Fragment a_fragment = (World3D_Road_Fragment)road.Fragments.get(fragment_start_distance);
-              double center_start_x = a_fragment.Start_Loc_X;
-              double center_start_z = a_fragment.Start_Loc_Z;
-              double center_end_x = a_fragment.End_Loc_X;
-              double center_end_z = a_fragment.End_Loc_Z;
-              double start_angle_radian = a_fragment.Start_Heading_Angle / 180.0 * Math.PI;
-              double end_angle_radian = ( a_fragment.Start_Heading_Angle + a_fragment.Turn_Angle ) / 180.0 * Math.PI;
-              
-              double start_x_offset = road.Lane_Width/2.0 * Math.cos(start_angle_radian); 
-              double start_z_offset = road.Lane_Width/2.0 * Math.sin(start_angle_radian); //an angle, in radians
-                
-              double center_lane_left_edge_start_x = center_start_x - start_x_offset; 
-              double center_lane_left_edge_start_z = center_start_z + start_z_offset;
-              double center_lane_right_edge_start_x = center_start_x + start_x_offset; 
-              double center_lane_right_edge_start_z = center_start_z - start_z_offset;
-              
-              double end_x_offset = road.Lane_Width/2.0 * Math.cos(end_angle_radian);
-              double end_z_offset = road.Lane_Width/2.0 * Math.sin(end_angle_radian);
-              
-              double center_lane_left_edge_end_x = center_end_x - end_x_offset; 
-              double center_lane_left_edge_end_z = center_end_z + end_z_offset;
-              double center_lane_right_edge_end_x = center_end_x + end_x_offset; 
-              double center_lane_right_edge_end_z = center_end_z - end_z_offset;
-              
-              
-             
-              if(!road.hide){ // add center lane lelft edge
-                
-          //#region experiment_driving_and_comprehension                 
-                
-                if(sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals(  "experiment_driving_and_comprehension")){
-                  LinkedList<String> animator3d_IDs = sim.funs.AnimatorModuleFun__Animator3D_Add_Dashed_Line_XZ_Plane( center_lane_left_edge_start_x, center_lane_left_edge_start_z,     center_lane_left_edge_end_x, center_lane_left_edge_end_z  );
-                  if(animator3d_IDs.size() > 0){
-                    for(String an_id : animator3d_IDs){
-                      a_fragment.Animator3D_IDs.put("0_left" + "_dashed_" + an_id, an_id );
-                      //hide end points in AnimatorModuleFun__Animator3D_Add_Dashed_Line_XZ_Plane
-                    }
-                  }
-                }
-                
-          //#endregion      
-                else{ 
-                  
-//                  System.out.println("TODO Event_06_Animator_Initialization Animator3D");
-//                  String center_left_edge_animator3d_id = Animator3D.Create3DLine(center_lane_left_edge_start_x, 0.0, center_lane_left_edge_start_z,     center_lane_left_edge_end_x, 0.0, center_lane_left_edge_end_z );
-//                  a_fragment.Animator3D_IDs.put("0_left", center_left_edge_animator3d_id );
-//                  Animator3D.Hide3DLineEndPoint(center_left_edge_animator3d_id);
-                  QnactrSimulation.taskVisualization3D.draw3DLine(center_lane_left_edge_start_x, -0.0, center_lane_left_edge_start_z,     center_lane_left_edge_end_x, -0.0, center_lane_left_edge_end_z ); //X Z the same, Y need to be additive inversed
-                  
-                  
-                }
-              }
-              
-              if(!road.hide){ // add center lane right edge
-
-//                System.out.println("TODO Event_06_Animator_Initialization Animator3D");
-//                String center_right_edge_animator3d_id = Animator3D.Create3DLine(center_lane_right_edge_start_x, 0.0, center_lane_right_edge_start_z,   center_lane_right_edge_end_x, 0.0, center_lane_right_edge_end_z);
-//                a_fragment.Animator3D_IDs.put("0_right", center_right_edge_animator3d_id);
-//                Animator3D.Hide3DLineEndPoint(center_right_edge_animator3d_id);
-                QnactrSimulation.taskVisualization3D.draw3DLine(center_lane_right_edge_start_x, -0.0, center_lane_right_edge_start_z,   center_lane_right_edge_end_x, -0.0, center_lane_right_edge_end_z); //X Z the same, Y need to be additive inversed
-                
-              }
-              
-              if( road.Lane_Num_Left > 0 ){
-                int i;
-                for(i = 1 ; i <= road.Lane_Num_Left ; i++) {
-                  double the_lane_left_edge_start_x = center_start_x - (1 + 2*i) * start_x_offset; 
-                  double the_lane_left_edge_start_z = center_start_z + (1 + 2*i) * start_z_offset;
-                  //double the_lane_right_edge_start_x = center_start_x + (1 + 2*i) * start_x_offset; 
-                  //double the_lane_right_edge_start_z = center_start_z - (1 + 2*i) * start_z_offset;
-                  
-                  double the_lane_left_edge_end_x = center_end_x - (1 + 2*i) * end_x_offset; 
-                  double the_lane_left_edge_end_z = center_end_z + (1 + 2*i) * end_z_offset;
-                  //double the_lane_right_edge_end_x = center_end_x + (1 + 2*i) * end_x_offset; 
-                  //double the_lane_right_edge_end_z = center_end_z - (1 + 2*i) * end_z_offset;
-                  
-                  if(!road.hide){
-
-//                    System.out.println("TODO Event_06_Animator_Initialization Animator3D");
-//                    String the_left_edge_animator3d_id = Animator3D.Create3DLine(the_lane_left_edge_start_x, 0.0, the_lane_left_edge_start_z,     the_lane_left_edge_end_x, 0.0, the_lane_left_edge_end_z );
-//                    a_fragment.Animator3D_IDs.put("-" + i.ToString() + "_left", the_left_edge_animator3d_id );
-//                    Animator3D.Hide3DLineEndPoint(the_left_edge_animator3d_id);
-                    
-                    QnactrSimulation.taskVisualization3D.draw3DLine(the_lane_left_edge_start_x, -0.0, the_lane_left_edge_start_z,     the_lane_left_edge_end_x, -0.0, the_lane_left_edge_end_z ); //X Z the same, Y need to be additive inversed
-                    
-                  }
-                  //String the_right_edge_animator3d_id = Animator3D.Create3DLine(the_lane_right_edge_start_x, 0.0, the_lane_right_edge_start_z,   the_lane_right_edge_end_x, 0.0, the_lane_right_edge_end_z);
-                  //a_fragment.Animator3D_IDs.put(?? + "_right", the_right_edge_animator3d_id);           
-                  
-                }
-                
-              }//end of adding left other lanes
-              
-              if (road.Lane_Num_Right > 0){
-                int i;
-                for(i = 1 ; i <= road.Lane_Num_Left ; i++) {
-                  //double the_lane_left_edge_start_x = center_start_x - (1 + 2*i) * start_x_offset; 
-                  //double the_lane_left_edge_start_z = center_start_z + (1 + 2*i) * start_z_offset;
-                  double the_lane_right_edge_start_x = center_start_x + (1 + 2*i) * start_x_offset; 
-                  double the_lane_right_edge_start_z = center_start_z - (1 + 2*i) * start_z_offset;
-                  
-                  //double the_lane_left_edge_end_x = center_end_x - (1 + 2*i) * end_x_offset; 
-                  //double the_lane_left_edge_end_z = center_end_z + (1 + 2*i) * end_z_offset;
-                  double the_lane_right_edge_end_x = center_end_x + (1 + 2*i) * end_x_offset; 
-                  double the_lane_right_edge_end_z = center_end_z - (1 + 2*i) * end_z_offset;
-                  
-                  //String the_left_edge_animator3d_id = Animator3D.Create3DLine(the_lane_left_edge_start_x, 0.0, the_lane_left_edge_start_z,     the_lane_left_edge_end_x, 0.0, the_lane_left_edge_end_z );
-                  //a_fragment.Animator3D_IDs.put(?? + "_left", the_left_edge_animator3d_id );
-                  
-                  if(!road.hide){
-
-//                    System.out.println("TODO Event_06_Animator_Initialization Animator3D");
-//                    String the_right_edge_animator3d_id = Animator3D.Create3DLine(the_lane_right_edge_start_x, 0.0, the_lane_right_edge_start_z,   the_lane_right_edge_end_x, 0.0, the_lane_right_edge_end_z);
-//                    a_fragment.Animator3D_IDs.put(i.ToString() + "_right", the_right_edge_animator3d_id); 
-//                    Animator3D.Hide3DLineEndPoint(the_right_edge_animator3d_id);
-                    
-                    QnactrSimulation.taskVisualization3D.draw3DLine(the_lane_right_edge_start_x, -0.0, the_lane_right_edge_start_z,   the_lane_right_edge_end_x, -0.0, the_lane_right_edge_end_z ); //X Z the same, Y need to be additive inversed
-                     
-                  }
-                }
-                
-              }//end of adding right other lanes
-            }
-            
-          } //end of World3D_Road
-          
-          else if(an_object.getValue() instanceof World3D_Point){
-            World3D_Point the_point = (World3D_Point)an_object.getValue();
-            
-            if (the_point.Type.equals( "customized-local-point")){
-//TODO
-              System.out.println("TODO Event_06_Animator_Initialization ObjectProperties");
-              
-//              ObjectProperties properties = new ObjectProperties();
-//              properties.ModelID = sim.vars.animator3DModule.Point_Model_ID;
-//              
-//              Three_Tuple global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(the_point.On_Road_World3D_ID, the_point.Distance_From_Start, the_point.Distance_Lateral_To_Center_Lane_Center, 0.0);
-//              the_point.Loc_X = (double) global_para.Ob1;
-//              the_point.Loc_Z = (double) global_para.Ob2;
-//                    
-//              properties.X = the_point.Loc_X;
-//              properties.Y = the_point.Loc_Y - the_point.Size_Y / 2.0;  // Loc_Y should be 0 as initially. Animator3D by default put the object's bottom at Y = 0 level, so this sets Y at 0.
-//              properties.Z = the_point.Loc_Z;
-//              
-//              double size_factor = 1.0 / 3.0 ; // for Sphere3Foot object
-//              
-//              properties.ScaleX = the_point.Size_X * size_factor ;
-//              properties.ScaleY = the_point.Size_Y * size_factor ;
-//              properties.ScaleZ = the_point.Size_Z * size_factor ;
-//              
-//              String ojbect_id = (String)Animator3D.Create3DObject(properties);
-//              Animator3D.SetColor( ojbect_id, the_point.Color ) ;
-//              the_point.Animator3D_Object_ID = ojbect_id;
-            }
-            else if(the_point.Type.length() >= 9 && the_point.Type.substring(0,9).equals( "far-point")){
-//TODO
-              System.out.println("TODO Event_06_Animator_Initialization ObjectProperties");
-              
-//              ObjectProperties properties = new ObjectProperties();
-//              properties.ModelID = sim.vars.animator3DModule.Point_Model_ID;
-//              
-//              Three_Tuple global_para = sim.funs.ProgramUtilitiesFun__World3D_Local_Loc_And_Angle_To_Global(the_point.On_Road_World3D_ID, the_point.Distance_From_Start, the_point.Distance_Lateral_To_Center_Lane_Center, 0.0);
-//              the_point.Loc_X = (double) global_para.Ob1;
-//              the_point.Loc_Z = (double) global_para.Ob2;
-//                    
-//              properties.X = the_point.Loc_X;
-//              properties.Y = the_point.Loc_Y;  // should be 0 as initially, Animator3D by default put the object's bottom at Y = 0 level, so this far-point's bottom is at Y = 0 level.
-//              properties.Z = the_point.Loc_Z;
-//              
-//              properties.ScaleX = sim.vars.animator3DModule.Far_Point_Scale;
-//              properties.ScaleY = sim.vars.animator3DModule.Far_Point_Scale;
-//              properties.ScaleZ = sim.vars.animator3DModule.Far_Point_Scale;
-//              
-//              String ojbect_id = (String)Animator3D.Create3DObject(properties);
-//              Animator3D.SetColor( ojbect_id, Color.Red ) ;
-//              the_point.Animator3D_Object_ID = ojbect_id;
-            }
-            else{
-              System.out.println("Error! Event_06_Animator_Initialization has undefined Point type: " + the_point.Type);
-              SimSystem.abort();
-            }
-            
-          } //end of World3D_Point
-          
-          else if(an_object.getValue() instanceof World3D_Line_Segment){
-            World3D_Line_Segment the_line_seg = (World3D_Line_Segment)an_object.getValue();
-            
-            if (the_line_seg.Type.equals( "customized-local-line-segment")){
-//TODO
-              System.out.println("TODO Event_06_Animator_Initialization Animator3D");
-              
-//              String ojbect_id = (String)Animator3D.Create3DLine( the_line_seg.P1_Loc_X, the_line_seg.P1_Loc_Y, the_line_seg.P1_Loc_Z, the_line_seg.P2_Loc_X, the_line_seg.P2_Loc_Y, the_line_seg.P2_Loc_Z);
-//              Animator3D.SetColor( ojbect_id, the_line_seg.Color) ;
-//              the_line_seg.Animator3D_Object_ID = ojbect_id;
-            }
-            else{
-              System.out.println("Error! Event_06_Animator_Initialization has undefined World3D_Line_Segment the_line_seg.Type: " + the_line_seg.Type );
-              SimSystem.abort();
-            }
-            
-          } //end of World3D_Line_Segment
-          
-          else{
-            System.out.println("Error! Event_06_Animator_Initialization has undefined world3d object type"); 
-            SimSystem.abort();
-          }
-        
-        }
-        
-      }
-
+		          else if(an_object.getValue() instanceof World3D_Line_Segment){
+		            World3D_Line_Segment the_line_seg = (World3D_Line_Segment)an_object.getValue();
+		            
+		            if (the_line_seg.Type.equals( "customized-local-line-segment")){
+		//TODO
+		              System.out.println("TODO Event_06_Animator_Initialization Animator3D");
+		//              String ojbect_id = (String)Animator3D.Create3DLine( the_line_seg.P1_Loc_X, the_line_seg.P1_Loc_Y, the_line_seg.P1_Loc_Z, the_line_seg.P2_Loc_X, the_line_seg.P2_Loc_Y, the_line_seg.P2_Loc_Z);
+		//              Animator3D.SetColor( ojbect_id, the_line_seg.Color) ;
+		//              the_line_seg.Animator3D_Object_ID = ojbect_id;
+		            }
+		            else{
+		              System.out.println("Error! Event_06_Animator_Initialization has undefined World3D_Line_Segment the_line_seg.Type: " + the_line_seg.Type );
+		              SimSystem.abort();
+		            }
+		          } //end of World3D_Line_Segment
+		          else{
+		            System.out.println("Error! Event_06_Animator_Initialization has undefined world3d object type"); 
+		            SimSystem.abort();
+		          }
+		        }
+		      }
       //#region customized Animator Ojbects
-
-
         //#region for Space 6DOF speed-control demo  sp-driv
-        if( sim.vars.world3DTemplate.Method_Object != null && (sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method)){
-          World3D_Template_Driving_Method  driving_method_pointer =  sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
-          if(driving_method_pointer != null && (driving_method_pointer.Who_Drive.toLowerCase().equals( "model-6dof-speed") || driving_method_pointer.Who_Drive.toLowerCase().equals( "human-6dof-speed" )) ){ 
+		      if( sim.vars.world3DTemplate.Method_Object != null && (sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method)){
+		    	  World3D_Template_Driving_Method  driving_method_pointer =  sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
+		    	  if(driving_method_pointer != null && (driving_method_pointer.Who_Drive.toLowerCase().equals( "model-6dof-speed") || driving_method_pointer.Who_Drive.toLowerCase().equals( "human-6dof-speed" )) ){ 
 
 //TODO
-            System.out.println("TODO Event_06_Animator_Initialization ObjectProperties");
+		    		  System.out.println("TODO Event_06_Animator_Initialization ObjectProperties");
             
 //            ObjectProperties properties6DOF_Target_Background = new ObjectProperties();
 //            properties6DOF_Target_Background.ModelID = "Target_Background";
@@ -1449,8 +1374,8 @@ public class ServerLogics {
             */
           
           
-          }
-        }
+		    	  }
+		      }
 
 
 
@@ -1471,8 +1396,7 @@ public class ServerLogics {
 //        System.out.println("Clock " + SimSystem.clock() + ", Event_07_Extra_Predefined_Model_Setup has additional debug codes.");
 //        sim.funs.ProductionModuleFun__Print_All_Productions();
         
-        if(sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "experiment_medical_decision_making"))
-        {
+		      if(sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "experiment_medical_decision_making")){
 
 //          System.out.println("TODO Event_07_Extra_Predefined_Model_Setup MedicalExp");
           
@@ -1538,39 +1462,33 @@ public class ServerLogics {
 //                         }
 //                 }
 //             }
-        }
+		      }
         
-        if(sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "experiment_driving_and_comprehension") )
-        {
-          
-          //specifying the rules that require follow up processing, as in the filtering discipline
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("heard-word-sound-retrieve-meaning", "goal");  // +retrieval>
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("heard-low-beep", "goal");  // +imaginal>
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("heard-high-beep", "goal");  // +retrieval>
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("start-recognition-1", "goal");  // +imaginal>
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("start-recognition-2", "goal");  // +imaginal>
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-subject-match-yes", "goal");  // +aural-location>, listening to important aural info (probe sentence)
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-subject-match-no", "goal");  // +aural-location>, listening to important aural info (probe sentence)
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-aux-match-yes-1", "goal");  // +aural-location>, listening to important aural info (probe sentence)
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-aux-match-no-1", "goal");  // +aural-location>, listening to important aural info (probe sentence)
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-aux-match-yes-2", "goal");  // +aural-location>, listening to important aural info (probe sentence)
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-aux-match-no-2", "goal");  // +aural-location>, listening to important aural info (probe sentence)
-          
-          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("drive-control-process-near-attend-far", "goal-2");  //drive-control-process-far will always following this without interruption by T2, used here to achieve the same effect as visual-motor path way not blocked by the limited production module resource, as a workaround
-          
-        }
-        
-            
-            
+	        if(sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "experiment_driving_and_comprehension") ){
+	          //specifying the rules that require follow up processing, as in the filtering discipline
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("heard-word-sound-retrieve-meaning", "goal");  // +retrieval>
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("heard-low-beep", "goal");  // +imaginal>
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("heard-high-beep", "goal");  // +retrieval>
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("start-recognition-1", "goal");  // +imaginal>
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("start-recognition-2", "goal");  // +imaginal>
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-subject-match-yes", "goal");  // +aural-location>, listening to important aural info (probe sentence)
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-subject-match-no", "goal");  // +aural-location>, listening to important aural info (probe sentence)
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-aux-match-yes-1", "goal");  // +aural-location>, listening to important aural info (probe sentence)
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-aux-match-no-1", "goal");  // +aural-location>, listening to important aural info (probe sentence)
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-aux-match-yes-2", "goal");  // +aural-location>, listening to important aural info (probe sentence)
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("find-next-sound-phase-probe-aux-match-no-2", "goal");  // +aural-location>, listening to important aural info (probe sentence)
+	          
+	          sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("drive-control-process-near-attend-far", "goal-2");  //drive-control-process-far will always following this without interruption by T2, used here to achieve the same effect as visual-motor path way not blocked by the limited production module resource, as a workaround
+	        }
             
             // end of adding Clock = 0 Scenario Events
         
-        if(QnactrSimulation.computeUtilization){
-          //Recurrent_01_Compute_Utilization
-          //repeat for ever, every 1 second
-          Entity Temp_Entity_Recurrent_01 = sim.funs.createEntity( "Recurrent Event" , "Recurrent Event", "Recurrent Event", "Recurrent Event 1", 0.0);
-          Temp_Entity_Recurrent_01.Direct_Cast_Delay = 1.0; 
-        }
+	        if(QnactrSimulation.computeUtilization){
+	          //Recurrent_01_Compute_Utilization
+	          //repeat for ever, every 1 second
+	          Entity Temp_Entity_Recurrent_01 = sim.funs.createEntity( "Recurrent Event" , "Recurrent Event", "Recurrent Event", "Recurrent Event 1", 0.0);
+	          Temp_Entity_Recurrent_01.Direct_Cast_Delay = 1.0; 
+	        }
         
             break;
             
@@ -2445,7 +2363,6 @@ public class ServerLogics {
              sim.funs.ProductionModuleFun__Goal_Thread_Add_Or_Update(Entity.Chunk.Chunk_Name);
             }
             
-            
             if (Entity.Entity_Type.equals( "Buffer Chunk Spec Change Notice")) {
               
               String[] The_Chunk_Spec_Change = sim.funs.ProgramUtilitiesFun__LinkedListString_To_ArrayString(Entity.The_Chunk_Spec_Change_List);
@@ -2581,7 +2498,8 @@ public class ServerLogics {
             }
             
             sim.funs.NetworkDetailsVisualizationFun__Get_Imaginal_Buffer_Contents();
-            
+            //System.out.println("IMAGINAL BUFFER: stored a chunk:");
+            //sim.funs.ChunkFun__Print_Chunk(Entity.Chunk);
             break;
             
           case Ending:
@@ -2700,8 +2618,6 @@ public class ServerLogics {
       case intentionalmodule:
         switch (ServiceStage){
           case Release:
-            
-            
             //            int itemsInTask = sim.funs.getNumberOfQnactrEntityInServer(ServerName.toString());
             return (!Entity.Trash)&& (sim.funs.getNumberOfQnactrEntityInServer(ServerName.toString()) < sim.funs.getServerCapacity(ServerName.toString())); //(itemsInTask < 1);
        
@@ -2726,7 +2642,6 @@ public class ServerLogics {
               sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "GOAL" + "\t\t" + "CREATE-NEW-BUFFER-CHUNK GOAL ISA "+Entity.Chunk.Chunk_Type); 
               
             }
-            
             if (Entity.Entity_Type.equals( "Modify Goal")) { 
             //no need. if change Tag, must update server.qnactrEntityInServer and server.removeTokensInServer
               //Entity.Tag = QnactrSimulation.entityNumber; //give it an new entity number, init. 1
@@ -2745,7 +2660,6 @@ public class ServerLogics {
               Entity.Entity_Type = "Clear Goal";    
               //Entity.Chunk just be the same
             }
-            
             if (Entity.Entity_Type.equals( "Add Goal-2") ){ 
             //no need. if change Tag, must update server.qnactrEntityInServer and server.removeTokensInServer
               //Entity.Tag = QnactrSimulation.entityNumber; //give it an new entity number, init. 1
@@ -2755,7 +2669,6 @@ public class ServerLogics {
               Entity.Entity_Type = "Goal Buffer-2's New Chunk";    
               //Entity.Chunk just be the same
               sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "GOAL" + "\t\t" + "CREATE-NEW-BUFFER-CHUNK GOAL-2 ISA "+Entity.Chunk.Chunk_Type); 
-              
             }
             if (Entity.Entity_Type.equals( "Modify Goal-2")) { 
             //no need. if change Tag, must update server.qnactrEntityInServer and server.removeTokensInServer
@@ -2775,7 +2688,6 @@ public class ServerLogics {
               Entity.Entity_Type = "Clear Goal";    
               //Entity.Chunk just be the same
             }
-            
             
             break;
             
@@ -2824,8 +2736,6 @@ public class ServerLogics {
       case matchingandselection:
         switch (ServiceStage){
           case Release:
-            
-            
             int itemsInTask = sim.funs.getNumberOfQnactrEntityInServer(ServerName.toString());
             if (sim.vars.centralParametersModule.Use_Procedural_Resources) {
               return (!Entity.Trash ); //may take multiple entities in QN
@@ -2834,7 +2744,6 @@ public class ServerLogics {
               return (!Entity.Trash ) && (sim.funs.getNumberOfQnactrEntityInServer(ServerName.toString()) < sim.funs.getServerCapacity(ServerName.toString())); //(itemsInTask < 1);
             }
 
-            
           case Beginning:
 
             //GlobalUtilities.popUpMessage("test");
@@ -3034,11 +2943,6 @@ public class ServerLogics {
             for(Production_Rule rule : selected_rules_list) {
               rule.Variable_Binding = sim.funs.ProductionModuleFun__Bind_Variables_In_Rule_Condition(rule);
             }
-            
-            
-            
-            
-            
             
             break;
             
@@ -3746,13 +3650,10 @@ public class ServerLogics {
                     double  time_new = Double.parseDouble( sim.funs.ChunkFun__Get_Chunk_Slot_Value(Entity.Chunk, "time-new"));
                     
                     if(sim.vars.animator3DModule.Show_Animator3D){
-                      
                       System.out.println("TODO serverlogics case motormodule Beginning: Animator3D");
-
 //TODO     Animator3D     
 //                      Animator3D.SetCommentText(11, "Near Point Angle (degree): " + Double.toString(GlobalUtilities.round(na_new,3)));
 //                      Animator3D.SetCommentText(12, "Far Point Angle (degree): " + Double.toString(GlobalUtilities.round(fa_new,3)));
-//                      
                     }
                     
 //                    method_pointer.Simulation = this;
@@ -4123,13 +4024,10 @@ public class ServerLogics {
       case retrievalbuffer:
         switch (ServiceStage){
           case Release:
-            
-            
             int itemsInTask = sim.funs.getNumberOfQnactrEntityInServer(ServerName.toString());
             return  (sim.funs.getNumberOfQnactrEntityInServer(ServerName.toString()) < sim.funs.getServerCapacity(ServerName.toString())); //(itemsInTask < 1);
-            
+          
           case Beginning:
-            
             Entity.Time_Computed = false;
             if (Entity.Entity_Type.equals( "Retrieval Buffer's New Chunk") ){
               if (Entity.Chunk.Chunk_Name.equals( "" ) && Entity.Chunk.Chunk_Type.equals( "" )){
@@ -4159,7 +4057,6 @@ public class ServerLogics {
                   else {
                     //nothing
                   }
-                  
                 }
                 sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );
                 sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "DECLARATIVE" + "\t" + "SET-BUFFER-CHUNK RETRIEVAL " + Entity.Chunk.Chunk_Name); 
@@ -4173,16 +4070,13 @@ public class ServerLogics {
             break;
             
           case Ending:
-            
             Entity.To = "Matching And Selection";
             Entity.Entity_Type = "Production Rule Firing Trigger";
           //no need. if change Tag, must update server.qnactrEntityInServer and server.removeTokensInServer
             //Entity.Tag = QnactrSimulation.entityNumber; 
             //QnactrSimulation.entityNumber++;
-
             
             //ProgramUtilitiesFun__Obsolete_Clean_All_Trash();
-            
             
             break;
             
@@ -4195,19 +4089,15 @@ public class ServerLogics {
       case speechexecution:
         switch (ServiceStage){
           case Release:
-            
-            
             int itemsInTask = sim.funs.getNumberOfQnactrEntityInServer(ServerName.toString());
             return (!Entity.Trash ) && (sim.funs.getNumberOfQnactrEntityInServer(ServerName.toString()) < sim.funs.getServerCapacity(ServerName.toString())); //(itemsInTask < 1);
             
           case Beginning:
-                        
             //Entity.Time = 0.0;
             Entity.Time_Computed = false;
             //1. beginning effect; 2. timing; 3. ending effect
             if (Entity.From.equals( "Speech Initiation") && Entity.To.equals( "Speech Execution") && Entity.Entity_Type.equals( "Add Vocal")){ //copy an entity to control for Speech execution results
               if(!Entity.Chunk.Chunk_Type.equals( "clear") && !Entity.Chunk.Chunk_Type.equals( "subvocalize")){ //subvocalize should not have output sound
-                
                 Entity Temp_Entity = sim.funs.createEntity( "Control Voice Key" , "Speech Execution", "Control Voice Key", "Speech Execution Result", 0.0);
                 //                Entity Temp_Entity = new Entity();  
                 //                Temp_Entity.ID = "222"; //Control Voice Key
@@ -4218,7 +4108,6 @@ public class ServerLogics {
                 //                Temp_Entity.To = "Control Voice Key";
                 //                Temp_Entity.Entity_Type = "Speech Execution Result";   
                 Temp_Entity.Chunk = sim.funs.ChunkFun__Chunk_Clone(Entity.Chunk);
-                
               }
               else if (Entity.Chunk.Chunk_Type.equals( "subvocalize")){ //talk to oneself
                 String content = (String) Entity.Chunk.Slot.get("string");
@@ -5056,10 +4945,16 @@ public class ServerLogics {
                     method_pointer.Visual_Attention_Location_World3D_ID = visual_location_chunk_name.substring(10); // "far-point-";
                     //GlobalUtilities.popUpMessage(method_pointer.Visual_Attention_Location_World3D_ID);
                   }
-                  else if ( (visual_location_chunk_name.length() >= "customized-point".length() && visual_location_chunk_name.substring(0,"customized-point".length()).equals( "customized-point")) ){ 		
+                  else if ( (visual_location_chunk_name.length() >= 16 && visual_location_chunk_name.substring(0,16).equals( "customized-point")) ){ 		
                     if(QnactrSimulation.taskVisualization2DEnable)sim.vars.taskVisualization2D.hideObject(sim.vars.taskVisualization2D.visualAttentionCircleID); //Animator.HideComment("500");
                     World3D_Template_Driving_Method method_pointer = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
-                    method_pointer.Visual_Attention_Location_World3D_ID = visual_location_chunk_name.substring("customized-point".length() + 1); // "customized-point-";
+                    method_pointer.Visual_Attention_Location_World3D_ID = visual_location_chunk_name.substring(17); // "customized-point-";
+                  }
+                  else if((visual_location_chunk_name.length() >= 16 && visual_location_chunk_name.substring(0,16).equals( "critical-element"))) {
+                	  // critical element
+                	  //form visual chunk, with kind of world3d-driving-criticalelement-vehicle, or world3d-driving-criticalelement-sign
+                      World3D_Template_Driving_Method method_pointer = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
+                      method_pointer.Visual_Attention_Location_World3D_ID = visual_location_chunk_name.substring(17); // "critical-element-"
                   }
                   //end of Animator 3D
                   else{ // Animator 2D
@@ -5185,8 +5080,6 @@ public class ServerLogics {
                 else sim.vars.visionModule.State_Free = true;
               }
             }
-            
-            
             else if (Entity.From.equals( "Execution") && Entity.Entity_Type.equals( "Add Visual-location")){
             //no need. if change Tag, must update server.qnactrEntityInServer and server.removeTokensInServer
               //Entity.Tag = QnactrSimulation.entityNumber; //give it an new entity number, init. 1
@@ -5203,10 +5096,15 @@ public class ServerLogics {
                 Entity.Chunk = sim.funs.VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec(Entity.Chunk);
                 //sim.vars.visualDisplay.World3D_Visual_Locations.put( Entity.Chunk.Chunk_Name, sim.funs.ChunkFun__Chunk_Clone( Entity.Chunk ) );
               }
+              else if (visual_location_type.equals( "visual-location-world3d-driving-criticalelement")){
+                  Entity.Chunk = sim.funs.VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec(Entity.Chunk);
+                  //sim.vars.visualDisplay.World3D_Visual_Locations.put( Entity.Chunk.Chunk_Name, sim.funs.ChunkFun__Chunk_Clone( Entity.Chunk ) );
+                }
               else {
                 System.out.println("Error! Vision Module has undefined Add visual_location_type: " + visual_location_type);
                 break;
               }
+              
               if (Entity.Chunk.Chunk_Name.equals( "" ) && Entity.Chunk.Chunk_Type.equals( "" )){
                 sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "VISION" + "\t\t" + "Find-location");
                 sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "VISION" + "\t\t" + "FIND-LOC-FAILURE");
@@ -5226,7 +5124,6 @@ public class ServerLogics {
                 sim.vars.visualLocationBuffer.Unrequested = false;
               }
             }
-            
             else if (Entity.From.equals( "Execution" ) && Entity.Entity_Type.equals( "Add Visual" )) { 
               if (!Entity.Chunk.Chunk_Type.equals( "clear")){
               //no need. if change Tag, must update server.qnactrEntityInServer and server.removeTokensInServer
@@ -5251,6 +5148,9 @@ public class ServerLogics {
                 }
                 else if ( visual_location_chunk_name.equals( "customized-point-dummy-visual-location-point-vehicle-a" ) ){
                   temp_chunk.Chunk_Type = "vehicle-a";
+                }
+                else if ( (visual_location_chunk_name.length() >= 17 && visual_location_chunk_name.substring(0,17).equals( "critical-element-")) ){
+                   temp_chunk.Chunk_Type = "critical-element";
                 }
                 
                 
@@ -5591,11 +5491,8 @@ public class ServerLogics {
         switch (ServiceStage){
           case Release:
             
-            
             int itemsInTask = sim.funs.getNumberOfQnactrEntityInServer(ServerName.toString());
             return (!Entity.Trash ) && (sim.funs.getNumberOfQnactrEntityInServer(ServerName.toString()) < sim.funs.getServerCapacity(ServerName.toString())); //(itemsInTask < 1);
-            
-            
             
           case Beginning:
             
@@ -5619,6 +5516,10 @@ public class ServerLogics {
         			}
         			ChunkFun__Define_Chunk( Entity.Chunk );
                */
+            	// added by Yelly
+            	// I need visual-location chunk to be in the center chunks,
+    			sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );
+    			
               sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk = sim.funs.ChunkFun__Chunk_Clone(Entity.Chunk);
               if(!Entity.Chunk.Chunk_Name.equals( "" ) && !Entity.Chunk.Chunk_Type.equals( "" )){ //verifed with ACT-R command (buffer-chunk)
                 sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "VISION" + "\t\t" + "SET-BUFFER-CHUNK VISUAL-LOCATION " + sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk.Chunk_Name  ); 
@@ -5718,6 +5619,7 @@ public class ServerLogics {
                 //currently don't define "world3d-" visual buffer chunk.
               }
               else{
+            	  // critical element case is in this 
                 sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );
               }
               
@@ -5742,9 +5644,17 @@ public class ServerLogics {
                 //sim.vars.visionModule.Last_Attended_Visicon_Name = old_chunk_name;
                 //sim.vars.visualization__Vision_Module_Last_Attended_Visicon_Name = sim.vars.visionModule.Last_Attended_Visicon_Name;
               }
+              else if ( (screen_pos.length() >= 16 && screen_pos.substring(0,16).equals( "critical-element")) ){ 	 // this case is added by Yelly                  
+                  // these commented codes are uncommented by Yelly
+                  sim.vars.visionModule.Last_Attended_Screen_X = "";
+                  sim.vars.visionModule.Last_Attended_Screen_Y = "";
+                  sim.vars.visionModule.Last_Attended_Visual_Location_Name = screen_pos;
+                  sim.vars.visionModule.Last_Attended_Visicon_Name = old_chunk_name;
+                  sim.vars.visualization__Vision_Module_Last_Attended_Visicon_Name = sim.vars.visionModule.Last_Attended_Visicon_Name;
+                }
               else if (screen_pos.equals( "customized-point-dummy-visual-location-point-vehicle-a")){
-                //do nothing
-              }
+                  //do nothing
+                }
               else{
                 Chunk temp_visual_location_pointer = (Chunk)sim.vars.centralParametersModule.Chunks.get(screen_pos);
                 sim.vars.visionModule.Last_Attended_Screen_X = sim.funs.ChunkFun__Get_Chunk_Slot_Value(temp_visual_location_pointer, "screen-x");
@@ -5768,7 +5678,6 @@ public class ServerLogics {
               else 	sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "VISION" + "\t\t" + "No visual-object found"); 
               
             }
-            
             else if (Entity.Entity_Type.equals( "Visual Clear Notice")) { //this is implicit visual buffer strict harvesting or explicit -visual>
               
               //reset last attended info should only be done by +visual> isa clear.
@@ -7352,7 +7261,7 @@ public class ServerLogics {
               //System.out.println(Clock + " Initiated: " + sim.vars.motorModule.Initiated_But_Output_Not_Finished_Request );
               
               //put experiment Control Motor result collection here
-              
+
               String request_type = Entity.Chunk.Chunk_Type;
               switch(request_type){
                 case "press-key":{ 
@@ -7914,16 +7823,13 @@ public class ServerLogics {
                         
         	  
         	  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
-        		  //do not need to output results here, because results are available in TORCS output        		  
-        		  
+        		  //do not need to output results here, because results are available in TORCS output      
                 	
                 } //end of model_drive_torcs
         	  else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "unity_tangtang_2015" )){
         		  // may want to output some results. TODO
-                	
                 } 
-        	  else{ //old method, use internal 3D model
-        		  
+        	  else{ //old method, use internal 3D mo
         	  
 	            //System.out.println("World3D_Cyclic_Refresh test");
 	            //output first row titles for human drive results
@@ -8020,19 +7926,16 @@ public class ServerLogics {
 	            }
         	  }// end of old method, use internal 3D model
         	  
-        	  
             break;
             
           case Ending:
         	  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
         		  //TODO        		  
-        		  
                 	
                 } //end of model_drive_torcs
         	  
         	  else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "unity_tangtang_2015" )){
         		  //TODO        		  
-        		  
                 	
                 } 
         	  
@@ -8531,15 +8434,11 @@ public class ServerLogics {
 	              } //end of World3D_Point
 	            }
 	            
-	            
 	            if( sim.vars.world3DTemplate.Method_Object != null ){
 	              if (sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) {
 	                sim.funs.VisionModuleFun__Update_World3D_Driving_Method_Visible_Objects();
 	              }
 	            }
-	            
-	            
-	            
 	            
 	            /*
 	          // for Space Drive 1D speed control demo
@@ -8551,8 +8450,6 @@ public class ServerLogics {
 	             */
         	  } //end of old method, use internal 3D model
             break;
-            
-            
             
           case Timing:
         	  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
@@ -8607,10 +8504,8 @@ public class ServerLogics {
         	  else{ //old method, use internal 3D model
         		  return sim.vars.world3DTemplate.World.Refresh_Cycle; //in second
         	  }
-            
         }
         break;
-        
         
       default:
         JOptionPane.showMessageDialog(null, "Enums has undefined serverName: " + ServerName , "ServerLogics.java" , JOptionPane.INFORMATION_MESSAGE); //QN-Java
@@ -8639,4 +8534,9 @@ public class ServerLogics {
     }
     return null; // if break from any switch of ServerNames with no return value.
   }
+
+private void ChunkFun__Print_Chunk() {
+	// TODO Auto-generated method stub
+	
+}
 }

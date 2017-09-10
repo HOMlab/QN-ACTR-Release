@@ -8,6 +8,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,13 +55,23 @@ public class World3D_Template_Driving_Method {
 	private int UDPQNtoTORCSPort = 5678; 	//this can be set in TORCS expconfig.txt
 	private int UDPTORCStoQNPort = 8765;	//this can be set in TORCS expconfig.txt
 	private final int bufferSizetoTORCS = 500; 		//this can be set in TORCS human.cpp
-	private final int bufferSizefromTORCS = 500;	//this can be set in TORCS human.cpp
+	private final int bufferSizefromTORCS = 4096;
 	private DatagramSocket sendSocket;
 	private DatagramSocket receiveSocket;
 	
 	// added by Yelly,
 	// for parsing receiving msg from OpenDS
-	HashMap<String, CriticalElement> criticalElements = new HashMap<String, CriticalElement>();
+	private HashMap<String, CriticalElement> criticalElements = new HashMap<String, CriticalElement>();
+	private ArrayList< CriticalElement> front_visible_CriticalElements = new ArrayList< CriticalElement>();
+	private ArrayList< CriticalElement> centerBack_visible_CriticalElements = new ArrayList< CriticalElement>();
+	private ArrayList< CriticalElement> leftBack_visible_CriticalElements = new ArrayList< CriticalElement>();
+	private ArrayList< CriticalElement> rightBack_visible_CriticalElements = new ArrayList< CriticalElement>();
+	public CriticalElement critical_element_focusing = null;
+	// parameters subject to be changed
+	private final float front_perceive_weight = 0.7f;
+	private final float centerBack_perceive_weight = 0.1f;
+	private final float leftBack_perceive_weight = 0.1f;
+	private final float rightBack_perceive_weight = 0.1f;
     
 	private final int MSG_PARTS = 6;
 	
@@ -190,6 +201,7 @@ public class World3D_Template_Driving_Method {
 		str += "Accelerator: " + torcsControlAccelerator + ", ";  //0-1
 		str += "Brake: " + torcsControlBrake + ", ";  //0-1
 		str += "Steering: " + torcsControlSteerAngleDegree + ", ";  //steering angle in degree
+		//System.out.println("control to OpenDS:" + str);
 				
 		byte buffer[] = new byte[bufferSizetoTORCS];
 		buffer = str.getBytes(); 
@@ -293,8 +305,10 @@ public class World3D_Template_Driving_Method {
 			speedmps = Double.parseDouble(tokens[this.SPEED].substring(this.msg_prefix[this.SPEED].length()));
 			
 			int endInd = tokens[this.CRITICAL_ELEMENTS].indexOf('}');
+			if(endInd<0) System.err.println("wrong msg format received from OpenDS. endInd = -1");
+			//System.out.println("endInd: " + endInd + ", tokens[this.CRITICAL_ELEMENTS]: " + tokens[this.CRITICAL_ELEMENTS]);
 			String element_str = tokens[this.CRITICAL_ELEMENTS].substring(this.msg_prefix[this.CRITICAL_ELEMENTS].length(), endInd);
-			System.out.println("element_str: " +element_str);
+			//System.out.println("element_str: " +element_str);
 			int eqInd, typeEqInd, typeCommaInd, contentEqInd, contentCommaInd, frontVisibilityEqInd, frontVisibilityCommaInd, backVisibilityEqInd, backVisibilityCommaInd, 
 				leftBackVisibilityEqInd, leftBackVisibilityCommaInd, rightBackVisibilityEqInd, rightBackVisibilityCommaInd, lastInd;
 			if(element_str.length()>0) {
@@ -322,13 +336,88 @@ public class World3D_Template_Driving_Method {
 					boolean element_rightBack_visibility = (element_str.substring(rightBackVisibilityEqInd+1, rightBackVisibilityCommaInd).equals("true"))?true:false;
 					
 					if(this.criticalElements.containsKey(element_name)) {// change visibility
-						this.criticalElements.get(element_name).setFront_visibility(element_front_visibility); 
-						this.criticalElements.get(element_name).setBack_visibility(element_back_visibility); 
-						this.criticalElements.get(element_name).setLeftBack_visibility(element_leftBack_visibility); 
-						this.criticalElements.get(element_name).setRightBack_visibility(element_rightBack_visibility); 
+						CriticalElement theElement = this.criticalElements.get(element_name);
+						
+						// front visibility
+						if(theElement.front_visibility) {
+							if(!element_front_visibility) {
+								//remove the element from visible_criticalElement list and change the element visibility
+								this.front_visible_CriticalElements.remove(theElement);
+								this.criticalElements.get(element_name).setFront_visibility(element_front_visibility); 
+							}
+							// else visible before and visible now, do nothing
+						}
+						else {
+							if(element_front_visibility) {
+								//add the element to visible_criticalElement list and change the element visibility
+								this.front_visible_CriticalElements.add(theElement);
+								this.criticalElements.get(element_name).setFront_visibility(element_front_visibility); 
+							}
+							// else invisible before and invisible now, do nothing
+						}
+						
+						// center-back visibility
+						if(theElement.back_visibility) {
+							if(!element_back_visibility) {
+								//remove the element from visible_criticalElement list and change the element visibility
+								this.centerBack_visible_CriticalElements.remove(theElement);
+								this.criticalElements.get(element_name).setBack_visibility(element_back_visibility); 
+							}
+							// else visible before and visible now, do nothing
+						}
+						else {
+							if(element_back_visibility) {
+								//add the element to visible_criticalElement list and change the element visibility
+								this.centerBack_visible_CriticalElements.add(theElement);
+								this.criticalElements.get(element_name).setBack_visibility(element_back_visibility); 
+							}
+							// else invisible before and invisible now, do nothing
+						}
+						
+						// left-back visibility
+						if(theElement.leftBack_visibility) {
+							if(!element_leftBack_visibility) {
+								//remove the element from visible_criticalElement list and change the element visibility
+								this.leftBack_visible_CriticalElements.remove(theElement);
+								this.criticalElements.get(element_name).setLeftBack_visibility(element_leftBack_visibility); 
+							}
+							// else visible before and visible now, do nothing
+						}
+						else {
+							if(element_leftBack_visibility) {
+								//add the element to visible_criticalElement list and change the element visibility
+								this.leftBack_visible_CriticalElements.add(theElement);
+								this.criticalElements.get(element_name).setLeftBack_visibility(element_leftBack_visibility); 
+							}
+							// else invisible before and invisible now, do nothing
+						}
+						
+						// right-back visibility
+						if(theElement.rightBack_visibility) {
+							if(!element_rightBack_visibility) {
+								//remove the element from visible_criticalElement list and change the element visibility
+								this.rightBack_visible_CriticalElements.remove(theElement);
+								this.criticalElements.get(element_name).setRightBack_visibility(element_rightBack_visibility); 
+							}
+							// else visible before and visible now, do nothing
+						}
+						else {
+							if(element_rightBack_visibility) {
+								//add the element to visible_criticalElement list and change the element visibility
+								this.rightBack_visible_CriticalElements.add(theElement);
+								this.criticalElements.get(element_name).setRightBack_visibility(element_rightBack_visibility); 
+							}
+							// else invisible before and invisible now, do nothing
+						}
 					}
 					else {
-						this.criticalElements.put(element_name, new CriticalElement(element_type, element_content, element_front_visibility, element_back_visibility, element_leftBack_visibility, element_rightBack_visibility));
+						CriticalElement theNewElement = new CriticalElement(element_type, element_content, element_front_visibility, element_back_visibility, element_leftBack_visibility, element_rightBack_visibility);
+						this.criticalElements.put(element_name, theNewElement);
+						// add this element to corresponding visible_criticalElement list
+						if(element_front_visibility) this.front_visible_CriticalElements.add(theNewElement);
+						if(element_back_visibility) this.centerBack_visible_CriticalElements.add(theNewElement);
+						if(element_leftBack_visibility) this.leftBack_visible_CriticalElements.add(theNewElement);
+						if(element_rightBack_visibility) this.rightBack_visible_CriticalElements.add(theNewElement);
 					}
 					
 					lastInd = element_str.indexOf("], ");
@@ -339,12 +428,12 @@ public class World3D_Template_Driving_Method {
 			//speedmps = Double.parseDouble(tokens[this.SPEED].substring(this.msg_prefix[this.SPEED].length(), endInd));
 		}
 	    
-	    System.out.print("OpenDSClock:"+OpenDSClockSecond);    
+	    /*System.out.print("OpenDSClock:"+OpenDSClockSecond);    
 	    System.out.print("\tnearPointAngleDegree:"+nearPointAngleDegree);
 	    System.out.print("\tfarPointAngleDegree:"+farPointAngleDegree);
 	    System.out.print("\tfarPointDistanceMeter:"+farPointDistanceMeter);
 	    System.out.println("\tspeedmps:"+speedmps);
-	    System.out.println("\tcriticalElements:"+criticalElements);
+	    System.out.println("\tcriticalElements:"+criticalElements);*/
 	    
 	    torcsPerceptEarly.TORCSClock = OpenDSClockSecond;
 	    torcsPerceptEarly.nearPointAngleDegree = nearPointAngleDegree;
@@ -359,8 +448,54 @@ public class World3D_Template_Driving_Method {
 		
 		return torcsPerceptEarly; // currently try use this, may change it and see what's different
 	}
-
 	
+	public String chooseFocusingCriticalElement(String viewArea) {
+		float viewAreaRan = new Random().nextFloat();
+
+		// suppose if there're visible elements in the chosen view area, the driver could see at least one (also exactly one) of them 
+		if(viewAreaRan < front_perceive_weight) {
+			// only look at object in the front view
+		    System.out.println("looking direction: front, front_visible_list: " + this.front_visible_CriticalElements);
+			viewArea = "front";
+			int visible_num = this.front_visible_CriticalElements.size();
+			if(visible_num==0) this.critical_element_focusing = null;
+			else {
+				this.critical_element_focusing = this.front_visible_CriticalElements.get(new Random().nextInt(visible_num));
+			}
+		}
+		else if(viewAreaRan < centerBack_perceive_weight) {
+			// only look at object in the center-back mirror
+		    System.out.println("looking direction: center-back, center-back_visible_list: " + this.centerBack_visible_CriticalElements);
+			viewArea = "center-back";
+			int visible_num = this.centerBack_visible_CriticalElements.size();
+			if(visible_num==0) this.critical_element_focusing = null;
+			else {
+				this.critical_element_focusing = this.centerBack_visible_CriticalElements.get(new Random().nextInt(visible_num));
+			}
+		}
+		else if(viewAreaRan < leftBack_perceive_weight) {
+			// only look at object in the left-back mirror
+		    System.out.println("looking direction: left-back, left-back_visible_list: " + this.leftBack_visible_CriticalElements);
+			viewArea = "left-back";
+			int visible_num = this.leftBack_visible_CriticalElements.size();
+			if(visible_num==0) this.critical_element_focusing = null;
+			else {
+				this.critical_element_focusing = this.leftBack_visible_CriticalElements.get(new Random().nextInt(visible_num));
+			}
+		}
+		else {
+			// only look at object in the right-back mirror
+		    System.out.println("looking direction: right-back, right-back_visible_list: " + this.rightBack_visible_CriticalElements);
+			viewArea = "right-back";
+			int visible_num = this.rightBack_visible_CriticalElements.size();
+			if(visible_num==0) this.critical_element_focusing = null;
+			else {
+				this.critical_element_focusing = this.rightBack_visible_CriticalElements.get(new Random().nextInt(visible_num));
+			}
+		}
+		
+		return viewArea;
+	}
 	
 	
 	public void Do_Accelerate ( double far_time_head_way_new, double delta_time_head_way, double delta_time){
