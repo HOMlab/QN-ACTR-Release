@@ -72,15 +72,19 @@ public class World3D_Template_Driving_Method {
 	// for parsing receiving msg from OpenDS
 	private HashMap<String, CriticalElement> criticalElements = new HashMap<String, CriticalElement>();
 	private HashMap<String, CriticalElement> front_visible_CriticalElements = new HashMap<String, CriticalElement>();
-	private HashMap<String, CriticalElement> centerBack_visible_CriticalElements = new HashMap<String, CriticalElement>();
-	private HashMap<String, CriticalElement> leftBack_visible_CriticalElements = new HashMap<String, CriticalElement>();
-	private HashMap<String, CriticalElement> rightBack_visible_CriticalElements = new HashMap<String, CriticalElement>();
+	private HashMap<String, CriticalElement> left_visible_CriticalElements = new HashMap<String, CriticalElement>();
+	private HashMap<String, CriticalElement> right_visible_CriticalElements = new HashMap<String, CriticalElement>();
+	private HashMap<String, CriticalElement> insideMirror_visible_CriticalElements = new HashMap<String, CriticalElement>();
+	private HashMap<String, CriticalElement> leftMirror_visible_CriticalElements = new HashMap<String, CriticalElement>();
+	private HashMap<String, CriticalElement> rightMirror_visible_CriticalElements = new HashMap<String, CriticalElement>();
 	//public CriticalElement critical_element_focusing = null;
 	// parameters subject to be changed
-	private final float front_perceive_weight = 0.7f;
-	private final float centerBack_perceive_weight = 0.1f;
-	private final float leftBack_perceive_weight = 0.1f;
-	private final float rightBack_perceive_weight = 0.1f;
+	private final float front_perceive_weight = 0.6f;
+	private final float left_perceive_weight = 0.05f;
+	private final float right_perceive_weight = 0.05f;
+	private final float insideMirror_perceive_weight = 0.1f;
+	private final float leftMirror_perceive_weight = 0.1f;
+	private final float rightMirror_perceive_weight = 0.1f;
     
 	
 	private final int OPENDS_CLOCK = 0;
@@ -340,8 +344,9 @@ public class World3D_Template_Driving_Method {
 			//System.out.println("endInd: " + endInd + ", tokens[this.CRITICAL_ELEMENTS]: " + tokens[this.CRITICAL_ELEMENTS]);
 			String element_str = tokens[this.CRITICAL_ELEMENTS].substring(this.msg_prefix[this.CRITICAL_ELEMENTS].length(), endInd);
 			//System.out.println("element_str: " +element_str);
-			int eqInd, typeEqInd, typeCommaInd, contentEqInd, contentCommaInd, frontVisibilityEqInd, frontVisibilityCommaInd, backVisibilityEqInd, backVisibilityCommaInd, 
-				leftBackVisibilityEqInd, leftBackVisibilityCommaInd, rightBackVisibilityEqInd, rightBackVisibilityCommaInd, lastInd, idEqInd, idCommaInd;
+			int eqInd, typeEqInd, typeCommaInd, contentEqInd, contentCommaInd, frontVisibilityEqInd, frontVisibilityCommaInd, lastInd, idEqInd, idCommaInd,
+			leftVisibilityEqInd, leftVisibilityCommaInd, rightVisibilityEqInd, rightVisibilityCommaInd, insideMirrorVisibilityEqInd, insideMirrorVisibilityCommaInd,
+			leftMirrorVisibilityEqInd, leftMirrorVisibilityCommaInd, rightMirrorVisibilityEqInd, rightMirrorVisibilityCommaInd;
 			if(element_str.length()>0) {
 				while(true) {
 					eqInd = element_str.indexOf("=");
@@ -353,20 +358,26 @@ public class World3D_Template_Driving_Method {
 					contentCommaInd = element_str.indexOf(",", contentEqInd+1);
 					frontVisibilityEqInd = element_str.indexOf("=", contentCommaInd+1);
 					frontVisibilityCommaInd = element_str.indexOf(",", frontVisibilityEqInd+1);
-					backVisibilityEqInd = element_str.indexOf("=", contentCommaInd+1);
-					backVisibilityCommaInd = element_str.indexOf(",", frontVisibilityEqInd+1);
-					leftBackVisibilityEqInd = element_str.indexOf("=", contentCommaInd+1);
-					leftBackVisibilityCommaInd = element_str.indexOf(",", frontVisibilityEqInd+1);
-					rightBackVisibilityEqInd = element_str.indexOf("=", contentCommaInd+1);
-					rightBackVisibilityCommaInd = element_str.indexOf(",", frontVisibilityEqInd+1);
+					leftVisibilityEqInd = element_str.indexOf("=", frontVisibilityCommaInd+1);
+					leftVisibilityCommaInd = element_str.indexOf(",", leftVisibilityEqInd+1);
+					rightVisibilityEqInd = element_str.indexOf("=", leftVisibilityCommaInd+1);
+					rightVisibilityCommaInd = element_str.indexOf(",", rightVisibilityEqInd+1);
+					insideMirrorVisibilityEqInd = element_str.indexOf("=", rightVisibilityCommaInd+1);
+					insideMirrorVisibilityCommaInd = element_str.indexOf(",", insideMirrorVisibilityEqInd+1);
+					leftMirrorVisibilityEqInd = element_str.indexOf("=", insideMirrorVisibilityCommaInd+1);
+					leftMirrorVisibilityCommaInd = element_str.indexOf(",", leftMirrorVisibilityEqInd+1);
+					rightMirrorVisibilityEqInd = element_str.indexOf("=", leftMirrorVisibilityCommaInd+1);
+					rightMirrorVisibilityCommaInd = element_str.indexOf(",", rightMirrorVisibilityEqInd+1);
 					
 					String element_name = element_str.substring(0, eqInd); // name is actually equal to id and it's used as hash key
 					String element_type = element_str.substring(typeEqInd+1, typeCommaInd);
 					String element_content = element_str.substring(contentEqInd+1, contentCommaInd);
 					boolean element_front_visibility = (element_str.substring(frontVisibilityEqInd+1, frontVisibilityCommaInd).equals("true"))?true:false;
-					boolean element_back_visibility = (element_str.substring(backVisibilityEqInd+1, backVisibilityCommaInd).equals("true"))?true:false;
-					boolean element_leftBack_visibility = (element_str.substring(leftBackVisibilityEqInd+1, leftBackVisibilityCommaInd).equals("true"))?true:false;
-					boolean element_rightBack_visibility = (element_str.substring(rightBackVisibilityEqInd+1, rightBackVisibilityCommaInd).equals("true"))?true:false;
+					boolean element_left_visibility = (element_str.substring(leftVisibilityEqInd+1, leftVisibilityCommaInd).equals("true"))?true:false;
+					boolean element_right_visibility = (element_str.substring(rightVisibilityEqInd+1, rightVisibilityCommaInd).equals("true"))?true:false;
+					boolean element_insideMirror_visibility = (element_str.substring(insideMirrorVisibilityEqInd+1, insideMirrorVisibilityCommaInd).equals("true"))?true:false;
+					boolean element_leftMirror_visibility = (element_str.substring(leftMirrorVisibilityEqInd+1, leftMirrorVisibilityCommaInd).equals("true"))?true:false;
+					boolean element_rightMirror_visibility = (element_str.substring(rightMirrorVisibilityEqInd+1, rightMirrorVisibilityCommaInd).equals("true"))?true:false;
 					
 					if(this.criticalElements.containsKey(element_name)) {// change visibility
 						CriticalElement theElement = this.criticalElements.get(element_name);
@@ -389,68 +400,106 @@ public class World3D_Template_Driving_Method {
 							// else invisible before and invisible now, do nothing
 						}
 						
-						// center-back visibility
-						if(theElement.back_visibility) {
-							if(!element_back_visibility) {
+						// left visibility
+						if(theElement.left_visibility) {
+							if(!element_left_visibility) {
 								//remove the element from visible_criticalElement list and change the element visibility
-								this.centerBack_visible_CriticalElements.remove(element_name);
-								this.criticalElements.get(element_name).setBack_visibility(element_back_visibility); 
+								this.left_visible_CriticalElements.remove(element_name);
+								this.criticalElements.get(element_name).setLeft_visibility(element_left_visibility); 
 							}
 							// else visible before and visible now, do nothing
 						}
 						else {
-							if(element_back_visibility) {
+							if(element_left_visibility) {
 								//add the element to visible_criticalElement list and change the element visibility
-								this.centerBack_visible_CriticalElements.put(element_name, theElement);
-								this.criticalElements.get(element_name).setBack_visibility(element_back_visibility); 
+								this.left_visible_CriticalElements.put(element_name, theElement);
+								this.criticalElements.get(element_name).setLeft_visibility(element_left_visibility); 
 							}
 							// else invisible before and invisible now, do nothing
 						}
 						
-						// left-back visibility
-						if(theElement.leftBack_visibility) {
-							if(!element_leftBack_visibility) {
+						// right visibility
+						if(theElement.right_visibility) {
+							if(!element_right_visibility) {
 								//remove the element from visible_criticalElement list and change the element visibility
-								this.leftBack_visible_CriticalElements.remove(element_name);
-								this.criticalElements.get(element_name).setLeftBack_visibility(element_leftBack_visibility); 
+								this.right_visible_CriticalElements.remove(element_name);
+								this.criticalElements.get(element_name).setRight_visibility(element_right_visibility); 
 							}
 							// else visible before and visible now, do nothing
 						}
 						else {
-							if(element_leftBack_visibility) {
+							if(element_right_visibility) {
 								//add the element to visible_criticalElement list and change the element visibility
-								this.leftBack_visible_CriticalElements.put(element_name, theElement);
-								this.criticalElements.get(element_name).setLeftBack_visibility(element_leftBack_visibility); 
+								this.right_visible_CriticalElements.put(element_name, theElement);
+								this.criticalElements.get(element_name).setRight_visibility(element_right_visibility); 
 							}
 							// else invisible before and invisible now, do nothing
 						}
 						
-						// right-back visibility
-						if(theElement.rightBack_visibility) {
-							if(!element_rightBack_visibility) {
+						// inside-mirror visibility
+						if(theElement.insideMirror_visibility) {
+							if(!element_insideMirror_visibility) {
 								//remove the element from visible_criticalElement list and change the element visibility
-								this.rightBack_visible_CriticalElements.remove(element_name);
-								this.criticalElements.get(element_name).setRightBack_visibility(element_rightBack_visibility); 
+								this.insideMirror_visible_CriticalElements.remove(element_name);
+								this.criticalElements.get(element_name).setInsideMirror_visibility(element_insideMirror_visibility); 
 							}
 							// else visible before and visible now, do nothing
 						}
 						else {
-							if(element_rightBack_visibility) {
+							if(element_insideMirror_visibility) {
 								//add the element to visible_criticalElement list and change the element visibility
-								this.rightBack_visible_CriticalElements.put(element_name, theElement);
-								this.criticalElements.get(element_name).setRightBack_visibility(element_rightBack_visibility); 
+								this.insideMirror_visible_CriticalElements.put(element_name, theElement);
+								this.criticalElements.get(element_name).setInsideMirror_visibility(element_insideMirror_visibility); 
+							}
+							// else invisible before and invisible now, do nothing
+						}
+						
+						// left-mirror visibility
+						if(theElement.leftMirror_visibility) {
+							if(!element_leftMirror_visibility) {
+								//remove the element from visible_criticalElement list and change the element visibility
+								this.leftMirror_visible_CriticalElements.remove(element_name);
+								this.criticalElements.get(element_name).setLeftMirror_visibility(element_leftMirror_visibility); 
+							}
+							// else visible before and visible now, do nothing
+						}
+						else {
+							if(element_leftMirror_visibility) {
+								//add the element to visible_criticalElement list and change the element visibility
+								this.leftMirror_visible_CriticalElements.put(element_name, theElement);
+								this.criticalElements.get(element_name).setLeftMirror_visibility(element_leftMirror_visibility); 
+							}
+							// else invisible before and invisible now, do nothing
+						}
+						
+						// right-mirror visibility
+						if(theElement.rightMirror_visibility) {
+							if(!element_rightMirror_visibility) {
+								//remove the element from visible_criticalElement list and change the element visibility
+								this.rightMirror_visible_CriticalElements.remove(element_name);
+								this.criticalElements.get(element_name).setRightMirror_visibility(element_rightMirror_visibility); 
+							}
+							// else visible before and visible now, do nothing
+						}
+						else {
+							if(element_rightMirror_visibility) {
+								//add the element to visible_criticalElement list and change the element visibility
+								this.rightMirror_visible_CriticalElements.put(element_name, theElement);
+								this.criticalElements.get(element_name).setRightMirror_visibility(element_rightMirror_visibility); 
 							}
 							// else invisible before and invisible now, do nothing
 						}
 					}
 					else {
-						CriticalElement theNewElement = new CriticalElement(element_name, element_type, element_content, element_front_visibility, element_back_visibility, element_leftBack_visibility, element_rightBack_visibility);
+						CriticalElement theNewElement = new CriticalElement(element_name, element_type, element_content, element_front_visibility, element_left_visibility, element_right_visibility, element_insideMirror_visibility, element_leftMirror_visibility, element_rightMirror_visibility);
 						this.criticalElements.put(element_name, theNewElement);
 						// add this element to corresponding visible_criticalElement list
 						if(element_front_visibility) this.front_visible_CriticalElements.put(element_name, theNewElement);
-						if(element_back_visibility) this.centerBack_visible_CriticalElements.put(element_name, theNewElement);
-						if(element_leftBack_visibility) this.leftBack_visible_CriticalElements.put(element_name, theNewElement);
-						if(element_rightBack_visibility) this.rightBack_visible_CriticalElements.put(element_name, theNewElement);
+						if(element_left_visibility) this.left_visible_CriticalElements.put(element_name, theNewElement);
+						if(element_right_visibility) this.right_visible_CriticalElements.put(element_name, theNewElement);
+						if(element_insideMirror_visibility) this.insideMirror_visible_CriticalElements.put(element_name, theNewElement);
+						if(element_leftMirror_visibility) this.leftMirror_visible_CriticalElements.put(element_name, theNewElement);
+						if(element_rightMirror_visibility) this.rightMirror_visible_CriticalElements.put(element_name, theNewElement);
 					}
 					
 					lastInd = element_str.indexOf("], ");
@@ -488,11 +537,14 @@ public class World3D_Template_Driving_Method {
 	}
 	
 	public String chooseViewArea() {
-		float viewAreaRan = new Random().nextFloat(); 
+		float viewAreaRan = new Random().nextFloat();
+		
 		if(viewAreaRan < front_perceive_weight) return "front";
-		else if(viewAreaRan < centerBack_perceive_weight) return "center-back";
-		else if(viewAreaRan < leftBack_perceive_weight) return "left-back";
-		return "right-back";
+		else if(viewAreaRan < front_perceive_weight + left_perceive_weight) return "left";
+		else if(viewAreaRan < front_perceive_weight + left_perceive_weight + right_perceive_weight) return "right";
+		else if(viewAreaRan < front_perceive_weight + left_perceive_weight + right_perceive_weight + insideMirror_perceive_weight) return "inside-mirror";
+		else if(viewAreaRan < front_perceive_weight + left_perceive_weight + right_perceive_weight + insideMirror_perceive_weight + leftMirror_perceive_weight) return "left-mirror";
+		return "right-mirror";
 	}
 	
 	public String chooseFocusingCriticalElementFromViewArea(String viewArea) {
@@ -505,25 +557,39 @@ public class World3D_Template_Driving_Method {
 				Object[] entries = this.front_visible_CriticalElements.keySet().toArray();
 				return (String)entries[new Random().nextInt(visible_num)];
 			}
-			case "center-back":
+			case "left":
 			{
-				int visible_num = this.centerBack_visible_CriticalElements.size();
+				int visible_num = this.left_visible_CriticalElements.size();
 				if(visible_num==0) return null;
-				Object[] entries = this.centerBack_visible_CriticalElements.keySet().toArray();
+				Object[] entries = this.left_visible_CriticalElements.keySet().toArray();
 				return (String)entries[new Random().nextInt(visible_num)];
 			}
-			case "left-back":
+			case "right":
 			{
-				int visible_num = this.leftBack_visible_CriticalElements.size();
+				int visible_num = this.right_visible_CriticalElements.size();
 				if(visible_num==0) return null;
-				Object[] entries = this.leftBack_visible_CriticalElements.keySet().toArray();
+				Object[] entries = this.right_visible_CriticalElements.keySet().toArray();
 				return (String)entries[new Random().nextInt(visible_num)];
 			}
-			case "right-back":
+			case "inside-mirror":
 			{
-				int visible_num = this.rightBack_visible_CriticalElements.size();
+				int visible_num = this.insideMirror_visible_CriticalElements.size();
 				if(visible_num==0) return null;
-				Object[] entries = this.rightBack_visible_CriticalElements.keySet().toArray();
+				Object[] entries = this.insideMirror_visible_CriticalElements.keySet().toArray();
+				return (String)entries[new Random().nextInt(visible_num)];
+			}
+			case "left-mirror":
+			{
+				int visible_num = this.leftMirror_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				Object[] entries = this.leftMirror_visible_CriticalElements.keySet().toArray();
+				return (String)entries[new Random().nextInt(visible_num)];
+			}
+			case "right-mirror":
+			{
+				int visible_num = this.rightMirror_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				Object[] entries = this.rightMirror_visible_CriticalElements.keySet().toArray();
 				return (String)entries[new Random().nextInt(visible_num)];
 			}
 			default:
@@ -541,25 +607,39 @@ public class World3D_Template_Driving_Method {
 				if(this.front_visible_CriticalElements.containsKey(id)) return this.front_visible_CriticalElements.get(id);
 				else return null;
 			}
-			case "center-back":
+			case "left":
 			{
-				int visible_num = this.centerBack_visible_CriticalElements.size();
+				int visible_num = this.left_visible_CriticalElements.size();
 				if(visible_num==0) return null;
-				if(this.centerBack_visible_CriticalElements.containsKey(id)) return this.centerBack_visible_CriticalElements.get(id);
+				if(this.left_visible_CriticalElements.containsKey(id)) return this.left_visible_CriticalElements.get(id);
 				else return null;
 			}
-			case "left-back":
+			case "right":
 			{
-				int visible_num = this.leftBack_visible_CriticalElements.size();
+				int visible_num = this.right_visible_CriticalElements.size();
 				if(visible_num==0) return null;
-				if(this.leftBack_visible_CriticalElements.containsKey(id)) return this.leftBack_visible_CriticalElements.get(id);
+				if(this.right_visible_CriticalElements.containsKey(id)) return this.right_visible_CriticalElements.get(id);
 				else return null;
 			}
-			case "right-back":
+			case "inside-mirror":
 			{
-				int visible_num = this.rightBack_visible_CriticalElements.size();
+				int visible_num = this.insideMirror_visible_CriticalElements.size();
 				if(visible_num==0) return null;
-				if(this.rightBack_visible_CriticalElements.containsKey(id)) return this.rightBack_visible_CriticalElements.get(id);
+				if(this.insideMirror_visible_CriticalElements.containsKey(id)) return this.insideMirror_visible_CriticalElements.get(id);
+				else return null;
+			}
+			case "left-mirror":
+			{
+				int visible_num = this.leftMirror_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				if(this.leftMirror_visible_CriticalElements.containsKey(id)) return this.leftMirror_visible_CriticalElements.get(id);
+				else return null;
+			}
+			case "right-mirror":
+			{
+				int visible_num = this.rightMirror_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				if(this.rightMirror_visible_CriticalElements.containsKey(id)) return this.rightMirror_visible_CriticalElements.get(id);
 				else return null;
 			}
 			default:
