@@ -1,0 +1,243 @@
+;;
+;; In this section, we specify the visual display features. That means, what's on the screen.
+;;
+
+(use_predefined_model_setup  emr_model_demo)   ;; this allows extra codes to be linked to this model in the java source code. can search emr_model_demo in java.
+
+(use_task_dbt_template   
+	:method    	discrete_display_feedback_two_stages_method
+	:response_terminates_display  	nil	;;t by default
+	:reset_all_modules_before_each_day    t	;;nil by default
+)
+
+(add_trials_from_discrete_display_feedback_two_stages_method
+	:add_number_of_days		1
+	:add_number_of_blocks_per_day   1
+	:add_number_of_trials_per_block   1
+
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "King, Krakow")
+	:item_name	patient_name
+	:key_press_event	key_pressed	;; optional, for dynamic events to catch any key press while this item is on display
+	:hide		nil
+	:display_item_screen_location_x  (66)
+	:display_item_screen_location_y  (87)
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "Patient Summary"  )
+	:button_click_event	patientsummary_clicked	
+	:display_item_screen_location_x  (55)
+	:display_item_screen_location_y  (200) 	
+	:display_item_height		(18)	;; (20) by default
+	:display_item_width		(100)	;; (20) by default
+	)
+
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "Chart Review"  )
+	:button_click_event	chartreview_clicked	
+	:display_item_screen_location_x  (55)
+	:display_item_screen_location_y  (225) 	
+	:display_item_height		(20)	;; (20) by default
+	:display_item_width		(100)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "Results Review"  )
+	:button_click_event	resultsreview_clicked	
+	:display_item_screen_location_x  (55)
+	:display_item_screen_location_y  (250) 	
+	:display_item_height		(20)	;; (20) by default
+	:display_item_width		(100)	;; (20) by default
+	)
+
+	( :item_type   display_item_visual_text_button
+	:visual_text   	(  "Synopsis"  )
+	:button_click_event	synopsis_clicked	
+	:display_item_screen_location_x  (55)
+	:display_item_screen_location_y  (275) 	
+	:display_item_height		(20)	;; (20) by default
+	:display_item_width		(100)	;; (20) by default
+	)
+
+
+
+
+	( :item_type   display_item_visual_text_button   ;; serve as a text input box
+	:item_name	textbox1			;; give it a name, so it will be treated as a dynamic item, which can be searched in the source code.
+	:visual_text   	(  "Place_new_order_text_input"  )
+	:button_click_event    placenewordertextinput_clicked	 ;;use all lower case
+	:display_item_screen_location_x  (1065)
+	:display_item_screen_location_y  (230) 	
+	:display_item_height		(20)	;; (20) by default
+	:display_item_width		(320)	;; (20) by default
+	)
+
+
+)  
+
+
+
+
+
+
+
+
+;;
+;; Here, define task-specific knowledge in the model, including declarative chunks, production rules, and parameters,
+;;
+;;
+
+
+(sgp :v t :show-focus t :trace-detail high)    ;; these three parameter settings will allow trace.txt output and show a red circle representing eye fixation in the visualization.
+
+
+(chunk-type heparin-order dose  state   search-keyword)      ;; define the type of order for heparin, with only one attribute dose to be specified.
+
+(add-dm 				;; add chunks to declarative memory
+	(demo-goal isa heparin-order    dose  "5,000 Units"      state start       search-keyword   "heparin")    ;; \n will be typed as the enter key.
+)
+
+(start-hand-at-mouse)
+
+(goal-focus demo-goal)
+
+
+;;
+;; For task-specific knowledge in the model, including declarative chunks, production rules, and parameters,
+;;
+;;
+
+
+
+(p find-order-textbox
+    =goal>
+      isa      heparin-order
+      state     start
+
+   ==>
+
+    +visual-location>
+      isa      visual-location
+      kind     oval			;; oval represents button
+      :attended nil 			;; this mean to look for something has not been recently attended.
+	> screen-x 900      		;; assume model knows roughly where this textbox is, around top right area.
+	< screen-y 300
+
+    =goal>
+      state looking-for-textbox
+)
+
+
+
+(p attend-textbox
+    =goal>
+      isa      heparin-order
+      state    looking-for-textbox
+    =visual-location>
+      isa      visual-location
+      kind     oval
+    ?visual>
+      state    free
+==>
+   
+    =goal>
+      state    attending-textbox
+    +visual>
+      isa move-attention
+      screen-pos =visual-location
+
+    =visual-location>
+)
+
+
+(p encode-textbox-target-found
+    =goal>
+      isa      heparin-order
+      state    attending-textbox
+
+    =visual>
+      isa      oval
+      value    "Place_new_order_text_input"
+   ==>
+
+    =goal>
+      state    prepare-mouse   ;;prepare a mouse click on the textbox, which will trigger text input mode. Once this button is clicked, it will trigger codes in ServerLogics.java, case dynamicevents:
+
+)
+
+
+(p move-mouse
+    =goal>
+      isa      heparin-order
+      state    prepare-mouse
+    =visual-location>
+      isa      visual-location
+
+    ?visual>
+      state   free
+    ?manual>
+      state   free
+==>
+    =visual-location>
+
+    +visual>
+      isa      move-attention
+      screen-pos =visual-location
+    =goal>
+      state    move-mouse
+    +manual>
+      isa      move-cursor
+      loc      =visual-location
+    )
+
+(p click-mouse
+    =goal>
+      isa      heparin-order
+      state    move-mouse
+    ?manual>
+      state    free
+==>
+    =goal>
+      state    wait-for-click
+
+    +manual>
+      isa      click-mouse
+)
+
+
+;; TODO. after using the mouse, the right hand should move to the keyboard before typing, which should also take time. Currently, this step is omitted. 
+
+
+(p type-keyword
+    =goal>
+      isa      heparin-order
+      state    wait-for-click
+      search-keyword   =keyword
+    ?manual>
+      state    free
+==>
+    =goal>
+      state    typing-keyword	
+   +manual>
+      ISA         type-letters
+      letters     =keyword
+)
+
+
+(p enter-keyword
+    =goal>
+      isa      heparin-order
+      state    typing-keyword
+==>
+    =goal>
+      state    entering-keyword
+   +manual>
+      ISA         press-key
+      key         return	;; this the enter key.
+)
+
+
