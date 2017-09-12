@@ -35,7 +35,7 @@
 (chunk-type world3d-driving-criticalelement-sign screen-pos content)
 (chunk-type world3d-driving-criticalelement-vehicle-img screen-pos color)
 (chunk-type world3d-driving-criticalelement-sign-img screen-pos content)
-(chunk-type visual-location-world3d-driving-criticalelement kind viewarea :attended) ;;mind use lowercase
+(chunk-type visual-location-world3d-driving-criticalelement kind id viewarea :attended) ;;mind use lowercase
 
 
 
@@ -138,6 +138,7 @@
       time-new  =time-2
 
 !eval! (world3d-driving-accelerate-brake   =fd-1   =fd-2  =v-1  =v-2    =time-1      =time-2  ) 	;;currently no module for this, just !eval! as Salvucci's model
+
 )
 
 (p attend-criticalelement
@@ -145,11 +146,13 @@
       isa drive-control  
       stage    4
    ==>
+!bind! =view (world3d-driving-choosing-viewArea)
     =goal>
       stage    5
    +visual-location>
       isa visual-location-world3d-driving-criticalelement
-      kind critical-element		
+      kind critical-element
+	viewArea =view		
 )
 
 (p attend-criticalelement-detected

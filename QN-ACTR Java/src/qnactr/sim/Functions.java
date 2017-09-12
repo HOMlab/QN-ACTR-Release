@@ -5120,11 +5120,29 @@ return return_string;
 		          World3D_DriverCar the_driver_car = ((World3D_DriverCar)sim.vars.world3DTemplate.World.Objects.get(  ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).DriverCar_World3D_ID  ));
 		          return Double.toString(the_driver_car.Vehicle_Basic.Speed);
 	          }
-
 	        }
 	        
-	        
-	        
+	        case "world3d-driving-choosing-viewarea":
+	        {
+		          if ( content_list.size() != 0 ) {
+			            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 0 parameter, not: " + input_string );
+			            return null;
+			          }
+			          if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method)) {
+			            System.out.println ("Error! LispFun__Evaluate_A_List. driving-get-velocity sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method)");
+		//
+			            return "";
+			          }
+			          
+			          if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+		        		  World3D_Template_Driving_Method the_method = null;
+			              if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();      
+			              return the_method.chooseViewArea();
+			          }
+			          else {
+				          return null;
+			          }
+	        }
 	        
 	        //the following functions apply to 1 and only 1 number
 	        case "abs":
@@ -5621,8 +5639,6 @@ return return_string;
 	          
 	        } //end of six double parameters
 	        
-	        
-	        
             case "replace-space-in-string": //replace space chars in a string using the specified char
             	//e.g., (replace-space-in-stringg  =letters  _ ), if =letters is "test ", then return "test_".
             {
@@ -5668,9 +5684,6 @@ return return_string;
             	break;
             }  //end of replace-space-in-string
             
-            
-	        
-	        
 	        default: {
 	          System.out.println ("Error! LispFun__Evaluate_A_List has an invalid input: " + input_string + " because of undefined function name: " + function_name  );
 	          return null; 
@@ -23851,9 +23864,21 @@ If the string is invalid or there is no current model then a warning is printed 
 			String kind = sim.funs.ChunkFun__Get_Chunk_Slot_Value(visual_location, "kind");
 			//System.out.println("VisionModuleFun__Find_Visicon_By_Location, visual_location kind: " + kind);
 			if(kind.equals("critical-element")) {
+				if( !visual_location.Slot.containsKey("id") ){
+					System.err.println("Error! VisionModuleFun__Find_Visicon_By_Location has no 'id' key");
+					return null;
+				}
+				if( !visual_location.Slot.containsKey("viewarea") ){
+					System.err.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has no 'viewarea' key");
+					return null;
+				}
+
+				String id = (String)visual_location.Slot.get("id");
+				String viewArea = (String)visual_location.Slot.get("viewarea");
+				  
 				Chunk visiconChunk = null;
 
-	    		CriticalElement focusing = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).critical_element_focusing;
+	    		CriticalElement focusing = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).getCEByIdAndViewArea(id, viewArea);
 	    		if(focusing == null) {
 	    			System.err.println("VisionModuleFun__Find_Visicon_By_Location for a chosen critical element while the element doesn't exist");
 	    			return new Chunk();
@@ -24277,57 +24302,50 @@ If the string is invalid or there is no current model then a warning is printed 
 	    }
 	  }
 	  else if(visual_location_isa.equals( "visual-location-world3d-driving-criticalelement")) {
-		    if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) ) {
-			      System.out.println("Error! add location isa visual-location-world3d-driving need needs sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method");
+		  if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) ) {
+			  System.out.println("Error! add location isa visual-location-world3d-driving need needs sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method");
+			  return null;
+		  }
+		  if( !the_chunk_spec.Slot.containsKey("kind") ){
+			  System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has no 'kind' key");
+			  return null;
+		  }
+		  if( !the_chunk_spec.Slot.containsKey("viewarea") ){
+			  System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has no 'viewarea' key");
+			  return null;
+		  }
+
+		  String kind = (String)the_chunk_spec.Slot.get("kind");
+		  String viewArea = (String)the_chunk_spec.Slot.get("viewarea");
 			    
-			      return null;
-			    }
-			    if( !the_chunk_spec.Slot.containsKey("kind") ){
-			      System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has no 'kind' key");
-			     
-			      return null;
-			    }
-			    String kind = (String)the_chunk_spec.Slot.get("kind");
-			    
-			    if(kind.equals( "critical-element")) { // added by Yelly: Get a visible critical element
-			    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
-			    		World3D_Template_Driving_Method theMethod = (World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object;
-			    		CriticalElement chosenCE = theMethod.critical_element_focusing;
-			    		double chosen_critical_element_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
-			    		/*String lane = (String)the_chunk_spec.Slot.get("lane");
-					    if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
-					      System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec 'lane' is not integer but: " + lane);
-					      return null;
-					    }*/
-					      
-					    String viewArea = "";
-					    viewArea = theMethod.chooseFocusingCriticalElement(viewArea);
-					    if(theMethod.critical_element_focusing == null)	{
-					    	System.out.println("after chooseFocusingCriticalElement, focusing on no critical element");
-					    	return new Chunk();
-					    }
-					    else {
-					    	//System.out.println("after chooseFocusingCriticalElement, focusing on critical element:" +  " critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) + ", isa" + "visual-location-world3d-driving-criticalelement" + ", kind" + kind + ", viewarea" + viewArea + ", state" + "exist");
-					    	return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving-criticalelement",  "kind",kind, "viewarea", viewArea});}	    	
-					}
-					else{
-						//TODO: actually I don't know what to do because this is not for our experiment  
-						return null;
-					}
-			    	
-			    }
-			    else {
-				      System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has undefined kind: "+ kind);
-				     
-				      return null;
-				}
+		  if(kind.equals( "critical-element")) { // added by Yelly: Get a visible critical element
+			  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+				  World3D_Template_Driving_Method theMethod = (World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object;
+				  String chosenCE_id = theMethod.chooseFocusingCriticalElementFromViewArea(viewArea);
+				  
+				  if(chosenCE_id == null)	{
+					  System.out.println("after chooseFocusingCriticalElement, focusing on no critical element");
+					  return new Chunk();
+				  }
+				  else {
+					  //System.out.println("after chooseFocusingCriticalElement, focusing on critical element:" +  " critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) + ", isa" + "visual-location-world3d-driving-criticalelement" + ", kind" + kind + ", viewarea" + viewArea + ", state" + "exist");
+					  return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving-criticalelement",  "kind",kind, "id", chosenCE_id, "viewarea", viewArea});    	
+				  }
+			  }
+			  else{
+				  //TODO: actually I don't know what to do because this is not for our experiment  
+				  return null;
+			  }
+		  }
+		  else {
+			  System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has undefined kind: "+ kind);
+			  return null;
+		  }
 	  }
 	  else{
-	    System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has undefined visual_location_isa: "+ visual_location_isa);
-	   
+	    System.err.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has undefined visual_location_isa: "+ visual_location_isa);
 	    return null;
 	  }
-	  
 	}
 	
 	public Chunk VisionModuleFun__Find_Visual_Location_In_Visicons_By_Chunk_Spec(Chunk The_Chunk_Spec, boolean Exclude_Buffer_Stuffing_Just_Selected_Attended_Nil_Locations){

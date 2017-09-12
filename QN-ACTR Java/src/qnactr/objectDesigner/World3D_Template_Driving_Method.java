@@ -64,18 +64,18 @@ public class World3D_Template_Driving_Method {
 	private int UDPQNtoOpenDSPort = 5678; 	//this can be set in eu.opends.qn.QNCenter.java
 	private int UDPOpenDStoQNPort = 8765;	//this can be set in eu.opends.qn.QNCenter.java
 	private final int bufferSizetoOpenDS = 1024; 	//this can be set in eu.opends.qn.QNCenter.java
-	private final int bufferSizefromOpenDS = 4096;	//this can be set in eu.opends.qn.QNCenter.java
+	private final int bufferSizefromOpenDS = 8192;	//this can be set in eu.opends.qn.QNCenter.java
 	private DatagramSocket sendSocket;
 	private DatagramSocket receiveSocket;
 	
 	// added by Yelly,
 	// for parsing receiving msg from OpenDS
 	private HashMap<String, CriticalElement> criticalElements = new HashMap<String, CriticalElement>();
-	private ArrayList< CriticalElement> front_visible_CriticalElements = new ArrayList< CriticalElement>();
-	private ArrayList< CriticalElement> centerBack_visible_CriticalElements = new ArrayList< CriticalElement>();
-	private ArrayList< CriticalElement> leftBack_visible_CriticalElements = new ArrayList< CriticalElement>();
-	private ArrayList< CriticalElement> rightBack_visible_CriticalElements = new ArrayList< CriticalElement>();
-	public CriticalElement critical_element_focusing = null;
+	private HashMap<String, CriticalElement> front_visible_CriticalElements = new HashMap<String, CriticalElement>();
+	private HashMap<String, CriticalElement> centerBack_visible_CriticalElements = new HashMap<String, CriticalElement>();
+	private HashMap<String, CriticalElement> leftBack_visible_CriticalElements = new HashMap<String, CriticalElement>();
+	private HashMap<String, CriticalElement> rightBack_visible_CriticalElements = new HashMap<String, CriticalElement>();
+	//public CriticalElement critical_element_focusing = null;
 	// parameters subject to be changed
 	private final float front_perceive_weight = 0.7f;
 	private final float centerBack_perceive_weight = 0.1f;
@@ -375,7 +375,7 @@ public class World3D_Template_Driving_Method {
 						if(theElement.front_visibility) {
 							if(!element_front_visibility) {
 								//remove the element from visible_criticalElement list and change the element visibility
-								this.front_visible_CriticalElements.remove(theElement);
+								this.front_visible_CriticalElements.remove(element_name);
 								this.criticalElements.get(element_name).setFront_visibility(element_front_visibility); 
 							}
 							// else visible before and visible now, do nothing
@@ -383,7 +383,7 @@ public class World3D_Template_Driving_Method {
 						else {
 							if(element_front_visibility) {
 								//add the element to visible_criticalElement list and change the element visibility
-								this.front_visible_CriticalElements.add(theElement);
+								this.front_visible_CriticalElements.put(element_name, theElement);
 								this.criticalElements.get(element_name).setFront_visibility(element_front_visibility); 
 							}
 							// else invisible before and invisible now, do nothing
@@ -393,7 +393,7 @@ public class World3D_Template_Driving_Method {
 						if(theElement.back_visibility) {
 							if(!element_back_visibility) {
 								//remove the element from visible_criticalElement list and change the element visibility
-								this.centerBack_visible_CriticalElements.remove(theElement);
+								this.centerBack_visible_CriticalElements.remove(element_name);
 								this.criticalElements.get(element_name).setBack_visibility(element_back_visibility); 
 							}
 							// else visible before and visible now, do nothing
@@ -401,7 +401,7 @@ public class World3D_Template_Driving_Method {
 						else {
 							if(element_back_visibility) {
 								//add the element to visible_criticalElement list and change the element visibility
-								this.centerBack_visible_CriticalElements.add(theElement);
+								this.centerBack_visible_CriticalElements.put(element_name, theElement);
 								this.criticalElements.get(element_name).setBack_visibility(element_back_visibility); 
 							}
 							// else invisible before and invisible now, do nothing
@@ -411,7 +411,7 @@ public class World3D_Template_Driving_Method {
 						if(theElement.leftBack_visibility) {
 							if(!element_leftBack_visibility) {
 								//remove the element from visible_criticalElement list and change the element visibility
-								this.leftBack_visible_CriticalElements.remove(theElement);
+								this.leftBack_visible_CriticalElements.remove(element_name);
 								this.criticalElements.get(element_name).setLeftBack_visibility(element_leftBack_visibility); 
 							}
 							// else visible before and visible now, do nothing
@@ -419,7 +419,7 @@ public class World3D_Template_Driving_Method {
 						else {
 							if(element_leftBack_visibility) {
 								//add the element to visible_criticalElement list and change the element visibility
-								this.leftBack_visible_CriticalElements.add(theElement);
+								this.leftBack_visible_CriticalElements.put(element_name, theElement);
 								this.criticalElements.get(element_name).setLeftBack_visibility(element_leftBack_visibility); 
 							}
 							// else invisible before and invisible now, do nothing
@@ -429,7 +429,7 @@ public class World3D_Template_Driving_Method {
 						if(theElement.rightBack_visibility) {
 							if(!element_rightBack_visibility) {
 								//remove the element from visible_criticalElement list and change the element visibility
-								this.rightBack_visible_CriticalElements.remove(theElement);
+								this.rightBack_visible_CriticalElements.remove(element_name);
 								this.criticalElements.get(element_name).setRightBack_visibility(element_rightBack_visibility); 
 							}
 							// else visible before and visible now, do nothing
@@ -437,7 +437,7 @@ public class World3D_Template_Driving_Method {
 						else {
 							if(element_rightBack_visibility) {
 								//add the element to visible_criticalElement list and change the element visibility
-								this.rightBack_visible_CriticalElements.add(theElement);
+								this.rightBack_visible_CriticalElements.put(element_name, theElement);
 								this.criticalElements.get(element_name).setRightBack_visibility(element_rightBack_visibility); 
 							}
 							// else invisible before and invisible now, do nothing
@@ -447,10 +447,10 @@ public class World3D_Template_Driving_Method {
 						CriticalElement theNewElement = new CriticalElement(element_name, element_type, element_content, element_front_visibility, element_back_visibility, element_leftBack_visibility, element_rightBack_visibility);
 						this.criticalElements.put(element_name, theNewElement);
 						// add this element to corresponding visible_criticalElement list
-						if(element_front_visibility) this.front_visible_CriticalElements.add(theNewElement);
-						if(element_back_visibility) this.centerBack_visible_CriticalElements.add(theNewElement);
-						if(element_leftBack_visibility) this.leftBack_visible_CriticalElements.add(theNewElement);
-						if(element_rightBack_visibility) this.rightBack_visible_CriticalElements.add(theNewElement);
+						if(element_front_visibility) this.front_visible_CriticalElements.put(element_name, theNewElement);
+						if(element_back_visibility) this.centerBack_visible_CriticalElements.put(element_name, theNewElement);
+						if(element_leftBack_visibility) this.leftBack_visible_CriticalElements.put(element_name, theNewElement);
+						if(element_rightBack_visibility) this.rightBack_visible_CriticalElements.put(element_name, theNewElement);
 					}
 					
 					lastInd = element_str.indexOf("], ");
@@ -487,52 +487,85 @@ public class World3D_Template_Driving_Method {
 		return opendsPerceptEarly; // currently try use this, may change it and see what's different
 	}
 	
-	public String chooseFocusingCriticalElement(String viewArea) {
-		float viewAreaRan = new Random().nextFloat();
-
+	public String chooseViewArea() {
+		float viewAreaRan = new Random().nextFloat(); 
+		if(viewAreaRan < front_perceive_weight) return "front";
+		else if(viewAreaRan < centerBack_perceive_weight) return "center-back";
+		else if(viewAreaRan < leftBack_perceive_weight) return "left-back";
+		return "right-back";
+	}
+	
+	public String chooseFocusingCriticalElementFromViewArea(String viewArea) {
 		// suppose if there're visible elements in the chosen view area, the driver could see at least one (also exactly one) of them 
-		if(viewAreaRan < front_perceive_weight) {
-			// only look at object in the front view
-		    //System.out.println("looking direction: front, front_visible_list: " + this.front_visible_CriticalElements);
-			viewArea = "front";
-			int visible_num = this.front_visible_CriticalElements.size();
-			if(visible_num==0) this.critical_element_focusing = null;
-			else {
-				this.critical_element_focusing = this.front_visible_CriticalElements.get(new Random().nextInt(visible_num));
+		switch(viewArea) {
+			case "front":
+			{
+				int visible_num = this.front_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				Object[] entries = this.front_visible_CriticalElements.keySet().toArray();
+				return (String)entries[new Random().nextInt(visible_num)];
 			}
-		}
-		else if(viewAreaRan < centerBack_perceive_weight) {
-			// only look at object in the center-back mirror
-		    //System.out.println("looking direction: center-back, center-back_visible_list: " + this.centerBack_visible_CriticalElements);
-			viewArea = "center-back";
-			int visible_num = this.centerBack_visible_CriticalElements.size();
-			if(visible_num==0) this.critical_element_focusing = null;
-			else {
-				this.critical_element_focusing = this.centerBack_visible_CriticalElements.get(new Random().nextInt(visible_num));
+			case "center-back":
+			{
+				int visible_num = this.centerBack_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				Object[] entries = this.centerBack_visible_CriticalElements.keySet().toArray();
+				return (String)entries[new Random().nextInt(visible_num)];
 			}
-		}
-		else if(viewAreaRan < leftBack_perceive_weight) {
-			// only look at object in the left-back mirror
-		    //System.out.println("looking direction: left-back, left-back_visible_list: " + this.leftBack_visible_CriticalElements);
-			viewArea = "left-back";
-			int visible_num = this.leftBack_visible_CriticalElements.size();
-			if(visible_num==0) this.critical_element_focusing = null;
-			else {
-				this.critical_element_focusing = this.leftBack_visible_CriticalElements.get(new Random().nextInt(visible_num));
+			case "left-back":
+			{
+				int visible_num = this.leftBack_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				Object[] entries = this.leftBack_visible_CriticalElements.keySet().toArray();
+				return (String)entries[new Random().nextInt(visible_num)];
 			}
-		}
-		else {
-			// only look at object in the right-back mirror
-		    //System.out.println("looking direction: right-back, right-back_visible_list: " + this.rightBack_visible_CriticalElements);
-			viewArea = "right-back";
-			int visible_num = this.rightBack_visible_CriticalElements.size();
-			if(visible_num==0) this.critical_element_focusing = null;
-			else {
-				this.critical_element_focusing = this.rightBack_visible_CriticalElements.get(new Random().nextInt(visible_num));
+			case "right-back":
+			{
+				int visible_num = this.rightBack_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				Object[] entries = this.rightBack_visible_CriticalElements.keySet().toArray();
+				return (String)entries[new Random().nextInt(visible_num)];
 			}
+			default:
+				System.err.println("viewArea not define: "+viewArea);
+				return null;
 		}
-		
-		return viewArea;
+	}
+	
+	public CriticalElement getCEByIdAndViewArea(String id, String viewArea) {
+		switch(viewArea) {
+			case "front":
+			{
+				int visible_num = this.front_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				if(this.front_visible_CriticalElements.containsKey(id)) return this.front_visible_CriticalElements.get(id);
+				else return null;
+			}
+			case "center-back":
+			{
+				int visible_num = this.centerBack_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				if(this.centerBack_visible_CriticalElements.containsKey(id)) return this.centerBack_visible_CriticalElements.get(id);
+				else return null;
+			}
+			case "left-back":
+			{
+				int visible_num = this.leftBack_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				if(this.leftBack_visible_CriticalElements.containsKey(id)) return this.leftBack_visible_CriticalElements.get(id);
+				else return null;
+			}
+			case "right-back":
+			{
+				int visible_num = this.rightBack_visible_CriticalElements.size();
+				if(visible_num==0) return null;
+				if(this.rightBack_visible_CriticalElements.containsKey(id)) return this.rightBack_visible_CriticalElements.get(id);
+				else return null;
+			}
+			default:
+				System.err.println("viewArea not define: "+viewArea);
+				return null;
+		}
 	}
 	
 	
