@@ -341,11 +341,13 @@ public class World3D_Template_Driving_Method {
 			String element_str = tokens[this.CRITICAL_ELEMENTS].substring(this.msg_prefix[this.CRITICAL_ELEMENTS].length(), endInd);
 			//System.out.println("element_str: " +element_str);
 			int eqInd, typeEqInd, typeCommaInd, contentEqInd, contentCommaInd, frontVisibilityEqInd, frontVisibilityCommaInd, backVisibilityEqInd, backVisibilityCommaInd, 
-				leftBackVisibilityEqInd, leftBackVisibilityCommaInd, rightBackVisibilityEqInd, rightBackVisibilityCommaInd, lastInd;
+				leftBackVisibilityEqInd, leftBackVisibilityCommaInd, rightBackVisibilityEqInd, rightBackVisibilityCommaInd, lastInd, idEqInd, idCommaInd;
 			if(element_str.length()>0) {
 				while(true) {
 					eqInd = element_str.indexOf("=");
-					typeEqInd = element_str.indexOf("=", eqInd+1);
+					idEqInd = element_str.indexOf("=", eqInd+1);
+					idCommaInd = element_str.indexOf(",", idEqInd+1);
+					typeEqInd = element_str.indexOf("=", idCommaInd+1);
 					typeCommaInd = element_str.indexOf(",", typeEqInd+1);
 					contentEqInd = element_str.indexOf("=", typeCommaInd+1);
 					contentCommaInd = element_str.indexOf(",", contentEqInd+1);
@@ -358,7 +360,7 @@ public class World3D_Template_Driving_Method {
 					rightBackVisibilityEqInd = element_str.indexOf("=", contentCommaInd+1);
 					rightBackVisibilityCommaInd = element_str.indexOf(",", frontVisibilityEqInd+1);
 					
-					String element_name = element_str.substring(0, eqInd);
+					String element_name = element_str.substring(0, eqInd); // name is actually equal to id and it's used as hash key
 					String element_type = element_str.substring(typeEqInd+1, typeCommaInd);
 					String element_content = element_str.substring(contentEqInd+1, contentCommaInd);
 					boolean element_front_visibility = (element_str.substring(frontVisibilityEqInd+1, frontVisibilityCommaInd).equals("true"))?true:false;
@@ -442,7 +444,7 @@ public class World3D_Template_Driving_Method {
 						}
 					}
 					else {
-						CriticalElement theNewElement = new CriticalElement(element_type, element_content, element_front_visibility, element_back_visibility, element_leftBack_visibility, element_rightBack_visibility);
+						CriticalElement theNewElement = new CriticalElement(element_name, element_type, element_content, element_front_visibility, element_back_visibility, element_leftBack_visibility, element_rightBack_visibility);
 						this.criticalElements.put(element_name, theNewElement);
 						// add this element to corresponding visible_criticalElement list
 						if(element_front_visibility) this.front_visible_CriticalElements.add(theNewElement);
