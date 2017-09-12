@@ -3413,7 +3413,7 @@ public class ServerLogics {
                 //do not check is_motor_output_sequence_ok for these.
                 //GlobalUtilities.popUpMessage("do not check is_motor_output_sequence_ok for these");
               }
-              else sim.vars.motorModule.Initiated_But_Output_Not_Finished_Request = sim.funs.ChunkFun__Get_Chunk_Contents(Entity.Chunk);
+              else if (sim.vars.motorModule.Motor_Output_Sequence_Required) sim.vars.motorModule.Initiated_But_Output_Not_Finished_Request = sim.funs.ChunkFun__Get_Chunk_Contents(Entity.Chunk); 
             }
             
             return is_motor_output_sequence_ok && is_resource_enough; //when resources are defined for each motor command and is_resource_enough is used, using both equal to using just  is_resource_enough; but otherwise, is_motor_output_sequence_ok may be used alone. 
