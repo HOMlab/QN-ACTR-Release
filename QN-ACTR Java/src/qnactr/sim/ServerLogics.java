@@ -6904,27 +6904,44 @@ public class ServerLogics {
             	            	
               switch (event_name){
                         
-              case "5000units_clicked" :{         	
+              	case "5000units_clicked" :{         	
             	  
             	  
             	  System.out.println("5000units_clicked");
   
               	
-                break;
-              }
+            	  break;
+              	}
               
-              
-                case "placeneworderTextInput_clicked" :{
-                	//TODO //sim.vars.visualDisplay.  focusTextInput, use a visual button type to serve as a text input box. 
-                	//add a flag boolean in visualDisplay to record the current mode, this will allow all following keyboard typing before enter key, to be used as input to the text box, the text is stored as the text of the button type.
+                case "placenewordertextinput_clicked" :{
                 	
+                	Display_Item_Visual_Text_Button new_order_textbox = (Display_Item_Visual_Text_Button)dynamic_items.get("textbox1") ;
+                	sim.vars.deviceModule.enterTextboxInputMode(new_order_textbox);
+                	sim.funs.TaskTemplateFun__Refresh_Dynamic_Item( new_order_textbox , 0.0F); //two parameters: item pointer, time delay before the refresh
+                	
+                	System.out.println("serverlogics, dynamicevents, placeneworderTextInput_clicked");
                   break;
                 }
+                
+                case "key_pressed" :{
+                	Display_Item_Visual_Text_Button new_order_textbox = (Display_Item_Visual_Text_Button)dynamic_items.get("textbox1") ;
+                	String key = ((Response_Item_Key_Press)Entity.Response_Item).Key ;
+                	sim.vars.deviceModule.textboxTyping(new_order_textbox, key);  //end textbox input mode function is defined inside deviceModule
+                	sim.funs.TaskTemplateFun__Refresh_Dynamic_Item( new_order_textbox , 0.0F); //two parameters: item pointer, time delay before the refresh
+                	
+                	String a_result_line = Double.toString(GlobalUtilities.round(SimSystem.clock() , 3)) + "\t" + key ;
+                	System.out.println("serverlogics, dynamicevents, key_pressed: " + a_result_line);
+                	            	
+                    break;
+                  }
+                
+                
                 default:{
                   System.out.println("Dynamic Events Beginning Effect has undefine event_name: " + event_name);
                   break;
                 }
-              }
+              } //end of switch
+              
             } //end of emr_model_demo
             
             
