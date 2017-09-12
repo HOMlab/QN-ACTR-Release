@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 2013 QN-Java project file
  * 
  */
@@ -21190,6 +21190,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	  return return_matrix; 
 	}
 	
+	
 	public  void TaskTemplateFun__Refresh_Dynamic_Item(Object an_object, double time_delay){
 	  if(time_delay < 0){
 	    System.out.println("Error! TaskTemplateFun__Refresh_Dynamic_Item has time_delay < 0: " + time_delay );
@@ -21197,7 +21198,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	  }
 	  
 	  if ( an_object instanceof Display_Item_Visual_Text){
-	    Display_Item_Visual_Text the_item = (Display_Item_Visual_Text) an_object; //different for each item type	    
+	    Display_Item_Visual_Text the_item = (Display_Item_Visual_Text) an_object; //different for each item type
 	    
 	    //update delay time
 	    the_item.Display_Item_Delay = time_delay; 
@@ -21236,6 +21237,50 @@ If the string is invalid or there is no current model then a warning is printed 
 	    int item_ID_num = Integer.parseInt( item_id.substring(5) );
 	    TaskTemplateFun__Show_Display_Item_Display( the_item, item_ID_num);
 	  }
+	  
+	  else if ( an_object instanceof Display_Item_Visual_Text_Button){  //basically, same as Display_Item_Visual_Text except for the item type.
+		  Display_Item_Visual_Text_Button the_item = (Display_Item_Visual_Text_Button) an_object; //different for each item type
+		    
+		    //update delay time
+		    the_item.Display_Item_Delay = time_delay; 
+		    
+		    String item_id = the_item.Item_ID; // item-?
+		    
+		    //remove current visicon, if any, do in a delayed way.
+		    
+		    if( sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.containsKey(item_id) ) { //the item was shown (not hidden)
+		      //System.out.println("TaskTemplateFun__Refresh_Dynamic_Item. Visicon_Names_Associated_With_A_Display_Item_ID contain item#: " + sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.size());
+		      
+		      LinkedList<String> associated_visicon_names = (LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_id);
+		      //System.out.println("TaskTemplateFun__Refresh_Dynamic_Item. associated_visicon_names: " + ProgramUtilitiesFun__LinkedListString_To_String_Show_Empty( associated_visicon_names ) );
+		      
+		      for(String a_visicon_name : associated_visicon_names){ //the visicon was not gone
+		        //System.out.println("TaskTemplateFun__Refresh_Dynamic_Item. a_visicon_name not gone: " + a_visicon_name + " for itemID: " + item_id);
+		        
+		        //if(VisionModuleFun__Find_The_Visicon_ID_By_Visicon_Name(a_visicon_name) != -1) DeviceModuleFun__Visual_Display_Remove_Item_By_Visicon_Name(a_visicon_name, time_delay);  // for a delayed appearing item, Find_The_Visicon_ID_By_Visicon_Name cannot find it.
+		        //else System.out.println("Error! TaskTemplateFun__Refresh_Dynamic_Item. cannot find Visicon_ID_By_Visicon_Name: " + a_visicon_name);
+		        
+		        DeviceModuleFun__Visual_Display_Remove_Item_By_Visicon_Name(a_visicon_name, time_delay);  
+		      }
+		    }
+		    else {
+		      //System.out.println("TaskTemplateFun__Refresh_Dynamic_Item. Visicon_Names_Associated_With_A_Display_Item_ID contain item#: " + sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.size());	
+		    }
+		    
+		    //if hidden, unhide
+		    the_item.Hide = false;
+		    
+		    
+		    
+		    //show updated display item, this below can handle delay.
+		    int item_ID_num = Integer.parseInt( item_id.substring(5) );
+		    TaskTemplateFun__Show_Display_Item_Display( the_item, item_ID_num);
+		  
+		  
+		  
+		  
+	  }
+	  
 	  else if ( an_object instanceof Display_Item_Visual_Line){
 	    
 	    Display_Item_Visual_Line the_item = (Display_Item_Visual_Line) an_object; //different for each item type
@@ -21266,6 +21311,10 @@ If the string is invalid or there is no current model then a warning is printed 
 	    System.out.println("Error! TaskTemplateFun__Refresh_Dynamic_Item has undefined item type");	
 	  }
 	}
+	
+
+
+
 	
 	public  void TaskTemplateFun__Set_World3D_Driving_Method (LinkedList<String> Parameter_List){
 	  if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method)) {
