@@ -1,4 +1,4 @@
-;; QN_ACTR_Model_Initialization driving test TORCS
+;; QN_ACTR_Model_Initialization driving test OpenDS
 ;; QN-ACTR, Sample Driving (Modeling driving)
 ;; For questions and comments, please send to Shi Cao (shicao@umich.edu).
 
@@ -7,11 +7,11 @@
 ;;;;;;;;;;;;;;;;;;;;;
 
 (use_world3d_template   
-	:method    	driving    ;; the refresh rate will be syncronized to TORCS (about 50 Hz, 20 ms each cycle)
+	:method    	driving    ;; the refresh rate will be syncronized to OpenDS (for TORCS it's about 50 Hz, 20 ms each cycle)
 )
 
-(use_predefined_model_setup		model_drive_torcs)
-;; the model will be connected with TORCS. Road and scenario settings are done in TORCS.
+(use_predefined_model_setup		model_drive_opends)
+;; the model will be connected with OpenDS. Road and scenario settings are done in OpenDS.
 
 ;;;;;;;;;;;;;;;;;;;;;
 ;; Mind definition ;;
@@ -35,7 +35,7 @@
 (chunk-type world3d-driving-criticalelement-sign screen-pos content)
 (chunk-type world3d-driving-criticalelement-vehicle-img screen-pos color)
 (chunk-type world3d-driving-criticalelement-sign-img screen-pos content)
-(chunk-type visual-location-world3d-driving-criticalelement kind viewarea state :attended) ;;mind use lowercase
+(chunk-type visual-location-world3d-driving-criticalelement kind viewarea :attended) ;;mind use lowercase
 
 
 
@@ -159,7 +159,6 @@
     =visual-location>
       isa visual-location-world3d-driving-criticalelement
       kind critical-element
-	state exist
     ?visual>
      state     free
    ==>
@@ -174,10 +173,8 @@
     =goal>
       isa drive-control  
       stage    5
-    =visual-location>
-      isa visual-location-world3d-driving-criticalelement
-      kind critical-element
-	state nonexist
+    ?visual-location>
+      state error
    ==>
     =goal>
       stage    1

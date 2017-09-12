@@ -1517,6 +1517,7 @@ public class ServerLogics {
             Entity.hmiID = Integer.toString(sim.ID);
             
             if( sim.vars.world3DTemplate.World.Object_Num > 0 
+            		|| sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )
             		|| sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )
             		|| sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "unity_tangtang_2015" )
             		
@@ -5516,14 +5517,14 @@ public class ServerLogics {
         			}
         			ChunkFun__Define_Chunk( Entity.Chunk );
                */
-            	// added by Yelly
-            	// I need visual-location chunk to be in the center chunks,
-    			sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );
     			
               sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk = sim.funs.ChunkFun__Chunk_Clone(Entity.Chunk);
               if(!Entity.Chunk.Chunk_Name.equals( "" ) && !Entity.Chunk.Chunk_Type.equals( "" )){ //verifed with ACT-R command (buffer-chunk)
                 sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "VISION" + "\t\t" + "SET-BUFFER-CHUNK VISUAL-LOCATION " + sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk.Chunk_Name  ); 
                 //ProgramUtilitiesFun__Output_Trace_Txt( sim.funs.ChunkFun__Get_Chunk_Contents (Entity.Chunk) );
+            	// added by Yelly
+            	// I need visual-location chunk to be in the center chunks,
+    			sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );
               }
             }
             
@@ -7821,14 +7822,18 @@ public class ServerLogics {
             
           case Beginning:
                         
-        	  
-        	  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
+
+        	  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+        		  //not sure, leave it blank as for torcs
+                	
+              } //end of model_drive_opends
+        	  else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
         		  //do not need to output results here, because results are available in TORCS output      
                 	
-                } //end of model_drive_torcs
+              } //end of model_drive_torcs
         	  else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "unity_tangtang_2015" )){
         		  // may want to output some results. TODO
-                } 
+              } 
         	  else{ //old method, use internal 3D mo
         	  
 	            //System.out.println("World3D_Cyclic_Refresh test");
@@ -7850,7 +7855,6 @@ public class ServerLogics {
 	                    "Joystick_Pitch", "Joystick_Yaw", "Joystick_Roll"
 	                };
 	              }
-	              
 	              else{
 	                
 	                //experiment_driving_and_comprehension    
@@ -7876,8 +7880,6 @@ public class ServerLogics {
 	              }
 	              sim.funs.ProgramUtilitiesFun__Output_Human_Drive_Results_Txt(  sim.funs.ProgramUtilitiesFun__StringArray_To_String_Show_Empty(titles) );
 	            }
-	            
-	            
 	            
 	            //output Human_Drive_Results
 	            if( sim.vars.world3DTemplate.Method_Object != null && (sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method)){
@@ -7929,15 +7931,18 @@ public class ServerLogics {
             break;
             
           case Ending:
+        	  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+        		  //not sure, leave it blank as for torcs      		  
+                	
+              } //end of model_drive_opends
         	  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
         		  //TODO        		  
                 	
-                } //end of model_drive_torcs
-        	  
+              } //end of model_drive_torcs
         	  else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "unity_tangtang_2015" )){
         		  //TODO        		  
                 	
-                } 
+              } 
         	  
         	  else{ //old method, use internal 3D model
 	            
@@ -8452,18 +8457,24 @@ public class ServerLogics {
             break;
             
           case Timing:
+        	  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+        		  World3D_Template_Driving_Method the_method_3 = null;
+	              if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method_3 = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();        		  
+        		  
+		          the_method_3.sendControlToOpenDS();
+		          the_method_3.receivePerceptEarlyFromOpenDS();
+        		  
+	              double cycleTime =  the_method_3.getOpenDSPercept().OpenDSClock - SimSystem.clock();
+	              
+	              return cycleTime; 
+	              
+              } //end of model_drive_opends
         	  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
         		  World3D_Template_Driving_Method the_method_3 = null;
 	              if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method_3 = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();        		  
         		  
-	              if(false) {
-		              the_method_3.sendControlToTORCS();
-		              the_method_3.receivePerceptEarlyFromTORCS();
-	              }
-	              else {
-		              the_method_3.sendControlToOpenDS();
-		              the_method_3.receivePerceptEarlyFromOpenDS();
-	              }
+	              the_method_3.sendControlToTORCS();
+		          the_method_3.receivePerceptEarlyFromTORCS();
         		  
 	              double cycleTime =  the_method_3.getTorcsPercept().TORCSClock - SimSystem.clock();
 	              
@@ -8473,8 +8484,7 @@ public class ServerLogics {
 	              
 	              return cycleTime; 
 	              
-                } //end of model_drive_torcs
-        	  
+              } //end of model_drive_torcs
         	  else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "unity_tangtang_2015" )){
         		  
         		  UnityJavaUdp unityUDPtool = null;

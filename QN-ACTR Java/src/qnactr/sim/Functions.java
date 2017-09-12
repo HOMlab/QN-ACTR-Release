@@ -3248,10 +3248,10 @@ public class Functions {
 		if(the_case.equals( "Visual_Buffer")  && (sim.vars.declarativeModule.Merge_Visual_Buffer_Chunk)==false )return;
 		if(the_case.equals( "Visual_Location_Buffer")  && (sim.vars.declarativeModule.Merge_Visual_Location_Buffer_Chunk)==false )return;
 
-		//don't merge these
+		//don't merge these, items in this list will not be merged into declarative memory.
 		List<String> do_no_merge = new ArrayList<String> ();
-		do_no_merge.add("visual-location-world3d-driving");
-		do_no_merge.add("visual-location-world3d-driving-criticalelement");
+		do_no_merge.add("visual-location-world3d-driving");		//these are near and far points, assume that they are not stored in DM.
+//		do_no_merge.add("visual-location-world3d-driving-criticalelement"); //assume critical elements are stored in DM
 		
 		if(do_no_merge.contains( The_Chunk.Chunk_Type ) ) return;
 
@@ -5106,7 +5106,12 @@ return return_string;
 	            return "";
 	          }
 	          
-	          if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
+	          if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+        		  World3D_Template_Driving_Method the_method = null;
+	              if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();      
+	              return Double.toString( the_method.getOpenDSPercept().speed );
+	          }
+	          else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
         		  World3D_Template_Driving_Method the_method = null;
 	              if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();      
 	              return Double.toString( the_method.getTorcsPercept().speed );
@@ -12839,9 +12844,11 @@ return return_string;
 	public  void ProductionModuleFun__Clear_Visual_Location_Buffer_Request(){
 	 
 	  if (!sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk.Chunk_Type.equals("")){ //if  buffer is not empty
-	    if( sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk.Chunk_Type.equals( "visual-location-world3d-driving") || sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk.Chunk_Type.equals( "visual-location-world3d-driving-criticalelement")){
-	      //don't merge world3d location	
-	    }
+		if( sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk.Chunk_Type.equals( "visual-location-world3d-driving") ){
+			//don't merge world3d location	
+			    	
+			// do merge critical elements. 
+		}
 	    else
 	    {
 	      DeclarativeModuleFun__Merge_Chunk_Into_DM (sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk, "Visual_Location_Buffer"); 
@@ -20653,8 +20660,10 @@ If the string is invalid or there is no current model then a warning is printed 
 	
 	public  World3D_DriverCar TaskTemplateFun__Get_World3D_DriverCar_Object(){
 	  World3D_Template_Driving_Method driving_method_pointer = TaskTemplateFun__Get_World3D_Driving_Method_Object();
-	  
+	  System.out.println("driving_method_pointer.DriverCar_World3D_ID=" + driving_method_pointer.DriverCar_World3D_ID);
+	  System.out.println("sim.vars.world3DTemplate.World.Objects=" + sim.vars.world3DTemplate.World.Objects);
 	  return ((World3D_DriverCar)sim.vars.world3DTemplate.World.Objects.get(driving_method_pointer.DriverCar_World3D_ID));
+	  
 	  
 	}
 	
@@ -21042,6 +21051,13 @@ If the string is invalid or there is no current model then a warning is printed 
 	      break;
 	    }
 	    
+	    case "model_drive_opends":
+	    {
+	    	//TODO add things need initiation here
+	    	
+	    	break;
+	    }
+	    
 	    case "model_drive_torcs":
 	    {
 	    	//TODO add things need initiation here
@@ -21181,11 +21197,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	  }
 	  
 	  if ( an_object instanceof Display_Item_Visual_Text){
-	    Display_Item_Visual_Text the_item = (Display_Item_Visual_Text) an_object; //different for each item type
-	    
-	    
-	    
-	    
+	    Display_Item_Visual_Text the_item = (Display_Item_Visual_Text) an_object; //different for each item type	    
 	    
 	    //update delay time
 	    the_item.Display_Item_Delay = time_delay; 
@@ -22191,8 +22203,24 @@ If the string is invalid or there is no current model then a warning is printed 
 	}
 	
 	public  void TaskTemplateFun__Update_DriverCar_Accelbrake (double new_accelbrake){
-	  
-		if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
+		  
+		if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+  		  World3D_Template_Driving_Method the_method = null;
+            if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
+            
+            if (new_accelbrake >= 0) {
+            	the_method.opendsControlBrake  = 0;
+            	the_method.opendsControlAccelerator = new_accelbrake;			    
+            	the_method.Accelbrake_Foot_On = "accel";
+			  }
+			  else {
+				  the_method.opendsControlAccelerator = 0;
+				  the_method.opendsControlBrake = Math.abs ( new_accelbrake );
+				  the_method.Accelbrake_Foot_On = "brake";
+			  }
+            
+		}
+		else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
   		  World3D_Template_Driving_Method the_method = null;
             if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
             
@@ -22228,7 +22256,14 @@ If the string is invalid or there is no current model then a warning is printed 
 	}
 	
 	public  void TaskTemplateFun__Update_DriverCar_Steer_And_Wheel_With_Delta_Steer (double the_delta_steer_degree){
-		if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
+		if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+	  		  World3D_Template_Driving_Method the_method = null;
+	            if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
+	            
+	            the_method.opendsControlSteerAngleDegree += the_delta_steer_degree;
+	            
+		}
+		else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 	  		  World3D_Template_Driving_Method the_method = null;
 	            if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
 	            
@@ -23864,7 +23899,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	
 	public Chunk VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec(Chunk the_chunk_spec){
 		World3D_Template_Driving_Method the_method = null;
-		if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
+		if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" ) || sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 			if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
 		}
 		else{
@@ -23890,8 +23925,18 @@ If the string is invalid or there is no current model then a warning is printed 
 	    
 	    
 	    if(kind.equals( "near-point")){
-	    	
-	    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
+
+	    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
+	    		String lane = (String)the_chunk_spec.Slot.get("lane");
+			      if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
+			        System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec 'lane' is not integer but: " + lane);
+			        
+			        return null;
+			      }
+	    		return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "near-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving",  "distance", Double.toString(near_point_ahead_distance), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getOpenDSPercept().nearPointAngleDegree)     });
+			}
+	    	else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
 	    		String lane = (String)the_chunk_spec.Slot.get("lane");
 			      if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
@@ -23935,7 +23980,19 @@ If the string is invalid or there is no current model then a warning is printed 
 	    	}
 	    } // end of kind near-point
 	    else if (kind.equals( "far-point")){
-	    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
+	    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
+	    		String lane = (String)the_chunk_spec.Slot.get("lane");
+			      if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
+			        System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec 'lane' is not integer but: " + lane);
+			        
+			        return null;
+			      }
+			      
+			      Chunk return_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "far-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving",  "distance", Double.toString(the_method.getOpenDSPercept().farPointDistanceMeter), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getOpenDSPercept().farPointAngleDegree)   });
+			      return return_chunk;	    		
+			}
+	    	else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
 	    		String lane = (String)the_chunk_spec.Slot.get("lane");
 			      if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
@@ -24184,7 +24241,7 @@ If the string is invalid or there is no current model then a warning is printed 
 			    String kind = (String)the_chunk_spec.Slot.get("kind");
 			    
 			    if(kind.equals( "critical-element")) { // added by Yelly: Get a visible critical element
-			    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
+			    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
 			    		World3D_Template_Driving_Method theMethod = (World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object;
 			    		CriticalElement chosenCE = theMethod.critical_element_focusing;
 			    		double chosen_critical_element_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
@@ -24197,13 +24254,13 @@ If the string is invalid or there is no current model then a warning is printed 
 					    String viewArea = "";
 					    viewArea = theMethod.chooseFocusingCriticalElement(viewArea);
 					    if(theMethod.critical_element_focusing == null)	{
-					    	//System.out.println("after chooseFocusingCriticalElement, focusing on no critical element");
-					    	return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving-criticalelement",  "kind",kind, "viewarea", viewArea, "state", "nonexist"});
+					    	System.out.println("after chooseFocusingCriticalElement, focusing on no critical element");
+					    	return new Chunk();
 					    }
 					    else {
 					    	//System.out.println("after chooseFocusingCriticalElement, focusing on critical element:" +  " critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) + ", isa" + "visual-location-world3d-driving-criticalelement" + ", kind" + kind + ", viewarea" + viewArea + ", state" + "exist");
-					    	return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving-criticalelement",  "kind",kind, "viewarea", viewArea, "state", "exist"});}	    	
-					    }
+					    	return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving-criticalelement",  "kind",kind, "viewarea", viewArea});}	    	
+					}
 					else{
 						//TODO: actually I don't know what to do because this is not for our experiment  
 						return null;

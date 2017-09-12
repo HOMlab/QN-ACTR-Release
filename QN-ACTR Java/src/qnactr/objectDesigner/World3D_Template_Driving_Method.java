@@ -47,15 +47,24 @@ public class World3D_Template_Driving_Method {
 	public String Who_Drive;
 	private Torcs_Percept torcsPerceptEarly;
 	private Torcs_Percept torcsPerceptLate;	
+	private OpenDS_Percept opendsPerceptEarly;
+	private OpenDS_Percept opendsPerceptLate;	
 	//public double Torcs_Cycle_Time;
 	public double torcsControlAccelerator = 0.0; //0-1
 	public double torcsControlBrake = 0.0; //0-1
 	public double torcsControlSteerAngleDegree = 0.0; //
+	public double opendsControlAccelerator = 0.0; //0-1
+	public double opendsControlBrake = 0.0; //0-1
+	public double opendsControlSteerAngleDegree = 0.0; //
 	
 	private int UDPQNtoTORCSPort = 5678; 	//this can be set in TORCS expconfig.txt
 	private int UDPTORCStoQNPort = 8765;	//this can be set in TORCS expconfig.txt
 	private final int bufferSizetoTORCS = 500; 		//this can be set in TORCS human.cpp
-	private final int bufferSizefromTORCS = 4096;
+	private final int bufferSizefromTORCS = 500;
+	private int UDPQNtoOpenDSPort = 5678; 	//this can be set in eu.opends.qn.QNCenter.java
+	private int UDPOpenDStoQNPort = 8765;	//this can be set in eu.opends.qn.QNCenter.java
+	private final int bufferSizetoOpenDS = 1024; 	//this can be set in eu.opends.qn.QNCenter.java
+	private final int bufferSizefromOpenDS = 4096;	//this can be set in eu.opends.qn.QNCenter.java
 	private DatagramSocket sendSocket;
 	private DatagramSocket receiveSocket;
 	
@@ -73,7 +82,6 @@ public class World3D_Template_Driving_Method {
 	private final float leftBack_perceive_weight = 0.1f;
 	private final float rightBack_perceive_weight = 0.1f;
     
-	private final int MSG_PARTS = 6;
 	
 	private final int OPENDS_CLOCK = 0;
 	private final int NEAR_POINT_ANGLE = 1;
@@ -81,6 +89,13 @@ public class World3D_Template_Driving_Method {
 	private final int FAR_POINT_DISTANCE = 3;
 	private final int SPEED = 4;
 	private final int CRITICAL_ELEMENTS = 5;
+	private final int MSG_PARTS = 6;
+	
+	// added by Yelly
+	// to specify QN-ACTR is connecting to TORCS or OpenDS
+	private final int T_SIM_TORCS = 0;
+	private final int T_SIM_OPENDS = 1;
+	private int simulator = T_SIM_OPENDS;
 	
 	private String msg_prefix[] = {
 			"QNModel [OpenDSClock=",
@@ -134,26 +149,42 @@ public class World3D_Template_Driving_Method {
 		
 		
 		Who_Drive="model";
-		torcsPerceptEarly = new Torcs_Percept();
-		torcsPerceptLate = new Torcs_Percept();
+		if(this.simulator == this.T_SIM_OPENDS){
+			torcsPerceptEarly = null;
+			torcsPerceptLate = null;
+			opendsPerceptEarly = new OpenDS_Percept();
+			opendsPerceptLate = new OpenDS_Percept();
+		}
+		else if(this.simulator == this.T_SIM_TORCS) {
+			torcsPerceptEarly = new Torcs_Percept();
+			torcsPerceptLate = new Torcs_Percept();
+			opendsPerceptEarly = null;
+			opendsPerceptLate = null;
+		}
+		else {
+			System.err.println("simulator not identified.");
+			return;
+		}
 		//Torcs_Cycle_Time = 0.0;
 		
 		try {
-			sendSocket = new DatagramSocket(16);  //this is to set the socket sending info to TORCS. 
+			sendSocket = new DatagramSocket(16);  //this is to set the socket sending info to TORCS/OpenDS. 
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		try {
-			receiveSocket = new DatagramSocket(UDPTORCStoQNPort);
+			if(this.simulator == this.T_SIM_OPENDS) receiveSocket = new DatagramSocket(UDPOpenDStoQNPort);
+			else if(this.simulator == this.T_SIM_TORCS) receiveSocket = new DatagramSocket(UDPTORCStoQNPort);
+			else {
+				System.err.println("simulator not identified.");
+				return;
+			}
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-				
-		
-		
 	}
 	
 	public void sendControlToTORCS(){
@@ -193,23 +224,19 @@ public class World3D_Template_Driving_Method {
 	
 	// for OpenDS
 	public void sendControlToOpenDS(){
-		
-		//debug
-		//torcsControlAccelerator = 0.5;
-		//		
 		String str = "QNClock: " + Double.toString( GlobalUtilities.round(SimSystem.clock(),3) ) + ", "; //in second
-		str += "Accelerator: " + torcsControlAccelerator + ", ";  //0-1
-		str += "Brake: " + torcsControlBrake + ", ";  //0-1
-		str += "Steering: " + torcsControlSteerAngleDegree + ", ";  //steering angle in degree
+		str += "Accelerator: " + opendsControlAccelerator + ", ";  //0-1
+		str += "Brake: " + opendsControlBrake + ", ";  //0-1
+		str += "Steering: " + opendsControlSteerAngleDegree + ", ";  //steering angle in degree
 		//System.out.println("control to OpenDS:" + str);
 				
-		byte buffer[] = new byte[bufferSizetoTORCS];
+		byte buffer[] = new byte[bufferSizetoOpenDS];
 		buffer = str.getBytes(); 
 		
 		DatagramPacket packet;
 		
 		try {
-			packet = new DatagramPacket(buffer, buffer.length, InetAddress.getLocalHost(), UDPQNtoTORCSPort);
+			packet = new DatagramPacket(buffer, buffer.length, InetAddress.getLocalHost(), UDPQNtoOpenDSPort);
 			sendSocket.send(packet);	
 			Thread.sleep(1);			
 		} 
@@ -275,7 +302,7 @@ public class World3D_Template_Driving_Method {
 	
 	public void receivePerceptEarlyFromOpenDS(){
 		
-		byte buffer[] = new byte[bufferSizefromTORCS]; 
+		byte buffer[] = new byte[bufferSizefromOpenDS]; 
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length); 
 		try {
 			receiveSocket.receive(packet);
@@ -285,7 +312,7 @@ public class World3D_Template_Driving_Method {
 		} 
 				
 		String receivedString = new String(packet.getData());
-		//System.out.println("receivePerceptEarlyFromTORCS Message received from TORCS: " + receivedString); 
+		//System.out.println("receivePerceptEarlyFromOpenDS Message received from OpenDS: " + receivedString); 
 		double OpenDSClockSecond = 0.0;
 		double nearPointAngleDegree = 0.0;
 		double farPointAngleDegree = 0.0;
@@ -305,7 +332,11 @@ public class World3D_Template_Driving_Method {
 			speedmps = Double.parseDouble(tokens[this.SPEED].substring(this.msg_prefix[this.SPEED].length()));
 			
 			int endInd = tokens[this.CRITICAL_ELEMENTS].indexOf('}');
-			if(endInd<0) System.err.println("wrong msg format received from OpenDS. endInd = -1");
+			if(endInd<0) {
+				System.err.println("wrong msg format received from OpenDS. endInd = -1");
+				System.out.println("receivedString:"+receivedString);
+				System.out.println("tokens[this.CRITICAL_ELEMENTS]:"+tokens[this.CRITICAL_ELEMENTS]);
+			}
 			//System.out.println("endInd: " + endInd + ", tokens[this.CRITICAL_ELEMENTS]: " + tokens[this.CRITICAL_ELEMENTS]);
 			String element_str = tokens[this.CRITICAL_ELEMENTS].substring(this.msg_prefix[this.CRITICAL_ELEMENTS].length(), endInd);
 			//System.out.println("element_str: " +element_str);
@@ -435,11 +466,11 @@ public class World3D_Template_Driving_Method {
 	    System.out.println("\tspeedmps:"+speedmps);
 	    System.out.println("\tcriticalElements:"+criticalElements);*/
 	    
-	    torcsPerceptEarly.TORCSClock = OpenDSClockSecond;
-	    torcsPerceptEarly.nearPointAngleDegree = nearPointAngleDegree;
-	    torcsPerceptEarly.farPointAngleDegree = farPointAngleDegree;
-	    torcsPerceptEarly.farPointDistanceMeter = farPointDistanceMeter;
-	    torcsPerceptEarly.speed = speedmps; 
+	    opendsPerceptEarly.OpenDSClock = OpenDSClockSecond;
+	    opendsPerceptEarly.nearPointAngleDegree = nearPointAngleDegree;
+	    opendsPerceptEarly.farPointAngleDegree = farPointAngleDegree;
+	    opendsPerceptEarly.farPointDistanceMeter = farPointDistanceMeter;
+	    opendsPerceptEarly.speed = speedmps; 
 	    
 		
 	}
@@ -448,6 +479,11 @@ public class World3D_Template_Driving_Method {
 		
 		return torcsPerceptEarly; // currently try use this, may change it and see what's different
 	}
+
+	public OpenDS_Percept getOpenDSPercept(){
+		
+		return opendsPerceptEarly; // currently try use this, may change it and see what's different
+	}
 	
 	public String chooseFocusingCriticalElement(String viewArea) {
 		float viewAreaRan = new Random().nextFloat();
@@ -455,7 +491,7 @@ public class World3D_Template_Driving_Method {
 		// suppose if there're visible elements in the chosen view area, the driver could see at least one (also exactly one) of them 
 		if(viewAreaRan < front_perceive_weight) {
 			// only look at object in the front view
-		    System.out.println("looking direction: front, front_visible_list: " + this.front_visible_CriticalElements);
+		    //System.out.println("looking direction: front, front_visible_list: " + this.front_visible_CriticalElements);
 			viewArea = "front";
 			int visible_num = this.front_visible_CriticalElements.size();
 			if(visible_num==0) this.critical_element_focusing = null;
@@ -465,7 +501,7 @@ public class World3D_Template_Driving_Method {
 		}
 		else if(viewAreaRan < centerBack_perceive_weight) {
 			// only look at object in the center-back mirror
-		    System.out.println("looking direction: center-back, center-back_visible_list: " + this.centerBack_visible_CriticalElements);
+		    //System.out.println("looking direction: center-back, center-back_visible_list: " + this.centerBack_visible_CriticalElements);
 			viewArea = "center-back";
 			int visible_num = this.centerBack_visible_CriticalElements.size();
 			if(visible_num==0) this.critical_element_focusing = null;
@@ -475,7 +511,7 @@ public class World3D_Template_Driving_Method {
 		}
 		else if(viewAreaRan < leftBack_perceive_weight) {
 			// only look at object in the left-back mirror
-		    System.out.println("looking direction: left-back, left-back_visible_list: " + this.leftBack_visible_CriticalElements);
+		    //System.out.println("looking direction: left-back, left-back_visible_list: " + this.leftBack_visible_CriticalElements);
 			viewArea = "left-back";
 			int visible_num = this.leftBack_visible_CriticalElements.size();
 			if(visible_num==0) this.critical_element_focusing = null;
@@ -485,7 +521,7 @@ public class World3D_Template_Driving_Method {
 		}
 		else {
 			// only look at object in the right-back mirror
-		    System.out.println("looking direction: right-back, right-back_visible_list: " + this.rightBack_visible_CriticalElements);
+		    //System.out.println("looking direction: right-back, right-back_visible_list: " + this.rightBack_visible_CriticalElements);
 			viewArea = "right-back";
 			int visible_num = this.rightBack_visible_CriticalElements.size();
 			if(visible_num==0) this.critical_element_focusing = null;
