@@ -2953,6 +2953,7 @@ public class Functions {
 		//currently just print who matched, and who is selected.
 		if (the_matched_chunk_id.size() ==0){
 			ProgramUtilitiesFun__Output_Trace_Txt("No Chunk matches");
+			System.out.println("DeclarativeModuleFun__Print_DM_Activation_Trace, No Chunk matches");
 			return;
 		}
 
@@ -2960,11 +2961,17 @@ public class Functions {
 		while(Enum.hasMoreElements()){
 			Chunk temp_chunk = sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, (int)Enum.nextElement());
 			ProgramUtilitiesFun__Output_Trace_Txt("Chunk " + temp_chunk.Chunk_Name + " matches, with activation: " + temp_chunk.Activation);
+			System.out.println("DeclarativeModuleFun__Print_DM_Activation_Trace, Chunk " + temp_chunk.Chunk_Name + " matches, with activation: " + temp_chunk.Activation);
+			ChunkFun__Print_Chunk(temp_chunk);
 		}
 		ProgramUtilitiesFun__Output_Trace_Txt("");
 		ProgramUtilitiesFun__Output_Trace_Txt("The Chunk selected is: " + the_retrieved_chunk.Chunk_Name + ", with activation: "+ the_retrieved_chunk.Activation);
 		ProgramUtilitiesFun__Output_Trace_Txt("=================Retrieve a Chunk: End=================");
 		ProgramUtilitiesFun__Output_Trace_Txt("");
+		System.out.println("");
+		System.out.println("The Chunk selected is: " + the_retrieved_chunk.Chunk_Name + ", with activation: "+ the_retrieved_chunk.Activation);
+		System.out.println("=================Retrieve a Chunk: End=================");
+		System.out.println("");
 		return;
 
 
@@ -3238,7 +3245,8 @@ public class Functions {
 	public void DeclarativeModuleFun__Merge_Chunk_Into_DM(Chunk The_Chunk, String the_case){
 		
 		
-		//if(sim.vars.printingModule.Output_Window_Trace)System.out.println( "DeclarativeModuleFun__Merge_Chunk_Into_DM: " + The_Chunk.Chunk_Name);
+		////*if(sim.vars.printingModule.Output_Window_Trace)*/System.out.println( "DeclarativeModuleFun__Merge_Chunk_Into_DM: " + The_Chunk.Chunk_Name);
+		//ChunkFun__Print_Chunk(The_Chunk);
 
 		//merge or not control
 		if(the_case.equals( "Aural_Buffer")  && (sim.vars.declarativeModule.Merge_Aural_Buffer_Chunk)==false )return;
@@ -5155,6 +5163,7 @@ return return_string;
 	        case "unity-tangtang-update-status":
 	        case "world3d-driving-report-criticalelement-sign":
 	        case "world3d-driving-report-criticalelement-vehicle":
+	        case "world3d-driving-recall-criticalelement-sign":
 	        { //accept only 1 parameter.
 	          if ( content_list.size() < 1 ) { //nothing there, error
 	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 1 parameter, not: " + input_string );
@@ -5265,6 +5274,12 @@ return return_string;
 	            case "world3d-driving-report-criticalelement-vehicle":
 	            {
 	            	System.out.println("The model is looking at a vehicle with color:" + para_1);
+		              return null;
+	            }
+	            case "world3d-driving-recall-criticalelement-sign":
+	            {
+	            	if(para_1.toLowerCase().equals("false")) System.out.println("The model couldn't recall a sign");
+	            	else System.out.println("The model recalls a sign with content:" + para_1);
 		              return null;
 	            }
 	            
@@ -12154,21 +12169,35 @@ return return_string;
 	  
 	  ProductionModuleFun__Clear_Imaginal_Buffer_Request();
 	  
-	  //Entity Temp_Entity = sim.funs.createEntity( "Imaginary Module" , "Execution", "Imaginary Module", "Add Imaginal", 0.0);
-	  
 	  // below changed by Yelly
-	  Entity Temp_Entity = new Entity();  
-	  Temp_Entity.ID = "8"; //Imaginal Module
-	  Temp_Entity.Time = (double) SimSystem.clock();
-	  //Temp_Entity.Tag = Entity_Number; //give it an entity number, init. 1
-	  //Entity_Number++;
-	  Temp_Entity.From = "Execution"; //tag from and to
-	  Temp_Entity.To = "Imaginary Module";
-	  Temp_Entity.Entity_Type = "Add Imaginal";    // +imaginal>
+//	  Entity Temp_Entity = new Entity();  
+//	  Temp_Entity.ID = "8"; //Imaginal Module
+//	  Temp_Entity.Time = (double) SimSystem.clock();
+//	  //Temp_Entity.Tag = Entity_Number; //give it an entity number, init. 1
+//	  //Entity_Number++;
+//	  Temp_Entity.From = "Execution"; //tag from and to
+//	  Temp_Entity.To = "Imaginary Module";
+//	  Temp_Entity.Entity_Type = "Add Imaginal";    // +imaginal>
 	  // parameters: ISA (slot_0), chunk_type(slot_0), slot_name_1, slot_value_1, slot_name_2, slot_value_2, ... for nil value, put ""
 	  
 	  //define-chunk, +imaginal> will not specify chunk_name, so it does not have a name.
 	  //Temp_Entity.Chunk = sim.funs.ChunkFun__Define_Chunk( sim.funs.ChunkFun__Make_Chunk_From_Descritption(The_Chunk_Spec_Request));
+	  
+	  // below are from master branch	  
+	  Entity Temp_Entity = sim.funs.createEntity( "Imaginary Module" , "Execution", "Imaginary Module", "Add Imaginal", 0.0);
+//	  Entity Temp_Entity = new Entity();  
+//	  Temp_Entity.ID = "8"; //Imaginal Module
+//	  Temp_Entity.Time = (double) SimSystem.clock();
+//	  Temp_Entity.Tag = Entity_Number; //give it an entity number, init. 1
+//	  Entity_Number++;
+//	  Temp_Entity.From = "Execution"; //tag from and to
+//	  Temp_Entity.To = "Imaginary Module";
+//	  Temp_Entity.Entity_Type = "Add Imaginal";    // +imaginal>
+	  // parameters: ISA (slot_0), chunk_type(slot_0), slot_name_1, slot_value_1, slot_name_2, slot_value_2, ... for nil value, put ""
+	  
+	  //define-chunk, +imaginal> will not specify chunk_name, so it does not have a name.
+	  System.out.println("");
+	  Temp_Entity.Chunk = sim.funs.ChunkFun__Define_Chunk( sim.funs.ChunkFun__Make_Chunk_From_Descritption(The_Chunk_Spec_Request));
 	  
 	  
 	  
@@ -12775,9 +12804,6 @@ return return_string;
 //	  Temp_Entity.From = "Execution"; //tag from and to
 //	  Temp_Entity.To = "Imaginary Module";
 //	  Temp_Entity.Entity_Type = "Clear Imaginal";    // -imaginal> action
-
-	  
-	  
 	}
 	
 	public  void ProductionModuleFun__Clear_Manual_Buffer_Request(){
@@ -13405,6 +13431,7 @@ return return_string;
 	      }		
 	      case "-imaginal>":
 	      {
+	    	  System.out.println("-imaginal>");
 	        ProductionModuleFun__Clear_Imaginal_Buffer_Request();
 	        break;
 	      }
@@ -13514,8 +13541,6 @@ return return_string;
 	  //System.out.println("Execute_Rule debug the_rule_name: " + the_rule_name);
 	  if(sim.vars.centralParametersModule.esc == true && ((sim.vars.utilityModule.utility_Computation_Method.equals( "temporal-difference-reinforcement" ) && sim.vars.utilityModule.ul == true) || (sim.vars.utilityModule.utility_Computation_Method.equals( "PG-C" ) && !sim.vars.utilityModule.PG_C_pl.equals( "nil" )) ) ) UtilityModuleFun__Propagate_Reward ( the_rule_name );
 	  
-	  
-	  
 	  /*
 			//old version
 			Parameterized_Production_Rule_Node a_node = new Parameterized_Production_Rule_Node();
@@ -13527,10 +13552,6 @@ return return_string;
 			//System.out.println(a_node.Rule_Descriptors[1]);
 			ProductionModuleFun__Execute_Parameterized_Production_Obsolete_Rule (a_node);
 	   */
-	  
-	  
-	  
-	  
 	  
 	}
 	
@@ -23876,7 +23897,7 @@ If the string is invalid or there is no current model then a warning is printed 
 
 				String id = (String)visual_location.Slot.get("id");
 				String viewArea = (String)visual_location.Slot.get("viewarea");
-				System.out.println("for critical element, looking at viewarea: "+viewArea);
+				//System.out.println("for critical element, looking at viewarea: "+viewArea);
 				  
 				Chunk visiconChunk = null;
 
@@ -23886,10 +23907,10 @@ If the string is invalid or there is no current model then a warning is printed 
 	    			return new Chunk();
 	    		}
 	    		else if(focusing.type.equals("vehicle")) {
-	    			visiconChunk  = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-vehicle",  "screen-pos", visual_location.Chunk_Name, "color", focusing.content});
+	    			visiconChunk  = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-vehicle",  "screen-pos", visual_location.Chunk_Name, "id", id, "color", focusing.content});
 	    		}
 	    		else if(focusing.type.equals("sign")) {
-	    			visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-sign",  "screen-pos", visual_location.Chunk_Name, "content", focusing.content});
+	    			visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-sign",  "screen-pos", visual_location.Chunk_Name, "id", id, "content", focusing.content});
 	    		}
 	    		else {
 	    			System.err.println("unspecified type of critical element");

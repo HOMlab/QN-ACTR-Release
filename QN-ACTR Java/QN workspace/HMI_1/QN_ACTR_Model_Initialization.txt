@@ -17,6 +17,8 @@
 ;; Mind definition ;;
 ;;;;;;;;;;;;;;;;;;;;;
 
+(sgp :esc t :rt -0.5 :bll 0.5 :ans 0.5 :lf 0.4) 
+
 ;; driving-control based on Salvucci (2006) driving model with two-point visual-motor control
 
 (chunk-type drive-control	;; both lateral and longitudinal controls 
@@ -31,10 +33,10 @@
 	stage			 
 )
 
-(chunk-type world3d-driving-criticalelement-vehicle screen-pos color)
-(chunk-type world3d-driving-criticalelement-sign screen-pos content)
-(chunk-type world3d-driving-criticalelement-vehicle-img screen-pos color)
-(chunk-type world3d-driving-criticalelement-sign-img screen-pos content)
+(chunk-type world3d-driving-criticalelement-vehicle screen-pos id color)
+(chunk-type world3d-driving-criticalelement-sign screen-pos id content)
+(chunk-type world3d-driving-criticalelement-vehicle-img id color)
+(chunk-type world3d-driving-criticalelement-sign-img id content)
 (chunk-type visual-location-world3d-driving-criticalelement kind id viewarea :attended) ;;mind use lowercase
 
 
@@ -48,7 +50,7 @@
         fd-old          0	;; because far distance is determined by speed * far-time
 	time-old	0
 	speed-old	0	;; use initial speed
-	stage		1
+	stage		attending-near
  )
 
 )
@@ -59,7 +61,7 @@
    =goal>
       isa drive-control
       lane =lane
-      stage 1
+      stage attending-near
 
 ==>
    +visual-location>
@@ -67,7 +69,7 @@
       kind near-point
       lane =lane   
    =goal>
-      stage 2	
+      stage processing-near-attending-far
 )
 
 (p drive-control-process-near-attend-far
@@ -75,7 +77,7 @@
       isa drive-control
       lane 	=lane
       na-new    =na-1
-      stage 	2
+      stage 	processing-near-attending-far
    =visual-location>
       isa  visual-location-world3d-driving
       kind near-point
@@ -86,7 +88,7 @@
    =goal>
       na-old 	=na-1      
       na-new    =na-2
-      stage     3
+      stage     processing-far
    +visual-location>
       isa visual-location-world3d-driving
       kind far-point		;;this far point will include both road far points and car far points
@@ -104,7 +106,7 @@
       fd-old    =fd-1
       speed-old =v-1
       time-old  =time-1
-      stage     3
+      stage     processing-far
    =visual-location>
       isa 	visual-location-world3d-driving
       kind 	far-point
@@ -124,7 +126,7 @@
       fd-old =fd-2
       speed-old =v-2
       time-old =time-2
-      stage     4
+      stage     attending-critical
    +visual>
       isa         move-attention 		;;note here as in Salvucci's model, near and far angle is not computed from visual but use visual-location only. this +visual> is used for showing eye movement, in fact as a side effect. info processing is not affected by visual prepare, encoding and eye movement speed
       screen-pos  =visual-location
@@ -144,11 +146,11 @@
 (p attend-criticalelement
     =goal>
       isa drive-control  
-      stage    4
+      stage    attending-critical
    ==>
 !bind! =view (world3d-driving-choosing-viewArea)
     =goal>
-      stage    5
+      stage    critical-detect-result
    +visual-location>
       isa visual-location-world3d-driving-criticalelement
       kind critical-element
@@ -158,7 +160,7 @@
 (p attend-criticalelement-detected
     =goal>
       isa drive-control  
-      stage    5
+      stage    critical-detect-result
     =visual-location>
       isa visual-location-world3d-driving-criticalelement
       kind critical-element
@@ -169,64 +171,108 @@
       isa      move-attention
       screen-pos =visual-location
     =goal>
-      stage    6
+      stage    reading-critical
 )
 
 (p attend-criticalelement-detect-failure
     =goal>
       isa drive-control  
-      stage    5
+      stage    critical-detect-result
     ?visual-location>
       state error
    ==>
     =goal>
-      stage    1
+      stage    recalling
 )
 
 (p read-criticalelement-vehicle
     =goal>
       isa drive-control  
-      stage    6
+      stage    reading-critical
     =visual>
       isa      world3d-driving-criticalelement-vehicle
+	id	=i
       color    =col
 
 ==>
+    =goal>
+      stage    recalling
+!eval! (world3d-driving-report-criticalelement-vehicle  =col) 
     +imaginal>
       isa      world3d-driving-criticalelement-vehicle-img
+	id	=i
       color    =col
-    =goal>
-      stage    1
-!eval! (world3d-driving-report-criticalelement-vehicle  =col) 
+   -imaginal> ;;to put this chunk into declarative memory
 )
 
 (p read-criticalelement-sign
     =goal>
       isa drive-control  
-      stage    6
+      stage    reading-critical
     =visual>
       isa      world3d-driving-criticalelement-sign
+	id	=i
       content    =cont
 
 ==>
+    =goal>
+      stage    recalling
+!eval! (world3d-driving-report-criticalelement-sign  =cont) 
     +imaginal>
       isa      world3d-driving-criticalelement-sign-img
+	id	=i
       content    =cont
-    =goal>
-      stage    1
-!eval! (world3d-driving-report-criticalelement-sign  =cont) 
+   -imaginal> ;;to put this chunk into declarative memory
 )
 
 (p read-criticalelement-failure
     =goal>
       isa drive-control  
-      stage    6
+      stage    reading-critical
     ?visual>
       state error
 
 ==>
     =goal>
-      stage    1
+      stage    recalling
 )
+
+(p recall-sign
+    =goal>
+      isa      drive-control  
+      stage    recalling
+==>
+    +retrieval>
+      isa      world3d-driving-criticalelement-sign-img
+    =goal>
+      stage    recall-result
+)
+
+(p recall-sign-success
+    =goal>
+      isa      drive-control  
+      stage    recall-result
+    =retrieval>
+      isa      world3d-driving-criticalelement-sign-img
+      content    =cont
+==>
+    =goal>
+      stage    attending-near
+!eval! (world3d-driving-recall-criticalelement-sign  =cont)
+)
+
+(p cannot-recall
+    =goal>
+      isa      drive-control  
+      stage    recall-result
+    ?retrieval>
+      state   error
+   ==>
+    =goal>
+      stage    attending-near
+!eval! (world3d-driving-recall-criticalelement-sign nil )
+)
+
+;; TODO: add recalling of vehicle
 
 (goal-focus driving)
