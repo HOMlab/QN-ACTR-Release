@@ -2793,7 +2793,8 @@ public class ServerLogics {
               LinkedList<Production_Rule> matched_rules_clone = sim.funs.ProductionModuleFun__Match_Rule(rule_pool_to_be_matched);
               
               //debug showing the matched rule(s)
-              
+              //System.out.println("debug showing the matched rule(s)");
+              //for(Production_Rule rule:matched_rules_clone) System.out.println("Matched rule: "+  rule.Rule_Name);
         			//IEnumerator enum_rules = matched_rules_clone.GetEnumerator();
         			//while(enum_rules.MoveNext()){
         			//	GlobalUtilities.popUpMessage("Matched rule: " +  ((Production_Rule)enum_rules.Current).Rule_Name );
@@ -5134,6 +5135,7 @@ public class ServerLogics {
                 Entity.From = "Vision Module"; //tag from and to
                 Entity.To = "Visual Buffer";
                 Entity.Entity_Type = "Visual Buffer's New Chunk";    
+
                 //Entity.Chunk = sim.funs.VisionModuleFun__Find_Visual_Display_Chunk_By_Chunk_Location_Spec(Entity.Chunk); //find the chunk
                 //Entity.Chunk = sim.funs.VisionModuleFun__Find_Visicon_By_Chunk_Spec(Entity.Chunk); //find the chunk
                 String visual_location_chunk_name = sim.funs.ChunkFun__Get_Chunk_Slot_Value(Entity.Chunk, "screen-pos");
@@ -5179,16 +5181,16 @@ public class ServerLogics {
             			else 
                  */	
                 if (Entity.Chunk.Chunk_Name.equals( "" ) && Entity.Chunk.Chunk_Type.equals( "" )){
-                  sim.vars.visionModule.State_Error = true;   //verifed with ACT-R:  (buffer-status)
                   sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "VISION" + "\t\t" + "Encoding-complete " + visual_location_chunk_name  + " NIL"); 
                   sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "VISION" + "\t\t" + "No visual-object found");
                   Entity.From = "Vision Module";
                   Entity.To = "Visual Buffer";	
                   Entity.Entity_Type = "Production Rule Firing Trigger"	;
-                  //System.out.println ("Vision_Module retrieval failed.");
+                  //System.out.println ("add Visual, Vision_Module retrieval failed.");
+                  if(temp_chunk.Chunk_Type.equals("critical-element")) sim.vars.visionModule.State_Error = true;
                 } //failed
                 else{
-                  if (sim.vars.messageOn) System.out.println ("Vision_Module retrieval succeeded");
+                  if (sim.vars.messageOn) System.out.println ("add Visual, Vision_Module retrieval succeeded");
                   sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "VISION" + "\t\t" + "Encoding-complete " + visual_location_chunk_name  + " NIL"); 
                   if( Entity.Chunk.Chunk_Name.length() >= 7 && Entity.Chunk.Chunk_Name.substring(0,7).equals( "world3d")){
                     //Currently don't have visual finst for world3d objects.
@@ -5690,7 +5692,6 @@ public class ServerLogics {
               //sim.vars.visionModule.Last_Attended_Visicon_Name = "";
               
             } //currently don't know what should do
-            
             else if (Entity.Entity_Type.equals( "Buffer Chunk Spec Change Notice") ) {
               // nothing need to do now
               if (sim.vars.messageOn) System.out.println ("Chunk Spec Changed at Visual_Buffer" );

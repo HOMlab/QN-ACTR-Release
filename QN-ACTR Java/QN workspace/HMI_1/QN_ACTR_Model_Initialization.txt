@@ -217,4 +217,16 @@
 !eval! (world3d-driving-report-criticalelement-sign  =cont) 
 )
 
+(p read-criticalelement-failure
+    =goal>
+      isa drive-control  
+      stage    6
+    ?visual>
+      state error
+
+==>
+    =goal>
+      stage    1
+)
+
 (goal-focus driving)

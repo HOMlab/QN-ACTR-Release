@@ -15034,6 +15034,7 @@ return return_string;
 	                }
 	                case "state_error":{
 	                  //here is the different part for each module
+	                	//System.out.println("sim.vars.visionModule.State_Error="+sim.vars.visionModule.State_Error);
 	                  is_slot_matched = (sim.vars.visionModule.State_Error == true);
 	                  //
 	                  break;
@@ -23875,12 +23876,13 @@ If the string is invalid or there is no current model then a warning is printed 
 
 				String id = (String)visual_location.Slot.get("id");
 				String viewArea = (String)visual_location.Slot.get("viewarea");
+				System.out.println("for critical element, looking at viewarea: "+viewArea);
 				  
 				Chunk visiconChunk = null;
 
 	    		CriticalElement focusing = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).getCEByIdAndViewArea(id, viewArea);
 	    		if(focusing == null) {
-	    			System.err.println("VisionModuleFun__Find_Visicon_By_Location for a chosen critical element while the element doesn't exist");
+	    			System.out.println("VisionModuleFun__Find_Visicon_By_Location for a chosen critical element while the element doesn't exist");
 	    			return new Chunk();
 	    		}
 	    		else if(focusing.type.equals("vehicle")) {
@@ -24324,7 +24326,7 @@ If the string is invalid or there is no current model then a warning is printed 
 				  String chosenCE_id = theMethod.chooseFocusingCriticalElementFromViewArea(viewArea);
 				  
 				  if(chosenCE_id == null)	{
-					  System.out.println("after chooseFocusingCriticalElement, focusing on no critical element");
+					  System.out.println("after chooseFocusingCriticalElementFromViewArea" + viewArea +" , focusing on no critical element");
 					  return new Chunk();
 				  }
 				  else {
