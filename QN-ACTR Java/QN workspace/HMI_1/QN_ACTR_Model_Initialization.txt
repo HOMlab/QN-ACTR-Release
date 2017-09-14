@@ -305,7 +305,7 @@
       content    =cont
 ==>
     =goal>
-      stage    recalling-speed
+      stage    recalling-vehicle
 !eval! (world3d-driving-recall-criticalelement-sign  =cont)
 )
 
@@ -317,11 +317,45 @@
       state   error
    ==>
     =goal>
-      stage    recalling-speed
+      stage    recalling-vehicle
 !eval! (world3d-driving-recall-criticalelement-sign nil )
 )
 
-;; TODO: add recalling of vehicle
+(p recall-vehicle
+    =goal>
+      isa      drive-control  
+      stage    recalling-vehicle
+==>
+    +retrieval>
+      isa      world3d-driving-criticalelement-vehicle-img
+    =goal>
+      stage    recall-vehicle-result
+)
+
+(p recall-sign-success
+    =goal>
+      isa      drive-control  
+      stage    recall-vehicle-result
+    =retrieval>
+      isa      world3d-driving-criticalelement-vehicle-img
+      color	=col
+==>
+    =goal>
+      stage    recalling-speed
+!eval! (world3d-driving-recall-criticalelement-vehicle  =col)
+)
+
+(p cannot-recall-sign
+    =goal>
+      isa      drive-control  
+      stage    recall-vehicle-result
+    ?retrieval>
+      state   error
+   ==>
+    =goal>
+      stage    recalling-speed
+!eval! (world3d-driving-recall-criticalelement-vehicle  nil )
+)
 
 (p recall-speed
     =goal>

@@ -5165,6 +5165,7 @@ return return_string;
 	        case "world3d-driving-report-criticalelement-sign":
 	        case "world3d-driving-report-criticalelement-vehicle":
 	        case "world3d-driving-recall-criticalelement-sign":
+	        case "world3d-driving-recall-criticalelement-vehicle":
 	        case "world3d-driving-recall-speed":
 	        case "world3d-driving-report-speed":
 	        { //accept only 1 parameter.
@@ -5288,6 +5289,12 @@ return return_string;
 	            {
 	            	if(para_1.toLowerCase().equals("false")) System.out.println("The model couldn't recall a sign");
 	            	else System.out.println("The model recalls a sign with content:" + para_1);
+		              return null;
+	            }
+	            case "world3d-driving-recall-criticalelement-vehicle":
+	            {
+	            	if(para_1.toLowerCase().equals("false")) System.out.println("The model couldn't recall a vehicle");
+	            	else System.out.println("The model recalls a vehicle with color:" + para_1);
 		              return null;
 	            }
 	            case "world3d-driving-recall-speed":
