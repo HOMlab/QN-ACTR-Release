@@ -37,7 +37,10 @@
 (chunk-type world3d-driving-criticalelement-sign screen-pos id content)
 (chunk-type world3d-driving-criticalelement-vehicle-img id color)
 (chunk-type world3d-driving-criticalelement-sign-img id content)
+(chunk-type world3d-driving-speed screen-pos speed)
+(chunk-type world3d-driving-speed-img speed)
 (chunk-type visual-location-world3d-driving-criticalelement kind id viewarea :attended) ;;mind use lowercase
+(chunk-type visual-location-world3d-driving-speed :attended value) 
 
 
 
@@ -126,7 +129,7 @@
       fd-old =fd-2
       speed-old =v-2
       time-old =time-2
-      stage     attending-critical
+      stage     attending-speed
    +visual>
       isa         move-attention 		;;note here as in Salvucci's model, near and far angle is not computed from visual but use visual-location only. this +visual> is used for showing eye movement, in fact as a side effect. info processing is not affected by visual prepare, encoding and eye movement speed
       screen-pos  =visual-location
@@ -141,6 +144,51 @@
 
 !eval! (world3d-driving-accelerate-brake   =fd-1   =fd-2  =v-1  =v-2    =time-1      =time-2  ) 	;;currently no module for this, just !eval! as Salvucci's model
 
+)
+
+(p drive-control-attend-speed
+   =goal>
+      isa drive-control
+      stage attending-speed
+==>
+   +visual-location>
+      isa  visual-location-world3d-driving-speed
+   =goal>
+      stage processing-speed
+)
+
+(p drive-control-process-speed
+   =goal>
+      isa drive-control
+      stage 	processing-speed
+   =visual-location>
+      isa  visual-location-world3d-driving-speed
+    ?visual>
+     state     free
+==>
+    +visual>               
+      isa      move-attention
+      screen-pos =visual-location
+   =goal>
+      stage     reading-speed
+)
+
+(p read-speed
+    =goal>
+      isa drive-control  
+      stage    reading-speed
+    =visual>
+      isa      world3d-driving-speed
+	speed	=v
+
+==>
+    =goal>
+      stage    attending-critical
+!eval! (world3d-driving-report-speed  =v) 
+    +imaginal>
+      isa      world3d-driving-speed-img
+	speed	=v
+   -imaginal> ;;to put this chunk into declarative memory
 )
 
 (p attend-criticalelement
@@ -182,7 +230,7 @@
       state error
    ==>
     =goal>
-      stage    recalling
+      stage    recalling-sign
 )
 
 (p read-criticalelement-vehicle
@@ -196,7 +244,7 @@
 
 ==>
     =goal>
-      stage    recalling
+      stage    recalling-sign
 !eval! (world3d-driving-report-criticalelement-vehicle  =col) 
     +imaginal>
       isa      world3d-driving-criticalelement-vehicle-img
@@ -216,7 +264,7 @@
 
 ==>
     =goal>
-      stage    recalling
+      stage    recalling-sign
 !eval! (world3d-driving-report-criticalelement-sign  =cont) 
     +imaginal>
       isa      world3d-driving-criticalelement-sign-img
@@ -234,45 +282,81 @@
 
 ==>
     =goal>
-      stage    recalling
+      stage    recalling-sign
 )
 
 (p recall-sign
     =goal>
       isa      drive-control  
-      stage    recalling
+      stage    recalling-sign
 ==>
     +retrieval>
       isa      world3d-driving-criticalelement-sign-img
     =goal>
-      stage    recall-result
+      stage    recall-sign-result
 )
 
 (p recall-sign-success
     =goal>
       isa      drive-control  
-      stage    recall-result
+      stage    recall-sign-result
     =retrieval>
       isa      world3d-driving-criticalelement-sign-img
       content    =cont
 ==>
     =goal>
-      stage    attending-near
+      stage    recalling-speed
 !eval! (world3d-driving-recall-criticalelement-sign  =cont)
 )
 
-(p cannot-recall
+(p cannot-recall-sign
     =goal>
       isa      drive-control  
-      stage    recall-result
+      stage    recall-sign-result
+    ?retrieval>
+      state   error
+   ==>
+    =goal>
+      stage    recalling-speed
+!eval! (world3d-driving-recall-criticalelement-sign nil )
+)
+
+;; TODO: add recalling of vehicle
+
+(p recall-speed
+    =goal>
+      isa      drive-control  
+      stage    recalling-speed
+==>
+    +retrieval>
+      isa      world3d-driving-speed-img
+    =goal>
+      stage    recall-speed-result
+)
+
+(p recall-speed-success
+    =goal>
+      isa      drive-control  
+      stage    recall-speed-result
+    =retrieval>
+      isa      world3d-driving-speed-img
+	speed	=v
+==>
+    =goal>
+      stage    attending-near
+!eval! (world3d-driving-recall-speed  =v)
+)
+
+(p cannot-recall-speed
+    =goal>
+      isa      drive-control  
+      stage    recall-speed-result
     ?retrieval>
       state   error
    ==>
     =goal>
       stage    attending-near
-!eval! (world3d-driving-recall-criticalelement-sign nil )
+!eval! (world3d-driving-recall-speed  nil )
 )
-
-;; TODO: add recalling of vehicle
 
 (goal-focus driving)

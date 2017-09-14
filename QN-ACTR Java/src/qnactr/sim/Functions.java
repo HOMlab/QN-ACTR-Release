@@ -1743,6 +1743,7 @@ public class Functions {
 			}
 			else{
 				System.out.println ("ChunkFun__Get_Chunk_Slot_Value, chunk: " + The_Chunk.Chunk_Name + " don't have the slot name: "  + The_Slot_Name);
+				ChunkFun__Print_Chunk(The_Chunk);
 				return "_No_Such_Slot_Name_";
 			}
 
@@ -5164,6 +5165,8 @@ return return_string;
 	        case "world3d-driving-report-criticalelement-sign":
 	        case "world3d-driving-report-criticalelement-vehicle":
 	        case "world3d-driving-recall-criticalelement-sign":
+	        case "world3d-driving-recall-speed":
+	        case "world3d-driving-report-speed":
 	        { //accept only 1 parameter.
 	          if ( content_list.size() < 1 ) { //nothing there, error
 	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 1 parameter, not: " + input_string );
@@ -5266,6 +5269,11 @@ return return_string;
 		              //break;
 	            }
 
+	            case "world3d-driving-report-speed":
+	            {
+	            	System.out.println("The model is looking at the speed:" + para_1);
+		              return null;
+	            }
 	            case "world3d-driving-report-criticalelement-sign":
 	            {
 	            	System.out.println("The model is looking at a sign with content:" + para_1);
@@ -5280,6 +5288,12 @@ return return_string;
 	            {
 	            	if(para_1.toLowerCase().equals("false")) System.out.println("The model couldn't recall a sign");
 	            	else System.out.println("The model recalls a sign with content:" + para_1);
+		              return null;
+	            }
+	            case "world3d-driving-recall-speed":
+	            {
+	            	if(para_1.toLowerCase().equals("false")) System.out.println("The model couldn't recall the speed");
+	            	else System.out.println("The model recalls the current speed as:" + para_1);
 		              return null;
 	            }
 	            
@@ -13431,7 +13445,7 @@ return return_string;
 	      }		
 	      case "-imaginal>":
 	      {
-	    	  System.out.println("-imaginal>");
+	    	  //System.out.println("-imaginal>");
 	        ProductionModuleFun__Clear_Imaginal_Buffer_Request();
 	        break;
 	      }
@@ -23878,7 +23892,6 @@ If the string is invalid or there is no current model then a warning is printed 
 	}
 	
 	public Chunk VisionModuleFun__Find_Visicon_By_Location(Chunk visual_location){
-		//System.out.println("VisionModuleFun__Find_Visicon_By_Location");
 		// added by Yelly
 		// return the vision chunk for critical element
 		// place it and return at the very beginning because the former driving model just return empty chunk as near point and far point does not have neccessary visual representation
@@ -23930,6 +23943,17 @@ If the string is invalid or there is no current model then a warning is printed 
 				// so I just let it return empty chunk
 			    return new Chunk();
 			}
+		}
+		// return the vision chunk for speed
+		else if(visual_location.Chunk_Type.equals("visual-location-world3d-driving-speed")) {
+			Chunk visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-speed",  "screen-pos", visual_location.Chunk_Name, "speed", Double.toString(((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).getOpenDSPercept().speed)});
+    		// for speedometer, add visicon here
+            // copied from "Visual Display Onset" part
+            Chunk temp_chunk = sim.funs.ChunkFun__Chunk_Clone(visiconChunk);
+            temp_chunk.Creation_Time = SimSystem.clock();
+            sim.vars.visualDisplay.Visicon.addLast(temp_chunk);
+    		
+    		return visiconChunk;
 		}
 		
 		
@@ -24364,6 +24388,12 @@ If the string is invalid or there is no current model then a warning is printed 
 			  System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has undefined kind: "+ kind);
 			  return null;
 		  }
+	  }
+	  else if(visual_location_isa.equals( "visual-location-world3d-driving-speed")) {
+		  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+			  return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving-speed"});
+		  }
+		  else return null; // else don't know how to deal because this is not our case
 	  }
 	  else{
 	    System.err.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has undefined visual_location_isa: "+ visual_location_isa);

@@ -2024,7 +2024,6 @@ public class ServerLogics {
               
               sim.vars.programGlobalVar__DeclarativeModule_Beginning_To_Timing_And_Ending_MatchedChunkID = sim.funs.DeclarativeModuleFun__Find_Add_Retrieval_Matched_DM_Chunk_IDs_By_Chunk_Spec(Entity.Chunk);
               sim.vars.programGlobalVar__DeclarativeModule_Beginning_To_Timing_And_Ending_RetrievedChunk = sim.funs.DeclarativeModuleFun__Retrieve_A_Chunk (sim.vars.programGlobalVar__DeclarativeModule_Beginning_To_Timing_And_Ending_MatchedChunkID , Entity.Chunk); //the second parameter is to pass to partial matching activation computation
-              
               //GlobalUtilities.popUpMessage("Declarative Module retrieved chunk: " );
               //sim.funs.ChunkFun__Popout_Message_Show_Chunk_Contents ( sim.vars.programGlobalVar__DeclarativeModule_Beginning_To_Timing_And_Ending_RetrievedChunk );
               
@@ -2059,10 +2058,12 @@ public class ServerLogics {
                 sim.vars.declarativeModule.State_Error = true;
                 //sim.vars.retrievalBuffer.Empty = true; //moved to retrieval buffer
                 Entity.Chunk = new Chunk();
-                //System.out.println ("DM retrieval failed.");
+                System.out.println ("DM retrieval failed.");
               } //retrieval failed
               else{
                 sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "DECLARATIVE" + "\t" + "RETRIEVED-CHUNK " + Entity.Chunk.Chunk_Name + ": " + sim.funs.ChunkFun__Get_Chunk_Contents(Entity.Chunk)); 
+//                System.out.println("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "DECLARATIVE" + "\t" + "RETRIEVED-CHUNK " + Entity.Chunk.Chunk_Name + ": " + sim.funs.ChunkFun__Get_Chunk_Contents(Entity.Chunk)); 
+//                sim.funs.ChunkFun__Print_Chunk(Entity.Chunk);
                 sim.vars.declarativeModule.State_Error = false;
                 //sim.vars.retrievalBuffer.Empty = false; //moved to retrieval buffer
                 
@@ -2139,7 +2140,6 @@ public class ServerLogics {
               
               for (Production_Rule a_selected_rule : Entity.Production_Rules_List_Clone_From_Matching_And_Selection_To_Execution){
                 sim.funs.ProductionModuleFun__Execute_Rule( a_selected_rule );
-                
                 //new test exclusive process goal.
                 if(sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.containsKey( a_selected_rule.Rule_Name )){
                   //this rule is one that requires follow up processing
@@ -2465,6 +2465,8 @@ public class ServerLogics {
               sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );	
               
               sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk = Entity.Chunk;
+//              System.out.println("sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk: ");
+//              sim.funs.ChunkFun__Print_Chunk(sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk);
               sim.vars.imaginalBuffer.Empty = false;
             }
             
@@ -2491,6 +2493,7 @@ public class ServerLogics {
             if (Entity.Entity_Type.equals( "Clear Imaginal")) {
               if (!sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk.Chunk_Type.equals("") && !sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk.Chunk_Name.equals("")){ //if imaginal buffer is not empty
                 sim.funs.DeclarativeModuleFun__Merge_Chunk_Into_DM (sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk, "Imaginal_Buffer");
+                //System.out.println("Clear Imaginal, merged chunk: "+ sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk.Chunk_Name +" into DM");
               }
               sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk = new Chunk();
               sim.vars.imaginalBuffer.Empty = true;
@@ -2793,8 +2796,8 @@ public class ServerLogics {
               LinkedList<Production_Rule> matched_rules_clone = sim.funs.ProductionModuleFun__Match_Rule(rule_pool_to_be_matched);
               
               //debug showing the matched rule(s)
-              //System.out.println("debug showing the matched rule(s)");
-              //for(Production_Rule rule:matched_rules_clone) System.out.println("Matched rule: "+  rule.Rule_Name);
+//              System.out.println("debug showing the matched rule(s)");
+//              for(Production_Rule rule:matched_rules_clone) System.out.println("Matched rule: "+  rule.Rule_Name);
         			//IEnumerator enum_rules = matched_rules_clone.GetEnumerator();
         			//while(enum_rules.MoveNext()){
         			//	GlobalUtilities.popUpMessage("Matched rule: " +  ((Production_Rule)enum_rules.Current).Rule_Name );
@@ -4948,6 +4951,12 @@ public class ServerLogics {
                     method_pointer.Visual_Attention_Location_World3D_ID = visual_location_chunk_name.substring(10); // "far-point-";
                     //GlobalUtilities.popUpMessage(method_pointer.Visual_Attention_Location_World3D_ID);
                   }
+                  else if ( (visual_location_chunk_name.length() >= 11 && visual_location_chunk_name.substring(0,11).equals( "speedometer")) ){ 		
+                      if(QnactrSimulation.taskVisualization2DEnable)sim.vars.taskVisualization2D.hideObject(sim.vars.taskVisualization2D.visualAttentionCircleID); //Animator.HideComment("500");
+                      World3D_Template_Driving_Method method_pointer = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
+                      method_pointer.Visual_Attention_Location_World3D_ID = visual_location_chunk_name.substring(12); // "speedometer-";
+                      //GlobalUtilities.popUpMessage(method_pointer.Visual_Attention_Location_World3D_ID);
+                    }
                   else if ( (visual_location_chunk_name.length() >= 16 && visual_location_chunk_name.substring(0,16).equals( "customized-point")) ){ 		
                     if(QnactrSimulation.taskVisualization2DEnable)sim.vars.taskVisualization2D.hideObject(sim.vars.taskVisualization2D.visualAttentionCircleID); //Animator.HideComment("500");
                     World3D_Template_Driving_Method method_pointer = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
@@ -5095,16 +5104,20 @@ public class ServerLogics {
               if(visual_location_type.equals( "visual-location")){
                 Entity.Chunk = sim.funs.VisionModuleFun__Find_Visual_Location_In_Visicons_By_Chunk_Spec(Entity.Chunk, false); //find the visual-location chunk in visual display
               }
-              else if (visual_location_type.equals( "visual-location-world3d-driving")){
+              else if (visual_location_type.equals( "visual-location-world3d-driving") || visual_location_type.equals( "visual-location-world3d-driving-criticalelement") || visual_location_type.equals( "visual-location-world3d-driving-speed")){
                 Entity.Chunk = sim.funs.VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec(Entity.Chunk);
                 //sim.vars.visualDisplay.World3D_Visual_Locations.put( Entity.Chunk.Chunk_Name, sim.funs.ChunkFun__Chunk_Clone( Entity.Chunk ) );
               }
-              else if (visual_location_type.equals( "visual-location-world3d-driving-criticalelement")){
-                  Entity.Chunk = sim.funs.VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec(Entity.Chunk);
-                  //sim.vars.visualDisplay.World3D_Visual_Locations.put( Entity.Chunk.Chunk_Name, sim.funs.ChunkFun__Chunk_Clone( Entity.Chunk ) );
-                }
+//              else if (visual_location_type.equals( "visual-location-world3d-driving-criticalelement")){
+//                Entity.Chunk = sim.funs.VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec(Entity.Chunk);
+//                  //sim.vars.visualDisplay.World3D_Visual_Locations.put( Entity.Chunk.Chunk_Name, sim.funs.ChunkFun__Chunk_Clone( Entity.Chunk ) );
+//                }
+//              else if (visual_location_type.equals( "visual-location-world3d-driving-speed")){
+//                  Entity.Chunk = sim.funs.VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec(Entity.Chunk);
+//                  //sim.vars.visualDisplay.World3D_Visual_Locations.put( Entity.Chunk.Chunk_Name, sim.funs.ChunkFun__Chunk_Clone( Entity.Chunk ) );
+//                }
               else {
-                System.out.println("Error! Vision Module has undefined Add visual_location_type: " + visual_location_type);
+                System.err.println("Error! Vision Module has undefined Add visual_location_type: " + visual_location_type);
                 break;
               }
               
@@ -5150,6 +5163,9 @@ public class ServerLogics {
                 else if ( (visual_location_chunk_name.length() >= 10 && visual_location_chunk_name.substring(0,10).equals( "far-point-")) ){ 
                   temp_chunk.Chunk_Type = "far-point";
                 }
+                else if ( (visual_location_chunk_name.length() >= 12 && visual_location_chunk_name.substring(0,12).equals( "speedometer-")) ){ 
+                    temp_chunk.Chunk_Type = "speed";
+                  }
                 else if ( visual_location_chunk_name.equals( "customized-point-dummy-visual-location-point-vehicle-a" ) ){
                   temp_chunk.Chunk_Type = "vehicle-a";
                 }
@@ -5649,6 +5665,14 @@ public class ServerLogics {
                 //sim.vars.visualization__Vision_Module_Last_Attended_Visicon_Name = sim.vars.visionModule.Last_Attended_Visicon_Name;
               }
               else if ( (screen_pos.length() >= 16 && screen_pos.substring(0,16).equals( "critical-element")) ){ 	 // this case is added by Yelly                  
+                  // these commented codes are uncommented by Yelly
+                  sim.vars.visionModule.Last_Attended_Screen_X = "";
+                  sim.vars.visionModule.Last_Attended_Screen_Y = "";
+                  sim.vars.visionModule.Last_Attended_Visual_Location_Name = screen_pos;
+                  sim.vars.visionModule.Last_Attended_Visicon_Name = old_chunk_name;
+                  sim.vars.visualization__Vision_Module_Last_Attended_Visicon_Name = sim.vars.visionModule.Last_Attended_Visicon_Name;
+                }
+              else if ( (screen_pos.length() >= 11 && screen_pos.substring(0,11).equals( "speedometer")) ){ 	 // this case is added by Yelly                  
                   // these commented codes are uncommented by Yelly
                   sim.vars.visionModule.Last_Attended_Screen_X = "";
                   sim.vars.visionModule.Last_Attended_Screen_Y = "";
