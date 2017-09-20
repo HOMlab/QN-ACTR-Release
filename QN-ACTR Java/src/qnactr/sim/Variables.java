@@ -204,6 +204,10 @@ ProgramUtilitiesFun__Combined_Linear_Congruential_Generators
 	 //TODO // public MAAD.Simulator.Utilities.IRuntimeTask Task;
 	
 	//TODO: add other variables
+  
+  // added by Yelly
+  // output qn-answer
+  public boolean qn_answer = false;
 	
   public TaskVisualization2D taskVisualization2D = QnactrSimulation.taskVisualization2D;
   public boolean programGlobalVar__MotorModule_Start_Right_Hand_At_Touch_Screen = false;

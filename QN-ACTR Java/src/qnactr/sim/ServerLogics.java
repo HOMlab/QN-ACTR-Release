@@ -102,7 +102,7 @@ public class ServerLogics {
             return 0.0;
             
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;  
         }
         break;
@@ -156,7 +156,7 @@ public class ServerLogics {
             return 0.0;  
             
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break; 
         }
         break;
@@ -434,6 +434,7 @@ public class ServerLogics {
             //QN-Java
             if(sim.vars.printingModule.Clear_Output_Trace_Txt_Before_Each_Simulation ){ // TODO && (Model.RunNumber == 1) 
                sim.files.Results_trace.clear();
+               sim.files.QN_Result.clear();
             }
             else {
               //do nothing
@@ -697,7 +698,7 @@ public class ServerLogics {
 		              }
 		            }
 		            if(!road_found){
-		              System.out.println("Error! Event_05_World3D_Initialization cannot find road with name: " + start_on_road_name + " for driver_car.");
+		              System.err.println("Error! Event_05_World3D_Initialization cannot find road with name: " + start_on_road_name + " for driver_car.");
 		              SimSystem.abort();
 		            }
 		            driver_car.Start_Road_World3D_ID = the_start_road.World3D_ID;
@@ -767,7 +768,7 @@ public class ServerLogics {
 		              }
 		            }
 		            if(!road_found){
-		              System.out.println("Error! Event_05_World3D_Initialization cannot find road with name: " + start_on_road_name + " for driver_car.");
+		              System.err.println("Error! Event_05_World3D_Initialization cannot find road with name: " + start_on_road_name + " for driver_car.");
 		              SimSystem.abort();
 		            }
 		            
@@ -779,7 +780,7 @@ public class ServerLogics {
 		            //nothing, waiting for driver car to get its on road world3d ID
 		          } //end of World3D_Road
 		          else{
-		            System.out.println("Error! Event_05_World3D_Initialization has undefined world3d object type");  
+		            System.err.println("Error! Event_05_World3D_Initialization has undefined world3d object type");  
 		            SimSystem.abort();
 		          }
 	          } //end of first round
@@ -1251,7 +1252,7 @@ public class ServerLogics {
 	//              the_point.Animator3D_Object_ID = ojbect_id;
 		        	  }
 		            else{
-		              System.out.println("Error! Event_06_Animator_Initialization has undefined Point type: " + the_point.Type);
+		              System.err.println("Error! Event_06_Animator_Initialization has undefined Point type: " + the_point.Type);
 		              SimSystem.abort();
 		            }
 		          } //end of World3D_Point
@@ -1267,12 +1268,12 @@ public class ServerLogics {
 		//              the_line_seg.Animator3D_Object_ID = ojbect_id;
 		            }
 		            else{
-		              System.out.println("Error! Event_06_Animator_Initialization has undefined World3D_Line_Segment the_line_seg.Type: " + the_line_seg.Type );
+		              System.err.println("Error! Event_06_Animator_Initialization has undefined World3D_Line_Segment the_line_seg.Type: " + the_line_seg.Type );
 		              SimSystem.abort();
 		            }
 		          } //end of World3D_Line_Segment
 		          else{
-		            System.out.println("Error! Event_06_Animator_Initialization has undefined world3d object type"); 
+		            System.err.println("Error! Event_06_Animator_Initialization has undefined world3d object type"); 
 		            SimSystem.abort();
 		          }
 		        }
@@ -1496,7 +1497,7 @@ public class ServerLogics {
             //            JOptionPane.showMessageDialog(null, "Clock: " + SimSystem.clock() + ". Operator ID: " + sim.ID  + "\nEnums has serverName: " + ServerName + ". ServiceStage: " + ServiceStage, "ServerLogics.java" , JOptionPane.INFORMATION_MESSAGE); 
             return 0.0;  
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break; 
         }
         break;
@@ -1548,7 +1549,7 @@ public class ServerLogics {
             return 0.0;
             
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;  
         }
         break;
@@ -1619,7 +1620,7 @@ public class ServerLogics {
             }
             
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;	
         }
         break;
@@ -1872,7 +1873,7 @@ public class ServerLogics {
             return duration;
 
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;	
         }
         break;
@@ -1908,7 +1909,7 @@ public class ServerLogics {
             return 0.0;
             
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;	
         }
         break;
@@ -1980,7 +1981,7 @@ public class ServerLogics {
             return 0.0;
             
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;	
         }
         break;
@@ -2104,7 +2105,7 @@ public class ServerLogics {
             return DM_Retrieval_Time;
             
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;	
         }
         break;
@@ -2206,7 +2207,7 @@ public class ServerLogics {
             else{
               //QN-ACTR version, the capacity of procedural model instanceof   sim.vars.productionModule.Processor_Low_Level_Max_Capacity
               double new_utilization_value = 1.0 - ( sim.vars.productionModule.Processor_Low_Level_Remaining_Capacity / sim.vars.productionModule.Processor_Low_Level_Max_Capacity );
-              if (new_utilization_value < 0)System.out.println("Error! Execution ending effect has new_utilization_value < 0");
+              if (new_utilization_value < 0)System.err.println("Error! Execution ending effect has new_utilization_value < 0");
               sim.funs.ProgramUtilitiesFun__Hashtable_Add_OR_Set_Value( sim.vars.utilization__Production_Module_Changes_In_A_Second ,  (double)GlobalUtilities.round(SimSystem.clock(),3) , new_utilization_value ) ;
             }
             
@@ -2218,7 +2219,7 @@ public class ServerLogics {
 
             
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;	
         }
         break;
@@ -2259,7 +2260,7 @@ public class ServerLogics {
               else if (Entity.Entity_Type.equals( "Goal Buffer-2's New Chunk")) {
                 sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "GOAL" + "\t\t" + "SET-BUFFER-CHUNK GOAL-2 " + Entity.Chunk.Chunk_Name );  //sim.vars.goalBuffer.Goal_Buffer_Chunk_2.Chunk_Type); 
               }
-              else System.out.println("Goal Buffer-2 beginning effect has undefined case: Entity.Entity_Type == " + Entity.Entity_Type);
+              else System.err.println("Goal Buffer-2 beginning effect has undefined case: Entity.Entity_Type == " + Entity.Entity_Type);
               
               sim.funs.ProductionModuleFun__Goal_Thread_Add_Or_Update(Entity.Chunk.Chunk_Name);
             }
@@ -2316,7 +2317,7 @@ public class ServerLogics {
             return 0.0;
       
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;	
         }
         break;
@@ -2424,7 +2425,7 @@ public class ServerLogics {
             return 0.0;
   
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;	
         }
         break;
@@ -2526,7 +2527,7 @@ public class ServerLogics {
             return 0.0;
 
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;	
         }
         break;
@@ -2809,7 +2810,7 @@ public class ServerLogics {
                 }
                 else{ // this is 2nd round or later, no match, so kill this entity, no selection needed. NEED TO CHANGE THIS TO SOMETHING ELSE
                   if (sim.vars.centralParametersModule.Use_Procedural_Resources == false) { //double check
-                    System.out.println( "Error! Matching And Selection has 2nd round or later, no match, when Use_Procedural_Resources == false");
+                    System.err.println( "Error! Matching And Selection has 2nd round or later, no match, when Use_Procedural_Resources == false");
                     break; 
                   }
                   //debug
@@ -2839,12 +2840,12 @@ public class ServerLogics {
                 }
                 else if ( round_number > 1 ){ // this is 2nd round or later
                   if (sim.vars.centralParametersModule.Use_Procedural_Resources == false) { //double check
-                    System.out.println( "Error! Matching And Selection has 2nd round or later, matched, when Use_Procedural_Resources == false");
+                    System.err.println( "Error! Matching And Selection has 2nd round or later, matched, when Use_Procedural_Resources == false");
                     break; 
                   }
                 }
                 else { //Halt program.
-                  System.out.println( "Error! Matching And Selection has undefined round_number: " + round_number);
+                  System.err.println( "Error! Matching And Selection has undefined round_number: " + round_number);
                   break;
                 }
                 //see selection part below
@@ -2907,7 +2908,7 @@ public class ServerLogics {
                 }
                 else { // when no match,.equals( "nil"), do not reduce capacity; do not create another entity; just double check and go through the rest process
                   if (matched_rules_clone.size() != 0) {
-                    System.out.println("Error! Matching and selection has no match double check error! ");
+                    System.err.println("Error! Matching and selection has no match double check error! ");
                     break;
                   }
                 }
@@ -3141,11 +3142,11 @@ public class ServerLogics {
                 }
                 
                 case "":{
-                  System.out.println("Motor Execution Ending effect has an empty ISA command type.");
+                  System.err.println("Motor Execution Ending effect has an empty ISA command type.");
                   break;
                 }
                 default: {
-                  System.out.println("Motor Execution Ending effect has undefine case: " + request_type);
+                  System.err.println("Motor Execution Ending effect has undefine case: " + request_type);
                   break;
                 }	
               }//end of resource giving back
@@ -3439,7 +3440,7 @@ public class ServerLogics {
             else if (Entity.Chunk.Chunk_Type.equals( "customized-manual-action" )) {
               String initiation_duration = sim.funs.ChunkFun__Get_Chunk_Slot_Value(Entity.Chunk, "initiation-duration");
               if( !sim.funs.ProgramUtilitiesFun__Is_String_Double (initiation_duration) ) {
-                System.out.println("Error! Motor Initiation must be a double rather than: " + initiation_duration);	
+                System.err.println("Error! Motor Initiation must be a double rather than: " + initiation_duration);	
                 SimSystem.abort();
               }
               
@@ -3791,7 +3792,7 @@ public class ServerLogics {
                   double after_initiation_till_control_device_gets_action_time = 0.100; // the hand movement time needed to hit the joystick key
                   String press_duration_string = sim.funs.ChunkFun__Get_Chunk_Slot_Value(Entity.Chunk, "duration" );
                   if ( ! sim.funs.ProgramUtilitiesFun__Is_String_Double(press_duration_string) ) {
-                    System.out.println("Error! Motor Module timing has ! sim.funs.ProgramUtilitiesFun__Is_String_Double(press_duration), press_duration: " + press_duration_string );
+                    System.err.println("Error! Motor Module timing has ! sim.funs.ProgramUtilitiesFun__Is_String_Double(press_duration), press_duration: " + press_duration_string );
                     SimSystem.abort();
                   }
                   double press_duration = Double.parseDouble ( press_duration_string );
@@ -3834,7 +3835,7 @@ public class ServerLogics {
             if(Entity.Chunk.Chunk_Type.equals( "customized-manual-action")){
               String preparation_duration = sim.funs.ChunkFun__Get_Chunk_Slot_Value(Entity.Chunk, "preparation-duration");
               if( !sim.funs.ProgramUtilitiesFun__Is_String_Double (preparation_duration) ) {
-                System.out.println("Error! Motor Module timing need preparation_duration to be a double rather than: " + preparation_duration);	
+                System.err.println("Error! Motor Module timing need preparation_duration to be a double rather than: " + preparation_duration);	
                 SimSystem.abort();
               }
               motor_preparation_time = 	Double.parseDouble( preparation_duration );
@@ -3875,7 +3876,7 @@ public class ServerLogics {
             if(Entity.Chunk.Chunk_Type.equals( "customized-manual-action")){
               String execution_duration = sim.funs.ChunkFun__Get_Chunk_Slot_Value(Entity.Chunk, "execution-duration" );
               if( !sim.funs.ProgramUtilitiesFun__Is_String_Double (execution_duration) ) {
-                System.out.println("Error! Motor Module timing need execution_duration to be a double rather than: " + execution_duration);	
+                System.err.println("Error! Motor Module timing need execution_duration to be a double rather than: " + execution_duration);	
                 SimSystem.abort();
               }
               motor_execution_time = 	Double.parseDouble( execution_duration );
@@ -3896,7 +3897,7 @@ public class ServerLogics {
             if(Entity.Chunk.Chunk_Type.equals( "customized-manual-action")){
               String finish_duration = sim.funs.ChunkFun__Get_Chunk_Slot_Value(Entity.Chunk, "finish-duration" );
               if( !sim.funs.ProgramUtilitiesFun__Is_String_Double (finish_duration) ) {
-                System.out.println("Error! Motor Module timing need finish_duration to be a double rather than: " + finish_duration);	
+                System.err.println("Error! Motor Module timing need finish_duration to be a double rather than: " + finish_duration);	
                 SimSystem.abort();
               }
               motor_finish_time = 	Double.parseDouble( finish_duration );
@@ -4538,7 +4539,7 @@ public class ServerLogics {
                 sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "TEMPORAL" + "\t" + "create-new-buffer-chunk isa "+Entity.Chunk.Chunk_Type);
                 sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "TEMPORAL" + "\t" + "set-buffer-chunk-temporal "+Entity.Chunk.Chunk_Name);
               } else {
-                System.out.println("Error! Temporal Module Ending effect has temporalBuffer not Empty when Request Temporal");
+                System.err.println("Error! Temporal Module Ending effect has temporalBuffer not Empty when Request Temporal");
                 SimSystem.abort();
               }
               Entity.To = "Temporal Module"; 
@@ -4697,7 +4698,7 @@ public class ServerLogics {
                 else loop = true;
               }
               else {
-                System.out.println("Error! " + trigger_node_name + " has undefined find Event_Priority result.");
+                System.err.println("Error! " + trigger_node_name + " has undefined find Event_Priority result.");
                 break;
               }
               
@@ -4707,7 +4708,7 @@ public class ServerLogics {
               
             }
             else {
-              System.out.println("Error! " + trigger_node_name + " has undefined case.");
+              System.err.println("Error! " + trigger_node_name + " has undefined case.");
               break;
 
             }
@@ -5365,7 +5366,7 @@ public class ServerLogics {
                 else loop = true;
               }
               else {
-                System.out.println("Error! " + trigger_node_name + " has undefined find Event_Priority result.");
+                System.err.println("Error! " + trigger_node_name + " has undefined find Event_Priority result.");
                 break;
               }
               
@@ -5375,7 +5376,7 @@ public class ServerLogics {
               
             }
             else {
-              System.out.println("Error! " + trigger_node_name + " has undefined case.");
+              System.err.println("Error! " + trigger_node_name + " has undefined case.");
               break;
 
             }
@@ -5853,7 +5854,7 @@ public class ServerLogics {
             }
             else if (Entity.Entity_Type.equals( "Visual World3D Offset")){
               if(!sim.vars.visualDisplay.World3D_Visible_Object_IDs.contains(Entity.From)){
-                System.out.println("Error! Visual Display Visual World3D Offset does not contain Entity.From: " + Entity.From );
+                System.err.println("Error! Visual Display Visual World3D Offset does not contain Entity.From: " + Entity.From );
                 break;
               }
               sim.vars.visualDisplay.World3D_Visible_Object_IDs.remove(Entity.From);	
@@ -6206,7 +6207,7 @@ public class ServerLogics {
               else System.out.println("Visual and Audio Display Schedule has sim.vars.taskTemplate.Method == " + sim.vars.taskTemplate.Method + " undefined");
               
             } // respond to timer events
-            else System.out.println("Error! Visual and Audio Display Schedule has an undefined case" );
+            else System.err.println("Error! Visual and Audio Display Schedule has an undefined case" );
             
             break;
             
@@ -6279,7 +6280,7 @@ public class ServerLogics {
                   //stopped using item_delay in auto reaction time computation, because in multi-task, the first response may not correspond to the first display. instead, in case of delay used or multi-task, post processing in Excel to figure out the correct reaction time.
                   
                   int global_trial_num = (int)current_result_table_pointer.get("global-trial-num");
-                  if( global_trial_num != sim.vars.centralParametersModule.Experiment_Trial_Result_List.size()) System.out.println("Error. Control To Display  global_trial_num != Central_Parameters_Module.Experiment_Trial_Result_List.Count");
+                  if( global_trial_num != sim.vars.centralParametersModule.Experiment_Trial_Result_List.size()) System.err.println("Error. Control To Display  global_trial_num != Central_Parameters_Module.Experiment_Trial_Result_List.Count");
                   
                   LinkedList<Object> all_display_items_in_this_trial = (LinkedList<Object>) sim.funs.ProgramUtilitiesFun__LinkedListObject_Get_i_th_Object( sim.vars.centralParametersModule.Experiment_Trial_Display_Item_List, global_trial_num) ;
                   
@@ -6589,11 +6590,11 @@ public class ServerLogics {
                 //determine if to wait for more response items to come or trigger the next trial.
                 if( sim.vars.taskTemplate.Response_Terminates_Display ){
                   if ( number_of_responses_needed == -1){
-                    System.out.println("Error! Control To Display has sim.vars.taskTemplate.Response_Terminates_Display == true and number_of_responses_needed == -1");
+                    System.err.println("Error! Control To Display has sim.vars.taskTemplate.Response_Terminates_Display == true and number_of_responses_needed == -1");
                     terminate_display_stage = true;
                   }
                   else if ( number_of_responses_needed == 0 ){
-                    System.out.println("Error! Control To Display has sim.vars.taskTemplate.Response_Terminates_Display == true and number_of_responses_needed == 0");
+                    System.err.println("Error! Control To Display has sim.vars.taskTemplate.Response_Terminates_Display == true and number_of_responses_needed == 0");
                     terminate_display_stage = true;
                   }
                   else if ( current_response_list_pointer.size() == number_of_responses_needed ){ // all responses collected
@@ -6825,7 +6826,7 @@ public class ServerLogics {
                   break;
                 }
                 default:{
-                  System.out.println("Dynamic Events Beginning Effect has undefine event_name: " + event_name);
+                  System.err.println("Dynamic Events Beginning Effect has undefine event_name: " + event_name);
                   break;
                 }
               }
@@ -7118,7 +7119,7 @@ public class ServerLogics {
                       break;
                     }
                     default:{
-                      System.out.println("Error! Control Motor has undefined axis: " + axis);
+                      System.err.println("Error! Control Motor has undefined axis: " + axis);
                       SimSystem.abort();
                       break;  
                     }
@@ -7132,7 +7133,7 @@ public class ServerLogics {
                 
                 
                 default:{
-                  System.out.println("Error! Control Motor Release Queue has undefined case request_type: " + request_type);
+                  System.err.println("Error! Control Motor Release Queue has undefined case request_type: " + request_type);
                   SimSystem.abort();
                   break;  
                 }
@@ -7159,7 +7160,7 @@ public class ServerLogics {
                 
                 
                 default:{
-                  System.out.println("Error! Control Motor Release Queue timinig has undefined case request_type: " + request_type);
+                  System.err.println("Error! Control Motor Release Queue timinig has undefined case request_type: " + request_type);
                   SimSystem.abort();
                   return 0.0;
                     
@@ -7231,7 +7232,7 @@ public class ServerLogics {
 //                break;  
 //              }
               default:{
-                System.out.println("Error! Delayed_Function_Call_No_Return_Value has undefined function name: " + Entity.Entity_Type);
+                System.err.println("Error! Delayed_Function_Call_No_Return_Value has undefined function name: " + Entity.Entity_Type);
                 SimSystem.abort();
                 break;
               }
@@ -7403,7 +7404,7 @@ public class ServerLogics {
                           note = "\t" + "Substitution_Error_Due_To_Distance_Distribution"+ ",r=" + r_double + ",dis_error" + dis_error + "(cm)";  
                         }
                       }
-                      else System.out.println("Error! Control Motor ending effect has undefined r_double: " + r_double);
+                      else System.err.println("Error! Control Motor ending effect has undefined r_double: " + r_double);
                     }
                     else{ //at home row keys,
                       // do nothing, no distance error  
@@ -7705,7 +7706,7 @@ public class ServerLogics {
                       break;
                     }
                     default:{
-                      System.out.println("Error! Control Motor has undefined name: " + name + " for customized-manual-action");
+                      System.err.println("Error! Control Motor has undefined name: " + name + " for customized-manual-action");
                       SimSystem.abort();
                       break;
                     }
@@ -7724,7 +7725,7 @@ public class ServerLogics {
                   String axis = sim.funs.ChunkFun__Get_Chunk_Slot_Value(Entity.Chunk, "axis");
                   String value_string = sim.funs.ChunkFun__Get_Chunk_Slot_Value(Entity.Chunk, "value");
                   if ( ! sim.funs.ProgramUtilitiesFun__Is_String_Double(value_string) ) {
-                    System.out.println("Error! Control Motor has ! sim.funs.ProgramUtilitiesFun__Is_String_Double(value_string), value_string: " + value_string );
+                    System.err.println("Error! Control Motor has ! sim.funs.ProgramUtilitiesFun__Is_String_Double(value_string), value_string: " + value_string );
                     SimSystem.abort();
                   }
                   double value = Double.parseDouble (value_string);
@@ -7756,7 +7757,7 @@ public class ServerLogics {
                       break;
                     }
                     default:{
-                      System.out.println("Error! Control Motor has undefined axis: " + axis);
+                      System.err.println("Error! Control Motor has undefined axis: " + axis);
                       SimSystem.abort();
                       break;  
                     }
@@ -7989,7 +7990,7 @@ public class ServerLogics {
 	                
 	                if(driving_method_pointer.Who_Drive.equals( "perfect_machine")){
 	                  if( driving_method_pointer.Perfect_Machine_Driving_At_Speed <= 0.0 ) {
-	                    System.out.println("Error! driving_method_pointer.Perfect_Machine_Driving_At_Speed <= 0.0 when Who_Drive == model");
+	                    System.err.println("Error! driving_method_pointer.Perfect_Machine_Driving_At_Speed <= 0.0 when Who_Drive == model");
 	                    SimSystem.abort();
 	                  }
 	                  //assume perfectly following the center of the lane, and therefore all movement is along the road direction.
@@ -8204,7 +8205,7 @@ public class ServerLogics {
 	                      Yaw_new_in_radian = Yaw_in_radian;
 	                    }
 	                    else if( Math.abs(wheel_angle) >= 90 ){
-	                      System.out.println("Error! World3D_Cyclic_Refresh has Math.Abs(wheel_angle) >= 90, wheel_angle: " + wheel_angle);
+	                      System.err.println("Error! World3D_Cyclic_Refresh has Math.Abs(wheel_angle) >= 90, wheel_angle: " + wheel_angle);
 	                      SimSystem.abort();
 	                      X_new = 0.0;
 	                      Z_new = 0.0;
@@ -8296,7 +8297,7 @@ public class ServerLogics {
 	                //              }
 	                
 	                else {
-	                  System.out.println("Error! World3D_Cyclic_Refresh has driving_method_pointer.Who_Drive undefined value: " + driving_method_pointer.Who_Drive);
+	                  System.err.println("Error! World3D_Cyclic_Refresh has driving_method_pointer.Who_Drive undefined value: " + driving_method_pointer.Who_Drive);
 	                  SimSystem.abort();
 	                  
 	                }
@@ -8405,7 +8406,7 @@ public class ServerLogics {
 	                //wait for DriverCar to update
 	              } //end of World3D_Point
 	              else{
-	                System.out.println("Error! World3D_Cyclic_Refresh has undefined world3d object type");  
+	                System.err.println("Error! World3D_Cyclic_Refresh has undefined world3d object type");  
 	                SimSystem.abort();
 	              }
 	              
@@ -8459,7 +8460,7 @@ public class ServerLogics {
 	                  }
 	                }
 	                else{
-	                  System.out.println("Error! World3D_Cyclic_Refresh has undefined Point type: " + the_point.Type);
+	                  System.err.println("Error! World3D_Cyclic_Refresh has undefined Point type: " + the_point.Type);
 	                  SimSystem.abort();
 	                }
 	              } //end of World3D_Point
@@ -8562,7 +8563,7 @@ public class ServerLogics {
             return 0.0;
             
           default:
-            System.out.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
+            System.err.println("Error! ServerLogics has undefined ServiceStage: " + ServiceStage + " for ServerName: " + ServerName);
             break;  
         }
         break;

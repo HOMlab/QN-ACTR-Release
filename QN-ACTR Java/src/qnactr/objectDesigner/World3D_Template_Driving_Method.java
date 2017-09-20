@@ -85,7 +85,10 @@ public class World3D_Template_Driving_Method {
 	private final float insideMirror_perceive_weight = 0.1f;
 	private final float leftMirror_perceive_weight = 0.1f;
 	private final float rightMirror_perceive_weight = 0.1f;
-    
+	
+	// to trigger each q&a
+	private float qn_trigger = 100.0f;
+	public boolean qn_answer_switch = false;
 	
 	private final int OPENDS_CLOCK = 0;
 	private final int NEAR_POINT_ANGLE = 1;
@@ -228,10 +231,21 @@ public class World3D_Template_Driving_Method {
 	
 	// for OpenDS
 	public void sendControlToOpenDS(){
-		String str = "QNClock: " + Double.toString( GlobalUtilities.round(SimSystem.clock(),3) ) + ", "; //in second
+		double qnclock =  GlobalUtilities.round(SimSystem.clock(),3);
+		String str = "QNClock: " + Double.toString(qnclock) + ", "; //in second
 		str += "Accelerator: " + opendsControlAccelerator + ", ";  //0-1
 		str += "Brake: " + opendsControlBrake + ", ";  //0-1
 		str += "Steering: " + opendsControlSteerAngleDegree + ", ";  //steering angle in degree
+		if(qnclock > this.qn_trigger) {
+			str += "report: true, ";  //true/false
+			this.qn_trigger+=100;
+			this.qn_answer_switch = true;
+			sim.funs.ProgramUtilitiesFun__Output_QN_Result_Txt("QNClock: " + qnclock);
+			System.out.println("outputing q&a");
+		}
+		else {
+			str += "report: false, ";  //true/false
+		}
 		//System.out.println("control to OpenDS:" + str);
 				
 		byte buffer[] = new byte[bufferSizetoOpenDS];

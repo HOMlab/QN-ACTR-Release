@@ -1,0 +1,285 @@
+QNClock: 101.0
+
+---------------Retrieve a Chunk: Start---------------
+Computing activation for chunk world3d-driving-criticalelement-sign-img0-0: 
+ 
+world3d-driving-criticalelement-sign-img0-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 0.855
+             , Number_Of_Presentations: 44, last presentation time: 70.63
+             , references: 
+world3d-driving-criticalelement-sign-img0-0
+   ISA        world3d-driving-criticalelement-sign-img
+   content       Raleigh
+   id       sign_Raleigh_roadname_1
+Total base-level: 2.1696528089959384
+
+Computing activation for chunk world3d-driving-criticalelement-sign-img13-0: 
+ 
+world3d-driving-criticalelement-sign-img13-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 14.205
+             , Number_Of_Presentations: 9, last presentation time: 38.825
+             , references: 
+world3d-driving-criticalelement-sign-img13-0
+   ISA        world3d-driving-criticalelement-sign-img
+   content       Wade
+   id       sign_Wade_roadname_1
+Total base-level: 0.6535533598830434
+
+Computing activation for chunk world3d-driving-criticalelement-sign-img48-0: 
+ 
+world3d-driving-criticalelement-sign-img48-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 44.18
+             , Number_Of_Presentations: 32, last presentation time: 99.68
+             , references: 
+world3d-driving-criticalelement-sign-img48-0
+   ISA        world3d-driving-criticalelement-sign-img
+   content       speedLimit30
+   id       sign_speedLimit30_1
+Total base-level: 2.1312544966026445
+
+Computing activation for chunk world3d-driving-criticalelement-sign-img73-0: 
+ 
+world3d-driving-criticalelement-sign-img73-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 72.595
+             , Number_Of_Presentations: 13, last presentation time: 99.025
+             , references: 
+world3d-driving-criticalelement-sign-img73-0
+   ISA        world3d-driving-criticalelement-sign-img
+   content       Ma
+   id       sign_Ma_roadname_1
+Total base-level: 1.5695588182506095
+
+
+The Chunk selected is: world3d-driving-criticalelement-sign-img48-0, with activation: 3.2314287537889763
+=================Retrieve a Chunk: End=================
+
+
+---------------Retrieve a Chunk: Start---------------
+Computing activation for chunk world3d-driving-criticalelement-vehicle-img0-0: 
+ 
+world3d-driving-criticalelement-vehicle-img0-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 2.165
+             , Number_Of_Presentations: 16, last presentation time: 53.6
+             , references: 
+world3d-driving-criticalelement-vehicle-img0-0
+   ISA        world3d-driving-criticalelement-vehicle-img
+   color       grey
+   id       vehicle_grey_AudiS6_1
+Total base-level: 1.16399652463617
+
+Computing activation for chunk world3d-driving-criticalelement-vehicle-img16-0: 
+ 
+world3d-driving-criticalelement-vehicle-img16-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 56.22
+             , Number_Of_Presentations: 22, last presentation time: 100.855
+             , references: 
+world3d-driving-criticalelement-vehicle-img16-0
+   ISA        world3d-driving-criticalelement-vehicle-img
+   color       red
+   id       vehicle_red_CitroenC4_1
+Total base-level: 1.8723096657643838
+
+
+The Chunk selected is: world3d-driving-criticalelement-vehicle-img0-0, with activation: 1.1828804282993182
+=================Retrieve a Chunk: End=================
+
+
+---------------Retrieve a Chunk: Start---------------
+Computing activation for chunk world3d-driving-speed-img0-0: 
+ 
+world3d-driving-speed-img0-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 0.62
+             , Number_Of_Presentations: 18, last presentation time: 11.62
+             , references: 
+world3d-driving-speed-img0-0
+   ISA        world3d-driving-speed-img
+   speed       0
+Total base-level: 1.2730020921679808
+
+Computing activation for chunk world3d-driving-speed-img18-0: 
+ 
+world3d-driving-speed-img18-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 12.275
+             , Number_Of_Presentations: 4, last presentation time: 13.97
+             , references: 
+world3d-driving-speed-img18-0
+   ISA        world3d-driving-speed-img
+   speed       1
+Total base-level: -0.1701520855438936
+
+Computing activation for chunk world3d-driving-speed-img22-0: 
+ 
+world3d-driving-speed-img22-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 14.625
+             , Number_Of_Presentations: 1, last presentation time: 14.625
+             , references: 
+world3d-driving-speed-img22-0
+   ISA        world3d-driving-speed-img
+   speed       2
+Total base-level: -1.5432090706630035
+
+Computing activation for chunk world3d-driving-speed-img23-0: 
+ 
+world3d-driving-speed-img23-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 15.28
+             , Number_Of_Presentations: 4, last presentation time: 17.245
+             , references: 
+world3d-driving-speed-img23-0
+   ISA        world3d-driving-speed-img
+   speed       3
+Total base-level: -0.15316181997470446
+
+Computing activation for chunk world3d-driving-speed-img27-0: 
+ 
+world3d-driving-speed-img27-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 17.9
+             , Number_Of_Presentations: 1, last presentation time: 17.9
+             , references: 
+world3d-driving-speed-img27-0
+   ISA        world3d-driving-speed-img
+   speed       5
+Total base-level: -1.5241564320101464
+
+Computing activation for chunk world3d-driving-speed-img28-0: 
+ 
+world3d-driving-speed-img28-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 18.555
+             , Number_Of_Presentations: 2, last presentation time: 19.21
+             , references: 
+world3d-driving-speed-img28-0
+   ISA        world3d-driving-speed-img
+   speed       6
+Total base-level: -0.8271100276029968
+
+Computing activation for chunk world3d-driving-speed-img30-0: 
+ 
+world3d-driving-speed-img30-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 19.865
+             , Number_Of_Presentations: 1, last presentation time: 19.865
+             , references: 
+world3d-driving-speed-img30-0
+   ISA        world3d-driving-speed-img
+   speed       7
+Total base-level: -1.5123663337437239
+
+Computing activation for chunk world3d-driving-speed-img31-0: 
+ 
+world3d-driving-speed-img31-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 20.385
+             , Number_Of_Presentations: 2, last presentation time: 21.04
+             , references: 
+world3d-driving-speed-img31-0
+   ISA        world3d-driving-speed-img
+   speed       8
+Total base-level: -0.816052041466506
+
+Computing activation for chunk world3d-driving-speed-img33-0: 
+ 
+world3d-driving-speed-img33-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 21.695
+             , Number_Of_Presentations: 1, last presentation time: 21.695
+             , references: 
+world3d-driving-speed-img33-0
+   ISA        world3d-driving-speed-img
+   speed       10
+Total base-level: -1.5011304577583457
+
+Computing activation for chunk world3d-driving-speed-img34-0: 
+ 
+world3d-driving-speed-img34-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 22.35
+             , Number_Of_Presentations: 2, last presentation time: 23.005
+             , references: 
+world3d-driving-speed-img34-0
+   ISA        world3d-driving-speed-img
+   speed       11
+Total base-level: -0.8038995351327876
+
+Computing activation for chunk world3d-driving-speed-img36-0: 
+ 
+world3d-driving-speed-img36-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 23.66
+             , Number_Of_Presentations: 1, last presentation time: 23.66
+             , references: 
+world3d-driving-speed-img36-0
+   ISA        world3d-driving-speed-img
+   speed       12
+Total base-level: -1.4887777868605339
+
+Computing activation for chunk world3d-driving-speed-img37-0: 
+ 
+world3d-driving-speed-img37-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 24.315
+             , Number_Of_Presentations: 2, last presentation time: 24.97
+             , references: 
+world3d-driving-speed-img37-0
+   ISA        world3d-driving-speed-img
+   speed       13
+Total base-level: -0.7914442886002819
+
+Computing activation for chunk world3d-driving-speed-img39-0: 
+ 
+world3d-driving-speed-img39-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 25.625
+             , Number_Of_Presentations: 1, last presentation time: 25.625
+             , references: 
+world3d-driving-speed-img39-0
+   ISA        world3d-driving-speed-img
+   speed       14
+Total base-level: -1.4761121917885283
+
+Computing activation for chunk world3d-driving-speed-img40-0: 
+ 
+world3d-driving-speed-img40-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 26.28
+             , Number_Of_Presentations: 2, last presentation time: 26.935
+             , references: 
+world3d-driving-speed-img40-0
+   ISA        world3d-driving-speed-img
+   speed       15
+Total base-level: -0.7786708320932083
+
+Computing activation for chunk world3d-driving-speed-img42-0: 
+ 
+world3d-driving-speed-img42-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 27.59
+             , Number_Of_Presentations: 2, last presentation time: 28.245
+             , references: 
+world3d-driving-speed-img42-0
+   ISA        world3d-driving-speed-img
+   speed       16
+Total base-level: -0.7699702246882592
+
+Computing activation for chunk world3d-driving-speed-img44-0: 
+ 
+world3d-driving-speed-img44-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 28.765
+             , Number_Of_Presentations: 1, last presentation time: 28.765
+             , references: 
+world3d-driving-speed-img44-0
+   ISA        world3d-driving-speed-img
+   speed       18
+Total base-level: -1.4551824994163445
+
+Computing activation for chunk world3d-driving-speed-img45-0: 
+ 
+world3d-driving-speed-img45-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 29.42
+             , Number_Of_Presentations: 2, last presentation time: 30.075
+             , references: 
+world3d-driving-speed-img45-0
+   ISA        world3d-driving-speed-img
+   speed       19
+Total base-level: -0.7575567483023897
+
+Computing activation for chunk world3d-driving-speed-img47-0: 
+ 
+world3d-driving-speed-img47-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 30.73
+             , Number_Of_Presentations: 1, last presentation time: 30.73
+             , references: 
+world3d-driving-speed-img47-0
+   ISA        world3d-driving-speed-img
+   speed       20
+Total base-level: -1.4416246152953458
+
+Computing activation for chunk world3d-driving-speed-img48-0: 
+ 
+world3d-driving-speed-img48-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 31.385
+             , Number_Of_Presentations: 2, last presentation time: 32.04
+             , references: 
+world3d-driving-speed-img48-0
+   ISA        world3d-driving-speed-img
+   speed       21
+Total base-level: -0.743875194588498
+
+Computing activation for chunk world3d-driving-speed-img50-0: 
+ 
+world3d-driving-speed-img50-0, Last-Retrieval-Activation: 0.0, base_level: nil, permanent_noise: 0.0, creation time: 32.695
+             , Number_Of_Presentations: 110, last presentation time: 101.795
+             , references: 
+world3d-driving-speed-img50-0
+   ISA        world3d-driving-speed-img
+   speed       22
+Total base-level: 3.272791538001745
+
+
+The Chunk selected is: world3d-driving-speed-img50-0, with activation: 3.5068748996587416
+=================Retrieve a Chunk: End=================
+

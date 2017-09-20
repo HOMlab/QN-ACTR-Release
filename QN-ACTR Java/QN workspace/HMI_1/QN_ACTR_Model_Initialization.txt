@@ -17,7 +17,7 @@
 ;; Mind definition ;;
 ;;;;;;;;;;;;;;;;;;;;;
 
-(sgp :esc t :rt -0.5 :bll 0.5 :ans 0.5 :lf 0.4) 
+(sgp :esc t :rt -0.5 :bll 0.5 :ans 0.5 :lf 0.4 :act t) 
 
 ;; driving-control based on Salvucci (2006) driving model with two-point visual-motor control
 
@@ -67,6 +67,7 @@
       stage attending-near
 
 ==>
+!bind! =qn-answer (start-qn-answer)     ;; start output qn-answer if triggered
    +visual-location>
       isa  visual-location-world3d-driving
       kind near-point
@@ -229,8 +230,9 @@
     ?visual-location>
       state error
    ==>
+!bind! =s (decide-report)     ;; decide whether to enter recalling process or to begin a new routine
     =goal>
-      stage    recalling-sign
+      stage    =s
 )
 
 (p read-criticalelement-vehicle
@@ -243,8 +245,9 @@
       color    =col
 
 ==>
+!bind! =s (decide-report)     ;; decide whether to enter recalling process or to begin a new routine
     =goal>
-      stage    recalling-sign
+      stage    =s
 !eval! (world3d-driving-report-criticalelement-vehicle  =col) 
     +imaginal>
       isa      world3d-driving-criticalelement-vehicle-img
@@ -263,8 +266,9 @@
       content    =cont
 
 ==>
+!bind! =s (decide-report)     ;; decide whether to enter recalling process or to begin a new routine
     =goal>
-      stage    recalling-sign
+      stage    =s
 !eval! (world3d-driving-report-criticalelement-sign  =cont) 
     +imaginal>
       isa      world3d-driving-criticalelement-sign-img
@@ -281,8 +285,9 @@
       state error
 
 ==>
+!bind! =s (decide-report)     ;; decide whether to enter recalling process or to begin a new routine
     =goal>
-      stage    recalling-sign
+      stage    =s
 )
 
 (p recall-sign

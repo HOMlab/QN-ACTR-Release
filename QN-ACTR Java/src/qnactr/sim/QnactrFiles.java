@@ -68,6 +68,9 @@ public class QnactrFiles
   QnactrTxtFile Results_trace;
   QnactrTxtFile Results_mental_workload;
   QnactrTxtFile QN_ACTR_Model_Initialization;
+  // added by Yelly
+  // to output qn-result
+  QnactrTxtFile QN_Result;
   
   QnactrExcelFile excelTest;
   
@@ -98,8 +101,7 @@ public class QnactrFiles
     Results_trace = new QnactrTxtFile(hmiFolder + "Results/" + "trace.txt");
     Results_mental_workload = new QnactrTxtFile(hmiFolder + "Results/" + "results_mental_workload.txt");
     QN_ACTR_Model_Initialization = new QnactrTxtFile(hmiFolder + "QN_ACTR_Model_Initialization.txt");
-        
-    
+    QN_Result = new QnactrTxtFile(hmiFolder + "Results/" + "qn_result.txt");
     
     //System.out.println(FILE_NAME_Defaults_ModelParameters + " " + FILE_NAME_Results_trace);
     
@@ -212,6 +214,7 @@ public class QnactrFiles
       Results_results_response.writer.close();
       Results_trace.writer.close();
       Results_mental_workload.writer.close();
+      QN_Result.writer.close();
     } catch (IOException e)
     {
       // TODO Auto-generated catch block
