@@ -87,7 +87,7 @@ public class World3D_Template_Driving_Method {
 	private final float rightMirror_perceive_weight = 0.1f;
 	
 	// to trigger each q&a
-	private float qn_trigger = 100.0f;
+	private float qn_trigger = 150.0f;
 	public boolean qn_answer_switch = false;
 	
 	private final int OPENDS_CLOCK = 0;
@@ -112,6 +112,9 @@ public class World3D_Template_Driving_Method {
 			"speed=",
 			"criticalElements={"
 	};
+	
+	// for performance improvement
+	private int msg_prefix_len[] = {0, 0, 0, 0, 0, 0};
 	
 	public  World3D_Template_Driving_Method(QnactrSimulation Sim){
 		sim = Sim;
@@ -192,6 +195,10 @@ public class World3D_Template_Driving_Method {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		for(int i = 0; i<MSG_PARTS; i++) {
+			this.msg_prefix_len[i] = this.msg_prefix[i].length();
+		}
 	}
 	
 	public void sendControlToTORCS(){
@@ -238,7 +245,7 @@ public class World3D_Template_Driving_Method {
 		str += "Steering: " + opendsControlSteerAngleDegree + ", ";  //steering angle in degree
 		if(qnclock > this.qn_trigger) {
 			str += "report: true, ";  //true/false
-			this.qn_trigger+=100;
+			this.qn_trigger+=50;
 			this.qn_answer_switch = true;
 			sim.funs.ProgramUtilitiesFun__Output_QN_Result_Txt("QNClock: " + qnclock);
 			System.out.println("outputing q&a");
@@ -343,11 +350,11 @@ public class World3D_Template_Driving_Method {
 			System.err.println("wrong msg format received from OpenDS");
 		}
 		else {
-			OpenDSClockSecond = Double.parseDouble(tokens[OPENDS_CLOCK].substring(this.msg_prefix[this.OPENDS_CLOCK].length()));
-			nearPointAngleDegree = Double.parseDouble(tokens[this.NEAR_POINT_ANGLE].substring(this.msg_prefix[this.NEAR_POINT_ANGLE].length()));
-			farPointAngleDegree = Double.parseDouble(tokens[this.FAR_POINT_ANGLE].substring(this.msg_prefix[this.FAR_POINT_ANGLE].length()));
-			farPointDistanceMeter = Double.parseDouble(tokens[this.FAR_POINT_DISTANCE].substring(this.msg_prefix[this.FAR_POINT_DISTANCE].length()));
-			speedmps = Double.parseDouble(tokens[this.SPEED].substring(this.msg_prefix[this.SPEED].length()));
+			OpenDSClockSecond = Double.parseDouble(tokens[OPENDS_CLOCK].substring(this.msg_prefix_len[this.OPENDS_CLOCK]));
+			nearPointAngleDegree = Double.parseDouble(tokens[this.NEAR_POINT_ANGLE].substring(this.msg_prefix_len[this.NEAR_POINT_ANGLE]));
+			farPointAngleDegree = Double.parseDouble(tokens[this.FAR_POINT_ANGLE].substring(this.msg_prefix_len[this.FAR_POINT_ANGLE]));
+			farPointDistanceMeter = Double.parseDouble(tokens[this.FAR_POINT_DISTANCE].substring(this.msg_prefix_len[this.FAR_POINT_DISTANCE]));
+			speedmps = Double.parseDouble(tokens[this.SPEED].substring(this.msg_prefix_len[this.SPEED]));
 			
 			int endInd = tokens[this.CRITICAL_ELEMENTS].indexOf('}');
 			if(endInd<0) {
