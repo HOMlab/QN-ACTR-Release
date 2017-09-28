@@ -113,6 +113,35 @@ public class World3D_Template_Driving_Method {
 			"criticalElements={"
 	};
 	
+	static public enum SpeedLevel{
+		First("Lower-than-25", 0), // [0, 25) km/h
+		Second("25-to-30", 1), // [25, 30) km/h
+		Third("30-to-35", 2), // [30, 35) km/h
+		Forth("35-to-40", 3), // [35, 40) km/h
+		Fifth("40-to-45", 4), // [40, 45) km/h
+		Sixth("45-to-50", 5), // [45, 50) km/h
+		Seventh("More-than-50", 6); // [50, +00) km/h
+		
+		private String range;
+		private int index;
+		
+		private SpeedLevel(String range, int index) {
+			this.range = range;
+			this.index = index;
+		}
+		
+		public String getRange() {
+			return this.range;
+		}
+	}
+	
+	private final static float SpeedLevel_First_Max = 25;
+	private final static float SpeedLevel_Second_Max = 30;
+	private final static float SpeedLevel_Third_Max = 35;
+	private final static float SpeedLevel_Forth_Max = 40;
+	private final static float SpeedLevel_Fifth_Max = 45;
+	private final static float SpeedLevel_Sixth_Max = 50;
+	
 	// for performance improvement
 	private int msg_prefix_len[] = {0, 0, 0, 0, 0, 0};
 	
@@ -555,6 +584,32 @@ public class World3D_Template_Driving_Method {
 	public OpenDS_Percept getOpenDSPercept(){
 		
 		return opendsPerceptEarly; // currently try use this, may change it and see what's different
+	}
+	
+	// get current speed level
+	public SpeedLevel getSpeedLevel() {
+		return speedToSpeedLevel(opendsPerceptEarly.speed);
+	}
+	
+	/*
+	 * @param speed in m/s
+	 * @return speed level
+	 */
+	static public SpeedLevel speedToSpeedLevel(double speed2) {
+		final double speedMSToKmH = 3.6;
+		double speedKmH = speed2 * speedMSToKmH;
+		
+		if(speedKmH < 0) {
+			System.err.println("speedToSpeedLevel ERROR! speed less than 0.");
+			return SpeedLevel.First;
+		}
+		else if(speedKmH < SpeedLevel_First_Max) return SpeedLevel.First;
+		else if(speedKmH < SpeedLevel_Second_Max) return SpeedLevel.Second;
+		else if(speedKmH < SpeedLevel_Third_Max) return SpeedLevel.Third;
+		else if(speedKmH < SpeedLevel_Forth_Max) return SpeedLevel.Forth;
+		else if(speedKmH < SpeedLevel_Fifth_Max) return SpeedLevel.Fifth;
+		else if(speedKmH < SpeedLevel_Sixth_Max) return SpeedLevel.Sixth;
+		return SpeedLevel.Seventh;
 	}
 	
 	public String chooseViewArea() {

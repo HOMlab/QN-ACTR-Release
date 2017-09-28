@@ -5216,7 +5216,7 @@ return return_string;
 	        case "world3d-driving-report-speed":
 	        { //accept only 1 parameter.
 	          if ( content_list.size() < 1 ) { //nothing there, error
-	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 1 parameter, not: " + input_string );
+	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 1 parameter, not: " + input_string );
 	            return null;
 	          }
 	          String para_1;
@@ -24008,7 +24008,7 @@ If the string is invalid or there is no current model then a warning is printed 
 		}
 		// return the vision chunk for speed
 		else if(visual_location.Chunk_Type.equals("visual-location-world3d-driving-speed")) {
-			Chunk visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-speed",  "screen-pos", visual_location.Chunk_Name, "speed", Integer.toString((int) (Math.round(((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).getOpenDSPercept().speed)))});
+			Chunk visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-speed",  "screen-pos", visual_location.Chunk_Name, "speed", ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).getSpeedLevel().getRange()});
     		// for speedometer, add visicon here
             // copied from "Visual Display Onset" part
             Chunk temp_chunk = sim.funs.ChunkFun__Chunk_Clone(visiconChunk);
