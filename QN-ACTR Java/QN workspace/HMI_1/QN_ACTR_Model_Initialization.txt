@@ -212,7 +212,7 @@
       stage    critical-detect-result
     =visual-location>
       isa visual-location-world3d-driving-criticalelement
-      kind critical-element
+      kind "critical-element"
     ?visual>
      state     free
    ==>
