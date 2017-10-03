@@ -2447,23 +2447,29 @@ public class ServerLogics {
             if (Entity.Entity_Type.equals( "Imaginal Buffer's New Chunk")) {
               //ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(), 3) + "\t" + "IMAGINAL" + "\t" + "SET-BUFFER-CHUNK IMAGINAL " + sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk.Chunk_Type); 
               sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "IMAGINAL" + "\t" + "SET-BUFFER-CHUNK IMAGINAL " + Entity.Chunk.Chunk_Name ); 
-              
-              //put Chunk in buffer naming rule: its name is changed into name-j, where j starts from 0. If "name-j" is already a name in the model chunk list, then j++, unitl it is a new name.
-              int j = 0;
+
               String old_chunk_name = Entity.Chunk.Chunk_Name;
-              String new_chunk_name = old_chunk_name + "-" + Integer.toString(j);
-              while(sim.funs.ChunkFun__Is_Chunk_Name(new_chunk_name)){
-                j++;
-                new_chunk_name = old_chunk_name + "-" + Integer.toString(j);
+              
+              if(!Entity.Chunk.Chunk_Type.equals("world3d-driving-speed") && !Entity.Chunk.Chunk_Type.equals("world3d-driving-criticalelement-vehicle") && !Entity.Chunk.Chunk_Type.equals("world3d-driving-criticalelement-sign")) {//put Chunk in buffer naming rule: its name is changed into name-j, where j starts from 0. If "name-j" is already a name in the model chunk list, then j++, unitl it is a new name.
+                  
+	              //put Chunk in buffer naming rule: its name is changed into name-j, where j starts from 0. If "name-j" is already a name in the model chunk list, then j++, unitl it is a new name.
+	              int j = 0;
+	              String new_chunk_name = old_chunk_name + "-" + Integer.toString(j);
+	              while(sim.funs.ChunkFun__Is_Chunk_Name(new_chunk_name)){
+	                j++;
+	                new_chunk_name = old_chunk_name + "-" + Integer.toString(j);
+	              }
+	              Entity.Chunk.Chunk_Name = new_chunk_name;
+	              if(sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Name(old_chunk_name) != -1) {	//when the old chunk is already in DM, need to clear the DM parameters in the old chunk for the new chunk
+	                Entity.Chunk.Activation = (double) 0.0; //all default values
+	                Entity.Chunk.Creation_Time = 0.0;
+	                Entity.Chunk.Number_Of_Presentations = 0;
+	                Entity.Chunk.Presentation_Time_References  = new LinkedList<Double> ();
+	              }
+	              //System.out.println("imaginalbuffer, defining chunk: " + Entity.Chunk.Chunk_Name);
+	              sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );	
+	              //System.out.println("imaginalbuffer, finished defining chunk.");
               }
-              Entity.Chunk.Chunk_Name = new_chunk_name;
-              if(sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Name(old_chunk_name) != -1) {	//when the old chunk is already in DM, need to clear the DM parameters in the old chunk for the new chunk
-                Entity.Chunk.Activation = (double) 0.0; //all default values
-                Entity.Chunk.Creation_Time = 0.0;
-                Entity.Chunk.Number_Of_Presentations = 0;
-                Entity.Chunk.Presentation_Time_References  = new LinkedList<Double> ();
-              }
-              sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );	
               
               sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk = Entity.Chunk;
 //              System.out.println("sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk: ");
@@ -2493,8 +2499,9 @@ public class ServerLogics {
             
             if (Entity.Entity_Type.equals( "Clear Imaginal")) {
               if (!sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk.Chunk_Type.equals("") && !sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk.Chunk_Name.equals("")){ //if imaginal buffer is not empty
+                  //System.out.println("Clear Imaginal, merging chunk: "+ sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk.Chunk_Name +" into DM");
                 sim.funs.DeclarativeModuleFun__Merge_Chunk_Into_DM (sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk, "Imaginal_Buffer");
-                //System.out.println("Clear Imaginal, merged chunk: "+ sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk.Chunk_Name +" into DM");
+                //System.out.println("Clear Imaginal, finished merging chunk: "+ sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk.Chunk_Name +" into DM");
               }
               sim.vars.imaginalBuffer.Imaginal_Buffer_Chunk = new Chunk();
               sim.vars.imaginalBuffer.Empty = true;
@@ -2946,7 +2953,10 @@ public class ServerLogics {
             //Entity.Entity_Type = the_selected_rule_clone.Rule_Name; //now there may be multiple rules selected
             Entity.Production_Rules_List_Clone_From_Matching_And_Selection_To_Execution = selected_rules_list;
             // for each rule, store the variable binding at the time of selection (now)
+        	//System.out.println("matchingandselection beginning===============================");
             for(Production_Rule rule : selected_rules_list) {
+//            	System.out.println("selected rule:");
+//            	sim.funs.ProductionModuleFun__Print_A_Production(rule);
               rule.Variable_Binding = sim.funs.ProductionModuleFun__Bind_Variables_In_Rule_Condition(rule);
             }
             
@@ -4065,7 +4075,9 @@ public class ServerLogics {
                     //nothing
                   }
                 }
+                //System.out.println("retrievalbuffer, defining chunk: " + Entity.Chunk.Chunk_Name);
                 sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );
+                //System.out.println("retrievalbuffer, finished defining chunk.");
                 sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "DECLARATIVE" + "\t" + "SET-BUFFER-CHUNK RETRIEVAL " + Entity.Chunk.Chunk_Name); 
                 sim.vars.retrievalBuffer.Empty = false;
               }	
@@ -5153,10 +5165,12 @@ public class ServerLogics {
                 //Entity.Chunk = sim.funs.VisionModuleFun__Find_Visual_Display_Chunk_By_Chunk_Location_Spec(Entity.Chunk); //find the chunk
                 //Entity.Chunk = sim.funs.VisionModuleFun__Find_Visicon_By_Chunk_Spec(Entity.Chunk); //find the chunk
                 String visual_location_chunk_name = sim.funs.ChunkFun__Get_Chunk_Slot_Value(Entity.Chunk, "screen-pos");
+
+                if(visual_location_chunk_name.contains("dup")) visual_location_chunk_name = visual_location_chunk_name.substring(0, visual_location_chunk_name.indexOf("-dup"));
+                //System.out.println("add visual, visual_location_chunk_name: " + visual_location_chunk_name);
+                
                 //Chunk visual_chunk = sim.funs.ChunkFun__Chunk_Clone(Entity.Chunk);
                 Chunk temp_chunk = new Chunk();
-                sim.funs.ChunkFun__Add_Chunk_Slot_Name_And_Value(temp_chunk, "screen-pos", visual_location_chunk_name);
-                
                 //world3d visual object special cases
                 if(   (visual_location_chunk_name.length() >= 11 && visual_location_chunk_name.substring(0,11).equals( "near-point-")) ) {
                   temp_chunk.Chunk_Type = "near-point";
@@ -5164,19 +5178,26 @@ public class ServerLogics {
                 else if ( (visual_location_chunk_name.length() >= 10 && visual_location_chunk_name.substring(0,10).equals( "far-point-")) ){ 
                   temp_chunk.Chunk_Type = "far-point";
                 }
-                else if ( (visual_location_chunk_name.length() >= 12 && visual_location_chunk_name.substring(0,12).equals( "speedometer-")) ){ 
+                else if ( (visual_location_chunk_name.length() >= 20 && visual_location_chunk_name.substring(0,20).equals( "speedometer-location")) ){ 
+                	// format: speedometer-location
                     temp_chunk.Chunk_Type = "speed";
-                  }
+                }
                 else if ( visual_location_chunk_name.equals( "customized-point-dummy-visual-location-point-vehicle-a" ) ){
                   temp_chunk.Chunk_Type = "vehicle-a";
                 }
-                else if ( (visual_location_chunk_name.length() >= 17 && visual_location_chunk_name.substring(0,17).equals( "critical-element-")) ){
+                else if ( (visual_location_chunk_name.length() >= 26 && visual_location_chunk_name.substring(0,26).equals( "critical-element-location-")) ){
+                	// format: critical-element-location-id
                    temp_chunk.Chunk_Type = "critical-element";
                 }
+
+                //System.out.println("add visual, temp_chunk screen-pos slot value: " + visual_location_chunk_name);
+                sim.funs.ChunkFun__Add_Chunk_Slot_Name_And_Value(temp_chunk, "screen-pos", visual_location_chunk_name);
                 
-                
-                Entity.Chunk = sim.funs.VisionModuleFun__Find_Visicon_By_Location((Chunk)sim.vars.centralParametersModule.Chunks.get((String)temp_chunk.Slot.get("screen-pos")));
-                
+                //System.out.println("add Visual, VisionModuleFun__Find_Visicon_By_Location: " + (String)temp_chunk.Slot.get("screen-pos"));
+                Chunk location_chunk = (Chunk)sim.vars.centralParametersModule.Chunks.get((String)temp_chunk.Slot.get("screen-pos"));
+                //sim.funs.ChunkFun__Print_Chunk(location_chunk);
+                Entity.Chunk = sim.funs.VisionModuleFun__Find_Visicon_By_Location(location_chunk);
+                //System.out.println("add Visual, after VisionModuleFun__Find_Visicon_By_Location, get chunk name: " + Entity.Chunk.Chunk_Name);
                 /*
             			if(   (visual_location_chunk_name.Length >= 10 && visual_location_chunk_name.Substring(0,10).equals( "near-point")) ) {
             				visual_chunk.Chunk_Name = "near-point";
@@ -5209,13 +5230,17 @@ public class ServerLogics {
                 else{
                   if (sim.vars.messageOn) System.out.println ("add Visual, Vision_Module retrieval succeeded");
                   sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "VISION" + "\t\t" + "Encoding-complete " + visual_location_chunk_name  + " NIL"); 
+                  
                   if( Entity.Chunk.Chunk_Name.length() >= 7 && Entity.Chunk.Chunk_Name.substring(0,7).equals( "world3d")){
                     //Currently don't have visual finst for world3d objects.
                   }
                   else{
-                    sim.funs.VisionModuleFun__Place_Visual_Finst_On (Entity.Chunk.Chunk_Name);
+                	  String visicon_name = Entity.Chunk.Chunk_Name;
+                	  if(visicon_name.contains("dup")) visicon_name = Entity.Chunk.DM_Name_Origin;
+                	  //System.out.println("VisionModuleFun__Place_Visual_Finst_On visicon: " +visicon_name );
+                	  sim.funs.VisionModuleFun__Place_Visual_Finst_On (visicon_name);
                   }
-                  
+
                   sim.vars.visionModule.State_Error = false;
                 }
                 sim.vars.visionModule.State_Free = true;
@@ -5247,7 +5272,7 @@ public class ServerLogics {
               }
             }
             
-            else System.out.println( "Vision Module ending effect has an undefined case");
+            else System.err.println( "Vision Module ending effect has an undefined case");
             
             sim.funs.NetworkDetailsVisualizationFun__Get_Visicon();
             sim.funs.NetworkDetailsVisualizationFun__Get_Visual_Buffer_Contents();
@@ -5262,7 +5287,6 @@ public class ServerLogics {
              */
             
             sim.funs.ProgramUtilitiesFun__Hashtable_Add_OR_Set_Value(sim.vars.utilization__Vision_Module_Changes_In_A_Second, (double)GlobalUtilities.round (SimSystem.clock(),3) , 0.0 ) ; 
-            
             break;
             
           case Timing:
@@ -5410,7 +5434,7 @@ public class ServerLogics {
 //                else loop = true;
 //              }
 //              else {
-//                System.out.println("Error! " + trigger_node_name + " has undefined find Event_Priority result.");
+//                System.err.println("Error! " + trigger_node_name + " has undefined find Event_Priority result.");
 //                SimSystem.abort();
 //                loop = true; // to make the compiler happy
 //              }
@@ -5421,7 +5445,7 @@ public class ServerLogics {
 //              
 //            }
 //            else {
-//              System.out.println("Error! " + trigger_node_name + " has undefined find result.");
+//              System.err.println("Error! " + trigger_node_name + " has undefined find result.");
 //              SimSystem.abort();
 //              loop = true; // to make the compiler happy
 //            }
@@ -5543,11 +5567,15 @@ public class ServerLogics {
                 sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "VISION" + "\t\t" + "SET-BUFFER-CHUNK VISUAL-LOCATION " + sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk.Chunk_Name  ); 
                 //ProgramUtilitiesFun__Output_Trace_Txt( sim.funs.ChunkFun__Get_Chunk_Contents (Entity.Chunk) );
             	// added by Yelly
-            	// I need visual-location chunk to be in the center chunks,
-    			sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );
+            	// I need visual-location chunk to be in the center chunks (if not exists before),
+                if (sim.funs.ChunkFun__Is_Chunk_Name(Entity.Chunk.Chunk_Name) == false && !Entity.Chunk.Chunk_Name.contains("dup")) {
+                    //System.out.println("visuallocationbuffer, defining chunk: " + Entity.Chunk.Chunk_Name);
+                    //sim.funs.ChunkFun__Print_Chunk(Entity.Chunk);
+                	sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );
+                    //System.out.println("visuallocationbuffer, finished defining chunk.");
+                }
               }
             }
-            
             
             sim.funs.NetworkDetailsVisualizationFun__Get_Visicon();
             sim.funs.NetworkDetailsVisualizationFun__Get_Visual_Buffer_Contents();
@@ -5620,29 +5648,37 @@ public class ServerLogics {
 
             Entity.Time_Computed = false;
             if (Entity.Entity_Type.equals( "Visual Buffer's New Chunk")) {
-              //put Chunk in buffer naming rule: its name is changed into name-j, where j starts from 0. If "name-j" is already a name in the model chunk list, then j++, unitl it is a new name.
-              int j = 0;
-              String old_chunk_name = Entity.Chunk.Chunk_Name;
-              String new_chunk_name = old_chunk_name + "-" + Integer.toString(j);
-              while(sim.funs.ChunkFun__Is_Chunk_Name(new_chunk_name)){
-                j++;
-                new_chunk_name = old_chunk_name + "-" + Integer.toString(j);
-              }
-              Entity.Chunk.Chunk_Name = new_chunk_name;
-              if(sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Name(old_chunk_name) != -1) {	//when the old chunk is already in DM, need to clear the DM parameters in the old chunk for the new chunk
-                Entity.Chunk.Activation = (double) 0.0; //all default values
-                Entity.Chunk.Creation_Time = 0.0;
-                Entity.Chunk.Number_Of_Presentations = 0;
-                Entity.Chunk.Presentation_Time_References  = new LinkedList<Double> ();
-              }
+            	
+                String old_chunk_name = Entity.Chunk.Chunk_Name;
+                
+            	// careful renaming when it comes to critical elements & speed to avoid chunk accumulation
+            	if(!Entity.Chunk.Chunk_Type.equals("world3d-driving-speed") && !Entity.Chunk.Chunk_Type.equals("world3d-driving-criticalelement-vehicle") && !Entity.Chunk.Chunk_Type.equals("world3d-driving-criticalelement-sign")) {//put Chunk in buffer naming rule: its name is changed into name-j, where j starts from 0. If "name-j" is already a name in the model chunk list, then j++, unitl it is a new name.
+                    int j = 0;
+                    String new_chunk_name = old_chunk_name + "-" + Integer.toString(j);
+                    while(sim.funs.ChunkFun__Is_Chunk_Name(new_chunk_name)){
+                      j++;
+                      new_chunk_name = old_chunk_name + "-" + Integer.toString(j);
+                    }
+                    Entity.Chunk.Chunk_Name = new_chunk_name;
+                    if(sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Name(old_chunk_name) != -1) {	
+                    	//when the old chunk is already in DM, need to clear the DM parameters in the old chunk for the new chunk
+                    	
+                        Entity.Chunk.Activation = (double) 0.0; //all default values
+                        Entity.Chunk.Creation_Time = 0.0;
+                        Entity.Chunk.Number_Of_Presentations = 0;
+                        Entity.Chunk.Presentation_Time_References  = new LinkedList<Double> ();
+                     }
+            	}
               
-              if( Entity.Chunk.Chunk_Name.length() >= 7 && Entity.Chunk.Chunk_Name.substring(0,7).equals( "world3d")){
-                //currently don't define "world3d-" visual buffer chunk.
-              }
-              else{
-            	  // critical element case is in this 
-                sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );
-              }
+//              if( Entity.Chunk.Chunk_Name.length() >= 7 && Entity.Chunk.Chunk_Name.substring(0,7).equals( "world3d")){
+//                //currently don't define "world3d-" visual buffer chunk.
+//              }
+//              else{
+//            	  // critical element case is in this 
+////            	System.out.println("visualbuffer, defining chunk: " + Entity.Chunk.Chunk_Name);
+////                sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );
+////            	System.out.println("visualbuffer, finished defining chunk.");
+//              }
               
               sim.vars.visualBuffer.Visual_Buffer_Chunk = sim.funs.ChunkFun__Chunk_Clone(Entity.Chunk);
               //sim.vars.visualBuffer.Visual_Buffer_Chunk.Chunk_Type = sim.vars.visualBuffer.Visual_Buffer_Chunk.Chunk_Name.Substring(0, sim.vars.visualBuffer.Visual_Buffer_Chunk.Chunk_Name.Length-(Visicon_History_Count-1).ToString().Length ); //e.g., Chunk_Type = "text"
@@ -5859,7 +5895,7 @@ public class ServerLogics {
               }
               sim.vars.visualDisplay.World3D_Visible_Object_IDs.remove(Entity.From);	
             }
-            else System.out.println("Visual Display has undefined entity_type: " + Entity.Entity_Type);
+            else System.err.println("Visual Display has undefined entity_type: " + Entity.Entity_Type);
             
             
             Entity.Scheduled_Task_Enter_Clock_Time = (double) 0.0; //change back to default for safe

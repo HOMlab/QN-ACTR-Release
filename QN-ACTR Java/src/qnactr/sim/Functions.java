@@ -1653,15 +1653,18 @@ public class Functions {
 		
 		String chunk_name = the_chunk.Chunk_Name;
 		String chunk_type = the_chunk.Chunk_Type;
+//		System.out.println("beginning defining chunk: "+ chunk_name + ", of type: " + chunk_type);
+//		System.out.println("sim.vars.centralParametersModule.Chunks number: "+ sim.vars.centralParametersModule.Chunks.size());
 		if (sim.funs.ChunkFun__Is_Chunk_Name(chunk_name)){
-			System.out.println("ChunkFun__Define_Chunk error, " + chunk_name + " is a already defined chunk name.");
+			System.err.println("ChunkFun__Define_Chunk error, " + chunk_name + " is a already defined chunk name.");
 			return the_chunk;
 		}
 		if (sim.funs.ChunkFun__Is_Chunk_Type(chunk_type)==false){
-			System.out.println("ChunkFun__Define_Chunk error, " + chunk_type + " is not defined.");
+			System.err.println("ChunkFun__Define_Chunk error, " + chunk_type + " is not defined.");
 		}
 
 		if (chunk_name.equals( "" )) { //name not specified, need a name
+			System.out.println("ChunkFun__Define_Chunk, name not specified, need a name");
 			//use the name Chunk_Typei.i start from 0.  If "Chunk_Typei" is already a name in the model chunk list, then i++, until it is a new name.
 			if(chunk_type.equals( "sound")){ //special case for audicon chunk naming
 				String kind = sim.funs.ChunkFun__Get_Chunk_Slot_Value(the_chunk, "kind");
@@ -1682,6 +1685,7 @@ public class Functions {
 				}
 				the_chunk.Chunk_Name = new_chunk_name;
 			}
+			System.out.println("ChunkFun__Define_Chunk, name not specified, get a new name: " + the_chunk.Chunk_Name);
 		} //else //a specified name that is not in the model chunk list
 
 		sim.funs.ProgramUtilitiesFun__Hashtable_Add_OR_Set_Value(sim.vars.centralParametersModule.Chunks , the_chunk.Chunk_Name , the_chunk ); //ProgramUtilitiesFun__Hashtable_Add_OR_Set_Value(sim.vars.centralParametersModule.Chunks , chunk_name , the_chunk );
@@ -1702,9 +1706,11 @@ public class Functions {
 				ProgramUtilitiesFun__Output_Trace_Txt("#|Warning: Creating chunk " + value + " of default type chunk |#");
 			}
 		}
-			
-			
 
+		//System.out.println("ChunkFun__Define_Chunk returning, chunk name: "+ the_chunk.Chunk_Name);
+		//System.out.println("ChunkFun__Define_Chunk returning, chunk: ");
+		//sim.funs.ChunkFun__Print_Chunk((Chunk) sim.vars.centralParametersModule.Chunks.get(the_chunk.Chunk_Name));
+		//System.out.println("ChunkFun__Define_Chunk returning, sim.vars.centralParametersModule.Chunks number: "+ sim.vars.centralParametersModule.Chunks.size());
 		return the_chunk;
 	}
 	
@@ -1834,7 +1840,7 @@ public class Functions {
 		
 		//check the validity of the input chunk description. ToDo: take care every cases handled in chunks.lisp, function define-chunks
 		if(The_Chunk_Spec.length < 2){
-			System.out.println("ChunkFun__Make_Chunk_From_Descritption has too few input parameters: " + sim.funs.ProgramUtilitiesFun__StringArray_To_String_Show_Empty(The_Chunk_Spec));
+			System.err.println("ChunkFun__Make_Chunk_From_Descritption has too few input parameters: " + sim.funs.ProgramUtilitiesFun__StringArray_To_String_Show_Empty(The_Chunk_Spec));
 			return null;
 		}
 
@@ -1858,19 +1864,20 @@ public class Functions {
 			//return null;
 			
 			//new method, return the chunk from the model chunk list if it has been defined.
+			//System.out.println("ChunkFun__Make_Chunk_From_Descritption, chunk: " + chunk_name +"exists.");
 			return (Chunk) sim.vars.centralParametersModule.Chunks.get(chunk_name ) ;
 			
 		}
 
 		if (!The_Chunk_Spec[1].toLowerCase().equals( "isa" )){ // the second descritpor (or the first if chunk name omitted) must be "isa"
-			System.out.println("ChunkFun__Make_Chunk_From_Descritption, the second descriptor (or the first if chunk name omitted) must be 'isa': " + sim.funs.ProgramUtilitiesFun__StringArray_To_String_Show_Empty(The_Chunk_Spec) );
+			System.err.println("ChunkFun__Make_Chunk_From_Descritption, the second descriptor (or the first if chunk name omitted) must be 'isa': " + sim.funs.ProgramUtilitiesFun__StringArray_To_String_Show_Empty(The_Chunk_Spec) );
 			return null;
 		}
 
 		String chunk_type = The_Chunk_Spec[2].toLowerCase(); 
 		if (sim.funs.ChunkFun__Is_Chunk_Type(chunk_type) == false){//check whether the chunk type is defined. Must be defined.
 			if (sim.vars.centralParametersModule.Special_Chunk_Types_For_Programming.contains (chunk_type) == false ){
-				System.out.println("ChunkFun__Make_Chunk_From_Descritption has a chunk type: " + chunk_type + " that is not defined but has to be defined." );
+				System.err.println("ChunkFun__Make_Chunk_From_Descritption has a chunk type: " + chunk_type + " that is not defined but has to be defined." );
 				return null;
 			}
 		}
@@ -1996,6 +2003,13 @@ public class Functions {
 		ProgramUtilitiesFun__Output_Trace_Txt(temp_Chunk.Chunk_Name);
 		ProgramUtilitiesFun__Output_Trace_Txt( "   ISA        " + temp_Chunk.Chunk_Type);
 		
+//		System.out.println("ChunkFun__Print_Chunk: ");
+//		System.out.println(temp_Chunk.Chunk_Name + ", Last-Retrieval-Activation: " + temp_Chunk.Activation + ", base_level: " + temp_Chunk.base_level + ", permanent_noise: " +  temp_Chunk.permanent_noise+", creation time: " + temp_Chunk.Creation_Time );
+//		System.out.println("             , Number_Of_Presentations: " + temp_Chunk.Number_Of_Presentations +  ", last presentation time: " + temp_Chunk.Last_Presentation_Time);
+//		System.out.println("             , references: " + sim.funs.ProgramUtilitiesFun__LinkedListDouble_To_String(temp_Chunk.Presentation_Time_References));
+//		System.out.println(temp_Chunk.Chunk_Name);
+//		System.out.println( "   ISA        " + temp_Chunk.Chunk_Type);
+		
 		if(sim.vars.qn_answer) {
 			ProgramUtilitiesFun__Output_QN_Result_Txt(" ");
 			ProgramUtilitiesFun__Output_QN_Result_Txt(temp_Chunk.Chunk_Name + ", Last-Retrieval-Activation: " + temp_Chunk.Activation + ", base_level: " + temp_Chunk.base_level + ", permanent_noise: " +  temp_Chunk.permanent_noise+", creation time: " + temp_Chunk.Creation_Time );
@@ -2009,6 +2023,7 @@ public class Functions {
 		while ( itrSlot.hasNext() ){  // get every element
 			Entry<String, String> currentEntry1 = itrSlot.next();
 			ProgramUtilitiesFun__Output_Trace_Txt( "   " + currentEntry1.getKey() + "       " + currentEntry1.getValue());
+			//System.out.println( "   " + currentEntry1.getKey() + "       " + currentEntry1.getValue());
 			if(sim.vars.qn_answer) ProgramUtilitiesFun__Output_QN_Result_Txt("   " + currentEntry1.getKey() + "       " + currentEntry1.getValue());
 		}
 	}
@@ -2016,17 +2031,19 @@ public class Functions {
 	//DeclarativeModuleFun
 	
 	public Chunk DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name(String The_Chunk_Name){
-		
+		sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name, sim.vars.declarativeModule.Number_of_Chunks: " + sim.vars.declarativeModule.Number_of_Chunks);
 		int i;
 		for (i = 0; i < sim.vars.declarativeModule.Number_of_Chunks ; i ++){ 
 			Chunk temp_chunk = sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, i);
 			if (temp_chunk.Chunk_Name.equals( The_Chunk_Name)){
+				sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name, found.");
 				return sim.funs.ChunkFun__Chunk_Clone (temp_chunk); //suppose each chunk has a unique name
 			}
 		}
 
 		//if no such chunk name
 		//Model.Message ("No chunk with name: " + The_Chunk_Name + " in declarative memory.");
+		sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name, No chunk with name: " + The_Chunk_Name + " in declarative memory.");
 		return new Chunk();
 	}
 	
@@ -2088,7 +2105,11 @@ public class Functions {
 		temp_chunk.Creation_Time = GlobalUtilities.round(SimSystem.clock(),3);
 
 		//define this chunk in model Chunks list (not DM_Chunk list) if it is not defined
-		if (ChunkFun__Is_Chunk_Name(temp_chunk.Chunk_Name) == false)  sim.funs.ChunkFun__Define_Chunk(temp_chunk);
+		if (ChunkFun__Is_Chunk_Name(temp_chunk.Chunk_Name) == false) {
+			System.out.println("DeclarativeModuleFun__Add_DM_Chunk_With_String_Array, define this chunk in model Chunks list (not DM_Chunk list) if it is not defined");
+			sim.funs.ChunkFun__Define_Chunk(temp_chunk);
+			System.out.println("DeclarativeModuleFun__Add_DM_Chunk_With_String_Array, defining chunk finished");
+		}
 
 		//only called when no such chunk name in DM
 		if ((DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name( temp_chunk.Chunk_Name)).Chunk_Name.equals( temp_chunk.Chunk_Name) ) {//already a chunk with the same name in DM
@@ -2123,7 +2144,11 @@ public class Functions {
 		The_Chunk.Creation_Time = GlobalUtilities.round(SimSystem.clock(),3);
 
 		//define this chunk in model Chunks list (not DM_Chunk list) if it is not defined
-		if (ChunkFun__Is_Chunk_Name(The_Chunk.Chunk_Name) == false)  sim.funs.ChunkFun__Define_Chunk(The_Chunk);
+		if (ChunkFun__Is_Chunk_Name(The_Chunk.Chunk_Name) == false) {
+			//System.out.println("DeclarativeModuleFun__Add_DM_Chunk_With_Chunk, defining chunk: " + The_Chunk.Chunk_Name);
+			sim.funs.ChunkFun__Define_Chunk(The_Chunk);
+			//System.out.println("DeclarativeModuleFun__Add_DM_Chunk_With_Chunk, finished defining chunk. ");
+		}
 
 		sim.vars.declarativeModule.DM_Chunk.addFirst ( sim.funs.ChunkFun__Chunk_Clone (The_Chunk) );
 		sim.vars.visualization__DM_Chunk_Number ++;
@@ -2146,7 +2171,6 @@ public class Functions {
 	  else{ //If :bll is set to a number, then the setting of :ol determines how the base-level is computed. 
 	    double return_value = 0.0;
 	    if (sim.vars.centralParametersModule.ol.equals( "t")){ // Optimized Learning 
-	      
 	      long n; //The number of presentations of chunk i.
 	      double L; // The lifetime of chunk i (the time since its creation).
 	      double d; //  The decay parameter
@@ -2158,7 +2182,6 @@ public class Functions {
 	      return_value = Math.log( n / (1-d) ) - d * Math.log( L ) + sim.vars.declarativeModule.blc;
 	      
 	    }
-	    
 	    else if (sim.vars.centralParametersModule.ol.equals( "nil")) { //full computation :ol nil
 	      long n; //The number of presentations of chunk i.
 	      double d; //  The decay parameter
@@ -2480,9 +2503,9 @@ public class Functions {
 	
 	public void DeclarativeModuleFun__Update_Declarative_Finst(){
 		
-		
 		LinkedList<String> remove_list = new LinkedList<String>();
 		Enumeration enum_chunk_name = Collections.enumeration(sim.vars.declarativeModule.Declarative_Retrieved_Finst_Name_List);
+		sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Update_Declarative_Finst, sim.vars.declarativeModule.Declarative_Retrieved_Finst_Name_List number: " + sim.vars.declarativeModule.Declarative_Retrieved_Finst_Name_List.size());
 		while( enum_chunk_name.hasMoreElements()){
 			String chunk_name = (String)enum_chunk_name.nextElement();
 			double last_retrieval_time = (double) sim.vars.declarativeModule.Declarative_Retrieved_Finst_Time_Hashtable.get(chunk_name) ;
@@ -2495,6 +2518,7 @@ public class Functions {
 			sim.vars.declarativeModule.Declarative_Retrieved_Finst_Name_List.remove(temp_name);
 			sim.vars.declarativeModule.Declarative_Retrieved_Finst_Time_Hashtable.remove(temp_name);
 		} 
+		sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Update_Declarative_Finst, finish.");
 	}
 	
 	public  LinkedList<Integer> DeclarativeModuleFun__Find_Add_Retrieval_Matched_DM_Chunk_IDs_By_Chunk_Spec(Chunk The_Chunk_Spec){
@@ -2510,7 +2534,7 @@ public class Functions {
 		int Matched_Chunk_Number = 0; //how many matched chunk found, and also the index of the next empty index of Matched_Chunk_Index
 		if (sim.vars.declarativeModule.Number_of_Chunks < 1){
 			//GlobalUtilities.popUpMessage("DeclarativeModuleFun__Find_Add_Retrieval_Matched_DM_Chunk_IDs_By_Chunk_Spec() Error! sim.vars.declarativeModule.Number_of_Chunks < 1");
-			if(debug) System.out.println("Error! DeclarativeModuleFun__Find_Add_Retrieval_Matched_DM_Chunk_IDs_By_Chunk_Spec() Error! sim.vars.declarativeModule.Number_of_Chunks < 1");
+			if(debug) System.err.println("Error! DeclarativeModuleFun__Find_Add_Retrieval_Matched_DM_Chunk_IDs_By_Chunk_Spec() Error! sim.vars.declarativeModule.Number_of_Chunks < 1");
 		  return return_linkedlist;
 		}
 		
@@ -2671,7 +2695,7 @@ public class Functions {
 						}
 					}
 				} //end of partial matching situation
-				else System.out.println ("DeclarativeModuleFun__Find_Add_Retrieval_Matched_DM_Chunk_IDs_By_Chunk_Spec has sim.vars.declarativeModule.mp illegal: " + sim.vars.declarativeModule.mp );
+				else System.err.println ("DeclarativeModuleFun__Find_Add_Retrieval_Matched_DM_Chunk_IDs_By_Chunk_Spec has sim.vars.declarativeModule.mp illegal: " + sim.vars.declarativeModule.mp );
 			}
 			for (i = 0; i < Temp_Index_Current; i++){      //put Temp_Index array into Matched_Chunk_Index array
 				Matched_Chunk_Index[i] = Temp_Index[i];
@@ -2727,13 +2751,14 @@ public class Functions {
 
 		if (The_Chunk_Spec.Chunk_Type.equals( "nil")){  //the first round is chunk type, ISA match
 			//may add later for chunk type is nil
-			System.out.println("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec has chunk type nil");
-			}
+			ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec has chunk type nil");
+		}
 		else if (The_Chunk_Spec.Chunk_Type.equals( "" )){
 			//may add later for matching any chunk type that is not nil
-			System.out.println("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec has chunk type empty");
-			}
+			ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec has chunk type empty");
+		}
 		else {  //matching a specific chunk type 
+			ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec, matching a specific chunk type , sim.vars.declarativeModule.Number_of_Chunks=" + sim.vars.declarativeModule.Number_of_Chunks);
 			for (i = 0; i < sim.vars.declarativeModule.Number_of_Chunks ; i ++){ 		
 			if (sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, i).Chunk_Type.equals( The_Chunk_Spec.Chunk_Type)){
 			//if (sim.vars.declarativeModule.DM_Chunk[i].Chunk_Type == The_Chunk_Spec.Chunk_Type){
@@ -2743,6 +2768,7 @@ public class Functions {
 			}
 		}
 
+		ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec, Matched_Chunk_Number: " + Matched_Chunk_Number);
 		if (Matched_Chunk_Number == 0)	return -1;
 
 
@@ -3110,7 +3136,7 @@ public class Functions {
 		String creation_time_string = the_creation_time_string;
 		int chunk_id = sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Name(the_chunk_name);
 		if (chunk_id == -1){
-			System.out.println("DeclarativeModuleFun__Set_Base_Levels, the chunk " + the_chunk_name + " does not exist in DM");
+			System.err.println("DeclarativeModuleFun__Set_Base_Levels, the chunk " + the_chunk_name + " does not exist in DM");
 			return;
 		}
 
@@ -3143,7 +3169,7 @@ public class Functions {
 			else if (sim.funs.ProgramUtilitiesFun__Is_String_Double(sim.vars.centralParametersModule.ol)){ //count some number of the latest references
 				int number_of_tracked_references  = Integer.parseInt ( sim.vars.centralParametersModule.ol );
 				if (reference_count > 1000 && number_of_tracked_references > 1000) {
-					System.out.println("DeclarativeModuleFun__Set_All_Base_Levels has reference_count > 1000 && number_of_tracked_references > 1000 may significantly slow down the model. Try a smaller :ol like 10.");
+					System.err.println("DeclarativeModuleFun__Set_All_Base_Levels has reference_count > 1000 && number_of_tracked_references > 1000 may significantly slow down the model. Try a smaller :ol like 10.");
 					return;
 				}
 				double time_interval = (GlobalUtilities.round(SimSystem.clock(),3) - temp_chunk_pointer.Creation_Time) / reference_count;
@@ -3156,7 +3182,7 @@ public class Functions {
 					temp_chunk_pointer.Presentation_Time_References.addLast ((double) GlobalUtilities.round (   (temp_chunk_pointer.Creation_Time + i * time_interval) ,3) );
 				}
 			}
-			else System.out.println ("DeclarativeModuleFun__Set_All_Base_Levels :ol has an undefined case: " + sim.vars.centralParametersModule.ol);
+			else System.err.println ("DeclarativeModuleFun__Set_All_Base_Levels :ol has an undefined case: " + sim.vars.centralParametersModule.ol);
 		}	
 				
 
@@ -3181,7 +3207,7 @@ public class Functions {
 			creation_time_string = The_Key_Value_Pairs[1];
 		}
 		else {
-			System.out.println ("DeclarativeModuleFun__Set_All_Base_Levels needs 2 strings REFERENCE-COUNT and CREATION-TIME. The second can be an empty string. But it is given " + The_Key_Value_Pairs.length + " parameters.");
+			System.err.println ("DeclarativeModuleFun__Set_All_Base_Levels needs 2 strings REFERENCE-COUNT and CREATION-TIME. The second can be an empty string. But it is given " + The_Key_Value_Pairs.length + " parameters.");
 			return;
 		}
 
@@ -3204,12 +3230,12 @@ public class Functions {
 		
 		int chunk_id = sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Name(name1);
 		if (chunk_id == -1){
-			System.out.println("DeclarativeModuleFun__Set_Similarities chunk " + name1 + " does not exist in DM");
+			System.err.println("DeclarativeModuleFun__Set_Similarities chunk " + name1 + " does not exist in DM");
 			return;
 		}
 		chunk_id = sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Name(name2);
 		if (chunk_id == -1){
-			System.out.println("DeclarativeModuleFun__Set_Similarities chunk " + name2 + " does not exist in DM");
+			System.err.println("DeclarativeModuleFun__Set_Similarities chunk " + name2 + " does not exist in DM");
 			return;
 		}
 
@@ -3250,7 +3276,9 @@ public class Functions {
 	}
 	
 	public void DeclarativeModuleFun__Merge_Chunk_Into_DM(Chunk The_Chunk, String the_case){
-		
+
+		//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Merge_Chunk_Into_DM begin... for chunk: " + The_Chunk.Chunk_Name);
+		//System.out.println("DeclarativeModuleFun__Merge_Chunk_Into_DM begin... for chunk: " + The_Chunk.Chunk_Name);
 		
 		////*if(sim.vars.printingModule.Output_Window_Trace)*/System.out.println( "DeclarativeModuleFun__Merge_Chunk_Into_DM: " + The_Chunk.Chunk_Name);
 		//ChunkFun__Print_Chunk(The_Chunk);
@@ -3279,7 +3307,7 @@ public class Functions {
 		if (temp_int == -1) is_same_chunk_type_and_content_in_DM = false;
 		else if (temp_int >= 0 && temp_int < sim.vars.declarativeModule.Number_of_Chunks) is_same_chunk_type_and_content_in_DM = true;
 		else {
-			System.out.println ("DeclarativeModuleFun__Merge_Chunk_Into_DM, dm_chunk_id range Error!");
+			System.err.println ("DeclarativeModuleFun__Merge_Chunk_Into_DM, dm_chunk_id range Error!");
 			return;
 		}
 
@@ -3288,7 +3316,7 @@ public class Functions {
 			//return;
 			
 			//rename
-			//put Chunk in buffer naming rule: its name is changed into name-j, where j starts from 0. If "name-j" is already a name in the model chunk list, then j++, unitl it is a new name.
+			//put Chunk in buffer naming rule: its name is changed into name-j, where j starts from 0. If "name-j" is already a name in the model chunk list, then j++, until it is a new name.
 			int j = 0;
 			String old_chunk_name = The_Chunk.Chunk_Name;
 			String new_chunk_name = old_chunk_name + "-" + Integer.toString(j);
@@ -3297,7 +3325,9 @@ public class Functions {
 				new_chunk_name = old_chunk_name + "-" + Integer.toString(j);
 			}
 			The_Chunk.Chunk_Name = new_chunk_name;
+			System.out.println("DeclarativeModuleFun__Merge_Chunk_Into_DM, defining chunk: " + The_Chunk.Chunk_Name);
 			ChunkFun__Define_Chunk( The_Chunk );
+			System.out.println("DeclarativeModuleFun__Merge_Chunk_Into_DM, finished defining chunk.");
 			
 		}
 
@@ -3305,22 +3335,27 @@ public class Functions {
 		if(is_same_chunk_type_and_content_in_DM == true){
 			Chunk chunk_pointer = sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, dm_chunk_id) ;
 			DeclarativeModuleFun__Update_Chunk_Presentation( chunk_pointer );
-			String DM_chunk_name = chunk_pointer.Chunk_Name;
-			String to_merge_chunk_name = The_Chunk.Chunk_Name;
-			if (ChunkFun__Is_Chunk_Name(to_merge_chunk_name)==false)System.out.println("DeclarativeModuleFun__Merge_Chunk_Into_DM sim.funs.ChunkFun__Is_Chunk_Name(to_merge_chunk_name)==false"); //this should never happen, because clear-buffer functions just add the chunk into model chunk list and then call this function
-			Chunk in_model_list_chunk =  (Chunk) sim.vars.centralParametersModule.Chunks.get(to_merge_chunk_name)  ;
-			if (chunk_pointer.DM_Name_Origin.equals( "" ))in_model_list_chunk.DM_Name_Origin = DM_chunk_name;
-			else in_model_list_chunk.DM_Name_Origin = chunk_pointer.DM_Name_Origin;
-			
-			if( the_case.equals( "Imaginal_Buffer")) sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("Merge_Chunk_Into_DM, is_same_chunk_type_and_content_in_DM: " + is_same_chunk_type_and_content_in_DM + ". The_Chunk: " + sim.funs.ChunkFun__Get_Chunk_Contents(The_Chunk)  );
+			if(!The_Chunk.Chunk_Name.contains("dup")) { // the duplicated chunks will not be in centermodule, and will never be referred to
+				String DM_chunk_name = chunk_pointer.Chunk_Name;
+				String to_merge_chunk_name = The_Chunk.Chunk_Name;
+				if (ChunkFun__Is_Chunk_Name(to_merge_chunk_name)==false)System.err.println("DeclarativeModuleFun__Merge_Chunk_Into_DM sim.funs.ChunkFun__Is_Chunk_Name(to_merge_chunk_name)==false, chunk name: " + to_merge_chunk_name); //this should never happen, because clear-buffer functions just add the chunk into model chunk list and then call this function
+				Chunk in_model_list_chunk =  (Chunk) sim.vars.centralParametersModule.Chunks.get(to_merge_chunk_name)  ;
+				if (chunk_pointer.DM_Name_Origin.equals( "" ))in_model_list_chunk.DM_Name_Origin = DM_chunk_name;
+				else in_model_list_chunk.DM_Name_Origin = chunk_pointer.DM_Name_Origin;
+				
+				if( the_case.equals( "Imaginal_Buffer")) sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("Merge_Chunk_Into_DM, is_same_chunk_type_and_content_in_DM: " + is_same_chunk_type_and_content_in_DM + ". The_Chunk: " + sim.funs.ChunkFun__Get_Chunk_Contents(The_Chunk)  );
+
+			}
 		}
 		else{ //no same-content-chunk in DM.
+			//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Merge_Chunk_Into_DM, no same-content-chunk in DM. Add============================================");
 			DeclarativeModuleFun__Add_DM_Chunk_With_Chunk(The_Chunk);
 			if( the_case.equals( "Imaginal_Buffer")) sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("Merge_Chunk_Into_DM, is_same_chunk_type_and_content_in_DM: " + is_same_chunk_type_and_content_in_DM + ". The_Chunk: " + sim.funs.ChunkFun__Get_Chunk_Contents(The_Chunk)  );
 		}
 
-
-
+		//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Merge_Chunk_Into_DM finish.");
+		//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Merge_Chunk_Into_DM, number of sim.vars.centralParametersModule.Chunks: " + sim.vars.centralParametersModule.Chunks.size());
+		//sim.funs.ChunkFun__Print_All_Chunks_In_Model();
 
 		/*
 		/////////////////////////////////
@@ -3774,7 +3809,7 @@ public  boolean DeviceModuleFun__Any_Display_Pending(String the_display_name){
 				a=2;
 				break;
 			default:
-				System.out.println ("Error! DeviceModuleFun__Get_Pointing_Device_Order has undefined the_device_name: " + the_device_name);
+				System.err.println ("Error! DeviceModuleFun__Get_Pointing_Device_Order has undefined the_device_name: " + the_device_name);
 				a=-1;
 				break;
 		}
@@ -4308,7 +4343,7 @@ return return_string;
 		//prepare a line visicon 
 		if(the_onset_clock_time.equals( "" )) the_onset_clock_time = (Double.toString(GlobalUtilities.round(SimSystem.clock(),3))); // by default
 		else if (sim.funs.ProgramUtilitiesFun__Is_String_Double(the_onset_clock_time) == false)System.err.println("Error! DeviceModuleFun__Visual_Display_Prepare_Line error. sim.funs.ProgramUtilitiesFun__Is_String_Double(the_onset_clock_time) == false ");
-		else if ( GlobalUtilities.round( Double.parseDouble( the_onset_clock_time),3 ) < GlobalUtilities.round(SimSystem.clock(),3) ) System.out.println("Error! DeviceModuleFun__Visual_Display_Prepare_Line error. Double.valueOf( the_onset_clock_time) < Clock ");
+		else if ( GlobalUtilities.round( Double.parseDouble( the_onset_clock_time),3 ) < GlobalUtilities.round(SimSystem.clock(),3) ) System.err.println("Error! DeviceModuleFun__Visual_Display_Prepare_Line error. Double.valueOf( the_onset_clock_time) < Clock ");
 			
 		if(the_color.equals( "" )) the_color = "black"; // by default
 
@@ -4424,7 +4459,7 @@ return return_string;
 
 
 		if(the_onset_clock_time.equals( "" )) the_onset_clock_time = (Double.toString(GlobalUtilities.round(SimSystem.clock(),3))); // by default
-		else if (sim.funs.ProgramUtilitiesFun__Is_String_Double(the_onset_clock_time) == false)System.out.println("DeviceModuleFun__Visual_Display_Prepare_Oval error. sim.funs.ProgramUtilitiesFun__Is_String_Double(the_onset_clock_time) == false ");
+		else if (sim.funs.ProgramUtilitiesFun__Is_String_Double(the_onset_clock_time) == false)System.err.println("DeviceModuleFun__Visual_Display_Prepare_Oval error. sim.funs.ProgramUtilitiesFun__Is_String_Double(the_onset_clock_time) == false ");
 		else if ( GlobalUtilities.round( Double.parseDouble( the_onset_clock_time),3 ) < GlobalUtilities.round(SimSystem.clock(),3) ) System.out.println("Error! DeviceModuleFun__Visual_Display_Prepare_Oval error. Double.valueOf( the_onset_clock_time) < Clock. the_onset_clock_time: "+ Double.parseDouble( the_onset_clock_time) + ", Clock: " + SimSystem.clock() );
 
 		if(the_color.equals( "" )) the_color = "gray"; // button color is gray by default
@@ -4518,8 +4553,8 @@ return return_string;
 		//System.out.println("DeviceModuleFun__Visual_Display_Prepare_Text 2: " + the_text + " , length: " + the_text.Length);
 
 		if(the_onset_clock_time.equals( "" )) the_onset_clock_time = (Double.toString(GlobalUtilities.round(SimSystem.clock(),3))); // by default
-		else if (sim.funs.ProgramUtilitiesFun__Is_String_Double(the_onset_clock_time) == false)System.out.println("DeviceModuleFun__Visual_Display_Prepare_Text error. sim.funs.ProgramUtilitiesFun__Is_String_Double(the_onset_clock_time) == false ");
-		else if ( GlobalUtilities.round( Double.parseDouble( the_onset_clock_time),3 ) < GlobalUtilities.round(SimSystem.clock(),3) ) System.out.println("Error! DeviceModuleFun__Visual_Display_Prepare_Text error. Double.valueOf( the_onset_clock_time) < Clock ");
+		else if (sim.funs.ProgramUtilitiesFun__Is_String_Double(the_onset_clock_time) == false)System.err.println("DeviceModuleFun__Visual_Display_Prepare_Text error. sim.funs.ProgramUtilitiesFun__Is_String_Double(the_onset_clock_time) == false ");
+		else if ( GlobalUtilities.round( Double.parseDouble( the_onset_clock_time),3 ) < GlobalUtilities.round(SimSystem.clock(),3) ) System.err.println("Error! DeviceModuleFun__Visual_Display_Prepare_Text error. Double.valueOf( the_onset_clock_time) < Clock ");
 
 
 		if(the_color.equals( "" )) the_color = "black"; // by default
@@ -4635,7 +4670,7 @@ return return_string;
 		}
 
 		if ( time_delay < 0) {
-			System.out.println("Error! DeviceModuleFun__Visual_Display_Remove_Item_By_Visicon_Name has time_delay < 0: " + time_delay);
+			System.err.println("Error! DeviceModuleFun__Visual_Display_Remove_Item_By_Visicon_Name has time_delay < 0: " + time_delay);
 			return;
 
 		}
@@ -5051,7 +5086,7 @@ return return_string;
 	  
 	  String[] input_array = sim.funs.ProgramUtilitiesFun__String_To_StringArray( input_string );   // e.g., ( = ( + 1 2 ) ( - 2 3 ) ) , variables like =num should have been substituted
 	  if (input_array.length == 0 ) {
-	    System.out.println ( "Error! LispFun__Evaluate_A_List has an empty input: __" + input_string + "__" );
+	    System.err.println ( "Error! LispFun__Evaluate_A_List has an empty input: __" + input_string + "__" );
 	    return null;
 	  }
 	  
@@ -5065,7 +5100,7 @@ return return_string;
 	  String return_string;
 	  if ( !input_array[0].equals( "(" )){ //first String is not a "("
 	    if ( input_array.length > 1){ //error
-	      System.out.println( "Error! LispFun__Evaluate_A_List has an invalid input: " + input_string ) ;
+	      System.err.println( "Error! LispFun__Evaluate_A_List has an invalid input: " + input_string ) ;
 	      return null;
 	    }
 	    else{ // input_array.length() == 1
@@ -5074,7 +5109,7 @@ return return_string;
 	  }
 	  else { // the first String is a "("
 	    if ( input_array.length == 2 ||  !input_array[ input_array.length - 1 ].equals( ")") ) { //error
-	      System.out.println( "Error! LispFun__Evaluate_A_List has an invalid input: " + input_string ) ;
+	      System.err.println( "Error! LispFun__Evaluate_A_List has an invalid input: " + input_string ) ;
 	      return null;
 	    }
 	    else{ // has a valid input with function (format standard), like ( + 1 ( + 1 1 ) ) or ( = 1 2 )
@@ -5090,7 +5125,7 @@ return return_string;
 	        case "get-clock-time":
 	        {
 	          if ( content_list.size() != 0 ) {
-	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 0 parameter, not: " + input_string );
+	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 0 parameter, not: " + input_string );
 	            return null;
 	          }
 	          
@@ -5103,12 +5138,12 @@ return return_string;
 	        case "unity-tangtang-get-enemy-distance":
 	        {
 	          if ( content_list.size() != 0 ) {
-	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 0 parameter, not: " + input_string );
+	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 0 parameter, not: " + input_string );
 	            return null;
 	          }
 	          
 	          if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof UnityJavaUdp)) {
-		            System.out.println ("Error! LispFun__Evaluate_A_List. unity-tangtang-get-enemy-distance sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is UnityJavaUdp)");
+		            System.err.println ("Error! LispFun__Evaluate_A_List. unity-tangtang-get-enemy-distance sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is UnityJavaUdp)");
 		            return null;
 		      }
 	          
@@ -5121,11 +5156,11 @@ return return_string;
 	        case "world3d-driving-get-velocity":
 	        {
 	          if ( content_list.size() != 0 ) {
-	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 0 parameter, not: " + input_string );
+	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 0 parameter, not: " + input_string );
 	            return null;
 	          }
 	          if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method)) {
-	            System.out.println ("Error! LispFun__Evaluate_A_List. driving-get-velocity sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method)");
+	            System.err.println ("Error! LispFun__Evaluate_A_List. driving-get-velocity sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method)");
 //
 	            return "";
 	          }
@@ -5149,11 +5184,11 @@ return return_string;
 	        case "world3d-driving-choosing-viewarea":
 	        {
 		          if ( content_list.size() != 0 ) {
-			            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 0 parameter, not: " + input_string );
+			            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 0 parameter, not: " + input_string );
 			            return null;
 			          }
 			          if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method)) {
-			            System.out.println ("Error! LispFun__Evaluate_A_List. driving-get-velocity sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method)");
+			            System.err.println ("Error! LispFun__Evaluate_A_List. driving-get-velocity sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method)");
 		//
 			            return "";
 			          }
@@ -5233,7 +5268,7 @@ return return_string;
 	          
 	          //now there must be nothing left in content_list
 	          if ( content_list.size() != 0 ) {
-	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 1 parameter, not: " + input_string );
+	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 1 parameter, not: " + input_string );
 	            return null;
 	          }
 	          
@@ -5243,7 +5278,7 @@ return return_string;
 	            case "abs": {
 	              //para 1 must be a number
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_1 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
 	                return null;
 	              }
 	              
@@ -5301,12 +5336,12 @@ return return_string;
 	            {
 	            	//para 1 must be an int number (1,2,3)
 		              if( sim.funs.ProgramUtilitiesFun__Is_String_Int ( para_1 ) == false ) {
-		                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be an int number, not: " + para_1 );
+		                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be an int number, not: " + para_1 );
 		                return null;
 		              }
 		              
 		              if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof UnityJavaUdp)) {
-				            System.out.println ("Error! LispFun__Evaluate_A_List. unity-tangtang-get-enemy-distance sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is UnityJavaUdp)");
+				            System.err.println ("Error! LispFun__Evaluate_A_List. unity-tangtang-get-enemy-distance sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is UnityJavaUdp)");
 				            return null;
 				      }
 			          
@@ -5351,7 +5386,7 @@ return return_string;
 	            }
 	            
 	            default:{
-	              System.out.println("Error! LispFun__Evaluate_A_List has undefined function name inside the 1 parameter number function group: " + function_name);
+	              System.err.println("Error! LispFun__Evaluate_A_List has undefined function name inside the 1 parameter number function group: " + function_name);
 	              return null;
 	              //break;
 	            }
@@ -5378,7 +5413,7 @@ return return_string;
 	        
 	        { //although Lisp accepts more than 2 parameters, here the number of parameters must be 2.
 	          if ( content_list.size() < 2 ) {
-	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 2 parameters, not: " + input_string );
+	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 2 parameters, not: " + input_string );
 	            return null;
 	          }
 	          String para_1;
@@ -5395,7 +5430,7 @@ return return_string;
 	          
 	          //now content_list contains String only for para_2 if there is any String
 	          if ( content_list.size() == 0 ) {
-	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 2 parameters, not: " + input_string );
+	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 2 parameters, not: " + input_string );
 	            return null;
 	          }
 	          String para_2;
@@ -5412,7 +5447,7 @@ return return_string;
 	          
 	          //now there must be nothing left in content_list
 	          if ( content_list.size() != 0 ) {
-	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 2 parameters, not: " + input_string );
+	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 2 parameters, not: " + input_string );
 	            return null;
 	          }
 	          
@@ -5422,11 +5457,11 @@ return return_string;
 	            case "+": {
 	              //para 1 and 2 must be numbers
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_1 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
 	                return null;
 	              }
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_2 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
 	                return null;
 	              }
 	              return_string = Double.toString( Double.parseDouble (para_1) + Double.parseDouble (para_2) );
@@ -5435,11 +5470,11 @@ return return_string;
 	            case "-": {
 	              //para 1 and 2 must be numbers
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_1 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
 	                return null;
 	              }
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_2 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
 	                return null;
 	              }
 	              return_string = Double.toString(Double.parseDouble (para_1) - Double.parseDouble (para_2) );
@@ -5448,11 +5483,11 @@ return return_string;
 	            case "*": {
 	              //para 1 and 2 must be numbers
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_1 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
 	                return null;
 	              }
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_2 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
 	                return null;
 	              }
 	              return_string = Double.toString( Double.parseDouble (para_1) * Double.parseDouble (para_2) );
@@ -5461,11 +5496,11 @@ return return_string;
 	            case "/": {
 	              //para 1 and 2 must be numbers
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_1 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
 	                return null;
 	              }
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_2 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
 	                return null;
 	              }
 	              return_string = Double.toString( Double.parseDouble (para_1) / Double.parseDouble (para_2) );
@@ -5474,11 +5509,11 @@ return return_string;
 	            case "=":{
 	              //para 1 and 2 must be numbers
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_1 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
 	                return null;
 	              }
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_2 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
 	                return null;
 	              }
 	              if (Double.parseDouble (para_1) == Double.parseDouble (para_2)){
@@ -5492,11 +5527,11 @@ return return_string;
 	            case "/=":  {//not equal
 	              //para 1 and 2 must be numbers
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_1 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
 	                return null;
 	              }
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_2 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
 	                return null;
 	              }
 	              if (Double.parseDouble (para_1) != Double.parseDouble (para_2)){
@@ -5510,11 +5545,11 @@ return return_string;
 	            case ">":{
 	              //para 1 and 2 must be numbers
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_1 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
 	                return null;
 	              }
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_2 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
 	                return null;
 	              }
 	              if (Double.parseDouble (para_1) > Double.parseDouble (para_2)){
@@ -5528,11 +5563,11 @@ return return_string;
 	            case "<":{
 	              //para 1 and 2 must be numbers
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_1 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
 	                return null;
 	              }
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_2 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
 	                return null;
 	              }
 	              if (Double.parseDouble (para_1) < Double.parseDouble (para_2)){
@@ -5546,11 +5581,11 @@ return return_string;
 	            case ">=":{
 	              //para 1 and 2 must be numbers
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_1 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
 	                return null;
 	              }
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_2 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
 	                return null;
 	              }
 	              if (Double.parseDouble (para_1) >= Double.parseDouble (para_2)){
@@ -5564,11 +5599,11 @@ return return_string;
 	            case "<=":{
 	              //para 1 and 2 must be numbers
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_1 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_1 must be a number, not: " + para_1 );
 	                return null;
 	              }
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( para_2 ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  para_2 must be a number, not: " + para_2 );
 	                return null;
 	              }
 	              if (Double.parseDouble (para_1) <= Double.parseDouble (para_2)){
@@ -5615,7 +5650,7 @@ return return_string;
 	            }
 
 	            default:{
-	              System.out.println("Error! LispFun__Evaluate_A_List has undefined function name inside the two parameter number function group: " + function_name);
+	              System.err.println("Error! LispFun__Evaluate_A_List has undefined function name inside the two parameter number function group: " + function_name);
 	              return null;
 	            }  
 	          }
@@ -5630,7 +5665,7 @@ return return_string;
 	          int number_of_parameters = 6;
 	          double[] para = new double[number_of_parameters]; //from 0 to number_of_parameters -1
 	          if ( content_list.size() < number_of_parameters ) {
-	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have " + number_of_parameters + " parameters, not: " + input_string );
+	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have " + number_of_parameters + " parameters, not: " + input_string );
 	            return null;
 	          }
 	          
@@ -5639,7 +5674,7 @@ return return_string;
 	            if( !content_list.getFirst().equals( "(" ) ) { //para_i is not a list,  
 	              String value_string = content_list.getFirst();
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( value_string ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  parameter " + Integer.toString((i+1)) + "  must be a number, not: " + value_string );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  parameter " + Integer.toString((i+1)) + "  must be a number, not: " + value_string );
 	                return null;
 	              }
 	              para[i] = Double.parseDouble(value_string);
@@ -5651,28 +5686,28 @@ return return_string;
 	              next_level_eval_content_list.addLast  ( ")" );
 	              String value_string = LispFun__Evaluate_A_List (  sim.funs.ProgramUtilitiesFun__LinkedListString_To_String ( next_level_eval_content_list )  );
 	              if( sim.funs.ProgramUtilitiesFun__Is_String_Double ( value_string ) == false ) {
-	                System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  parameter " + Integer.toString(i+1) + "  must be a number, not: " + value_string );
+	                System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  parameter " + Integer.toString(i+1) + "  must be a number, not: " + value_string );
 	                return null;
 	              }
 	              para[i] = Double.parseDouble(value_string);
 	            }
 	            
 	            if ( (i + 1) < number_of_parameters && content_list.size() == 0 ) {
-	              System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have " + number_of_parameters + " parameters, not: " + input_string );
+	              System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have " + number_of_parameters + " parameters, not: " + input_string );
 	              return null;
 	            }
 	          }
 	          
 	          //now there must be nothing left in content_list
 	          if ( content_list.size() != 0 ) {
-	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have " + number_of_parameters + " parameters, not: " + input_string );
+	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have " + number_of_parameters + " parameters, not: " + input_string );
 	            return null;
 	          }
 	          
 	          switch ( function_name ){
 	            case "world3d-driving-accelerate-brake": { // !eval! (do-accelerate =fthw =dthw =dt)  in Salvucci's model
 	              if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method)) {
-	                System.out.println ("Error! LispFun Eval sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method)");
+	                System.err.println ("Error! LispFun Eval sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method)");
 
 	                return "";
 	              }
@@ -5714,7 +5749,7 @@ return return_string;
 	            
 	            
 	            default:{
-	              System.out.println("Error! LispFun__Evaluate_A_List has undefined function name inside the " + number_of_parameters + " parameter number function group: " + function_name);
+	              System.err.println("Error! LispFun__Evaluate_A_List has undefined function name inside the " + number_of_parameters + " parameter number function group: " + function_name);
 	              return null;
 	            }
 	          }
@@ -5741,7 +5776,7 @@ return return_string;
 	  	          
 	  	          //now content_list contains String only for para_2 if there is any String
 	  	          if ( content_list.size() == 0 ) {
-	  	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 2 parameters, not: " + input_string );
+	  	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 2 parameters, not: " + input_string );
 	  	            return null;
 	  	          }
 	  	          String para_2;
@@ -5758,7 +5793,7 @@ return return_string;
 	  	          
 	  	          //now there must be nothing left in content_list
 	  	          if ( content_list.size() != 0 ) {
-	  	            System.out.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 2 parameters, not: " + input_string );
+	  	            System.err.println("Error! LispFun__Evaluate_A_List " + function_name + "  function must have 2 parameters, not: " + input_string );
 	  	            return null;
 	  	          }
             	return_string = para_1.replaceAll(" ", para_2);	    
@@ -5767,7 +5802,7 @@ return return_string;
             }  //end of replace-space-in-string
             
 	        default: {
-	          System.out.println ("Error! LispFun__Evaluate_A_List has an invalid input: " + input_string + " because of undefined function name: " + function_name  );
+	          System.err.println ("Error! LispFun__Evaluate_A_List has an invalid input: " + input_string + " because of undefined function name: " + function_name  );
 	          return null; 
 	          //break; // no need
 	        }
@@ -5824,7 +5859,7 @@ return return_string;
 	      break;
 	    }
 	    default:{
-	      System.out.println("Error! MotorModuleFun__Add_Item_To_Control_Motor_Release_Queue has undefined case request_type: " + request_type);
+	      System.err.println("Error! MotorModuleFun__Add_Item_To_Control_Motor_Release_Queue has undefined case request_type: " + request_type);
 	      break;	
 	    }
 	  }
@@ -5953,12 +5988,12 @@ return return_string;
 	      String loc_string    = sim.funs.ChunkFun__Get_Chunk_Slot_Value(the_chunk_spec, "loc");
 	      String screen_pos;
 	      if( (object_string.equals( "nil") && loc_string.equals( "nil" ) )  ) { // ACT-R first use the visual object to get the screen-location, if no visual object (visicon) specified in the move-cursor request, use the specified visual-location, if no visual-location, return error.   ACT-R 6.0 motor.lisp: ";; always refer back to the visicon chunks if possible"
-	        System.out.println ( "Error! MotorModuleFun__Compute_Execution_Time the_chunk_spec must move to an object (preferred) or a location, but OBJ: " + object_string + ", and LOC: " +loc_string);
+	        System.err.println ( "Error! MotorModuleFun__Compute_Execution_Time the_chunk_spec must move to an object (preferred) or a location, but OBJ: " + object_string + ", and LOC: " +loc_string);
 	        return (double) 0.0;
 	      }	
 	      else if (!object_string.equals( "nil" )){ //no mater what loc_string is , use the visual icon chunk
 	        if( sim.vars.centralParametersModule.Chunks.containsKey (object_string) == false ) {
-	          System.out.println("Error! MotorModuleFun__Compute_Execution_Time has sim.vars.centralParametersModule.Chunks.ContainsKey (object_string) == false: " + object_string);
+	          System.err.println("Error! MotorModuleFun__Compute_Execution_Time has sim.vars.centralParametersModule.Chunks.ContainsKey (object_string) == false: " + object_string);
 	          return (double) 0.0;
 	        }
 	        else{
@@ -5971,7 +6006,7 @@ return return_string;
 	      }
 	      
 	      if( sim.vars.centralParametersModule.Chunks.containsKey (screen_pos) == false ) {
-	        System.out.println("Error! MotorModuleFun__Compute_Execution_Time after object_string has sim.vars.centralParametersModule.Chunks.ContainsKey (screen_pos) == false: " + screen_pos);
+	        System.err.println("Error! MotorModuleFun__Compute_Execution_Time after object_string has sim.vars.centralParametersModule.Chunks.ContainsKey (screen_pos) == false: " + screen_pos);
 	        return (double) 0.0;
 	      }
 	      Chunk visual_location_chunk_pointer = (Chunk) sim.vars.centralParametersModule.Chunks.get(screen_pos);
@@ -5979,7 +6014,7 @@ return return_string;
 	      String target_height_in_pixel = sim.funs.ChunkFun__Get_Chunk_Slot_Value( visual_location_chunk_pointer, "height" );
 	      //then compute appoach w in the fitts law	
 	      if( !ProgramUtilitiesFun__Is_String_Double(theta) ) {
-	        System.out.println ("Error! MotorModuleFun__Compute_Execution_Time after object_string has !ProgramUtilitiesFun__Is_String_Double(theta), theta: "+ theta );
+	        System.err.println ("Error! MotorModuleFun__Compute_Execution_Time after object_string has !ProgramUtilitiesFun__Is_String_Double(theta), theta: "+ theta );
 	        return (double) 0.0;
 	      }
 	      double approaching_angle_in_radian = Double.parseDouble(theta );
@@ -6021,12 +6056,12 @@ return return_string;
 	      String loc_string    = sim.funs.ChunkFun__Get_Chunk_Slot_Value(the_chunk_spec, "loc");
 	      String screen_pos;
 	      if( (object_string.equals( "nil") && loc_string.equals( "nil" ) )  ) { // ACT-R first use the visual object to get the screen-location, if no visual object (visicon) specified in the move-hand-touch request, use the specified visual-location, if no visual-location, return error.   ACT-R 6.0 motor.lisp: ";; always refer back to the visicon chunks if possible"
-	        System.out.println ( "Error! MotorModuleFun__Compute_Execution_Time the_chunk_spec must move to an object (preferred) or a location, but OBJ: " + object_string + ", and LOC: " +loc_string);
+	        System.err.println ( "Error! MotorModuleFun__Compute_Execution_Time the_chunk_spec must move to an object (preferred) or a location, but OBJ: " + object_string + ", and LOC: " +loc_string);
 	        return (double) 0.0;
 	      }	
 	      else if (!object_string.equals( "nil" )){ //no mater what loc_string is , use the visual icon chunk
 	        if( sim.vars.centralParametersModule.Chunks.containsKey (object_string) == false ) {
-	          System.out.println("Error! MotorModuleFun__Compute_Execution_Time has sim.vars.centralParametersModule.Chunks.ContainsKey (object_string) == false: " + object_string);
+	          System.err.println("Error! MotorModuleFun__Compute_Execution_Time has sim.vars.centralParametersModule.Chunks.ContainsKey (object_string) == false: " + object_string);
 	          return (double) 0.0;
 	        }
 	        else{
@@ -6039,7 +6074,7 @@ return return_string;
 	      }
 	      
 	      if( sim.vars.centralParametersModule.Chunks.containsKey (screen_pos) == false ) {
-	        System.out.println("Error! MotorModuleFun__Compute_Execution_Time after object_string has sim.vars.centralParametersModule.Chunks.ContainsKey (screen_pos) == false: " + screen_pos);
+	        System.err.println("Error! MotorModuleFun__Compute_Execution_Time after object_string has sim.vars.centralParametersModule.Chunks.ContainsKey (screen_pos) == false: " + screen_pos);
 	        return (double) 0.0;
 	      }
 	      Chunk visual_location_chunk_pointer = (Chunk) sim.vars.centralParametersModule.Chunks.get(screen_pos);
@@ -6047,7 +6082,7 @@ return return_string;
 	      String target_height_in_pixel = sim.funs.ChunkFun__Get_Chunk_Slot_Value( visual_location_chunk_pointer, "height" );
 	      //then compute appoach w in the fitts law	
 	      if( !ProgramUtilitiesFun__Is_String_Double(theta) ) {
-	        System.out.println ("Error! MotorModuleFun__Compute_Execution_Time after object_string has !ProgramUtilitiesFun__Is_String_Double(theta), theta: "+ theta );
+	        System.err.println ("Error! MotorModuleFun__Compute_Execution_Time after object_string has !ProgramUtilitiesFun__Is_String_Double(theta), theta: "+ theta );
 	        return (double) 0.0;
 	      }
 	      double approaching_angle_in_radian = Double.parseDouble(theta );
@@ -6096,7 +6131,7 @@ return return_string;
 	  
 	  String command_type = the_chunk_spec.Chunk_Type;
 	  if( !entity.Chunk.Slot.containsKey("motor_execution_time") ){
-	    System.out.println("Error! MotorModuleFun__Compute_Finish_Time need a chunk with motor_execution_time already computed." );
+	    System.err.println("Error! MotorModuleFun__Compute_Finish_Time need a chunk with motor_execution_time already computed." );
 	    SimSystem.abort();
 	  }
 	  double exec_time = Double.parseDouble( sim.funs.ChunkFun__Get_Chunk_Slot_Value( entity.Chunk, "motor_execution_time") );
@@ -6149,7 +6184,7 @@ return return_string;
 	      break;
 	    }	
 	  }
-	  if (return_duration < exec_time ) System.out.println("Error! MotorModuleFun__Compute_Finish_Time: " + return_duration + " < exec_time: " + exec_time);
+	  if (return_duration < exec_time ) System.err.println("Error! MotorModuleFun__Compute_Finish_Time: " + return_duration + " < exec_time: " + exec_time);
 	  
 	  return (double) return_duration ;
 	}
@@ -6301,7 +6336,7 @@ return return_string;
 	  String basic_style_name_2 = MotorModuleFun__Motor_Request_Type_To_Basic_Style_Name(the_chunk2.Chunk_Type ) ;
 
 	  if (!basic_style_name_1.equals(basic_style_name_2)){
-	    System.out.println("MotorModuleFun__Get_Feature_Differences_For_A_Motor_Request error. The two inputs have different motor command basic_style_name: " + basic_style_name_1 + " and " + basic_style_name_2);
+	    System.err.println("MotorModuleFun__Get_Feature_Differences_For_A_Motor_Request error. The two inputs have different motor command basic_style_name: " + basic_style_name_1 + " and " + basic_style_name_2);
 	    return -1;
 	  }
 	  
@@ -6386,7 +6421,7 @@ return return_string;
 	    }
 	    default :
 	    {
-	      System.out.println("Error! MotorModuleFun__Get_Feature_Differences_For_A_Motor_Request has undefined: basic_style_name_1" + basic_style_name_1 );
+	      System.err.println("Error! MotorModuleFun__Get_Feature_Differences_For_A_Motor_Request has undefined: basic_style_name_1" + basic_style_name_1 );
 	      return -1;
 
 	    }
@@ -6401,7 +6436,7 @@ return return_string;
 	  if(hand_string.toLowerCase().equals( "right")) hand_ob = sim.vars.motorModule.Right_Hand;
 	  else if (hand_string.toLowerCase().equals( "left")) hand_ob = sim.vars.motorModule.Left_Hand;
 	  else {
-	    System.out.println ("Error! MotorModuleFun__Get_Finger_Resting_Location has undefined hand_string: " + hand_string);
+	    System.err.println ("Error! MotorModuleFun__Get_Finger_Resting_Location has undefined hand_string: " + hand_string);
 	  }
 	  int hand_x = (int) hand_ob.Location.Ob1;
 	  int hand_y = (int) hand_ob.Location.Ob2;
@@ -6418,7 +6453,7 @@ return return_string;
 		Motor_Module_Hand hand = null;
 	    if (hand_string.equals("left")) hand = sim.vars.motorModule.Left_Hand;
 	    else if (hand_string.equals("right")) hand = sim.vars.motorModule.Right_Hand;
-	    else System.out.println( "Error! MotorModuleFun__Get_Hand_From_Hand_String had undefined hand_string: " + hand_string );
+	    else System.err.println( "Error! MotorModuleFun__Get_Hand_From_Hand_String had undefined hand_string: " + hand_string );
 		return hand;
 	}
 	
@@ -6451,7 +6486,7 @@ return return_string;
 	    }
 	    default:
 	    {
-	      System.out.println( "Error! MotorModuleFun__Get_Motor_Request_Num_To_Prepare had undefined motor_command_style_in_terms_of_computation: " + motor_command_style_in_terms_of_computation );
+	      System.err.println( "Error! MotorModuleFun__Get_Motor_Request_Num_To_Prepare had undefined motor_command_style_in_terms_of_computation: " + motor_command_style_in_terms_of_computation );
 	      return -999;
 	      
 	    }
@@ -7320,7 +7355,7 @@ return return_string;
 	public  double MotorModuleFun__Min_Jerk_Dist(double tm,double a,double d){
 	  if(tm >= d) return a;
 	  if(tm < 0) {
-	    System.out.println("Error! MotorModuleFun__Min_Jerk_Dist Negative time passed to MINJERK-DIST");
+	    System.err.println("Error! MotorModuleFun__Min_Jerk_Dist Negative time passed to MINJERK-DIST");
 	    
 	  }
 	  if(tm == 0) return 0;
@@ -7362,7 +7397,7 @@ return return_string;
 	    }
 	    default:
 	    {
-	      System.out.println("Error! MotorModuleFun__Motor_Computation_Type_To_Style_Name has undefined Motor_Computation_Type: " + Motor_Computation_Type);
+	      System.err.println("Error! MotorModuleFun__Motor_Computation_Type_To_Style_Name has undefined Motor_Computation_Type: " + Motor_Computation_Type);
 	      style_name = "NULL";
 	      break;
 	    }
@@ -7388,12 +7423,12 @@ return return_string;
 	      String loc_string    = sim.funs.ChunkFun__Get_Chunk_Slot_Value(the_motor_request_chunk, "loc");
 	      String screen_pos;
 	      if( (object_string.equals( "nil") && loc_string.equals( "nil" ) )  ) { // ACT-R first use the visual object to get the screen-location, if no visual object (visicon) specified in the move-cursor request, use the specified visual-location, if no visual-location, return error.   ACT-R 6.0 motor.lisp: ";; always refer back to the visicon chunks if possible"
-	        System.out.println ( "Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk move-cursor must move to an object (preferred) or a location, but OBJ: " + object_string + ", and LOC: " +loc_string);
+	        System.err.println ( "Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk move-cursor must move to an object (preferred) or a location, but OBJ: " + object_string + ", and LOC: " +loc_string);
 	        return null;
 	      }	
 	      else if (!object_string.equals("nil")){ //no mater what loc_string is , use the visual icon chunk
 	        if( sim.vars.centralParametersModule.Chunks.containsKey (object_string) == false ) {
-	          System.out.println("Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk has sim.vars.centralParametersModule.Chunks.ContainsKey (object_string) == false: " + object_string);
+	          System.err.println("Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk has sim.vars.centralParametersModule.Chunks.ContainsKey (object_string) == false: " + object_string);
 	          return null;
 	        }
 	        else{
@@ -7406,7 +7441,7 @@ return return_string;
 	      }
 	      
 	      if( sim.vars.centralParametersModule.Chunks.containsKey (screen_pos) == false ) {
-	        System.out.println("Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk after object_string has sim.vars.centralParametersModule.Chunks.ContainsKey (screen_pos) == false: " + screen_pos);
+	        System.err.println("Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk after object_string has sim.vars.centralParametersModule.Chunks.ContainsKey (screen_pos) == false: " + screen_pos);
 	        return null;
 	      }
 	      Chunk visual_location_chunk_pointer = (Chunk) sim.vars.centralParametersModule.Chunks.get(screen_pos);
@@ -7432,12 +7467,12 @@ return return_string;
 	      String hand_string    = sim.funs.ChunkFun__Get_Chunk_Slot_Value(the_motor_request_chunk, "hand");
 	      String screen_pos;
 	      if( (object_string.equals( "nil") && loc_string.equals( "nil" ) )  ) { // ACT-R first use the visual object to get the screen-location, if no visual object (visicon) specified in the move-hand-touch request, use the specified visual-location, if no visual-location, return error.   ACT-R 6.0 motor.lisp: ";; always refer back to the visicon chunks if possible"
-	        System.out.println ( "Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk move-hand-touch must move to an object (preferred) or a location, but OBJ: " + object_string + ", and LOC: " +loc_string);
+	        System.err.println ( "Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk move-hand-touch must move to an object (preferred) or a location, but OBJ: " + object_string + ", and LOC: " +loc_string);
 	        return null;
 	      }	
 	      else if (!object_string.equals("nil")){ //no mater what loc_string is , use the visual icon chunk
 	        if( sim.vars.centralParametersModule.Chunks.containsKey (object_string) == false ) {
-	          System.out.println("Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk move-hand-touch has sim.vars.centralParametersModule.Chunks.ContainsKey (object_string) == false: " + object_string);
+	          System.err.println("Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk move-hand-touch has sim.vars.centralParametersModule.Chunks.ContainsKey (object_string) == false: " + object_string);
 	          return null;
 	        }
 	        else{
@@ -7450,7 +7485,7 @@ return return_string;
 	      }
 	      
 	      if( sim.vars.centralParametersModule.Chunks.containsKey (screen_pos) == false ) {
-	        System.out.println("Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk move-hand-touch after object_string has sim.vars.centralParametersModule.Chunks.ContainsKey (screen_pos) == false: " + screen_pos);
+	        System.err.println("Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk move-hand-touch after object_string has sim.vars.centralParametersModule.Chunks.ContainsKey (screen_pos) == false: " + screen_pos);
 	        return null;
 	      }
 	      Chunk visual_location_chunk_pointer = (Chunk) sim.vars.centralParametersModule.Chunks.get(screen_pos);
@@ -7479,7 +7514,7 @@ return return_string;
 	    }
 	    default:
 	    {
-	      System.out.println( "Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk has undefined command_type_in_terms_of_add_motor_request : " + the_motor_request_chunk.Chunk_Type);
+	      System.err.println( "Error! MotorModuleFun__Motor_Request_Chunk_To_Motor_Computation_Chunk has undefined command_type_in_terms_of_add_motor_request : " + the_motor_request_chunk.Chunk_Type);
 	      value = null;
 	      break;
 	    }
@@ -7531,7 +7566,7 @@ return return_string;
 	  else if (dividing_method.equals( "by_digrams")){
 	    //TODO
 	  }
-	  else System.out.println("Error! MotorModuleFun__Motor_Request_Type_Letters_To_Press_Keys has undefined dividing_method: " + dividing_method);
+	  else System.err.println("Error! MotorModuleFun__Motor_Request_Type_Letters_To_Press_Keys has undefined dividing_method: " + dividing_method);
 	  
 	}
 	
@@ -7554,7 +7589,7 @@ return return_string;
 	    }
 	    default:
 	    {
-	      System.out.println( "Error! MotorModuleFun__Motor_Request_Type_To_Basic_Style_Name has undefined command_type_in_terms_of_add_motor_request : " + command_type_in_terms_of_add_motor_request);
+	      System.err.println( "Error! MotorModuleFun__Motor_Request_Type_To_Basic_Style_Name has undefined command_type_in_terms_of_add_motor_request : " + command_type_in_terms_of_add_motor_request);
 	      returnString= "NULL" ;
 	      break;
 	    }
@@ -7596,7 +7631,7 @@ return return_string;
 	    }
 	    default:
 	    {
-	      System.out.println( "Error! MotorModuleFun__Motor_Request_Type_To_Motor_Computation_Type has undefined command_type_in_terms_of_add_motor_request : " + command_type_in_terms_of_add_motor_request);
+	      System.err.println( "Error! MotorModuleFun__Motor_Request_Type_To_Motor_Computation_Type has undefined command_type_in_terms_of_add_motor_request : " + command_type_in_terms_of_add_motor_request);
 	      motor_command_style_in_terms_of_computation = "NULL" ;
 	      break;
 	    }
@@ -8362,7 +8397,7 @@ return return_string;
               temp_line = sim.funs.ProgramUtilitiesFun__String_Remove_Space_And_Tab_From_The_Beginning(temp_line); //remove potential spaces and tabs
             }
             else if (temp_line.substring(0, 2).equals( "#|")){//double open error
-              System.out.println("Error! ParametersFun__Load_ACTR_Model_Into_Lines temp_line.Substring(0, 2) == #| double open error. Line: " + temp_line);
+              System.err.println("Error! ParametersFun__Load_ACTR_Model_Into_Lines temp_line.Substring(0, 2) == #| double open error. Line: " + temp_line);
               return null;
             }
             else{//keep it open and skip this line
@@ -8389,7 +8424,7 @@ return return_string;
             else new_temp_line = new_temp_line + Character.toString(a_char);   //outside "" -> ToLower,  inside "" -> unchanged
           }
           
-          if (quotation_area_open) System.out.println( "Error! ParametersFun__Load_ACTR_Model_Into_Lines has a line ends with quotation area open: " + temp_line); //each line must have quotation marks closed
+          if (quotation_area_open) System.err.println( "Error! ParametersFun__Load_ACTR_Model_Into_Lines has a line ends with quotation area open: " + temp_line); //each line must have quotation marks closed
           temp_line = new_temp_line;
           //old temp_line = temp_line.ToLower();  //change all Initialization codes to lowercase
           
@@ -8425,7 +8460,7 @@ return return_string;
     }    
     
 	  
-	  if(comment_area_open == true) System.out.println("ParametersFun__Load_ACTR_Model_Into_Lines Error. comment_area_open == true At the end.");
+	  if(comment_area_open == true) System.err.println("ParametersFun__Load_ACTR_Model_Into_Lines Error. comment_area_open == true At the end.");
 	  
 	  return return_list;
 	}
@@ -8695,7 +8730,7 @@ return return_string;
 	        a_list.removeFirst();
 	        String loc_Z = a_list.getFirst();
 	        if (sim.funs.ProgramUtilitiesFun__Is_String_Double (loc_X) == false) {
-	          System.out.println("Error! set_docking_target_location need all parameters to be double numbers rather than: " + all_parameters);
+	          System.err.println("Error! set_docking_target_location need all parameters to be double numbers rather than: " + all_parameters);
 	          break;
 	        }
 	        sim.vars.spaceDrivingVar__Target_Initiatial_Location_And_Rotation.Ob1 = Double.parseDouble(loc_X);  //in cm
@@ -8820,7 +8855,7 @@ return return_string;
 	  
 	  if( the_standard_lists.size() == 0 ) return null;
 	  if( !the_standard_lists.getFirst().equals("(") ){ //since count != 0, this is guarenteed.
-	    System.out.println("Error! ParametersFun__Remove_A_List_From_Initialization_Lists , (String) the_standard_lists.First.Value != (, but " + (String) the_standard_lists.getFirst());
+	    System.err.println("Error! ParametersFun__Remove_A_List_From_Initialization_Lists , (String) the_standard_lists.First.Value != (, but " + (String) the_standard_lists.getFirst());
 	    return null;
 	  }
 	  LinkedList<String> return_list = new LinkedList<String> ();
@@ -8893,12 +8928,12 @@ return return_string;
 	    else {} //do nothing
 	    
 	    if (open_left_parenthesis < 0) { 
-	      System.out.println("ParametersFun__Standardize_ACTR_Model_Lines Error. One ) is not preceded by a ( " );
+	      System.err.println("ParametersFun__Standardize_ACTR_Model_Lines Error. One ) is not preceded by a ( " );
 	      break;
 	    }
 	  }
 	  if (open_left_parenthesis > 0) { 
-	    System.out.println("ParametersFun__Standardize_ACTR_Model_Lines Error. " + open_left_parenthesis + " open left parentheses are not closed");
+	    System.err.println("ParametersFun__Standardize_ACTR_Model_Lines Error. " + open_left_parenthesis + " open left parentheses are not closed");
 	  } // open_left_parenthesis < 0 cases are handled above in the while loop.
 	  
 	  /*
@@ -8935,7 +8970,7 @@ return return_string;
 	  //LinkedList<String> temp_node = return_list;
 	  
 	  if(return_list == null || return_list.size() == 0 || return_list.getFirst() == null) {
-	    System.out.println("Error! Cannot find or load the QN_ACTR_Model_Initialization.txt");
+	    System.err.println("Error! Cannot find or load the QN_ACTR_Model_Initialization.txt");
 	    SimSystem.abort();
 	  }
 	  
@@ -9087,7 +9122,7 @@ return return_string;
 	    switch(The_Key){
 	      case ":at":{
 	        if (!sim.vars.utilityModule.utility_Computation_Method.equals( "temporal-difference-reinforcement")) System.out.println("Warning: spp " + The_Key + " needs sim.vars.utilityModule.utility_Computation_Method == \"temporal-difference-reinforcement\" ");
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Value ) ) System.out.println("Error! ParametersFun__UtilityModule_Spp needs The_Key: " + The_Key + " to be a double rather than: " + The_Value   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Value ) ) System.err.println("Error! ParametersFun__UtilityModule_Spp needs The_Key: " + The_Key + " to be a double rather than: " + The_Value   );
 	        (ProductionModuleFun__Find_Production_Rule_Pointer_By_Rule_Name(the_rule_name)).Action_Time =  (double) Double.parseDouble( The_Value );
 	        break;
 	      }
@@ -9137,7 +9172,7 @@ return return_string;
 	      }
 	      
 	      default:{
-	        System.out.println("ParametersFun__UtilityModule_Spp has undefined case: " + The_Key);
+	        System.err.println("ParametersFun__UtilityModule_Spp has undefined case: " + The_Key);
 	        break;
 	      }
 	    }
@@ -9197,7 +9232,7 @@ return return_string;
 	    int chunk_id = DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Name(the_chunk_name);
 	    Chunk temp_chunk_pointer = new Chunk();
 	    if (chunk_id < 0 ) {
-	      System.out.println("ParametersFun__Declarative_Module_Sdp has chunk_id < 0 ");
+	      System.err.println("ParametersFun__Declarative_Module_Sdp has chunk_id < 0 ");
 	      continue;
 	    }
 	    else {
@@ -9220,7 +9255,7 @@ return return_string;
 	          temp_chunk_pointer.Creation_Time = temp_value;
 	        }
 	        else {
-	          System.out.println("ParametersFun__Declarative_Module_Sdp error, CHUNK CREATION-TIME MUST BE SET TO A NUMBER LESS THAN OR EQUAL TO THE CURRENT TIME.");
+	          System.err.println("ParametersFun__Declarative_Module_Sdp error, CHUNK CREATION-TIME MUST BE SET TO A NUMBER LESS THAN OR EQUAL TO THE CURRENT TIME.");
 	        }
 	        break;
 	      }
@@ -9283,7 +9318,7 @@ return return_string;
 	        break;
 	      }
 	      default:{
-	        System.out.println("ParametersFun__Declarative_Module_Sdp has undefined case: " + The_Key);
+	        System.err.println("ParametersFun__Declarative_Module_Sdp has undefined case: " + The_Key);
 	        break;
 	      }
 	    }
@@ -9297,7 +9332,7 @@ return return_string;
 	  
 	  int j;
 	  
-	  if (The_Key_Value_Pairs.length < 2) System.out.println("ParametersFun__General_Sgp error! need at least 2 strings");
+	  if (The_Key_Value_Pairs.length < 2) System.err.println("ParametersFun__General_Sgp error! need at least 2 strings");
 	  
 	  //GlobalUtilities.popUpMessage(sim.funs.ProgramUtilitiesFun__StringArray_To_String_Show_Empty(The_Key_Value_Pairs));
 	  
@@ -9309,13 +9344,13 @@ return return_string;
 	      {
 	        if (The_Key_Value_Pairs[j+1].equals( "t" )) sim.vars.declarativeModule.act = true;
 	        else if (The_Key_Value_Pairs[j+1].equals( "nil" )) sim.vars.declarativeModule.act = false;
-	        else System.out.println ("ParametersFun__General_Sgp :act error! the value must be string t or nil");
+	        else System.err.println ("ParametersFun__General_Sgp :act error! the value must be string t or nil");
 	        break;
 	      }
 	      case ":alpha":
 	      {
 	        //could be either TD or PG-C //if (!sim.vars.utilityModule.utility_Computation_Method.equals("temporal-difference-reinforcement")) GlobalUtilities.popUpMessage("Warning: sgp " + The_Key_Value_Pairs[j].ToLower() +" needs sim.vars.utilityModule.utility_Computation_Method == \"temporal-difference-reinforcement\" ");
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.utilityModule.alpha =  (double) Double.parseDouble (The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
@@ -9326,13 +9361,13 @@ return return_string;
 	      }
 	      case ":aural-activation":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.auralBuffer.Aural_Activation =  (double) Double.parseDouble (The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":aural-location-activation":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.auralLocationBuffer.Aural_Location_Activation =  (double) Double.parseDouble (The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
@@ -9355,34 +9390,34 @@ return return_string;
 	      {
 	        if (The_Key_Value_Pairs[j+1].equals( "t") ) sim.vars.motorModule.Cursor_Noise = true;
 	        else if (The_Key_Value_Pairs[j+1].equals( "nil" )) sim.vars.motorModule.Cursor_Noise = false;
-	        else System.out.println ("ParametersFun__General_Sgp " + para_name + " error! the value must be string t or nil");
+	        else System.err.println ("ParametersFun__General_Sgp " + para_name + " error! the value must be string t or nil");
 	        
 	        break;
 	      }
 	      
 	      case ":declarative-finst-span":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.declarativeModule.Declarative_Finst_Span = (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":declarative-num-finsts":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Int( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be an int rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Int( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be an int rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.declarativeModule.Declarative_Num_Finsts = Integer.parseInt(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      
 	      case ":default-target-width":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.motorModule.Default_Target_Width = (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      
 	      case ":egs":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.utilityModule.egs =  (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
@@ -9391,44 +9426,44 @@ return return_string;
 	      {
 	        if (The_Key_Value_Pairs[j+1].equals( "t") ) sim.vars.productionCompilationModule.epl = true;
 	        else if (The_Key_Value_Pairs[j+1].equals( "nil") ) sim.vars.productionCompilationModule.epl = false;
-	        else System.out.println ("ParametersFun__General_Sgp :epl error! the value must be string t or nil");
+	        else System.err.println ("ParametersFun__General_Sgp :epl error! the value must be string t or nil");
 	        break;
 	      }
 	      case ":er":
 	      {
 	        if (The_Key_Value_Pairs[j+1].equals( "t" )) sim.vars.centralParametersModule.er = true;
 	        else if (The_Key_Value_Pairs[j+1].equals( "nil") ) sim.vars.centralParametersModule.er = false;
-	        else System.out.println ("ParametersFun__General_Sgp :er error! the value must be string t or nil");
+	        else System.err.println ("ParametersFun__General_Sgp :er error! the value must be string t or nil");
 	        break;
 	      }
 	      case ":esc":
 	      {
 	        if (The_Key_Value_Pairs[j+1].equals( "t") ) sim.vars.centralParametersModule.esc = true;
 	        else if (The_Key_Value_Pairs[j+1].equals( "nil" )) sim.vars.centralParametersModule.esc = false;
-	        else System.out.println ("ParametersFun__General_Sgp :esc error! the value must be string t or nil");
+	        else System.err.println ("ParametersFun__General_Sgp :esc error! the value must be string t or nil");
 	        break;
 	      }
 	      case ":g":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.utilityModule.PG_C_g =  (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":ga":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.goalBuffer.ga =  (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":imaginal-activation":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.imaginalBuffer.Imaginal_Activation =  (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":imaginal-delay":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.imaginaryModule.Imaginal_Delay =  (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
@@ -9442,13 +9477,13 @@ return return_string;
 	      case ":iu":
 	      {
 	        if (!sim.vars.utilityModule.utility_Computation_Method.equals( "temporal-difference-reinforcement")) System.out.println("Warning: sgp " + The_Key_Value_Pairs[j].toLowerCase() +" needs sim.vars.utilityModule.utility_Computation_Method == \"temporal-difference-reinforcement\" ");
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.utilityModule.iu =  (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":lf":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.declarativeModule.lf =  (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
@@ -9460,7 +9495,7 @@ return return_string;
 	      }
 	      case ":min-fitts-time":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        double the_number =  Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        if(the_number <=0 ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be larger than zero rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.motorModule.Min_Fitts_Time = (double) the_number;
@@ -9469,9 +9504,9 @@ return return_string;
 	      
 	      case ":mouse-fitts-coeff":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        double the_number =  Double.parseDouble(The_Key_Value_Pairs[j+1] );
-	        if(the_number <=0 ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be larger than zero rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if(the_number <=0 ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be larger than zero rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.motorModule.Mouse_Fitts_Coeff = (double) the_number;
 	        break;
 	      }		
@@ -9488,7 +9523,7 @@ return return_string;
 	      case ":nu":
 	      {
 	        if (!sim.vars.utilityModule.utility_Computation_Method.equals( "temporal-difference-reinforcement")) System.out.println("Warning: sgp " + The_Key_Value_Pairs[j].toLowerCase() +" needs sim.vars.utilityModule.utility_Computation_Method == \"temporal-difference-reinforcement\" ");
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.utilityModule.nu = (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
@@ -9503,14 +9538,14 @@ return return_string;
 	      {
 	        if (The_Key_Value_Pairs[j+1].equals( "t" )) sim.vars.productionCompilationModule.pct = true;
 	        else if (The_Key_Value_Pairs[j+1].equals( "nil" )) sim.vars.productionCompilationModule.pct = false;
-	        else System.out.println("ParametersFun__General_Sgp :pct error! the value must be string t or nil");
+	        else System.err.println("ParametersFun__General_Sgp :pct error! the value must be string t or nil");
 	        break;
 	      }
 	      case ":peck-fitts-coeff":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        double the_number =  Double.parseDouble(The_Key_Value_Pairs[j+1] );
-	        if(the_number <=0 ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be larger than zero rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if(the_number <=0 ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be larger than zero rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.motorModule.Peck_Fitts_Coeff = (double) the_number;
 	        break;
 	      }
@@ -9525,7 +9560,7 @@ return return_string;
 	      {
 	        if (The_Key_Value_Pairs[j+1].equals( "t") ) PrintingFun__Enable_All_Default_Result_Outputs (true);
 	        else if (The_Key_Value_Pairs[j+1].equals( "nil") ) PrintingFun__Enable_All_Default_Result_Outputs ( false );
-	        else System.out.println("ParametersFun__General_Sgp :qn-enable-all-default-result-outputs error! the value must be string t or nil");
+	        else System.err.println("ParametersFun__General_Sgp :qn-enable-all-default-result-outputs error! the value must be string t or nil");
 	        break;
 	      }
 	      
@@ -9533,7 +9568,7 @@ return return_string;
 	      {
 	        if (The_Key_Value_Pairs[j+1].equals( "t") ) AnimatorModuleFun__Animator3D_Show_Hide_All_Comments (true);
 	        else if (The_Key_Value_Pairs[j+1].equals( "nil") ) AnimatorModuleFun__Animator3D_Show_Hide_All_Comments ( false );
-	        else System.out.println("ParametersFun__General_Sgp :qn-show-hide-all-animator3d-comments error! the value must be string t or nil");
+	        else System.err.println("ParametersFun__General_Sgp :qn-show-hide-all-animator3d-comments error! the value must be string t or nil");
 	        break;
 	      }
 	      
@@ -9554,11 +9589,11 @@ return return_string;
 	        sim.vars.centralParametersModule.Randomize_Seed_For_Display_Sequence = false;
 	        
 	        if ( !The_Key_Value_Pairs[j+1].equals( "(" )) System.out.println("ParametersFun__General_Sgp :seed error, parameters must be a list with two numbers and starts with ( ");
-	        if( !ProgramUtilitiesFun__Is_String_Int( The_Key_Value_Pairs[j+2] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be an int rather than: " + The_Key_Value_Pairs[j+2]   );
-	        if( !ProgramUtilitiesFun__Is_String_Int( The_Key_Value_Pairs[j+3] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be an int rather than: " + The_Key_Value_Pairs[j+3]   );
+	        if( !ProgramUtilitiesFun__Is_String_Int( The_Key_Value_Pairs[j+2] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be an int rather than: " + The_Key_Value_Pairs[j+2]   );
+	        if( !ProgramUtilitiesFun__Is_String_Int( The_Key_Value_Pairs[j+3] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be an int rather than: " + The_Key_Value_Pairs[j+3]   );
 	        sim.vars.programGlobalVar__Rand1_Seed1 = Integer.parseInt(The_Key_Value_Pairs[j+2] );
 	        sim.vars.programGlobalVar__Rand1_Seed2 = Integer.parseInt(The_Key_Value_Pairs[j+3] );
-	        if ( !The_Key_Value_Pairs[j+4].equals( ")" ) )System.out.println("ParametersFun__General_Sgp :seed error, parameters must be a list with two numbers and ends with ) ");
+	        if ( !The_Key_Value_Pairs[j+4].equals( ")" ) )System.err.println("ParametersFun__General_Sgp :seed error, parameters must be a list with two numbers and ends with ) ");
 	        j = j + 3; //normally there is 1 parameter, but here it has 4. compensate for this.
 	        break;
 	      }
@@ -9566,36 +9601,36 @@ return return_string;
 	      {
 	        if (The_Key_Value_Pairs[j+1].equals( "t") ) sim.vars.animatorModule.Show_Visual_Attention_Focus = true;
 	        else if (The_Key_Value_Pairs[j+1].equals( "nil") ) sim.vars.animatorModule.Show_Visual_Attention_Focus = false;
-	        else System.out.println("ParametersFun__General_Sgp :show-focus error! the value must be string t or nil");
+	        else System.err.println("ParametersFun__General_Sgp :show-focus error! the value must be string t or nil");
 	        break;
 	      }
 	      case ":time-master-start-increment":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.temporalModule.Time_Master_Start_Increment =  (double) Double.parseDouble (The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":time-mult":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.temporalModule.Time_Mult =  (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":time-noise":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.temporalModule.Time_Noise =  (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":tone-detect-delay":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.audioModule.Tone_Detect_Delay =  (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":tone-recode-delay":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.audioModule.Tone_Recode_Delay =  (double) Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
@@ -9610,7 +9645,7 @@ return return_string;
 	        if (!sim.vars.utilityModule.utility_Computation_Method.equals( "temporal-difference-reinforcement")) System.out.println("Warning: sgp " + The_Key_Value_Pairs[j].toLowerCase() +" needs sim.vars.utilityModule.utility_Computation_Method == \"temporal-difference-reinforcement\" ");
 	        if (The_Key_Value_Pairs[j+1].equals( "t") ) sim.vars.utilityModule.ul = true;
 	        else if (The_Key_Value_Pairs[j+1].equals( "nil") ) sim.vars.utilityModule.ul = false;
-	        else System.out.println("ParametersFun__General_Sgp :ul error! the value must be string t or nil");
+	        else System.err.println("ParametersFun__General_Sgp :ul error! the value must be string t or nil");
 	        break;
 	      }
 	      case ":ut":
@@ -9626,44 +9661,44 @@ return return_string;
 	      
 	      case ":viewing-distance":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.deviceModule.Viewing_Distance =  Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      
 	      case ":visual-activation":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.visualBuffer.Visual_Activation =  Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":visual-attention-latency":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.visionModule.Visual_Attention_Latency =  Double.parseDouble(The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":visual-finst-span":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.visionModule.Visual_Finst_Span  = Double.parseDouble( The_Key_Value_Pairs[j+1]  );
 	        break;
 	      }
 	      case ":visual-location-activation":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.visualLocationBuffer.Visual_Location_Activation =  Double.parseDouble (The_Key_Value_Pairs[j+1] );
 	        break;
 	      }
 	      case ":visual-num-finsts":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Int( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be an int rather than: " + The_Key_Value_Pairs[j+1]   );
+	        if( !ProgramUtilitiesFun__Is_String_Int( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be an int rather than: " + The_Key_Value_Pairs[j+1]   );
 	        sim.vars.visionModule.Visual_Num_Finsts = Integer.parseInt ( The_Key_Value_Pairs[j+1]  );
 	        break;
 	      }
 	      case ":visual-movement-tolerance":
 	      {
-	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.out.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]	);
+	        if( !ProgramUtilitiesFun__Is_String_Double( The_Key_Value_Pairs[j+1] ) ) System.err.println("Error! ParametersFun__General_Sgp needs para_name: " + para_name + " to be a double rather than: " + The_Key_Value_Pairs[j+1]	);
 	        sim.vars.visionModule.Visual_Movement_Tolerance = Double.parseDouble( The_Key_Value_Pairs[j+1]  );
 	        break;
 	      }
@@ -9715,7 +9750,7 @@ return return_string;
               temp_line = sim.funs.ProgramUtilitiesFun__String_Remove_Space_And_Tab_From_The_Beginning(temp_line); //remove potential spaces and tabs
             }
             else if (temp_line.substring(0, 2).equals( "#|")){//double open error
-              System.out.println("Error! ParametersFun__Load_ACTR_Model_Into_Lines temp_line.Substring(0, 2) == #| double open error. Line: " + temp_line);
+              System.err.println("Error! ParametersFun__Load_ACTR_Model_Into_Lines temp_line.Substring(0, 2) == #| double open error. Line: " + temp_line);
               return null;
             }
             else{//keep it open and skip this line
@@ -9822,7 +9857,7 @@ return return_string;
 	  */
     
     //double check
-	  if(comment_area_open == true) System.out.println("Error! ParametersFun__Load_ACTR_Model_Into_Lines Error. comment_area_open == true At the end.");
+	  if(comment_area_open == true) System.err.println("Error! ParametersFun__Load_ACTR_Model_Into_Lines Error. comment_area_open == true At the end.");
 	  	  
 	  return return_list;
 	}
@@ -9902,7 +9937,7 @@ return return_string;
 	  
 	  // sim.vars.programGlobalVar__ProductionCompilationModule_Equivalent_Var_Var_Constant_List?
 	  
-	  if (the_var1.charAt(0) != '=')System.out.println("ProductionCompilationModuleFun__Add_Equivalent_Var_Var_Constant_List Input error. the first parameter should be a var rather than constant");
+	  if (the_var1.charAt(0) != '=')System.err.println("ProductionCompilationModuleFun__Add_Equivalent_Var_Var_Constant_List Input error. the first parameter should be a var rather than constant");
 	  boolean is_2_var = (the_var2_or_constant.charAt(0) == '=');
 	  
 	  //find the home for the_var1 in sim.vars.programGlobalVar__ProductionCompilationModule_Equivalent_Var_Var_Constant_List
@@ -9934,7 +9969,7 @@ return return_string;
 	        Enumeration temp_enum = Collections.enumeration(home_list);
 	        while(temp_enum.hasMoreElements()){
 	          if( ((String)temp_enum.nextElement()).charAt(0) != '=' ){
-	            System.out.println("ProductionCompilationModuleFun__Add_Equivalent_Var_Var_Constant_List Bug:  ( ((String)temp_enum.Current)[0] != '=' )");
+	            System.err.println("ProductionCompilationModuleFun__Add_Equivalent_Var_Var_Constant_List Bug:  ( ((String)temp_enum.Current)[0] != '=' )");
 	            return;
 	          }
 	        }
@@ -10016,7 +10051,7 @@ return return_string;
 	      slot_value = (String) Enum.nextElement();
 	    }
 	    else {
-	      System.out.println("ProductionCompilationModuleFun__Buffer_Description_Difference has Enum.MoveNext() == false, slot name and value must come in pairs" );
+	      System.err.println("ProductionCompilationModuleFun__Buffer_Description_Difference has Enum.MoveNext() == false, slot name and value must come in pairs" );
 	      break;
 	    }
 	    
@@ -10121,7 +10156,7 @@ return return_string;
 	         */
 	        String slot_value_in_return_table = (String) return_hashtable.get(slot_name);
 	        if (!ProgramUtilitiesFun__StringsEqualByStringOrDouble(slot_value_in_return_table, slot_value)){
-	          System.out.println( "Error! ProductionCompilationModuleFun__Buffer_Description_No_Conflict_Union has slot_value_in_return_table not equal to slot_value");
+	          System.err.println( "Error! ProductionCompilationModuleFun__Buffer_Description_No_Conflict_Union has slot_value_in_return_table not equal to slot_value");
 	          break;
 	        }
 	        
@@ -11080,7 +11115,7 @@ return return_string;
 	          
 	        }
 	        else{
-	          System.out.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_buffer_index for: "+  the_key +". is undefined: " + the_buffer_index);
+	          System.err.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_buffer_index for: "+  the_key +". is undefined: " + the_buffer_index);
 	        }
 	      }
 	    }
@@ -11129,12 +11164,12 @@ return return_string;
 	        else {} //do nothing
 	      }
 	      else {//undefined
-	        System.out.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_buffer_index for: "+  the_key +". is undefined: " + the_buffer_index);
+	        System.err.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_buffer_index for: "+  the_key +". is undefined: " + the_buffer_index);
 	      }
 	    }
 	  }
 	  else{
-	    System.out.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_key is undefined: " + the_key);
+	    System.err.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_key is undefined: " + the_key);
 	  }
 	  
 	  return return_linkedlist;
@@ -11188,7 +11223,7 @@ return return_string;
 	          
 	        }
 	        else{
-	          System.out.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_buffer_index for: "+  the_key +". is undefined: " + the_buffer_index);
+	          System.err.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_buffer_index for: "+  the_key +". is undefined: " + the_buffer_index);
 	        }
 	      }
 	    }
@@ -11234,12 +11269,12 @@ return return_string;
 	        else {} //do nothing
 	      }
 	      else {//undefined
-	        System.out.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_buffer_index for: "+  the_key +". is undefined: " + the_buffer_index);
+	        System.err.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_buffer_index for: "+  the_key +". is undefined: " + the_buffer_index);
 	      }
 	    }
 	  }
 	  else{
-	    System.out.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_key is undefined: " + the_key);
+	    System.err.println ("ProductionCompilationModuleFun__Get_Buffer_Without_Head_Description error! the_key is undefined: " + the_key);
 	  }
 	  
 	  return return_linkedlist;
@@ -11382,7 +11417,7 @@ return return_string;
 	      break;
 	      
 	    default:
-	      System.out.println("ProductionCompilationModuleFun__Get_P1_Description_To_Map. the_p1_add_buffer_case is undefined: " + the_p1_add_buffer_case);
+	      System.err.println("ProductionCompilationModuleFun__Get_P1_Description_To_Map. the_p1_add_buffer_case is undefined: " + the_p1_add_buffer_case);
 	      break;
 	      
 	  }
@@ -12263,10 +12298,50 @@ return return_string;
 	  // parameters: ISA (slot_0), chunk_type(slot_0), slot_name_1, slot_value_1, slot_name_2, slot_value_2, ... for nil value, put ""
 	  
 	  //define-chunk, +imaginal> will not specify chunk_name, so it does not have a name.
-	  System.out.println("");
-	  Temp_Entity.Chunk = sim.funs.ChunkFun__Define_Chunk( sim.funs.ChunkFun__Make_Chunk_From_Descritption(The_Chunk_Spec_Request));
 	  
+	  // modified by Yelly:
+	  // when it comes to speedometer&critical element, define carefully to avoid chunk accumulation
+	  Chunk temp_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(The_Chunk_Spec_Request);
+
+	  String chunk_type = temp_chunk.Chunk_Type;
+	  //System.out.println("ProductionModuleFun__Add_Imaginal_Request, chunk: ");
+	  //sim.funs.ChunkFun__Print_Chunk(temp_chunk);
+	  if(chunk_type.equals("world3d-driving-criticalelement-vehicle-img") || chunk_type.equals("world3d-driving-criticalelement-sign-img")) {
+		  if(!temp_chunk.Slot.containsKey("id")) {
+			  System.err.println("ProductionModuleFun__Add_Imaginal_Request, chunk specification for type: " + chunk_type +", doesn't contain id field.");
+		  }
+		  else {
+			  String critical_element_id = temp_chunk.Slot.get("id");
+			  if(sim.funs.ChunkFun__Is_Chunk_Name("critical-element-img-" + critical_element_id)) {
+				  temp_chunk.Chunk_Name = "critical-element-img-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3));
+			  }
+			  else {
+				  temp_chunk.Chunk_Name = "critical-element-img-" + critical_element_id;
+				  sim.funs.ChunkFun__Define_Chunk(temp_chunk);
+			  }
+		  }
+	  }
+	  else if(chunk_type.equals("world3d-driving-speed-img")) {
+		  if(!temp_chunk.Slot.containsKey("speed")) {
+			  System.err.println("ProductionModuleFun__Add_Imaginal_Request, chunk specification for type: " + chunk_type +", doesn't contain speed field.");
+		  }
+		  else {
+			  String speed_val = temp_chunk.Slot.get("speed");
+			  if(!speed_val.contains("\"")) {
+				  temp_chunk.Slot.put("speed", "\"" + speed_val + "\"");
+			  }
+			  else speed_val = speed_val.substring(1, speed_val.lastIndexOf('"'));
+			  if(sim.funs.ChunkFun__Is_Chunk_Name("speed-img-" + speed_val)) {
+				  temp_chunk.Chunk_Name = "speed-img-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3));
+			  }
+			  else {
+				  temp_chunk.Chunk_Name = "speed-img-" + speed_val;
+				  sim.funs.ChunkFun__Define_Chunk(temp_chunk);
+			  }
+		  }
+	  }
 	  
+	  Temp_Entity.Chunk = temp_chunk;
 	  
 	  /*
 			int j;
@@ -12744,11 +12819,11 @@ return return_string;
 	      String content_string = currentItem.Buffer_Name;
 	      String [] content_array = sim.funs.ProgramUtilitiesFun__String_To_StringArray( content_string );
 	      if( content_array.length < 2 ) {
-	        System.out.println("Error! ProductionModuleFun__Bind_Variables_In_Rule_Condition has !bind! content_array.Length < 2, content_string: " + content_string);
+	        System.err.println("Error! ProductionModuleFun__Bind_Variables_In_Rule_Condition has !bind! content_array.Length < 2, content_string: " + content_string);
 	      }
 	      else{ //at least !bind!  string_group_1 string_group_2
-	        if( content_array[0].equals( "(") )System.out.println("Error! ProductionModuleFun__Bind_Variables_In_Rule_Condition has !bind! starts with (. the first string must be a variable, e.g., =val ");
-	        else if( content_array[0].charAt(0) != '=' ) System.out.println ("Error! ProductionModuleFun__Bind_Variables_In_Rule_Condition has !bind! starts with " + content_array[0] + ". the first string must be a variable, e.g., =val ");
+	        if( content_array[0].equals( "(") )System.err.println("Error! ProductionModuleFun__Bind_Variables_In_Rule_Condition has !bind! starts with (. the first string must be a variable, e.g., =val ");
+	        else if( content_array[0].charAt(0) != '=' ) System.err.println ("Error! ProductionModuleFun__Bind_Variables_In_Rule_Condition has !bind! starts with " + content_array[0] + ". the first string must be a variable, e.g., =val ");
 	        else{
 	          String variable_to_bind = content_array[0];
 	          
@@ -12760,8 +12835,8 @@ return return_string;
 	          String [] content_array_subst = sim.funs.ProgramUtilitiesFun__Subst_String_Array(    sim.funs.ProgramUtilitiesFun__LinkedListString_To_ArrayString (  temp_linkedlist  )   , return_variable_value_pair);
 	          //safety check, content_array_subst could not contain variables e.g., =num,  "=" is ok.
 	          for(int i = 0; i < content_array_subst.length ; i ++){
-	            if( content_array_subst[i].length() == 0 ) System.out.println("Error! ProductionModuleFun__Bind_Variables_In_Rule_Condition for rule: " + the_rule.Rule_Name + ", has !bind! with an empty string in its contents.");
-	            else if( content_array_subst[i].length() >= 2 && content_array_subst[i].charAt(0) == '=' ) System.out.println("Error! ProductionModuleFun__Bind_Variables_In_Rule_Condition for rule: " + the_rule.Rule_Name + ", has !bind! with a variable in its contents not bound: " + content_array_subst[i] );
+	            if( content_array_subst[i].length() == 0 ) System.err.println("Error! ProductionModuleFun__Bind_Variables_In_Rule_Condition for rule: " + the_rule.Rule_Name + ", has !bind! with an empty string in its contents.");
+	            else if( content_array_subst[i].length() >= 2 && content_array_subst[i].charAt(0) == '=' ) System.err.println("Error! ProductionModuleFun__Bind_Variables_In_Rule_Condition for rule: " + the_rule.Rule_Name + ", has !bind! with a variable in its contents not bound: " + content_array_subst[i] );
 	          }
 	          //!eval! part of !bind!
 	          String bind_result = LispFun__Evaluate_A_List ( sim.funs.ProgramUtilitiesFun__StringArray_To_String_Show_Empty( content_array_subst ) );
@@ -12787,7 +12862,7 @@ return return_string;
 	      //string bind_eval_contents
 	    }
 	    else{
-	      System.out.println ("ProductionModuleFun__Bind_Variables_In_Rule_Condition has an invalid condition item type: " + condition_item_type);
+	      System.err.println ("ProductionModuleFun__Bind_Variables_In_Rule_Condition has an invalid condition item type: " + condition_item_type);
 	    }
 	  }
 	  if(debug_trace)System.out.println("ProductionModuleFun__Bind_Variables_In_Rule_Condition return: " + sim.funs.ProgramUtilitiesFun__StringArray_To_String_Stop_If_Empty(sim.funs.ProgramUtilitiesFun__Hashtable_To_Array_String(return_variable_value_pair, "key")) +"      " + sim.funs.ProgramUtilitiesFun__StringArray_To_String_Stop_If_Empty(sim.funs.ProgramUtilitiesFun__Hashtable_To_Array_String(return_variable_value_pair, "value")));
@@ -12888,8 +12963,10 @@ return return_string;
 	  if (!sim.vars.retrievalBuffer.Retrieval_Buffer_Chunk.Chunk_Type.equals("")  && sim.vars.declarativeModule.State_Error == false ){ //if retrieval buffer is not empty and module state is not error
 	    //Model.Message (sim.vars.declarativeModule.Number_of_Chunks);
 	    //sim.vars.declarativeModule.Chunk_Name_Number--;	//in DeclarativeModuleFun__Merge_Chunk_Into_DM: sim.vars.declarativeModule.Chunk_Name_Number++; for clear GOAL buffer, but not for clear RETREIVAL BUFFER. That is, the new chunk name suffix number will not be increased for a valid clear retrieval buffer request, but will be increased by a valid clear goal buffer request.
-	    DeclarativeModuleFun__Merge_Chunk_Into_DM (sim.vars.retrievalBuffer.Retrieval_Buffer_Chunk, "Retrieval_Buffer");
-	    sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "PROCEDURAL" + "\t" + "CLEAR-BUFFER RETRIEVAL"); 
+		  //System.out.println("ProductionModuleFun__Clear_Retrieval_Buffer_Request, merging chunk");
+		DeclarativeModuleFun__Merge_Chunk_Into_DM (sim.vars.retrievalBuffer.Retrieval_Buffer_Chunk, "Retrieval_Buffer");
+		  //System.out.println("ProductionModuleFun__Clear_Retrieval_Buffer_Request, finished merging chunk");
+			sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "PROCEDURAL" + "\t" + "CLEAR-BUFFER RETRIEVAL"); 
 	  }
 	  else if (sim.vars.declarativeModule.State_Error == false){ //because it seems that ACT-R will still show clear retrieval buffer output trace even if no chunk to be cleared.
 	    sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("\t" + GlobalUtilities.round (SimSystem.clock(),3) + "\t" + "PROCEDURAL" + "\t" + "CLEAR-BUFFER RETRIEVAL"); 
@@ -12926,7 +13003,9 @@ return return_string;
 	      //currently don't merge "world3d-" visual buffer chunk.
 	    }
 	    else{
+	    	//System.out.println("ProductionModuleFun__Clear_Visual_Buffer_Request, merging chunk");
 	      DeclarativeModuleFun__Merge_Chunk_Into_DM (sim.vars.visualBuffer.Visual_Buffer_Chunk, "Visual_Buffer");
+	    	//System.out.println("ProductionModuleFun__Clear_Visual_Buffer_Request, finished merging chunk");
 	    }
 	    
 	  }
@@ -12957,7 +13036,9 @@ return return_string;
 		}
 	    else
 	    {
+	    	//System.out.println("ProductionModuleFun__Clear_Visual_Location_Buffer_Request, merging chunk");
 	      DeclarativeModuleFun__Merge_Chunk_Into_DM (sim.vars.visualLocationBuffer.Visual_Location_Buffer_Chunk, "Visual_Location_Buffer"); 
+	    	//System.out.println("ProductionModuleFun__Clear_Visual_Location_Buffer_Request, finished merging chunk");
 	    }
 	    
 	    
@@ -13179,7 +13260,7 @@ return return_string;
 	    Production_Rule currentRule = (Production_Rule)enum_rule.nextElement();
 	    if ( currentRule.Rule_Name.equals(the_rule_name )) return currentRule;
 	  }
-	  System.out.println("ProductionModuleFun__Find_Production_Rule_Pointer_By_Rule_Name. No such production rule with name: " + the_rule_name);
+	  System.err.println("ProductionModuleFun__Find_Production_Rule_Pointer_By_Rule_Name. No such production rule with name: " + the_rule_name);
 	  return null;
 	  
 	}
@@ -13529,7 +13610,7 @@ return return_string;
 	          String content_string = buffer_name;
 	          String [] content_array = sim.funs.ProgramUtilitiesFun__String_To_StringArray( content_string );
 	          if( content_array.length < 2 ) {
-	            System.out.println("Error! ProductionModuleFun__Execute_Rule has !bind! action content_array.Length < 2, content_string: " + content_string);
+	            System.err.println("Error! ProductionModuleFun__Execute_Rule has !bind! action content_array.Length < 2, content_string: " + content_string);
 	          }
 	          else{
 	            String variable_to_bind = content_array[0];
@@ -13542,8 +13623,8 @@ return return_string;
 	            String [] content_array_subst = sim.funs.ProgramUtilitiesFun__Subst_String_Array(    sim.funs.ProgramUtilitiesFun__LinkedListString_To_ArrayString (  temp_linkedlist  )   , variable_value_pair);
 	            //safety check, content_array_subst could not contain variables e.g., =num,  "=" is ok.
 	            for(int i = 0; i < content_array_subst.length ; i ++){
-	              if( content_array_subst[i].length() == 0 ) System.out.println("Error! ProductionModuleFun__Execute_Rule for rule: " + the_rule.Rule_Name + ", has !bind! action with an empty String in its contents.");
-	              else if( content_array_subst[i].length() >= 2 && content_array_subst[i].charAt(0) == '=' ) System.out.println("Error! ProductionModuleFun__Execute_Rule for rule: " + the_rule.Rule_Name + ", has !bind! action with a variable in its contents not bound: " + content_array_subst[i] );
+	              if( content_array_subst[i].length() == 0 ) System.err.println("Error! ProductionModuleFun__Execute_Rule for rule: " + the_rule.Rule_Name + ", has !bind! action with an empty String in its contents.");
+	              else if( content_array_subst[i].length() >= 2 && content_array_subst[i].charAt(0) == '=' ) System.err.println("Error! ProductionModuleFun__Execute_Rule for rule: " + the_rule.Rule_Name + ", has !bind! action with a variable in its contents not bound: " + content_array_subst[i] );
 	            }
 	            //!eval! part of !bind!
 	            String bind_result = LispFun__Evaluate_A_List ( sim.funs.ProgramUtilitiesFun__StringArray_To_String_Show_Empty( content_array_subst ) );
@@ -13574,15 +13655,15 @@ return return_string;
 	          String content_string = buffer_name;
 	          String [] content_array = sim.funs.ProgramUtilitiesFun__String_To_StringArray( content_string );
 	          if( content_array.length < 1 ) {
-	            System.out.println("Error! ProductionModuleFun__Execute_Rule has !eval! action content_array.Length < 1, content_string: " + content_string);
+	            System.err.println("Error! ProductionModuleFun__Execute_Rule has !eval! action content_array.Length < 1, content_string: " + content_string);
 	          }
 	          else{
 	            //substitute with the variable_value_table that is so far  ( most of the table come from the condition part, but some may also comes from previous !bind! actions)  . e.g., !bind! =val ( + =num 1 ) may be substituted into !bind! =val ( + 4 1 )
 	            String [] content_array_subst = sim.funs.ProgramUtilitiesFun__Subst_String_Array(    content_array  , variable_value_pair);
 	            //safety check, content_array_subst could not contain variables e.g., =num,  "=" is ok.
 	            for(int i = 0; i < content_array_subst.length ; i ++){
-	              if( content_array_subst[i].length() == 0 ) System.out.println("Error! ProductionModuleFun__Execute_Rule for rule: " + the_rule.Rule_Name + ", has !eval! action with an empty String in its contents.");
-	              else if( content_array_subst[i].length() >= 2 && content_array_subst[i].charAt(0) == '=' ) System.out.println("Error! ProductionModuleFun__Execute_Rule for rule: " + the_rule.Rule_Name + ", has !eval! action with a variable in its contents not bound: " + content_array_subst[i] );
+	              if( content_array_subst[i].length() == 0 ) System.err.println("Error! ProductionModuleFun__Execute_Rule for rule: " + the_rule.Rule_Name + ", has !eval! action with an empty String in its contents.");
+	              else if( content_array_subst[i].length() >= 2 && content_array_subst[i].charAt(0) == '=' ) System.err.println("Error! ProductionModuleFun__Execute_Rule for rule: " + the_rule.Rule_Name + ", has !eval! action with a variable in its contents not bound: " + content_array_subst[i] );
 	            }
 	            //!eval!
 	            String eval_result = LispFun__Evaluate_A_List ( sim.funs.ProgramUtilitiesFun__StringArray_To_String_Show_Empty( content_array_subst ) );
@@ -13593,7 +13674,7 @@ return return_string;
 	          
 	        } //end of !eval! action
 	        
-	        else System.out.println("ProductionModuleFun__Execute_Rule has undefined case: " + buffer_operator_string);
+	        else System.err.println("ProductionModuleFun__Execute_Rule has undefined case: " + buffer_operator_string);
 	        
 	        break;
 	      }
@@ -13767,7 +13848,7 @@ return return_string;
       return_string += "\n" + " :Failure    " +   sim.vars.utilityModule.PG_C_failure_flags.containsKey(temp_rule_name) ;
       
     }
-    else System.out.println("Error! ProductionModuleFun__Get_Rule_Contents_In_String has undefined sim.vars.utilityModule.Utility_Computation_Method case: " + sim.vars.utilityModule.utility_Computation_Method);
+    else System.err.println("Error! ProductionModuleFun__Get_Rule_Contents_In_String has undefined sim.vars.utilityModule.Utility_Computation_Method case: " + sim.vars.utilityModule.utility_Computation_Method);
 
     return return_string;
 	}
@@ -14096,7 +14177,7 @@ return return_string;
 	              break;
 	            }
 	            default:{
-	              System.out.println("ProductionModuleFun__Make_Chunk_Spec_For_Buffer_Operator_In_Action_Part has undefined slot_value variable name: " + slot_value);
+	              System.err.println("ProductionModuleFun__Make_Chunk_Spec_For_Buffer_Operator_In_Action_Part has undefined slot_value variable name: " + slot_value);
 	              break;
 	            }
 	          }
@@ -14126,7 +14207,7 @@ return return_string;
 	  int head_i ; // = 2 cut out "P", and rule_name 
 	  String head_string;
 	  boolean in_action_part = false; //start from in the condition part
-	  if(The_Rule_Spec.length < 3)System.out.println("ProductionModuleFun__Make_Production_Rule_From_Descriptors: the rule has too few descriptors.");
+	  if(The_Rule_Spec.length < 3)System.err.println("ProductionModuleFun__Make_Production_Rule_From_Descriptors: the rule has too few descriptors.");
 	  for(head_i = 2; head_i < The_Rule_Spec.length ; head_i++  ){ //go over every rule descriptor
 	    head_string = (The_Rule_Spec[head_i]);
 	    LinkedList<Production_Rule_Condition_Action_Item>  part_pointer = new LinkedList<Production_Rule_Condition_Action_Item> ();
@@ -14249,7 +14330,7 @@ return return_string;
 	              break;
 	            }
 	            default: {
-	              System.out.println("Error! ProductionModuleFun__Make_Production_Rule_From_Descriptors has undefined action type for central resources");
+	              System.err.println("Error! ProductionModuleFun__Make_Production_Rule_From_Descriptors has undefined action type for central resources");
 	              break;
 	            }
 	          }
@@ -14300,7 +14381,7 @@ return return_string;
 	        head_i--; //because the head_i = head_i + 2; in head_string[head_string.Length-1] != '>' test in the above while loop and the head_i++ in the big for loop.
 	      }	
 	    }
-	    else System.out.println("Error! ProductionModuleFun__Make_Production_Rule_From_Descriptors has undefined buffer-name> head String case: " + head_string);
+	    else System.err.println("Error! ProductionModuleFun__Make_Production_Rule_From_Descriptors has undefined buffer-name> head String case: " + head_string);
 	  }
 	  return new_rule;
 	}
@@ -14459,7 +14540,7 @@ return return_string;
 	        
 	        default:
 	        {
-	          System.out.println("ProductionModuleFun__Match_A_Rule_Test has an undifined buffer name in the condition part: " + currentConditionItem.Buffer_Name);
+	          System.err.println("ProductionModuleFun__Match_A_Rule_Test has an undifined buffer name in the condition part: " + currentConditionItem.Buffer_Name);
 	          //not_match = true;
 	          return false;
 	        }
@@ -15247,7 +15328,7 @@ return return_string;
 	        String a_string = eval_content_array [ i ] ;
 	        if (a_string.charAt(0) == '=' && a_string.length() > 1 && !a_string.equals( "=" )){ // it is a variable like =num, exclude "=" 
 	          if( variable_value_pair.containsKey (a_string) == false) {			// =num not bound 
-	            System.out.println("Error! ProductionModuleFun__Match_A_Rule_Test has variable_value_pair.ContainsKey (a_string) == false. a_string: " + a_string );
+	            System.err.println("Error! ProductionModuleFun__Match_A_Rule_Test has variable_value_pair.ContainsKey (a_string) == false. a_string: " + a_string );
 	            return false;
 	          }
 	          else { //substitute
@@ -15270,7 +15351,7 @@ return return_string;
 	      //else, continue with other tests
 	    } //end of condition_item_type.equals( "!bindl!")
 	    else{
-	      System.out.println ("ProductionModuleFun__Match_A_Rule_Test has an invalid condition item type: " + currentConditionItem.Type);
+	      System.err.println ("ProductionModuleFun__Match_A_Rule_Test has an invalid condition item type: " + currentConditionItem.Type);
 	    }
 	  }
 	  
@@ -16237,7 +16318,7 @@ return return_string;
 	        the_text += "\n";
 	      }
 	      else{
-	        System.out.println("Error! sim.funs.ProgramUtilitiesFun__String_Parser_Escape_Sequence has undefined escape sequence in: " + temp_string_text);	
+	        System.err.println("Error! sim.funs.ProgramUtilitiesFun__String_Parser_Escape_Sequence has undefined escape sequence in: " + temp_string_text);	
 	      }
 	      back_slash = false;
 	    }
@@ -16289,7 +16370,7 @@ return return_string;
 	    return_width_in_pixel = target_height_in_pixel / Math.sin ( approaching_angle_in_radian ) ;
 	  }
 	  else {
-	    System.out.println ("Error! sim.funs.ProgramUtilitiesFun__Approach_Width has uncovered approaching_angle_in_radian value: " + approaching_angle_in_radian );
+	    System.err.println ("Error! sim.funs.ProgramUtilitiesFun__Approach_Width has uncovered approaching_angle_in_radian value: " + approaching_angle_in_radian );
 	    return -999;
 	  }
 	  
@@ -16330,7 +16411,7 @@ return return_string;
 	  if (Xj_next > 0 )rand =  (double)Xj_next  / (double) M1;
 	  else if (Xj_next == 0 ) rand = (double )(M1 -1) / (double) M1;
 	  else {
-	    System.out.println("ProgramUtilitiesFun__Combined_Linear_Congruential_Generators Error");
+	    System.err.println("ProgramUtilitiesFun__Combined_Linear_Congruential_Generators Error");
 	  }
 	  
 	  //System.out.println("rand: " + rand);
@@ -16347,7 +16428,7 @@ return return_string;
 	public double ProgramUtilitiesFun__Act_R_Noise(double The_S){
 
 	  if (The_S < 0){ 
-	    System.out.println ("ProgramUtilitiesFun__Act_R_Noise error! s must >= 0");
+	    System.err.println ("ProgramUtilitiesFun__Act_R_Noise error! s must >= 0");
 	    return 0.0;
 	  }
 	  else {
@@ -16455,7 +16536,7 @@ return return_string;
 		//System.out.println("ProgramUtilitiesFun__LinkedList_Get_i_th  . the_i=" + the_i + ", The_LinkedList.size() = " + The_LinkedList.size());
 	    
 	  if (The_LinkedList.size() - 1 < the_i) {
-	    System.out.println("ProgramUtilitiesFun__LinkedList_Get_i_th  i is larger than the LinkedList"+". the_i=" + the_i + ", The_LinkedList.size() = " + The_LinkedList.size());
+	    System.err.println("ProgramUtilitiesFun__LinkedList_Get_i_th  i is larger than the LinkedList"+". the_i=" + the_i + ", The_LinkedList.size() = " + The_LinkedList.size());
 	    return null;
 	  }
 	  
@@ -16978,21 +17059,21 @@ return return_tuple;
 	  //pitch, compute in (Z, Y) plane
 	  double pitch = -1.0 * ProgramUtilitiesFun__World3D_Get_2D_Vector_Angle_Degree( (double)point0.ay, (double)point0.az, (double)pointz.ay, (double)pointz.az); //this 2D function is basically arc tan
 	  if (Double.isNaN (pitch) ) {
-	    System.out.println("Error! ProgramUtilitiesFun__World3D_Get_3D_Vector_Angle_Degree has (double.IsNaN (pitch) )");
+	    System.err.println("Error! ProgramUtilitiesFun__World3D_Get_3D_Vector_Angle_Degree has (double.IsNaN (pitch) )");
 	    //break;
 	  }
 	  
 	  //yaw, compute in (X, Z) plane
 	  double yaw = ProgramUtilitiesFun__World3D_Get_2D_Vector_Angle_Degree( (double)point0.ax, (double)point0.az, (double)pointz.ax, (double)pointz.az);
 	  if (Double.isNaN (yaw) ) {
-	    System.out.println("Error! ProgramUtilitiesFun__World3D_Get_3D_Vector_Angle_Degree has (double.IsNaN (yaw) )");
+	    System.err.println("Error! ProgramUtilitiesFun__World3D_Get_3D_Vector_Angle_Degree has (double.IsNaN (yaw) )");
 	    //break;
 	  }
 	  
 	  //roll, compute in (Y, X) plane
 	  double roll = -1.0 * ProgramUtilitiesFun__World3D_Get_2D_Vector_Angle_Degree( (double)point0.ax, (double)point0.ay, (double)pointy.ax, (double)pointy.ay);
 	  if (Double.isNaN (roll) ) {
-	    System.out.println("Error! ProgramUtilitiesFun__World3D_Get_3D_Vector_Angle_Degree has (double.IsNaN (roll) )");
+	    System.err.println("Error! ProgramUtilitiesFun__World3D_Get_3D_Vector_Angle_Degree has (double.IsNaN (roll) )");
 	    //break;
 	  }
 	  
@@ -17091,12 +17172,12 @@ return return_tuple;
 	    
 	    int first_quote = input_string.indexOf('"');
 	    if (first_quote < 0 ) {
-	      System.out.println("Error! ProgramUtilitiesFun__String_To_LinkedListString_By_Quote has part not started with a quote. : " + input_string);
+	      System.err.println("Error! ProgramUtilitiesFun__String_To_LinkedListString_By_Quote has part not started with a quote. : " + input_string);
 	      break;
 	    }
 	    int second_quote = input_string.indexOf('"', first_quote + 1);
 	    if (second_quote < 0 ) {
-	      System.out.println("Error! ProgramUtilitiesFun__String_To_LinkedListString_By_Quote has part not ended with a quote. : " + input_string);
+	      System.err.println("Error! ProgramUtilitiesFun__String_To_LinkedListString_By_Quote has part not ended with a quote. : " + input_string);
 	      break;
 	    }
 	    String a_string = input_string.substring(first_quote, second_quote + 1 +first_quote);
@@ -17136,7 +17217,7 @@ return return_tuple;
 	    temp_enum = java.util.Collections.enumeration(the_hashtable.values());
 	  }
 	  else {
-	    System.out.println("Error! ProgramUtilitiesFun__Hashtable_To_Array_String error. the_switch is undefined: " + the_switch);
+	    System.err.println("Error! ProgramUtilitiesFun__Hashtable_To_Array_String error. the_switch is undefined: " + the_switch);
 	    return null;
 	  }
 	  
@@ -17202,7 +17283,7 @@ return return_tuple;
 	    return return_object;
 	  }
 	  else {
-	    System.out.println("ProgramUtilitiesFun__Response_Item_Clone has undefined object type");
+	    System.err.println("ProgramUtilitiesFun__Response_Item_Clone has undefined object type");
 	    return null;
 	  }
 	  
@@ -17366,7 +17447,7 @@ return return_tuple;
 	
 	public  String ProgramUtilitiesFun__LinkedListString_Remove_and_Return_i_th_String (LinkedList<String> the_counter_string_list, int i_th){
 	  if (i_th <= 0 || i_th > the_counter_string_list.size()) {
-	    System.out.println("Error ProgramUtilitiesFun__LinkedListString_Remove_and_Return_i_th_String has i_th <= 0 || i_th > the_counter_string_list.Count");
+	    System.err.println("Error ProgramUtilitiesFun__LinkedListString_Remove_and_Return_i_th_String has i_th <= 0 || i_th > the_counter_string_list.Count");
 	    return null;
 	  }
 	  
@@ -17389,7 +17470,7 @@ return return_tuple;
 	
 	public  String ProgramUtilitiesFun__LinkedListString_Get_i_th_String (LinkedList<String> string_list, int i_th){
 	  if (i_th <= 0 || i_th > string_list.size()) {
-	    System.out.println("Error ProgramUtilitiesFun__LinkedListString_Get_i_th_String has i_th <= 0 || i_th > string_list.Count");
+	    System.err.println("Error ProgramUtilitiesFun__LinkedListString_Get_i_th_String has i_th <= 0 || i_th > string_list.Count");
 	    return null;
 	  }
 	  
@@ -17429,7 +17510,7 @@ return return_tuple;
 	  if(input_list instanceof LinkedList){
 	    LinkedList<Hashtable> object_list = (LinkedList<Hashtable> ) input_list ;
 	    if (i_th <= 0 || i_th > object_list.size()) {
-	      System.out.println("Error ProgramUtilitiesFun__LinkedListObject_Get_i_th_Object has i_th <= 0 || i_th > object_list.Count");
+	      System.err.println("Error ProgramUtilitiesFun__LinkedListObject_Get_i_th_Object has i_th <= 0 || i_th > object_list.Count");
 	      return null;
 	    }
 	    for (Object an_object : object_list) {
@@ -17441,7 +17522,7 @@ return return_tuple;
 	  else if(input_list instanceof LinkedList){
 	    LinkedList<Object> object_list = (LinkedList<Object> ) input_list ;
 	    if (i_th <= 0 || i_th > object_list.size()) {
-	      System.out.println("Error ProgramUtilitiesFun__LinkedListObject_Get_i_th_Object has i_th <= 0 || i_th > object_list.Count");
+	      System.err.println("Error ProgramUtilitiesFun__LinkedListObject_Get_i_th_Object has i_th <= 0 || i_th > object_list.Count");
 	      return null;
 	    }
 	    for (Object an_object : object_list) {
@@ -17453,7 +17534,7 @@ return return_tuple;
 	  else if(input_list instanceof LinkedList){
 	    LinkedList<LinkedList<Object>> object_list = ( LinkedList<LinkedList<Object>> ) input_list ;
 	    if (i_th <= 0 || i_th > object_list.size()) {
-	      System.out.println("Error ProgramUtilitiesFun__LinkedListObject_Get_i_th_Object has i_th <= 0 || i_th > object_list.Count");
+	      System.err.println("Error ProgramUtilitiesFun__LinkedListObject_Get_i_th_Object has i_th <= 0 || i_th > object_list.Count");
 	      return null;
 	    }
 	    for (Object an_object : object_list) {
@@ -17463,7 +17544,7 @@ return return_tuple;
 	    return null;
 	  } //LinkedList<LinkedList<object>>
 	  else{
-	    System.out.println("Error ProgramUtilitiesFun__LinkedListObject_Get_i_th_Object has undefined LinkedList< ?? > type. " );
+	    System.err.println("Error ProgramUtilitiesFun__LinkedListObject_Get_i_th_Object has undefined LinkedList< ?? > type. " );
 	    return null;
 	  }
 	  
@@ -17496,7 +17577,7 @@ return return_tuple;
 	
 	public  double ProgramUtilitiesFun__LinkedListDouble_Get_Stdev (LinkedList<Double> the_list){
 	  if(the_list == null) {
-	    System.out.println("Error! ProgramUtilitiesFun__LinkedListDouble_Get_Average gets an empty list");
+	    System.err.println("Error! ProgramUtilitiesFun__LinkedListDouble_Get_Average gets an empty list");
 	    return -10000000;
 	  }
 	  
@@ -17506,7 +17587,7 @@ return return_tuple;
 	    sum_of_square += (a_double - average) * (a_double - average);
 	  }
 	  if(the_list.size() == 0 ) {
-	    System.out.println("Error! ProgramUtilitiesFun__LinkedListDouble_Get_Stdev gets an empty list");
+	    System.err.println("Error! ProgramUtilitiesFun__LinkedListDouble_Get_Stdev gets an empty list");
 	    return -20000000;
 	  }
 	  return Math.sqrt(sum_of_square / the_list.size());
@@ -17545,7 +17626,7 @@ return return_tuple;
 	    return double_array[i-1];
 	  }
 	  else {
-	    System.out.println("ProgramUtilitiesFun__LinkedListDouble_Get_Median has ProgramUtilitiesFun__Mod error " );
+	    System.err.println("ProgramUtilitiesFun__LinkedListDouble_Get_Median has ProgramUtilitiesFun__Mod error " );
 	    return 0;
 	  }
 	}
@@ -17553,11 +17634,11 @@ return return_tuple;
 	
 	public  double ProgramUtilitiesFun__LinkedListDouble_Get_Average (LinkedList<Double> the_list){
 	  if(the_list == null) {
-	    System.out.println("Error! ProgramUtilitiesFun__LinkedListDouble_Get_Average gets an empty list");
+	    System.err.println("Error! ProgramUtilitiesFun__LinkedListDouble_Get_Average gets an empty list");
 	    return -10000000;
 	  }
 	  if(the_list.size() == 0 ) {
-	    System.out.println("Error! ProgramUtilitiesFun__LinkedListDouble_Get_Average gets an empty list");
+	    System.err.println("Error! ProgramUtilitiesFun__LinkedListDouble_Get_Average gets an empty list");
 	    return -20000000;
 	  }
 	  double sum = sim.funs.ProgramUtilitiesFun__LinkedListDouble_Get_Sum(the_list);
@@ -17639,7 +17720,7 @@ return return_tuple;
 	      break;
 	    default:
 	    {
-	      System.out.println("ProgramUtilitiesFun__Is_Buffer_Empty has undefined buffer code : " + the_buffer_code);
+	      System.err.println("ProgramUtilitiesFun__Is_Buffer_Empty has undefined buffer code : " + the_buffer_code);
 	      retu = false;
 	    }
 	    
@@ -17700,13 +17781,13 @@ return return_tuple;
 	  
 	  //error if two lists have different length
 	  if( original_full_string_list_1.size() != original_full_string_list_2.size()){
-	    System.out.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Two_Tuple_String_From_Randomizing_A_Pair_Of_String_Lists has two original lists with different length." );
+	    System.err.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Two_Tuple_String_From_Randomizing_A_Pair_Of_String_Lists has two original lists with different length." );
 	    return null;
 	  }
 	  
 	  //counter 1 and 2 must have the same length
 	  if( string_list_counter_1.size() != string_list_counter_2.size()){
-	    System.out.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Two_Tuple_String_From_Randomizing_A_Pair_Of_String_Lists has two counter lists with different length." );
+	    System.err.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Two_Tuple_String_From_Randomizing_A_Pair_Of_String_Lists has two counter lists with different length." );
 	    return null;
 	  }
 	  
@@ -17762,7 +17843,7 @@ return return_tuple;
 	    return return_tuple;
 	  }
 	  else {
-	    System.out.println("Error, sim.funs.ProgramUtilitiesFun__Get_A_Two_Tuple_String_From_Randomizing_A_Pair_Of_String_Lists has undefined method: " + random_method);
+	    System.err.println("Error, sim.funs.ProgramUtilitiesFun__Get_A_Two_Tuple_String_From_Randomizing_A_Pair_Of_String_Lists has undefined method: " + random_method);
 	    return null;
 	  }
 	}
@@ -17782,14 +17863,14 @@ return return_tuple;
 	  
 	  //error if three lists have different length
 	  if( original_full_string_list_1.size() != original_full_string_list_2.size()  ||  original_full_string_list_1.size() != original_full_string_list_3.size() || original_full_string_list_2.size() != original_full_string_list_3.size()){
-	    System.out.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Three_Tuple_String_From_Randomizing_Three_String_Lists has at least two original lists with different length." );
+	    System.err.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Three_Tuple_String_From_Randomizing_Three_String_Lists has at least two original lists with different length." );
 	    System.out.println("original_full_string_list_1.Count: " + original_full_string_list_1.size() + ", original_full_string_list_2.Count" + original_full_string_list_2.size() + ", original_full_string_list_3.Count" + original_full_string_list_3.size());
 	    return null;
 	  }
 	  
 	  //counter 1 and 2 and 3 must have the same length
 	  if( string_list_counter_1.size() != string_list_counter_2.size() || string_list_counter_1.size() != string_list_counter_3.size() || string_list_counter_2.size() != string_list_counter_3.size()){
-	    System.out.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Three_Tuple_String_From_Randomizing_Three_String_Lists has at least two counter lists with different length." );
+	    System.err.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Three_Tuple_String_From_Randomizing_Three_String_Lists has at least two counter lists with different length." );
 	    return null;
 	  }
 	  
@@ -17859,7 +17940,7 @@ return return_tuple;
 	    return return_tuple;
 	  }
 	  else {
-	    System.out.println("Error, sim.funs.ProgramUtilitiesFun__Get_A_Three_Tuple_String_From_Randomizing_Three_String_Lists has undefined method: " + random_method);
+	    System.err.println("Error, sim.funs.ProgramUtilitiesFun__Get_A_Three_Tuple_String_From_Randomizing_Three_String_Lists has undefined method: " + random_method);
 	    return null;
 	  }
 	  
@@ -17912,7 +17993,7 @@ return return_tuple;
 	  else if (random_method.charAt(0) == '=' ){ // refer to another method's random seed
 	    String referred_method_name = random_method.substring(1);
 	    if (!sim.vars.programGlobalVar__Block_Variable_Common_RandomMethod_Last_Seed.containsKey(referred_method_name)){
-	      System.out.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_String_From_Randomizing_A_String_List !sim.vars.programGlobalVar__Block_Variable_Common_RandomMethod_Last_Seed.containsKey(referred_method_name) : " + referred_method_name );
+	      System.err.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_String_From_Randomizing_A_String_List !sim.vars.programGlobalVar__Block_Variable_Common_RandomMethod_Last_Seed.containsKey(referred_method_name) : " + referred_method_name );
 	      
 	    }
 	    Three_Tuple record = (Three_Tuple) sim.vars.programGlobalVar__Block_Variable_Common_RandomMethod_Last_Seed.get(referred_method_name);
@@ -17943,14 +18024,14 @@ return return_tuple;
 	      return sim.funs.ProgramUtilitiesFun__LinkedListString_Remove_and_Return_i_th_String( string_list_counter, order_number  ); //change the string_list
 	    }
 	    else {
-	      System.out.println("Error, sim.funs.ProgramUtilitiesFun__Get_A_String_From_Randomizing_A_String_List has undefined true_random_method for referred case: " + random_method);
+	      System.err.println("Error, sim.funs.ProgramUtilitiesFun__Get_A_String_From_Randomizing_A_String_List has undefined true_random_method for referred case: " + random_method);
 	      
 	      return null;
 	    }
 	  }
 	  
 	  else {
-	    System.out.println("Error, sim.funs.ProgramUtilitiesFun__Get_A_String_From_Randomizing_A_String_List has undefined method: " + random_method);
+	    System.err.println("Error, sim.funs.ProgramUtilitiesFun__Get_A_String_From_Randomizing_A_String_List has undefined method: " + random_method);
 	    
 	    return null;
 	  }
@@ -17967,14 +18048,14 @@ return return_tuple;
 	  
 	  //error if original lists have different length
 	  if( !( (original_full_string_list_1.size() == original_full_string_list_2.size())  &&  (original_full_string_list_2.size() == original_full_string_list_3.size() ) && ( original_full_string_list_3.size() == original_full_string_list_4.size() ) && ( original_full_string_list_4.size() == original_full_string_list_5.size() ) && ( original_full_string_list_5.size() == original_full_string_list_6.size() ) ) ){
-	    System.out.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Six_Tuple_String_From_Randomizing_Six_String_Lists has at least two original lists with different length." );
+	    System.err.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Six_Tuple_String_From_Randomizing_Six_String_Lists has at least two original lists with different length." );
 	    System.out.println("original_full_string_list_1.Count: " + original_full_string_list_1.size() + ", original_full_string_list_2.Count" + original_full_string_list_2.size() + ", original_full_string_list_3.Count" + original_full_string_list_3.size() + ", original_full_string_list_4.Count" + original_full_string_list_4.size() + ", original_full_string_list_5.Count" + original_full_string_list_5.size() + ", original_full_string_list_6.Count" + original_full_string_list_6.size());
 	    return null;
 	  }
 	  
 	  //counter lists must have the same length
 	  if( !( (string_list_counter_1.size() == string_list_counter_2.size())  &&  (string_list_counter_2.size() == string_list_counter_3.size() ) && ( string_list_counter_3.size() == string_list_counter_4.size() ) && ( string_list_counter_4.size() == string_list_counter_5.size() ) && ( string_list_counter_5.size() == string_list_counter_6.size() ) ) ){
-	    System.out.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Six_Tuple_String_From_Randomizing_Six_String_Lists has at least two counter lists with different length." );
+	    System.err.println("Error! sim.funs.ProgramUtilitiesFun__Get_A_Six_Tuple_String_From_Randomizing_Six_String_Lists has at least two counter lists with different length." );
 	    return null;
 	  }
 	  
@@ -18075,7 +18156,7 @@ return return_tuple;
 	    return return_tuple;
 	  }
 	  else {
-	    System.out.println("Error, sim.funs.ProgramUtilitiesFun__Get_A_Six_Tuple_String_From_Randomizing_Six_String_Lists has undefined method: " + random_method);
+	    System.err.println("Error, sim.funs.ProgramUtilitiesFun__Get_A_Six_Tuple_String_From_Randomizing_Six_String_Lists has undefined method: " + random_method);
 	    return null;
 	  }
 	  
@@ -18101,7 +18182,7 @@ return return_tuple;
 	      }
 	      else if ( a_string.charAt(0) != '\"' && a_string.charAt(a_string.length()-1) == '\"'){ // e.g., ( ... x3" ...)
 	        //error
-	        System.out.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has :visual_text close quotation without previous open quotation: " + sim.funs.ProgramUtilitiesFun__LinkedListString_To_String_Show_Empty(parameter_list_clone));
+	        System.err.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has :visual_text close quotation without previous open quotation: " + sim.funs.ProgramUtilitiesFun__LinkedListString_To_String_Show_Empty(parameter_list_clone));
 	        break;
 	      }
 	      else { // e.g., (... "x" ...) ( a_string[0] == '\"' && a_string[a_string.Length-1] == '\"')  or  // e.g., (... x ...)  != !=
@@ -18114,7 +18195,7 @@ return return_tuple;
 	    else{ // quotation_open == true
 	      if (!a_string.equals( "\"") && ( a_string.charAt(0) == '\"' && a_string.charAt(a_string.length()-1) != '\"') && (a_string.charAt(0) == '\"' && a_string.charAt(a_string.length()-1) == '\"') ){ // e.g., (..."x0  "x1 ... )  or (..."x0  "x1" ... ) 
 	        //error
-	        System.out.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has :visual_text open quotation with previous open quotation: " + sim.funs.ProgramUtilitiesFun__LinkedListString_To_String_Show_Empty(parameter_list_clone));
+	        System.err.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has :visual_text open quotation with previous open quotation: " + sim.funs.ProgramUtilitiesFun__LinkedListString_To_String_Show_Empty(parameter_list_clone));
 	        break;
 	      }
 	      else if (a_string.equals( "\"") || ( a_string.charAt(0) != '\"' && a_string.charAt(a_string.length()-1) == '\"') ){ // e.g., ( .."x0 ... x3" ...)
@@ -18139,7 +18220,7 @@ return return_tuple;
 	  }
 	  if (quotation_open == true) {
 	    //error
-	    System.out.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has :visual_text end without close quotation: " + sim.funs.ProgramUtilitiesFun__LinkedListString_To_String_Show_Empty(parameter_list_clone));
+	    System.err.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has :visual_text end without close quotation: " + sim.funs.ProgramUtilitiesFun__LinkedListString_To_String_Show_Empty(parameter_list_clone));
 	    //break;	Not sure of this change
 	  }
 	  
@@ -18301,11 +18382,11 @@ If the string is invalid or there is no current model then a warning is printed 
 	      else  return  SpeechModuleFun__Get_Articulation_Time(text);
 	    }
 	    case "":{
-	      System.out.println("SpeechModuleFun__Compute_Finish_Time has an empty ISA command type.");
+	      System.err.println("SpeechModuleFun__Compute_Finish_Time has an empty ISA command type.");
 	      break;
 	    }
 	    default: {
-	      System.out.println("SpeechModuleFun__Compute_Finish_Time has undefined command_type case: " + command_type);
+	      System.err.println("SpeechModuleFun__Compute_Finish_Time has undefined command_type case: " + command_type);
 	      break;
 	    }	
 	  }
@@ -18354,7 +18435,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":start_road_name" : {//String
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error! TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error! TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error! TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
@@ -18370,12 +18451,12 @@ If the string is invalid or there is no current model then a warning is printed 
 	      { //double
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error! TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error! TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error! TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        
-	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.out.println ("Error TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs a double number. not " + a_parameter);
+	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.err.println ("Error TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs a double number. not " + a_parameter);
 	        
 	        if(parameter_name.equals( ":start_distance"))a_car.Start_Distance = (double) Double.parseDouble (a_parameter) ;
 	        if(parameter_name.equals( ":max_speed"))a_car.Max_Speed = (double) Double.parseDouble (a_parameter) ;
@@ -18387,12 +18468,12 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":start_lane_num" : {// int
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error! TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error! TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error! TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.err.println ("Error! TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        
-	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Int(a_parameter) == false)) System.out.println ("Error TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs a integer number. not " + a_parameter);
+	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Int(a_parameter) == false)) System.err.println ("Error TaskTemplateFun__Add_Other_Car_To_World3D " + parameter_name + " needs a integer number. not " + a_parameter);
 	        
 	        a_car.Start_Lane_Num = Integer.parseInt (a_parameter) ;
 	        
@@ -18436,7 +18517,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
@@ -18455,7 +18536,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	            break;
 	          }
 	          default:{
-	            System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D has undefined parameter_name" + parameter_name );
+	            System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D has undefined parameter_name" + parameter_name );
 	            break;
 	          }
 	        }
@@ -18465,7 +18546,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":start_loc_x" : {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
@@ -18480,12 +18561,12 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":start_loc_z" : {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        
-	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs a double number. not " + a_parameter);
+	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs a double number. not " + a_parameter);
 	        
 	        a_road.Start_Loc_Z = Double.parseDouble (a_parameter) ;
 	        
@@ -18495,12 +18576,12 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":start_heading_angle" : {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        
-	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs a double number. not " + a_parameter);
+	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs a double number. not " + a_parameter);
 	        
 	        a_road.Start_Heading_Angle = Double.parseDouble (a_parameter) ;
 	        
@@ -18510,12 +18591,12 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":lane_width" : {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        
-	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs a double number. not " + a_parameter);
+	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs a double number. not " + a_parameter);
 	        
 	        a_road.Lane_Width = Double.parseDouble (a_parameter) ;
 	        
@@ -18525,12 +18606,12 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":lane_num_left" : {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        
-	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Int(a_parameter) == false)) System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs a integer number. not " + a_parameter);
+	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Int(a_parameter) == false)) System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs a integer number. not " + a_parameter);
 	        
 	        a_road.Lane_Num_Left = Integer.parseInt (a_parameter) ;
 	        
@@ -18540,12 +18621,12 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":lane_num_right" : {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        
-	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Int(a_parameter) == false)) System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs a integer number. not " + a_parameter);
+	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Int(a_parameter) == false)) System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs a integer number. not " + a_parameter);
 	        
 	        a_road.Lane_Num_Right = Integer.parseInt (a_parameter) ;
 	        
@@ -18555,7 +18636,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case "(" : { //here means the () of multiple () parentheses, each representing the method to generate each road segment.
 	        LinkedList<String> a_list = sim.funs.ParametersFun__Remove_A_List_From_Initialization_Lists	(Parameter_List_Clone);  // the first () is poped out without () from the list
 	        if (a_list == null) { 
-	          System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D the parameters for each item displayed needs parameters");  
+	          System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D the parameters for each item displayed needs parameters");  
 	          break;
 	        }
 	        
@@ -18567,14 +18648,14 @@ If the string is invalid or there is no current model then a warning is printed 
 	            case ":segment_type" : {
 	              String parameter_name = a_list.getFirst().toLowerCase();
 	              a_list.removeFirst();
-	              if ( a_list.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
+	              if ( a_list.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
 	              String parameter_value = a_list.getFirst().toLowerCase();
 	              if ( (parameter_value.charAt(0) == ':' ) ||  parameter_value.charAt(0) == '(' || parameter_value.charAt(0) == ')' ){
-	                System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + parameter_value);
+	                System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + parameter_value);
 	                break;
 	              }
 	              if ( !parameter_value.equals( "straight") && !parameter_value.equals( "left" ) && !parameter_value.equals( "right" )  ){
-	                System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs straight, OR left, OR right, not " + parameter_value);
+	                System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs straight, OR left, OR right, not " + parameter_value);
 	                break;
 	              }
 	              a_list.removeFirst();
@@ -18587,14 +18668,14 @@ If the string is invalid or there is no current model then a warning is printed 
 	            case ":length" : {
 	              String parameter_name = a_list.getFirst().toLowerCase();
 	              a_list.removeFirst();
-	              if ( a_list.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
+	              if ( a_list.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
 	              String parameter_value = a_list.getFirst().toLowerCase();
 	              if ( (parameter_value.charAt(0) == ':' ) ||  parameter_value.charAt(0) == '(' || parameter_value.charAt(0) == ')' ){
-	                System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + parameter_value);
+	                System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + parameter_value);
 	                break;
 	              }
 	              if (!ProgramUtilitiesFun__Is_String_Double(parameter_value)){
-	                System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs double number. not " + parameter_value);
+	                System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs double number. not " + parameter_value);
 	                break;
 	              }
 	              a_list.removeFirst();
@@ -18610,11 +18691,11 @@ If the string is invalid or there is no current model then a warning is printed 
 	              if ( a_list.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter"); }
 	              String parameter_value = a_list.getFirst().toLowerCase();
 	              if ( (parameter_value.charAt(0) == ':' ) ||  parameter_value.charAt(0) == '(' || parameter_value.charAt(0) == ')' ){
-	                System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + parameter_value);
+	                System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs 1 parameter. not " + parameter_value);
 	                break;
 	              }
 	              if (!ProgramUtilitiesFun__Is_String_Double(parameter_value)){
-	                System.out.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs double number. not " + parameter_value);
+	                System.err.println ("Error TaskTemplateFun__Add_Road_To_World3D " + parameter_name + " needs double number. not " + parameter_value);
 	                break;
 	              }
 	              a_list.removeFirst();
@@ -18627,7 +18708,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	            
 	            default:
 	            {
-	              System.out.println ("Error! TaskTemplateFun__Add_Road_To_World3D error! parameters for an road segment, the Key is undefined: " + a_list.getFirst());
+	              System.err.println ("Error! TaskTemplateFun__Add_Road_To_World3D error! parameters for an road segment, the Key is undefined: " + a_list.getFirst());
 	              
 	              SimSystem.abort();
 	              
@@ -18669,7 +18750,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    //generate fragments	Hashtable< double start_distance, World3D_Road_Fragment> 
 	    if(a_segment.Type.equals( "straight")){ // just one fragment
 	      if (a_segment.Turn_Angle != 0.0){
-	        System.out.println("Error! TaskTemplateFun__Add_Road_To_World3D left turn segment needs Turn_Angle == 0, not: " + a_segment.Turn_Angle);
+	        System.err.println("Error! TaskTemplateFun__Add_Road_To_World3D left turn segment needs Turn_Angle == 0, not: " + a_segment.Turn_Angle);
 	        break;
 	      }
 	      World3D_Road_Fragment a_fragment = new World3D_Road_Fragment ();
@@ -18696,17 +18777,17 @@ If the string is invalid or there is no current model then a warning is printed 
 	    } //end of straight segment
 	    else if (a_segment.Type.equals( "left") || a_segment.Type.equals( "right")){ //curve segment
 	      if (a_segment.Type.equals( "left") && a_segment.Turn_Angle >= 0.0){
-	        System.out.println("Error! TaskTemplateFun__Add_Road_To_World3D left turn segment needs Turn_Angle < 0");
+	        System.err.println("Error! TaskTemplateFun__Add_Road_To_World3D left turn segment needs Turn_Angle < 0");
 	        break;
 	      }
 	      if (a_segment.Type.equals( "right") && a_segment.Turn_Angle <= 0.0){
-	        System.out.println("Error! TaskTemplateFun__Add_Road_To_World3D right turn segment needs Turn_Angle > 0");
+	        System.err.println("Error! TaskTemplateFun__Add_Road_To_World3D right turn segment needs Turn_Angle > 0");
 	        break;
 	      }
 	      
 	      double fragment_length_default = sim.vars.programGlobalVar__World3D_Curve_Fragment_Length;
 	      if(a_segment.Length < fragment_length_default){
-	        System.out.println("Error! TaskTemplateFun__Add_Road_To_World3D left turn segment has a_segment.length() < fragment_length_default");
+	        System.err.println("Error! TaskTemplateFun__Add_Road_To_World3D left turn segment has a_segment.length() < fragment_length_default");
 	        break;
 	      }
 	      
@@ -18760,7 +18841,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      a_segment.End_Loc_Z = (double) current_loc_z;
 	    } // end of curve segment
 	    else {
-	      System.out.println("Error! TaskTemplateFun__Add_Road_To_World3D has undefined a_segment.Type: " + a_segment.Type);
+	      System.err.println("Error! TaskTemplateFun__Add_Road_To_World3D has undefined a_segment.Type: " + a_segment.Type);
 	      break;
 	    }
 	    
@@ -18793,7 +18874,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":add_number_of_days" : {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter. not " + a_parameter);}
@@ -18805,11 +18886,11 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":add_number_of_blocks_per_day" : {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter. not " + a_parameter);}
-	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs a number. not " + a_parameter);
+	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs a number. not " + a_parameter);
 	        a_template.Add_Number_Of_Blocks_Per_Day = Integer.parseInt (a_parameter) ;
 	        break;
 	      }
@@ -18817,11 +18898,11 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":add_number_of_trials_per_block" : {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( (a_parameter.charAt(0) == ':' && a_parameter.length() <= 16) || (a_parameter.charAt(0) == ':' && a_parameter.length() > 16  && !a_parameter.substring(0,16).equals( ":block_variable_") ) || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter. not " + a_parameter);}
-	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs a number. not " + a_parameter);
+	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs a number. not " + a_parameter);
 	        a_template.Add_Number_Of_Trials_Per_Block = (a_parameter) ;
 	        break;
 	      }
@@ -18830,8 +18911,8 @@ If the string is invalid or there is no current model then a warning is printed 
 	      {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst();// remove the parameter name
-	        if ( Parameter_List_Clone.size() < 3 ) {  System.out.println ("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter in addition to () "); }
-	        if ( Parameter_List_Clone.getFirst().charAt(0) != '(' ){ System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs List of String parameter. not " + Parameter_List_Clone.getFirst());}
+	        if ( Parameter_List_Clone.size() < 3 ) {  System.err.println ("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter in addition to () "); }
+	        if ( Parameter_List_Clone.getFirst().charAt(0) != '(' ){ System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs List of String parameter. not " + Parameter_List_Clone.getFirst());}
 	        a_template.Display_And_Response_Duration =  sim.funs.ParametersFun__Remove_A_List_From_Initialization_Lists	(Parameter_List_Clone);  // the first () is poped out without () from the list
 	        break;
 	      }
@@ -18840,8 +18921,8 @@ If the string is invalid or there is no current model then a warning is printed 
 	      {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst();// remove the parameter name
-	        if ( Parameter_List_Clone.size() < 3 ) {  System.out.println ("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter in addition to () "); }
-	        if ( Parameter_List_Clone.getFirst().charAt(0)!= '(' ){ System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs List of String parameter. not " + Parameter_List_Clone.getFirst());}
+	        if ( Parameter_List_Clone.size() < 3 ) {  System.err.println ("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter in addition to () "); }
+	        if ( Parameter_List_Clone.getFirst().charAt(0)!= '(' ){ System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs List of String parameter. not " + Parameter_List_Clone.getFirst());}
 	        a_template.Feedback_Duration =  sim.funs.ParametersFun__Remove_A_List_From_Initialization_Lists	(Parameter_List_Clone);  // the first () is poped out without () from the list
 	        break;
 	      }
@@ -18849,7 +18930,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":how_many_display_items_to_use_in_a_trial" : {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( (a_parameter.charAt(0) == ':' && a_parameter.length() <= 16) || (a_parameter.charAt(0) == ':' && a_parameter.length() > 16  && !a_parameter.substring(0,16).equals( ":block_variable_") )  || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter. not " + a_parameter);}
@@ -18860,19 +18941,19 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":number_of_responses_per_trial" : {
 	        String parameter_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( (a_parameter.charAt(0) == ':' && a_parameter.length() <= 16) || (a_parameter.charAt(0) == ':' && a_parameter.length() > 16  && !a_parameter.substring(0,16).equals( ":block_variable_") )  || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter. not " + a_parameter);}
-	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs a number. not " + a_parameter);
-	        if ( (Double.parseDouble(a_parameter) < 0) && Double.parseDouble(a_parameter) != -1 ) System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs -1 or a non-negative number. not " + a_parameter);
+	        if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_parameter) == false)) System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs a number. not " + a_parameter);
+	        if ( (Double.parseDouble(a_parameter) < 0) && Double.parseDouble(a_parameter) != -1 ) System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs -1 or a non-negative number. not " + a_parameter);
 	        a_template.Number_Of_Responses_Per_Trial = (a_parameter) ;
 	        break;
 	      }
 	      
 	      case "(" : { //here means the () of multiple () parentheses, each representing the method to generate each item displayed for trials.
 	        LinkedList<String> a_list = sim.funs.ParametersFun__Remove_A_List_From_Initialization_Lists	(Parameter_List_Clone);  // the first () is poped out without () from the list
-	        if (a_list == null) { if(sim.vars.printingModule.Popout_Message) System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method the parameters for each item displayed needs parameters");  }
+	        if (a_list == null) { if(sim.vars.printingModule.Popout_Message) System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method the parameters for each item displayed needs parameters");  }
 	        Hashtable parameters_table_for_an_item  = new Hashtable ();
 	        
 	        /*
@@ -18923,7 +19004,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	            {
 	              String parameter_name = a_list.getFirst().toLowerCase();
 	              a_list.removeFirst();
-	              if ( a_list.size() < 1 ) { if(sim.vars.printingModule.Popout_Message) System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
+	              if ( a_list.size() < 1 ) { if(sim.vars.printingModule.Popout_Message) System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
 	              String parameter_value = a_list.getFirst().toLowerCase();
 	              if ( (parameter_value.charAt(0) == ':' && parameter_value.length() <= 16) || (parameter_value.charAt(0) == ':' && parameter_value.length() > 16  && !parameter_value.substring(0,16).equals( ":block_variable_") )  || parameter_value.charAt(0) == '(' || parameter_value.charAt(0) == ')' ){ if(sim.vars.printingModule.Popout_Message) System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter. not " + parameter_value);}
 	              a_list.removeFirst();
@@ -18932,7 +19013,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	              //check dynamic trigger name duplication
 	              if ( parameter_name.equals( ":button_click_event") || parameter_name.equals( ":key_press_event")){ //may add more dynamic trigger event keywords
 	                if(a_template.Dynamic_Trigger_Names.contains(parameter_value)){
-	                  System.out.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has duplicate dynamic trigger name from: " + parameter_name + ", " + parameter_value);
+	                  System.err.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has duplicate dynamic trigger name from: " + parameter_name + ", " + parameter_value);
 	                  break;
 	                }
 	                else a_template.Dynamic_Trigger_Names.addLast(parameter_value);
@@ -18941,7 +19022,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	              //check dynamic item name duplication
 	              if ( parameter_name.equals( ":item_name")){ 
 	                if(a_template.Dynamic_Item_Names.contains(parameter_value)){
-	                  System.out.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has duplicate dynamic item name from: " + parameter_name + ", " + parameter_value);
+	                  System.err.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has duplicate dynamic item name from: " + parameter_name + ", " + parameter_value);
 	                  break;
 	                }
 	                else a_template.Dynamic_Item_Names.addLast(parameter_value);
@@ -18957,7 +19038,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	                  //int type 
 	                {
 	                  if ( sim.funs.ProgramUtilitiesFun__Is_String_Int(parameter_value) == false  ){
-	                    System.out.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has " + parameter_name + " not integer but: " + parameter_value);
+	                    System.err.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has " + parameter_name + " not integer but: " + parameter_value);
 	                  }
 	                  break;
 	                }
@@ -18968,7 +19049,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	                  //bool t or nil type
 	                {
 	                  if ( !parameter_value.equals( "t" ) && !parameter_value.equals( "nil" ) ){
-	                    System.out.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has " + parameter_name + " neither t nor nil but: " + parameter_value);
+	                    System.err.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has " + parameter_name + " neither t nor nil but: " + parameter_value);
 	                  }
 	                  break;
 	                }
@@ -19012,9 +19093,9 @@ If the string is invalid or there is no current model then a warning is printed 
 	            {
 	              String parameter_name = a_list.getFirst().toLowerCase();
 	              a_list.removeFirst();
-	              if ( a_list.size() < 3 ) { if(sim.vars.printingModule.Popout_Message) System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter in addition to () "); }
+	              if ( a_list.size() < 3 ) { if(sim.vars.printingModule.Popout_Message) System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter in addition to () "); }
 	              if ( a_list.getFirst().charAt(0)  != '(' ){ 
-	                if(sim.vars.printingModule.Popout_Message) System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs List of String parameter. not " + a_list.getFirst());
+	                if(sim.vars.printingModule.Popout_Message) System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs List of String parameter. not " + a_list.getFirst());
 	                break;
 	              }
 	              LinkedList<String> parameter_list = sim.funs.ParametersFun__Remove_A_List_From_Initialization_Lists	(a_list);  // the first () is poped out without () from the list
@@ -19031,7 +19112,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	            {
 	              
 	              if(sim.vars.printingModule.Popout_Message) {
-	                System.out.println ("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method error! parameters for an item, the Key is undefined: " + a_list.getFirst());
+	                System.err.println ("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method error! parameters for an item, the Key is undefined: " + a_list.getFirst());
 	                break;
 	              }
 	              a_list.removeFirst();
@@ -19051,11 +19132,11 @@ If the string is invalid or there is no current model then a warning is printed 
 	        
 	        if ( parameter_name.length() >= 30  && parameter_name.substring(0, 30).equals( ":block_variable_randomization_" ) ){ //":block_variable_randomization_"
 	          Parameter_List_Clone.removeFirst();// remove the parameter name
-	          if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
+	          if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter"); }
 	          a_parameter = Parameter_List_Clone.getFirst();  //needs a single parameter
 	          Parameter_List_Clone.removeFirst();
-	          if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter. not " + a_parameter);}
-	          if ( a_template.Block_Variable_Randomization.containsKey( parameter_name ) ) System.out.println("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has a_template.Block_Variable_Randomization.containsKey( parameter_name ) : " + parameter_name);
+	          if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')' ){ System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	          if ( a_template.Block_Variable_Randomization.containsKey( parameter_name ) ) System.err.println("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has a_template.Block_Variable_Randomization.containsKey( parameter_name ) : " + parameter_name);
 	          a_template.Block_Variable_Randomization.put( parameter_name ,a_parameter);
 	          a_template.Block_Variable_Randomization_Ordered_Name.addLast ( parameter_name );
 	          
@@ -19064,7 +19145,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	            if (!sim.vars.programGlobalVar__Block_Variable_Common_RandomMethod_Last_Seed.containsKey(referred_name)) sim.vars.programGlobalVar__Block_Variable_Common_RandomMethod_Last_Seed.put(referred_name, new Three_Tuple());
 	            //safety check, the referred_name must have been defined
 	            if (!a_template.Block_Variable_Randomization_Ordered_Name.contains(referred_name)){
-	              System.out.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has !a_template.Block_Variable_Randomization_Ordered_Name.Contains(referred_name): " + referred_name );
+	              System.err.println("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has !a_template.Block_Variable_Randomization_Ordered_Name.Contains(referred_name): " + referred_name );
 	              break;
 	            }
 	          }
@@ -19072,10 +19153,10 @@ If the string is invalid or there is no current model then a warning is printed 
 	        }
 	        else if(  parameter_name.length() >= 16 && parameter_name.substring(0, 16).equals( ":block_variable_" ) ){ //":block_variable_"  but not ":block_variable_randomization_"
 	          Parameter_List_Clone.removeFirst();// remove the parameter name
-	          if ( Parameter_List_Clone.size() < 3 ) {  System.out.println ("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter in addition to () "); }
-	          if ( Parameter_List_Clone.getFirst().charAt(0) != '(' ){ System.out.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs List of String parameter. not " + Parameter_List_Clone.getFirst());}
+	          if ( Parameter_List_Clone.size() < 3 ) {  System.err.println ("Error! TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs 1 parameter in addition to () "); }
+	          if ( Parameter_List_Clone.getFirst().charAt(0) != '(' ){ System.err.println ("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method " + parameter_name + " needs List of String parameter. not " + Parameter_List_Clone.getFirst());}
 	          
-	          if ( a_template.Block_Variable.containsKey( parameter_name ) ) System.out.println("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has a_template.Block_Variable.containsKey( parameter_name ) : " + parameter_name);
+	          if ( a_template.Block_Variable.containsKey( parameter_name ) ) System.err.println("Error TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method has a_template.Block_Variable.containsKey( parameter_name ) : " + parameter_name);
 	          LinkedList<String> parameters = sim.funs.ParametersFun__Remove_A_List_From_Initialization_Lists	(Parameter_List_Clone) ;
 	          
 	          parameters = ProgramUtilitiesFun__Combine_Quotation_In_LinkedList_String		(parameters);	
@@ -19084,7 +19165,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	          //a_template.Block_Variable_Counter.Add (parameter_name,  ProgramUtilitiesFun__LinkedListString_Clone (parameters) );
 	        }
 	        else{
-	          System.out.println ("TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method error! the Key is undefined: " + Parameter_List_Clone.getFirst());
+	          System.err.println ("TaskTemplateFun__Add_Trials_From_discrete_display_feedback_two_stages_method error! the Key is undefined: " + Parameter_List_Clone.getFirst());
 	          Parameter_List_Clone.removeFirst();
 	        }
 	        break;
@@ -19098,7 +19179,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	public  void TaskTemplateFun__Catch_Key_Press_Event (Object the_response_object){
 
 	  if ( !(the_response_object instanceof Response_Item_Key_Press )) {
-	    System.out.println("Error! TaskTemplateFun__Catch_Key_Press_Event need input to be Response_Item_Key_Press" );
+	    System.err.println("Error! TaskTemplateFun__Catch_Key_Press_Event need input to be Response_Item_Key_Press" );
 	    return;
 	  }
 	  
@@ -19158,14 +19239,14 @@ If the string is invalid or there is no current model then a warning is printed 
 	public  void TaskTemplateFun__Catch_Mouse_L_Click_Event (Object the_response_object){
 
 	  if ( !(the_response_object instanceof Response_Item_Key_Press )) {
-	    System.out.println("Error! TaskTemplateFun__Catch_Mouse_L_Click_Event need input to be Response_Item_Key_Press" );
+	    System.err.println("Error! TaskTemplateFun__Catch_Mouse_L_Click_Event need input to be Response_Item_Key_Press" );
 	    return;
 	  }
 	  
 	  Response_Item_Key_Press the_response_item = (Response_Item_Key_Press) the_response_object;
 	  
 	  if (!the_response_item.Key.equals( "mouse-L" ) ) {
-	    System.out.println("Error! TaskTemplateFun__Catch_Mouse_L_Click_Event need the_response_item.Key = moust-L rather than: " + the_response_item.Key);
+	    System.err.println("Error! TaskTemplateFun__Catch_Mouse_L_Click_Event need the_response_item.Key = moust-L rather than: " + the_response_item.Key);
 	    return;
 	  }
 	  
@@ -19448,7 +19529,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    else if ( day_num == last_day_num && block_num == last_block_num + 1) trial_case = "same_day_new_block";
 	    else if ( day_num == last_day_num && block_num == last_block_num && trial_num_within_block == last_trial_num_within_block + 1) trial_case = "same_day_same_block_new_trial";
 	    else {
-	      System.out.println("Error! TaskTemplateFun__Events_Before_The_Start_Of_Each_Trial has undefined trial_case");
+	      System.err.println("Error! TaskTemplateFun__Events_Before_The_Start_Of_Each_Trial has undefined trial_case");
 	      trial_case = "Error!";
 	    }
 	    
@@ -19598,7 +19679,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    LinkedList<Hashtable> item_parameter_over_trials = new LinkedList<Hashtable> ();
 	    LinkedList<Object> item_display_over_trials = new LinkedList<Object>();
 	    
-	    if( generating_method_for_an_item_over_trials.containsKey(":item_type") == false) System.out.println("Error. TaskTemplateFun__Generate_An_Item_For_Trials_Using_Generating_Methods has generating_method_for_an_item_over_trials.containsKey( :item_type ) == false"); //checks for the case there is no ":item_type" key
+	    if( generating_method_for_an_item_over_trials.containsKey(":item_type") == false) System.err.println("Error. TaskTemplateFun__Generate_An_Item_For_Trials_Using_Generating_Methods has generating_method_for_an_item_over_trials.containsKey( :item_type ) == false"); //checks for the case there is no ":item_type" key
 	    String item_type = (String) generating_method_for_an_item_over_trials.get(":item_type");
 	    
 	    
@@ -20697,7 +20778,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    
 	    
 	    else {
-	      System.out.println("Error. TaskTemplateFun__Generate_An_Item_For_Trials_Using_Generating_Methods has undefined :item_type: " + item_type);
+	      System.err.println("Error. TaskTemplateFun__Generate_An_Item_For_Trials_Using_Generating_Methods has undefined :item_type: " + item_type);
 	      return null;
 	    }
 	    
@@ -20709,7 +20790,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    return return_tuple;
 	  }
 	  else {
-	    System.out.println("Error! TaskTemplateFun__Generate_An_Item_For_Trials_Using_Generating_Methods has the_template type undefined. " );
+	    System.err.println("Error! TaskTemplateFun__Generate_An_Item_For_Trials_Using_Generating_Methods has the_template type undefined. " );
 	    return null;
 	  }
 	}
@@ -20731,7 +20812,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    return ((Display_Item_Audio_Digit_Sound)display_object).Correct_Response;
 	  }
 	  
-	  else System.out.println("TaskTemplateFun__Get_Correct_Response_From_Display_Item has undefined diaplay_object type" );
+	  else System.err.println("TaskTemplateFun__Get_Correct_Response_From_Display_Item has undefined diaplay_object type" );
 	  
 	  return null;
 	}
@@ -20826,7 +20907,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      int number_of_items_per_slide = a_template.Generating_Method_For_Each_Item_Over_Trials.size();
 	      int add_number_of_days = 				a_template.Add_Number_Of_Days ;  //int >= 0
 	      int add_number_of_blocks_per_day = 		a_template.Add_Number_Of_Blocks_Per_Day; //int >= 0 , when it is 0, add_number_of_days must be 0
-	      if ( add_number_of_blocks_per_day == 0 && add_number_of_days != 0)System.out.println("Error. TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has add_number_of_blocks_per_day == 0 && add_number_of_days != 0");
+	      if ( add_number_of_blocks_per_day == 0 && add_number_of_days != 0)System.err.println("Error. TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has add_number_of_blocks_per_day == 0 && add_number_of_days != 0");
 	      
 	      int all_day_added = add_number_of_days;
 	      if (all_day_added == 0) all_day_added = 1; //here minimal is 1
@@ -20844,7 +20925,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	        String a_random_method_key = (String) an_entry.getKey();
           String corresponding_block_variable_name = ":block_variable_" + a_random_method_key.substring(30) ;
           //System.out.println(a_random_method_key + " " + corresponding_block_variable_name);
-          if ( a_template.Block_Variable.containsKey( corresponding_block_variable_name ) == false )System.out.println("Error! TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has a_template.Block_Variable.containsKey( corresponding_block_variable_name ) == false corresponding_block_variable_name: " + corresponding_block_variable_name);
+          if ( a_template.Block_Variable.containsKey( corresponding_block_variable_name ) == false )System.err.println("Error! TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has a_template.Block_Variable.containsKey( corresponding_block_variable_name ) == false corresponding_block_variable_name: " + corresponding_block_variable_name);
 	      }
 	      
 //	      for ( DictionaryEntry an_entry : a_template.Block_Variable_Randomization ){
@@ -20885,7 +20966,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	                Three_Tuple record = (Three_Tuple) sim.vars.programGlobalVar__Block_Variable_Common_RandomMethod_Last_Seed.get(random_method_name);
 	                record.Ob1 = random_method;
 	                if (random_method.charAt(0) == '=') {
-	                  System.out.println("Error! TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template random_method of a referred method must be a defined method rather than: " + random_method);
+	                  System.err.println("Error! TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template random_method of a referred method must be a defined method rather than: " + random_method);
 	                  break;
 	                }
 	                record.Ob2 = last_seed1;
@@ -20921,9 +21002,9 @@ If the string is invalid or there is no current model then a warning is printed 
 	      
 	      
 	      //trial information may be substitued by block variables
-	      if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_template.Add_Number_Of_Trials_Per_Block) == false)) System.out.println ("Error! TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template  has a_template.Add_Number_Of_Trials_Per_Block String not a number but: " + a_template.Add_Number_Of_Trials_Per_Block );
+	      if ( (sim.funs.ProgramUtilitiesFun__Is_String_Double(a_template.Add_Number_Of_Trials_Per_Block) == false)) System.err.println ("Error! TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template  has a_template.Add_Number_Of_Trials_Per_Block String not a number but: " + a_template.Add_Number_Of_Trials_Per_Block );
 	      int add_number_of_trials_per_block = Integer.parseInt(	a_template.Add_Number_Of_Trials_Per_Block ); //int >= 1
-	      if (add_number_of_trials_per_block < 1) System.out.println("Error. TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has add_number_of_trials_per_block < 1");
+	      if (add_number_of_trials_per_block < 1) System.err.println("Error. TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has add_number_of_trials_per_block < 1");
 	      int trials_added_per_block = add_number_of_trials_per_block;
 	      
 	      
@@ -21036,21 +21117,21 @@ If the string is invalid or there is no current model then a warning is printed 
 	            
 	            String a_display_and_response_duration_string = ProgramUtilitiesFun__Get_A_String_From_Randomizing_A_String_List ( a_template.Display_And_Response_Duration , counter_display_and_response_duration ,  a_template.Display_And_Response_Duration_Randomization   ); //original full String list, String list counter, random method (may include fixed_order)
 	            a_display_and_response_duration_string  =  TaskTemplateFun__Substitute_String_With_Block_Variables (Integer.toString(day_i), Integer.toString(block_i), a_display_and_response_duration_string, a_template.Block_Variable_Content_By_Day_Block_VName ) ;
-	            if ( ProgramUtilitiesFun__Is_String_Double(a_display_and_response_duration_string) == false) System.out.println ("Error TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template   a_display_and_response_duration_string  needs to be a number, not " + a_display_and_response_duration_string);
+	            if ( ProgramUtilitiesFun__Is_String_Double(a_display_and_response_duration_string) == false) System.err.println ("Error TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template   a_display_and_response_duration_string  needs to be a number, not " + a_display_and_response_duration_string);
 	            double a_display_and_response_duration_num = Double.parseDouble (a_display_and_response_duration_string);
 	            temp_trial_parameters.put("display-and-response-duration" ,  a_display_and_response_duration_num);
 	            
 	            
 	            String a_feedback_duration_string = ProgramUtilitiesFun__Get_A_String_From_Randomizing_A_String_List ( a_template.Feedback_Duration , counter_feedback_duration ,  a_template.Feedback_Duration_Randomization  ); //original full String list, String list counter, random method (may include fixed_order)
 	            a_feedback_duration_string =  TaskTemplateFun__Substitute_String_With_Block_Variables (Integer.toString(day_i), Integer.toString(block_i), a_feedback_duration_string, a_template.Block_Variable_Content_By_Day_Block_VName ) ;
-	            if ( ProgramUtilitiesFun__Is_String_Double(a_feedback_duration_string) == false) System.out.println ("Error TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template   a_feedback_duration_string  needs to be a number, not " + a_feedback_duration_string);
+	            if ( ProgramUtilitiesFun__Is_String_Double(a_feedback_duration_string) == false) System.err.println ("Error TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template   a_feedback_duration_string  needs to be a number, not " + a_feedback_duration_string);
 	            double a_feedback_duration_num = Double.parseDouble ( a_feedback_duration_string );
 	            temp_trial_parameters.put("feedback-duration" , a_feedback_duration_num);
 	            
 	            
 	            String number_of_responses_needed_string = a_template.Number_Of_Responses_Per_Trial;
 	            number_of_responses_needed_string =  TaskTemplateFun__Substitute_String_With_Block_Variables (Integer.toString(day_i), Integer.toString(block_i), number_of_responses_needed_string, a_template.Block_Variable_Content_By_Day_Block_VName ) ;
-	            if( ProgramUtilitiesFun__Is_String_Double ( number_of_responses_needed_string ) == false) System.out.println("Error! TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has  ProgramUtilitiesFun__Is_String_Double ( number_of_responses_needed_string ) == false ");
+	            if( ProgramUtilitiesFun__Is_String_Double ( number_of_responses_needed_string ) == false) System.err.println("Error! TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has  ProgramUtilitiesFun__Is_String_Double ( number_of_responses_needed_string ) == false ");
 	            int  number_of_responses_needed_int = Integer.parseInt( number_of_responses_needed_string);
 	            temp_trial_parameters.put("number-of-responses-needed" ,  number_of_responses_needed_int );
 	            
@@ -21062,7 +21143,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	            //for each item in this trial:, only use the partial of items that is specified by :how_many_display_items_to_use_in_a_trial
 	            String how_many_display_items_to_add_for_this_trial = TaskTemplateFun__Substitute_String_With_Block_Variables (Integer.toString(day_i), Integer.toString(block_i), a_template.How_Many_Display_Items_To_Use_In_A_Trial, a_template.Block_Variable_Content_By_Day_Block_VName ) ;
 	            if ( how_many_display_items_to_add_for_this_trial.equals( "all" ))how_many_display_items_to_add_for_this_trial = Integer.toString(number_of_items_per_slide);
-	            if(sim.funs.ProgramUtilitiesFun__Is_String_Double(how_many_display_items_to_add_for_this_trial) == false ) System.out.println ( "Error! TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has ProgramUtilitiesFun__Is_String_Double(how_many_display_items_to_add_for_this_trial) == false : " + how_many_display_items_to_add_for_this_trial);
+	            if(sim.funs.ProgramUtilitiesFun__Is_String_Double(how_many_display_items_to_add_for_this_trial) == false ) System.err.println ( "Error! TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has ProgramUtilitiesFun__Is_String_Double(how_many_display_items_to_add_for_this_trial) == false : " + how_many_display_items_to_add_for_this_trial);
 	            int how_many_display_items_to_add_for_this_trial_int = Integer.parseInt( how_many_display_items_to_add_for_this_trial );
 	            if ( how_many_display_items_to_add_for_this_trial_int > number_of_items_per_slide ) System.out.println("WARNING! TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has how_many_display_items_to_add_for_this_trial_int > number_of_items_per_slide : " + how_many_display_items_to_add_for_this_trial_int );
 	            
@@ -21113,7 +21194,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      
 	      
 	    }//if ( template_object is Task_Template_Discrete_Display_Feedback_Two_Stages_Method)
-	    else System.out.println ("Error. TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has undefined object type in  sim.vars.taskTemplate.Trial_Generating_Methods") ;
+	    else System.err.println ("Error. TaskTemplateFun__Initialize_Experiment_Trial_List_From_Template has undefined object type in  sim.vars.taskTemplate.Trial_Generating_Methods") ;
 	    //end of determine the three lists generated from a_template method
 	    
 	    //add lists to Central_Parameters_Module data base
@@ -21304,7 +21385,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	
 	public  void TaskTemplateFun__Refresh_Dynamic_Item(Object an_object, double time_delay){
 	  if(time_delay < 0){
-	    System.out.println("Error! TaskTemplateFun__Refresh_Dynamic_Item has time_delay < 0: " + time_delay );
+	    System.err.println("Error! TaskTemplateFun__Refresh_Dynamic_Item has time_delay < 0: " + time_delay );
 	    return;
 	  }
 	  
@@ -21330,7 +21411,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	        //System.out.println("TaskTemplateFun__Refresh_Dynamic_Item. a_visicon_name not gone: " + a_visicon_name + " for itemID: " + item_id);
 	        
 	        //if(VisionModuleFun__Find_The_Visicon_ID_By_Visicon_Name(a_visicon_name) != -1) DeviceModuleFun__Visual_Display_Remove_Item_By_Visicon_Name(a_visicon_name, time_delay);  // for a delayed appearing item, Find_The_Visicon_ID_By_Visicon_Name cannot find it.
-	        //else System.out.println("Error! TaskTemplateFun__Refresh_Dynamic_Item. cannot find Visicon_ID_By_Visicon_Name: " + a_visicon_name);
+	        //else System.err.println("Error! TaskTemplateFun__Refresh_Dynamic_Item. cannot find Visicon_ID_By_Visicon_Name: " + a_visicon_name);
 	        
 	        DeviceModuleFun__Visual_Display_Remove_Item_By_Visicon_Name(a_visicon_name, time_delay);  
 	      }
@@ -21369,7 +21450,7 @@ If the string is invalid or there is no current model then a warning is printed 
 		        //System.out.println("TaskTemplateFun__Refresh_Dynamic_Item. a_visicon_name not gone: " + a_visicon_name + " for itemID: " + item_id);
 		        
 		        //if(VisionModuleFun__Find_The_Visicon_ID_By_Visicon_Name(a_visicon_name) != -1) DeviceModuleFun__Visual_Display_Remove_Item_By_Visicon_Name(a_visicon_name, time_delay);  // for a delayed appearing item, Find_The_Visicon_ID_By_Visicon_Name cannot find it.
-		        //else System.out.println("Error! TaskTemplateFun__Refresh_Dynamic_Item. cannot find Visicon_ID_By_Visicon_Name: " + a_visicon_name);
+		        //else System.err.println("Error! TaskTemplateFun__Refresh_Dynamic_Item. cannot find Visicon_ID_By_Visicon_Name: " + a_visicon_name);
 		        
 		        DeviceModuleFun__Visual_Display_Remove_Item_By_Visicon_Name(a_visicon_name, time_delay);  
 		      }
@@ -21419,7 +21500,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    TaskTemplateFun__Show_Display_Item_Display( the_item, item_ID_num);
 	  }
 	  else {
-	    System.out.println("Error! TaskTemplateFun__Refresh_Dynamic_Item has undefined item type");	
+	    System.err.println("Error! TaskTemplateFun__Refresh_Dynamic_Item has undefined item type");	
 	  }
 	}
 	
@@ -21429,7 +21510,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	
 	public  void TaskTemplateFun__Set_World3D_Driving_Method (LinkedList<String> Parameter_List){
 	  if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method)) {
-	    System.out.println ("Error! TaskTemplateFun__Use_sim.vars.world3DTemplate. sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method)");
+	    System.err.println ("Error! TaskTemplateFun__Use_sim.vars.world3DTemplate. sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method)");
 	    
 	    return;
 	  }
@@ -21444,7 +21525,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    switch (Parameter_List_Clone.getFirst().toLowerCase()) {
 	      case ":driver_start_on_road_name" : {
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) {   System.out.println ("Error! TaskTemplateFun__Set_World3D_Driving_Method " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) {   System.err.println ("Error! TaskTemplateFun__Set_World3D_Driving_Method " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){   System.out.println ("Error! TaskTemplateFun__Set_World3D_Driving_Method " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
@@ -21465,11 +21546,11 @@ If the string is invalid or there is no current model then a warning is printed 
 	      { //double numbers
 	        String para_name = Parameter_List_Clone.getFirst().toLowerCase();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) {   System.out.println ("Error! TaskTemplateFun__Set_World3D_Driving_Method " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) {   System.err.println ("Error! TaskTemplateFun__Set_World3D_Driving_Method " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){   System.out.println ("Error! TaskTemplateFun__Set_World3D_Driving_Method " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
-	        if ( !ProgramUtilitiesFun__Is_String_Double(a_parameter)) { System.out.println ("Error! TaskTemplateFun__Set_World3D_Driving_Method " + Parameter_List_Clone.getFirst() + " needs to be double. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){   System.err.println ("Error! TaskTemplateFun__Set_World3D_Driving_Method " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
+	        if ( !ProgramUtilitiesFun__Is_String_Double(a_parameter)) { System.err.println ("Error! TaskTemplateFun__Set_World3D_Driving_Method " + Parameter_List_Clone.getFirst() + " needs to be double. not " + a_parameter);}
 	        
 	        switch (para_name){
 	          case ":driver_camera_height" :{
@@ -21511,7 +21592,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	            break;	
 	          }
 	          default: {
-	            System.out.println("Error! TaskTemplateFun__Set_World3D_Driving_Method double cases have undefined para_name: " + para_name);	
+	            System.err.println("Error! TaskTemplateFun__Set_World3D_Driving_Method double cases have undefined para_name: " + para_name);	
 	            break;
 	          }
 	        }
@@ -22017,7 +22098,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    
 	  } //end of Display_Item_Audio_Word_Sound
 	  else {
-	    System.out.println ( "TaskTemplateFun__Show_Display_Item_Display has undefined a_display_item type.");
+	    System.err.println ( "TaskTemplateFun__Show_Display_Item_Display has undefined a_display_item type.");
 	  }
 	  
 	  return output_txt_trace_for_an_item_display;
@@ -22275,7 +22356,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	      }
 	      
 	      else {
-	        System.out.println ( "TaskTemplateFun__Start_Trial_Feedback has undefined a_display_item type.");
+	        System.err.println ( "TaskTemplateFun__Start_Trial_Feedback has undefined a_display_item type.");
 	      }
 	      
 	      item_ID_num++;
@@ -22336,7 +22417,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	  if( a_string.length() > 16 && a_string.substring(0,16).equals( ":block_variable_" )){ //need to substitute
 	    String variable_key = day_i_string + "__" + block_i_string + "__" + a_string; 
 	    if( the_block_variable_table.containsKey( variable_key) == false) { 	
-	      System.out.println(" Error! TaskTemplateFun__Substitute_String_With_Block_Variables does not contain variable_key: " + variable_key);
+	      System.err.println(" Error! TaskTemplateFun__Substitute_String_With_Block_Variables does not contain variable_key: " + variable_key);
 	      return null;
 	    }
 	    else return (String) the_block_variable_table.get(variable_key) ;
@@ -22398,7 +22479,7 @@ If the string is invalid or there is no current model then a warning is printed 
 		}
 		else{
 			  if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method)) {
-			    System.out.println ("Error! TaskTemplateFun__Update_DriverCar_Accelbrake sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method)");
+			    System.err.println ("Error! TaskTemplateFun__Update_DriverCar_Accelbrake sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method)");
 			    
 			  }
 			  World3D_DriverCar the_driver_car = ((World3D_DriverCar)sim.vars.world3DTemplate.World.Objects.get(  ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).DriverCar_World3D_ID  ));
@@ -22450,7 +22531,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	  Hashtable dynamic_items = TaskTemplateFun__Get_Current_Dynamic_Items();
 	  
 	  if( dynamic_items.containsKey(item_name) == false){
-	    System.out.println("Error! TaskTemplateFun__Update_Text_Dynamic_Item_Text has undefined item_name: " + item_name);	
+	    System.err.println("Error! TaskTemplateFun__Update_Text_Dynamic_Item_Text has undefined item_name: " + item_name);	
 	    return;
 	  }
 	  
@@ -22655,13 +22736,13 @@ If the string is invalid or there is no current model then a warning is printed 
 	    switch (Parameter_List_Clone.getFirst().toLowerCase()) {
 	      case ":auto_compute_default_reaction_time" : {
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.Auto_Compute_Default_Reaction_Time = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.Auto_Compute_Default_Reaction_Time = false ;
-	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template :auto_compute_default_response_correctness has a parameter not t or nil but: " +  a_parameter );
+	        else System.err.println ("Error! TaskTemplateFun__Use_Task_DBT_Template :auto_compute_default_response_correctness has a parameter not t or nil but: " +  a_parameter );
 	        break;
 	      }
 	      case ":auto_compute_default_response_correctness" : {
@@ -22672,15 +22753,15 @@ If the string is invalid or there is no current model then a warning is printed 
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.Auto_Compute_Default_Response_Correctness = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.Auto_Compute_Default_Response_Correctness = false ;
-	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template :auto_compute_default_response_correctness has a parameter not t or nil but: " +  a_parameter );
+	        else System.err.println ("Error! TaskTemplateFun__Use_Task_DBT_Template :auto_compute_default_response_correctness has a parameter not t or nil but: " +  a_parameter );
 	        break;
 	      }
 	      case ":method" : {
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) {   System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) {   System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){   System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){   System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
 	        sim.vars.taskTemplate.Method = a_parameter ;
 	        break;
 	      }
@@ -22700,46 +22781,46 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":reset_vision_module_before_each_trial" : {
 	        String parameter_name = Parameter_List_Clone.getFirst();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.Reset_Vision_Module_Before_Each_Trial = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.Reset_Vision_Module_Before_Each_Trial = false ;
-	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
+	        else System.err.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
 	        break;
 	      }
 	      
 	      case ":reset_audio_module_before_each_trial" : {
 	        String parameter_name = Parameter_List_Clone.getFirst();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.Reset_Audio_Module_Before_Each_Trial = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.Reset_Audio_Module_Before_Each_Trial = false ;
-	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
+	        else System.err.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
 	        break;
 	      }
 	      
 	      case ":reset_imaginary_module_before_each_trial" : {
 	        String parameter_name = Parameter_List_Clone.getFirst();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.Reset_Imaginary_Module_Before_Each_Trial = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.Reset_Imaginary_Module_Before_Each_Trial = false ;
-	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
+	        else System.err.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
 	        break;
 	      }
 	      
 	      case ":reinitialize_goal_1_before_each_trial" : {
 	        String parameter_name = Parameter_List_Clone.getFirst();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
@@ -22752,26 +22833,26 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":reinitialize_intentional_module_before_each_trial" : {
 	        String parameter_name = Parameter_List_Clone.getFirst();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.ReInitialize_Intentional_Module_Before_Each_Trial = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.ReInitialize_Intentional_Module_Before_Each_Trial = false ;
-	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
+	        else System.err.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
 	        break;
 	      }
 	      
 	      case ":clear_retrieval_buffer_and_reset_declarative_module_state" : {
 	        String parameter_name = Parameter_List_Clone.getFirst();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.Clear_Retrieval_Buffer_And_Reset_Declarative_Module_State = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.Clear_Retrieval_Buffer_And_Reset_Declarative_Module_State = false ;
-	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
+	        else System.err.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
 	        break;
 	      }
 	      
@@ -22779,13 +22860,13 @@ If the string is invalid or there is no current model then a warning is printed 
 	      case ":Obsolete_ReInitialize_Goal_Focus_Before_Each_Trial" : {
 	        String parameter_name = Parameter_List_Clone.getFirst();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.Obsolete_ReInitialize_Goal_Focus_Before_Each_Trial = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.Obsolete_ReInitialize_Goal_Focus_Before_Each_Trial = false ;
-	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
+	        else System.err.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
 	        break;
 	      }
 	      
@@ -22798,20 +22879,20 @@ If the string is invalid or there is no current model then a warning is printed 
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.Reset_All_Modules_Before_Each_Trial = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.Reset_All_Modules_Before_Each_Trial = false ;
-	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
+	        else System.err.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
 	        break;
 	      } 
 	      
 	      case ":reset_all_modules_before_each_day" : {
 	        String parameter_name = Parameter_List_Clone.getFirst();
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + parameter_name + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.Reset_All_Modules_Before_Each_Day = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.Reset_All_Modules_Before_Each_Day = false ;
-	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
+	        else System.err.println ("Error! TaskTemplateFun__Use_Task_DBT_Template " + parameter_name +"  has a parameter not t or nil but: " +  a_parameter );
 	        break;
 	      } 
 	      case ":response_terminates_display" : {
@@ -22819,7 +22900,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.Response_Terminates_Display = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.Response_Terminates_Display = false ;
 	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template :response_terminates_display has a parameter not t or nil but: " +  a_parameter );
@@ -22828,13 +22909,13 @@ If the string is invalid or there is no current model then a warning is printed 
 	      
 	      case ":response_terminates_feedback" : {
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) { System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) { System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.out.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){  System.err.println ("Error TaskTemplateFun__Use_Task_DBT_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
 	        if (a_parameter.equals( "t")) sim.vars.taskTemplate.Response_Terminates_Feedback = true ;
 	        else if (a_parameter.equals( "nil")) sim.vars.taskTemplate.Response_Terminates_Feedback = false ;
-	        else System.out.println ("Error! TaskTemplateFun__Use_Task_DBT_Template :response_terminates_display has a parameter not t or nil but: " +  a_parameter );
+	        else System.err.println ("Error! TaskTemplateFun__Use_Task_DBT_Template :response_terminates_display has a parameter not t or nil but: " +  a_parameter );
 	        break;
 	      }
 	      
@@ -22857,10 +22938,10 @@ If the string is invalid or there is no current model then a warning is printed 
 	    switch (Parameter_List_Clone.getFirst().toLowerCase()) {
 	      case ":method" : {
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) {   System.out.println ("Error! TaskTemplateFun__Use_World3D_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) {   System.err.println ("Error! TaskTemplateFun__Use_World3D_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
-	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){   System.out.println ("Error! TaskTemplateFun__Use_World3D_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
+	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){   System.err.println ("Error! TaskTemplateFun__Use_World3D_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
 	        sim.vars.world3DTemplate.Method = a_parameter ;
 	        
 	        switch ( sim.vars.world3DTemplate.Method ){
@@ -22871,7 +22952,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	          }
 	          default:
 	          {
-	            System.out.println ("Error! TaskTemplateFun__Use_sim.vars.world3DTemplate. the sim.vars.world3DTemplate.Method is undefined: " + sim.vars.world3DTemplate.Method);
+	            System.err.println ("Error! TaskTemplateFun__Use_sim.vars.world3DTemplate. the sim.vars.world3DTemplate.Method is undefined: " + sim.vars.world3DTemplate.Method);
 	            break;
 	          }
 	          
@@ -22882,14 +22963,14 @@ If the string is invalid or there is no current model then a warning is printed 
 	      
 	      case ":refresh_cycle" : {
 	        Parameter_List_Clone.removeFirst(); // remove the parameter name
-	        if ( Parameter_List_Clone.size() < 1 ) {   System.out.println ("Error! TaskTemplateFun__Use_World3D_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
+	        if ( Parameter_List_Clone.size() < 1 ) {   System.err.println ("Error! TaskTemplateFun__Use_World3D_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter"); }
 	        a_parameter = Parameter_List_Clone.getFirst();  //needs has a single parameter
 	        Parameter_List_Clone.removeFirst();
 	        if ( a_parameter.charAt(0) == ':' || a_parameter.charAt(0) == '(' || a_parameter.charAt(0) == ')'){   System.out.println ("Error! TaskTemplateFun__Use_World3D_Template " + Parameter_List_Clone.getFirst() + " needs 1 parameter. not " + a_parameter);}
 	        
-	        if( !ProgramUtilitiesFun__Is_String_Double( a_parameter ) ) System.out.println("Error! TaskTemplateFun__Use_World3D_Template " + Parameter_List_Clone.getFirst() + " to be a double rather than: " + a_parameter   );
+	        if( !ProgramUtilitiesFun__Is_String_Double( a_parameter ) ) System.err.println("Error! TaskTemplateFun__Use_World3D_Template " + Parameter_List_Clone.getFirst() + " to be a double rather than: " + a_parameter   );
 	        sim.vars.world3DTemplate.World.Refresh_Cycle =  (double) Double.parseDouble (a_parameter );
-	        if(sim.vars.world3DTemplate.World.Refresh_Cycle <= 0.0)System.out.println("Error! TaskTemplateFun__Use_World3D_Template " + Parameter_List_Clone.getFirst() + " must be positive rather than: " + a_parameter   );
+	        if(sim.vars.world3DTemplate.World.Refresh_Cycle <= 0.0)System.err.println("Error! TaskTemplateFun__Use_World3D_Template " + Parameter_List_Clone.getFirst() + " must be positive rather than: " + a_parameter   );
 	        
 	        break;
 	      }
@@ -23764,14 +23845,19 @@ If the string is invalid or there is no current model then a warning is printed 
 //VisionModuleFun
 	
 	public int VisionModuleFun__Find_The_Visicon_ID_By_Visicon_Name(String the_visicon_name){
-		//System.out.println("VisionModuleFun__Find_The_Visicon_ID_By_Visicon_Name, the_visicon_name: " + the_visicon_name);
+		//System.out.println("VisionModuleFun__Find_The_Visicon_ID_By_Visicon_Name, print all visicons: ");
 	  Enumeration enum_chunk = Collections.enumeration(sim.vars.visualDisplay.Visicon);
 	  int i = 0 ;
 	  while(enum_chunk.hasMoreElements()){
-	    if (  ((Chunk)enum_chunk.nextElement()).Chunk_Name.equals(  the_visicon_name ) ) return i;
+		  String name = ((Chunk)enum_chunk.nextElement()).Chunk_Name;
+		  //System.out.println( name+ ", the_visicon_name: " + the_visicon_name);
+	    if (  name.equals(  the_visicon_name ) ) {
+	    	//System.out.println("VisionModuleFun__Find_The_Visicon_ID_By_Visicon_Name, found with i=" + i);
+	    	return i;
+	    }
 	    i++;
 	  }
-	  
+	  System.err.println("VisionModuleFun__Find_The_Visicon_ID_By_Visicon_Name, visicon: " + the_visicon_name + " not found");
 	  return -1;
 	  
 	  
@@ -23957,10 +24043,10 @@ If the string is invalid or there is no current model then a warning is printed 
 		// added by Yelly
 		// return the vision chunk for critical element
 		// place it and return at the very beginning because the former driving model just return empty chunk as near point and far point does not have neccessary visual representation
-		if(visual_location.Slot.containsKey("kind")) {
-			String kind = sim.funs.ChunkFun__Get_Chunk_Slot_Value(visual_location, "kind");
+		if(visual_location.Chunk_Type.equals("visual-location-world3d-driving-criticalelement")) {
+			//String kind = sim.funs.ChunkFun__Get_Chunk_Slot_Value(visual_location, "kind");
 			//System.out.println("VisionModuleFun__Find_Visicon_By_Location, visual_location kind: " + kind);
-			if(kind.equals("critical-element")) {
+			//if(kind.equals("critical-element")) {
 				if( !visual_location.Slot.containsKey("id") ){
 					System.err.println("Error! VisionModuleFun__Find_Visicon_By_Location has no 'id' key");
 					return null;
@@ -23971,8 +24057,9 @@ If the string is invalid or there is no current model then a warning is printed 
 				}
 
 				String id = (String)visual_location.Slot.get("id");
+				if(id.contains("\"")) id = id.substring(1, id.lastIndexOf('"'));
 				String viewArea = (String)visual_location.Slot.get("viewarea");
-				//System.out.println("for critical element, looking at viewarea: "+viewArea);
+				if(viewArea.contains("\"")) viewArea = viewArea.substring(1, viewArea.lastIndexOf('"'));
 				  
 				Chunk visiconChunk = null;
 
@@ -23982,40 +24069,70 @@ If the string is invalid or there is no current model then a warning is printed 
 	    			return new Chunk();
 	    		}
 	    		else if(focusing.type.equals("vehicle")) {
-	    			visiconChunk  = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-vehicle",  "screen-pos", visual_location.Chunk_Name, "id", id, "color", focusing.content});
+	    			// screen-pos is the first chunk related to this critical element. This is to keep content identical to avoid adding chunks to the model
+	    			if(sim.funs.ChunkFun__Is_Chunk_Name("critical-element-" + id)) {
+	    				visiconChunk  = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-vehicle",  "screen-pos", "critical-element-location-" + id, "id", id, "color", focusing.content});
+	    				visiconChunk.DM_Name_Origin = "critical-element-" + id;
+	    			}
+	    			else {
+	    				visiconChunk  = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + id , "isa", "world3d-driving-criticalelement-vehicle",  "screen-pos", "critical-element-location-" + id, "id", id, "color", focusing.content});
+
+	                    // for critical elements, add visicon here
+	                    // copied from "Visual Display Onset" part
+	                    Chunk temp_chunk = sim.funs.ChunkFun__Chunk_Clone(visiconChunk);
+	                    temp_chunk.Creation_Time = SimSystem.clock();
+	                    sim.vars.visualDisplay.Visicon.addLast(temp_chunk);
+	    			}
 	    		}
 	    		else if(focusing.type.equals("sign")) {
-	    			visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-sign",  "screen-pos", visual_location.Chunk_Name, "id", id, "content", focusing.content});
+	    			// screen-pos is the first chunk related to this critical element. This is to keep content identical to avoid adding chunks to the model
+	    			if(sim.funs.ChunkFun__Is_Chunk_Name("critical-element-" + id)) {
+	    				visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-sign",  "screen-pos", "critical-element-location-" + id, "id", id, "content", focusing.content});
+	    				visiconChunk.DM_Name_Origin = "critical-element-" + id;
+	    			}
+	    			else {
+	    				visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + id , "isa", "world3d-driving-criticalelement-sign",  "screen-pos", "critical-element-location-" + id, "id", id, "content", focusing.content});
+
+	                    // for critical elements, add visicon here
+	                    // copied from "Visual Display Onset" part
+	                    Chunk temp_chunk = sim.funs.ChunkFun__Chunk_Clone(visiconChunk);
+	                    temp_chunk.Creation_Time = SimSystem.clock();
+	                    sim.vars.visualDisplay.Visicon.addLast(temp_chunk);
+	    			}
 	    		}
 	    		else {
 	    			System.err.println("unspecified type of critical element");
 	    			return new Chunk();
 	    		}
 	    		
-                // for critical elements, add visicon here
-                // copied from "Visual Display Onset" part
-                Chunk temp_chunk = sim.funs.ChunkFun__Chunk_Clone(visiconChunk);
-                temp_chunk.Creation_Time = SimSystem.clock();
-                sim.vars.visualDisplay.Visicon.addLast(temp_chunk);
 	    		
 	    		return visiconChunk;
-	    	}
-			else if(kind.equals("near-point") || kind.equals("far-point")) {
-				// in driving model, near point/far point don't have visicon representation, 
-				// so I just let it return empty chunk
-			    return new Chunk();
-			}
+	    	//}
 		}
 		// return the vision chunk for speed
 		else if(visual_location.Chunk_Type.equals("visual-location-world3d-driving-speed")) {
-			Chunk visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-speed",  "screen-pos", visual_location.Chunk_Name, "speed", ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).getSpeedLevel().getRange()});
-    		// for speedometer, add visicon here
-            // copied from "Visual Display Onset" part
-            Chunk temp_chunk = sim.funs.ChunkFun__Chunk_Clone(visiconChunk);
-            temp_chunk.Creation_Time = SimSystem.clock();
-            sim.vars.visualDisplay.Visicon.addLast(temp_chunk);
+			Chunk visiconChunk;
+			String speed_val = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).getSpeedLevel().getRange();
+			if(sim.funs.ChunkFun__Is_Chunk_Name("speedometer-" + speed_val)) {
+				visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-speed",  "screen-pos", "speedometer-location", "speed", speed_val});
+				visiconChunk.DM_Name_Origin = "speedometer-" + speed_val;
+			}
+			else {
+				visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-" + speed_val , "isa", "world3d-driving-speed",  "screen-pos", "speedometer-location", "speed", "\"" + speed_val + "\"" });
+	    		// for speedometer, add visicon here
+	            // copied from "Visual Display Onset" part
+	            Chunk temp_chunk = sim.funs.ChunkFun__Chunk_Clone(visiconChunk);
+	            temp_chunk.Creation_Time = SimSystem.clock();
+	            sim.vars.visualDisplay.Visicon.addLast(temp_chunk);
+			}
     		
     		return visiconChunk;
+		}
+		
+		else if(visual_location.Chunk_Type.equals("visual-location-world3d-driving")) {
+			// in driving model, near point/far point don't have visicon representation, 
+			// so I just let it return empty chunk
+		    return new Chunk();
 		}
 		
 		
@@ -24094,7 +24211,6 @@ If the string is invalid or there is no current model then a warning is printed 
 	  if(visual_location_isa.equals( "visual-location-world3d-driving")) {
 	    if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) ) {
 	      System.err.println("Error! add location isa visual-location-world3d-driving need needs sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method");
-	    
 	      return null;
 	    }
 	    if( !the_chunk_spec.Slot.containsKey("kind") ){
@@ -24425,6 +24541,7 @@ If the string is invalid or there is no current model then a warning is printed 
 
 		  String kind = (String)the_chunk_spec.Slot.get("kind");
 		  String viewArea = (String)the_chunk_spec.Slot.get("viewarea");
+		  if(viewArea.contains("\"")) viewArea = viewArea.substring(1, viewArea.lastIndexOf('"'));
 			    
 		  if(kind.equals( "critical-element")) { // added by Yelly: Get a visible critical element
 			  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
@@ -24436,8 +24553,16 @@ If the string is invalid or there is no current model then a warning is printed 
 					  return new Chunk();
 				  }
 				  else {
-					  //System.out.println("after chooseFocusingCriticalElement, focusing on critical element:" +  " critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) + ", isa" + "visual-location-world3d-driving-criticalelement" + ", kind" + kind + ", viewarea" + viewArea + ", state" + "exist");
-					  return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving-criticalelement",  "kind",kind, "id", chosenCE_id, "viewarea", viewArea});    	
+					  if(sim.funs.ChunkFun__Is_Chunk_Name("critical-element-location-" + chosenCE_id)) {
+						  // if it already exists, give it a new name to avoid defining the renamed chunk in merge method
+						  Chunk temp_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-location-" + chosenCE_id +"-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)), "isa", "visual-location-world3d-driving-criticalelement",  "kind", "\"" + kind + "\"", "id", "\"" + chosenCE_id + "\"", "viewarea", "\"" + viewArea + "\""});    	
+						  temp_chunk.DM_Name_Origin = "critical-element-location-" + chosenCE_id;
+						  return temp_chunk;
+					  }
+					  else {
+						  //this chunk is the one that'll be referred to in "add visual" action
+						  return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-location-" + chosenCE_id , "isa", "visual-location-world3d-driving-criticalelement",  "kind", "\"" + kind + "\"", "id", "\"" + chosenCE_id + "\"", "viewarea", "\"" + viewArea + "\""});    	
+					  }
 				  }
 			  }
 			  else{
@@ -24452,7 +24577,16 @@ If the string is invalid or there is no current model then a warning is printed 
 	  }
 	  else if(visual_location_isa.equals( "visual-location-world3d-driving-speed")) {
 		  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
-			  return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving-speed"});
+			  if(sim.funs.ChunkFun__Is_Chunk_Name("speedometer-location")) {
+				  // if it already exists, give it a new name to avoid defining the renamed chunk in merge method
+				  Chunk temp_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-location-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)), "isa", "visual-location-world3d-driving-speed"});
+				  temp_chunk.DM_Name_Origin = "speedometer-location";
+				  return temp_chunk;
+			  }
+			  else {
+				  //this chunk is the one that'll be referred to in "add visual" action
+				  return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-location", "isa", "visual-location-world3d-driving-speed"});
+			  }
 		  }
 		  else return null; // else don't know how to deal because this is not our case
 	  }
@@ -25171,10 +25305,10 @@ If the string is invalid or there is no current model then a warning is printed 
 	
 	public void VisionModuleFun__Place_Visual_Finst_On(String the_visicon_name){
 	  
-	  
 	  VisionModuleFun__Update_Visual_Onset_New_And_T(); //update :attended new and t 
 	  
 	  int temp_ID = VisionModuleFun__Find_The_Visicon_ID_By_Visicon_Name(the_visicon_name);
+	  //System.out.println("VisionModuleFun__Place_Visual_Finst_On, the_visicon_name: " + the_visicon_name + ", Visicon_ID: " + temp_ID);
 	  
 	  if (sim.vars.visionModule.Visual_Finst_ID_Track.size() < sim.vars.visionModule.Visual_Num_Finsts || sim.vars.visionModule.Visual_Finst_ID_Track.contains(temp_ID)){//if Finst table is not yet full OR it is full; but the temp_ID was there in the Finst table, so just renew it.
 	    if(sim.vars.visionModule.Visual_Finst_ID_Track.contains(temp_ID)) {
@@ -25182,6 +25316,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    }	
 	    sim.vars.visionModule.Visual_Finst_ID_Track.addLast (temp_ID);
 	    Chunk temp_chunk_pointer =  ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer( sim.vars.visualDisplay.Visicon ,  temp_ID );
+	    //sim.funs.ChunkFun__Print_Chunk(temp_chunk_pointer);
 	    String screen_pos = sim.funs.ChunkFun__Get_Chunk_Slot_Value(temp_chunk_pointer, "screen-pos");
 	    Chunk visual_location_chunk = (Chunk) sim.vars.centralParametersModule.Chunks.get(screen_pos);
 	    sim.funs.ChunkFun__Set_Chunk_Slot_Value( visual_location_chunk , ":attended", "t");
@@ -25226,7 +25361,7 @@ If the string is invalid or there is no current model then a warning is printed 
 			Visual_Finst_Index_Track.Last_T_Time [Visicon_Finst_T_Number-1] = SimSystem.clock();
 	     */
 	  }
-	  else System.out.println ("VisionModuleFun__Place_Visual_Finst_On error");
+	  else System.err.println ("VisionModuleFun__Place_Visual_Finst_On error");
 	  
 	}
 		
@@ -25280,9 +25415,13 @@ If the string is invalid or there is no current model then a warning is printed 
 	  Enumeration<Chunk> enum_visicon = Collections.enumeration(sim.vars.visualDisplay.Visicon);
 	  while(enum_visicon.hasMoreElements()){
 	    Chunk currentChunk = (Chunk)enum_visicon.nextElement();
-	    
+		//System.out.println("VisionModuleFun__Update_Visual_Onset_New_And_T, current visicon: " + currentChunk.Chunk_Name);
+	    //sim.funs.ChunkFun__Print_Chunk(currentChunk);
 	    String screen_pos = sim.funs.ChunkFun__Get_Chunk_Slot_Value (currentChunk , "screen-pos" );
+		//System.out.println("VisionModuleFun__Update_Visual_Onset_New_And_T, visual_location: " + screen_pos);
 	    Chunk visual_location_chunk_pointer = (Chunk) sim.vars.centralParametersModule.Chunks.get(screen_pos);
+		//System.out.println("VisionModuleFun__Update_Visual_Onset_New_And_T, visual_location_chunk_pointer: ");
+		//sim.funs.ChunkFun__Print_Chunk(visual_location_chunk_pointer);
 	    if (ChunkFun__Get_Chunk_Slot_Value( visual_location_chunk_pointer, ":attended").equals( "new" ) && ( GlobalUtilities.round(SimSystem.clock(),3) >= ( currentChunk.Creation_Time + sim.vars.visionModule.Visual_Onset_Span) ) ){ //"new" is a special kind of "nil"
 	      sim.funs.ChunkFun__Set_Chunk_Slot_Value( visual_location_chunk_pointer, ":attended", "nil");
 	    }

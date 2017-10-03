@@ -113,14 +113,15 @@ public class World3D_Template_Driving_Method {
 			"criticalElements={"
 	};
 	
+	// notice that they're all in lower case because these might be used in chunk name
 	static public enum SpeedLevel{
-		First("Lower-than-25", 0), // [0, 25) km/h
+		First("lower-than-25", 0), // [0, 25) km/h
 		Second("25-to-30", 1), // [25, 30) km/h
 		Third("30-to-35", 2), // [30, 35) km/h
 		Forth("35-to-40", 3), // [35, 40) km/h
 		Fifth("40-to-45", 4), // [40, 45) km/h
 		Sixth("45-to-50", 5), // [45, 50) km/h
-		Seventh("More-than-50", 6); // [50, +00) km/h
+		Seventh("more-than-50", 6); // [50, +00) km/h
 		
 		private String range;
 		private int index;
@@ -419,7 +420,8 @@ public class World3D_Template_Driving_Method {
 					rightMirrorVisibilityEqInd = element_str.indexOf("=", leftMirrorVisibilityCommaInd+1);
 					rightMirrorVisibilityCommaInd = element_str.indexOf(",", rightMirrorVisibilityEqInd+1);
 					
-					String element_name = element_str.substring(0, eqInd); // name is actually equal to id and it's used as hash key
+					// notice using lower case where it is possible to be chunk name
+					String element_name = element_str.substring(0, eqInd).toLowerCase(); // name is actually equal to id and it's used as hash key
 					String element_type = element_str.substring(typeEqInd+1, typeCommaInd);
 					String element_content = element_str.substring(contentEqInd+1, contentCommaInd);
 					boolean element_front_visibility = (element_str.substring(frontVisibilityEqInd+1, frontVisibilityCommaInd).equals("true"))?true:false;
@@ -675,6 +677,7 @@ public class World3D_Template_Driving_Method {
 	}
 	
 	public CriticalElement getCEByIdAndViewArea(String id, String viewArea) {
+		//System.out.println("getCEByIdAndViewArea, id: " + id +", viewArea: " + viewArea);
 		switch(viewArea) {
 			case "front":
 			{
