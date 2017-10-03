@@ -2003,12 +2003,12 @@ public class Functions {
 		ProgramUtilitiesFun__Output_Trace_Txt(temp_Chunk.Chunk_Name);
 		ProgramUtilitiesFun__Output_Trace_Txt( "   ISA        " + temp_Chunk.Chunk_Type);
 		
-//		System.out.println("ChunkFun__Print_Chunk: ");
-//		System.out.println(temp_Chunk.Chunk_Name + ", Last-Retrieval-Activation: " + temp_Chunk.Activation + ", base_level: " + temp_Chunk.base_level + ", permanent_noise: " +  temp_Chunk.permanent_noise+", creation time: " + temp_Chunk.Creation_Time );
-//		System.out.println("             , Number_Of_Presentations: " + temp_Chunk.Number_Of_Presentations +  ", last presentation time: " + temp_Chunk.Last_Presentation_Time);
-//		System.out.println("             , references: " + sim.funs.ProgramUtilitiesFun__LinkedListDouble_To_String(temp_Chunk.Presentation_Time_References));
-//		System.out.println(temp_Chunk.Chunk_Name);
-//		System.out.println( "   ISA        " + temp_Chunk.Chunk_Type);
+		System.out.println("ChunkFun__Print_Chunk: ");
+		System.out.println(temp_Chunk.Chunk_Name + ", Last-Retrieval-Activation: " + temp_Chunk.Activation + ", base_level: " + temp_Chunk.base_level + ", permanent_noise: " +  temp_Chunk.permanent_noise+", creation time: " + temp_Chunk.Creation_Time );
+		System.out.println("             , Number_Of_Presentations: " + temp_Chunk.Number_Of_Presentations +  ", last presentation time: " + temp_Chunk.Last_Presentation_Time);
+		System.out.println("             , references: " + sim.funs.ProgramUtilitiesFun__LinkedListDouble_To_String(temp_Chunk.Presentation_Time_References));
+		System.out.println(temp_Chunk.Chunk_Name);
+		System.out.println( "   ISA        " + temp_Chunk.Chunk_Type);
 		
 		if(sim.vars.qn_answer) {
 			ProgramUtilitiesFun__Output_QN_Result_Txt(" ");
@@ -2023,7 +2023,7 @@ public class Functions {
 		while ( itrSlot.hasNext() ){  // get every element
 			Entry<String, String> currentEntry1 = itrSlot.next();
 			ProgramUtilitiesFun__Output_Trace_Txt( "   " + currentEntry1.getKey() + "       " + currentEntry1.getValue());
-			//System.out.println( "   " + currentEntry1.getKey() + "       " + currentEntry1.getValue());
+			System.out.println( "   " + currentEntry1.getKey() + "       " + currentEntry1.getValue());
 			if(sim.vars.qn_answer) ProgramUtilitiesFun__Output_QN_Result_Txt("   " + currentEntry1.getKey() + "       " + currentEntry1.getValue());
 		}
 	}
@@ -3291,16 +3291,33 @@ public class Functions {
 		if(the_case.equals( "Visual_Buffer")  && (sim.vars.declarativeModule.Merge_Visual_Buffer_Chunk)==false )return;
 		if(the_case.equals( "Visual_Location_Buffer")  && (sim.vars.declarativeModule.Merge_Visual_Location_Buffer_Chunk)==false )return;
 
-		//don't merge these, items in this list will not be merged into declarative memory.
-		List<String> do_no_merge = new ArrayList<String> ();
-		do_no_merge.add("visual-location-world3d-driving");		//these are near and far points, assume that they are not stored in DM.
-//		do_no_merge.add("visual-location-world3d-driving-criticalelement"); //assume critical elements are stored in DM
+		// modified by Yelly:
+		// do_no_merge and do_no_rename list initialization is moved to Variables.java to improve performances
 		
-		if(do_no_merge.contains( The_Chunk.Chunk_Type ) ) return;
+		//don't merge these, items in this list will not be merged into declarative memory.
+//		List<String> do_no_merge = new ArrayList<String> ();
+//		do_no_merge.add("visual-location-world3d-driving");		//these are near and far points, assume that they are not stored in DM.
+//		do_no_merge.add("visual-location-world3d-driving-criticalelement"); //assume critical elements are stored in DM
 
-		//
+		//System.out.println("DeclarativeModule__Merge_Chunk_Into_DM_do_no_merge list: " + sim.vars.DeclarativeModule__Merge_Chunk_Into_DM_do_no_merge);
+		if(sim.vars.DeclarativeModule__Merge_Chunk_Into_DM_do_no_merge.contains( The_Chunk.Chunk_Type ) ) return;
+
+
+//		// for these special ones, do not rename and redefine to control the growing of the chunk number
+//		List<String> do_no_rename = new ArrayList<String> ();
+//		do_no_rename.add("world3d-driving-criticalelement-vehicle");
+//		do_no_rename.add("world3d-driving-criticalelement-sign");
+//		do_no_rename.add("world3d-driving-speed");
+//		do_no_rename.add("world3d-driving-criticalelement-vehicle-img");
+//		do_no_rename.add("world3d-driving-criticalelement-sign-img");
+//		do_no_rename.add("world3d-driving-speed-img");
+//		do_no_rename.add("visual-location-world3d-driving-criticalelement");
+//		do_no_rename.add("visual-location-world3d-driving-speed");
 
 		boolean is_same_chunk_name_in_DM = (DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name( The_Chunk.Chunk_Name)).Chunk_Name.equals( The_Chunk.Chunk_Name );
+		
+		boolean do_no_rename = sim.vars.DeclarativeModule__Merge_Chunk_Into_DM_do_no_rename.contains(The_Chunk.Chunk_Type);
+		
 		boolean is_same_chunk_type_and_content_in_DM;
 		int temp_int = sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec (The_Chunk);
 		int dm_chunk_id = temp_int;
@@ -3311,7 +3328,7 @@ public class Functions {
 			return;
 		}
 
-		if (is_same_chunk_name_in_DM == true){ 
+		if (!do_no_rename && is_same_chunk_name_in_DM){ 
 			//GlobalUtilities.popUpMessage("DeclarativeModuleFun__Merge_Chunk_Into_DM is_same_chunk_name_in_DM == true.  " + The_Chunk.Chunk_Name + " " +  (DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name( The_Chunk.Chunk_Name)).Chunk_Name);
 			//return;
 			
@@ -3325,7 +3342,7 @@ public class Functions {
 				new_chunk_name = old_chunk_name + "-" + Integer.toString(j);
 			}
 			The_Chunk.Chunk_Name = new_chunk_name;
-			System.out.println("DeclarativeModuleFun__Merge_Chunk_Into_DM, defining chunk: " + The_Chunk.Chunk_Name);
+			System.out.println("DeclarativeModuleFun__Merge_Chunk_Into_DM, defining chunk: " + The_Chunk.Chunk_Name + ", chunk type: " + The_Chunk.Chunk_Type);
 			ChunkFun__Define_Chunk( The_Chunk );
 			System.out.println("DeclarativeModuleFun__Merge_Chunk_Into_DM, finished defining chunk.");
 			
@@ -3335,27 +3352,27 @@ public class Functions {
 		if(is_same_chunk_type_and_content_in_DM == true){
 			Chunk chunk_pointer = sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, dm_chunk_id) ;
 			DeclarativeModuleFun__Update_Chunk_Presentation( chunk_pointer );
-			if(!The_Chunk.Chunk_Name.contains("dup")) { // the duplicated chunks will not be in centermodule, and will never be referred to
+			
+			if(!do_no_rename) {
 				String DM_chunk_name = chunk_pointer.Chunk_Name;
 				String to_merge_chunk_name = The_Chunk.Chunk_Name;
 				if (ChunkFun__Is_Chunk_Name(to_merge_chunk_name)==false)System.err.println("DeclarativeModuleFun__Merge_Chunk_Into_DM sim.funs.ChunkFun__Is_Chunk_Name(to_merge_chunk_name)==false, chunk name: " + to_merge_chunk_name); //this should never happen, because clear-buffer functions just add the chunk into model chunk list and then call this function
 				Chunk in_model_list_chunk =  (Chunk) sim.vars.centralParametersModule.Chunks.get(to_merge_chunk_name)  ;
 				if (chunk_pointer.DM_Name_Origin.equals( "" ))in_model_list_chunk.DM_Name_Origin = DM_chunk_name;
 				else in_model_list_chunk.DM_Name_Origin = chunk_pointer.DM_Name_Origin;
-				
+					
 				if( the_case.equals( "Imaginal_Buffer")) sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("Merge_Chunk_Into_DM, is_same_chunk_type_and_content_in_DM: " + is_same_chunk_type_and_content_in_DM + ". The_Chunk: " + sim.funs.ChunkFun__Get_Chunk_Contents(The_Chunk)  );
-
 			}
 		}
 		else{ //no same-content-chunk in DM.
-			//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Merge_Chunk_Into_DM, no same-content-chunk in DM. Add============================================");
+			//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Merge_Chunk_Into_DM, no same-content-chunk in DM. for chunk: " + The_Chunk.Chunk_Name +", Add============================================");
 			DeclarativeModuleFun__Add_DM_Chunk_With_Chunk(The_Chunk);
 			if( the_case.equals( "Imaginal_Buffer")) sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("Merge_Chunk_Into_DM, is_same_chunk_type_and_content_in_DM: " + is_same_chunk_type_and_content_in_DM + ". The_Chunk: " + sim.funs.ChunkFun__Get_Chunk_Contents(The_Chunk)  );
 		}
 
-		//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Merge_Chunk_Into_DM finish.");
-		//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Merge_Chunk_Into_DM, number of sim.vars.centralParametersModule.Chunks: " + sim.vars.centralParametersModule.Chunks.size());
-		//sim.funs.ChunkFun__Print_All_Chunks_In_Model();
+//		sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Merge_Chunk_Into_DM finish.");
+//		sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Merge_Chunk_Into_DM, number of sim.vars.centralParametersModule.Chunks: " + sim.vars.centralParametersModule.Chunks.size());
+		
 
 		/*
 		/////////////////////////////////
@@ -3477,6 +3494,7 @@ public class Functions {
 			sim.funs.ChunkFun__Print_Chunk(The_Chunk);
 			sim.funs.ProgramUtilitiesFun__Output_QN_Result_Txt("Total base-level: " + B);
 			sim.funs.ProgramUtilitiesFun__Output_QN_Result_Txt("");
+			//sim.funs.ChunkFun__Print_All_Chunks_In_Model();
 		}
 
 		return (double) (B + S + P + Epsilon);
@@ -5223,10 +5241,10 @@ return return_string;
 	        	if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();      
             
 	        	if(sim.vars.qn_answer) {
-	        		return "recalling-sign";
+	        		return "\"recalling-sign\"";
 	        	}
 	        	else {
-		        	return "attending-near";
+		        	return "\"attending-near\"";
 	        	}
 	        }
 	        
@@ -12297,8 +12315,6 @@ return return_string;
 //	  Temp_Entity.Entity_Type = "Add Imaginal";    // +imaginal>
 	  // parameters: ISA (slot_0), chunk_type(slot_0), slot_name_1, slot_value_1, slot_name_2, slot_value_2, ... for nil value, put ""
 	  
-	  //define-chunk, +imaginal> will not specify chunk_name, so it does not have a name.
-	  
 	  // modified by Yelly:
 	  // when it comes to speedometer&critical element, define carefully to avoid chunk accumulation
 	  Chunk temp_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(The_Chunk_Spec_Request);
@@ -12307,37 +12323,37 @@ return return_string;
 	  //System.out.println("ProductionModuleFun__Add_Imaginal_Request, chunk: ");
 	  //sim.funs.ChunkFun__Print_Chunk(temp_chunk);
 	  if(chunk_type.equals("world3d-driving-criticalelement-vehicle-img") || chunk_type.equals("world3d-driving-criticalelement-sign-img")) {
-		  if(!temp_chunk.Slot.containsKey("id")) {
-			  System.err.println("ProductionModuleFun__Add_Imaginal_Request, chunk specification for type: " + chunk_type +", doesn't contain id field.");
+		  int temp_int = sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec (temp_chunk);
+		  if (temp_int == -1) {
+			  // a new chunk
+			  //define-chunk, +imaginal> will not specify chunk_name, so it does not have a name.
+			  sim.funs.ChunkFun__Define_Chunk(temp_chunk);
+		  }
+		  else if (temp_int >= 0 && temp_int < sim.vars.declarativeModule.Number_of_Chunks) {
+			  // the chunk with the same content already exists
+			  // return that existing chunk
+			  temp_chunk = sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, temp_int) ;
 		  }
 		  else {
-			  String critical_element_id = temp_chunk.Slot.get("id");
-			  if(sim.funs.ChunkFun__Is_Chunk_Name("critical-element-img-" + critical_element_id)) {
-				  temp_chunk.Chunk_Name = "critical-element-img-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3));
-			  }
-			  else {
-				  temp_chunk.Chunk_Name = "critical-element-img-" + critical_element_id;
-				  sim.funs.ChunkFun__Define_Chunk(temp_chunk);
-			  }
+			  System.err.println ("ProductionModuleFun__Add_Imaginal_Request, dm_chunk_id range Error!");
+			  temp_chunk = new Chunk();
 		  }
 	  }
 	  else if(chunk_type.equals("world3d-driving-speed-img")) {
-		  if(!temp_chunk.Slot.containsKey("speed")) {
-			  System.err.println("ProductionModuleFun__Add_Imaginal_Request, chunk specification for type: " + chunk_type +", doesn't contain speed field.");
+		  int temp_int = sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec (temp_chunk);
+		  if (temp_int == -1) {
+			  // a new chunk
+			  //define-chunk, +imaginal> will not specify chunk_name, so it does not have a name.
+			  sim.funs.ChunkFun__Define_Chunk(temp_chunk);
+		  }
+		  else if (temp_int >= 0 && temp_int < sim.vars.declarativeModule.Number_of_Chunks) {
+			  // the chunk with the same content already exists
+			  // return that existing chunk
+			  temp_chunk = sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, temp_int) ;
 		  }
 		  else {
-			  String speed_val = temp_chunk.Slot.get("speed");
-			  if(!speed_val.contains("\"")) {
-				  temp_chunk.Slot.put("speed", "\"" + speed_val + "\"");
-			  }
-			  else speed_val = speed_val.substring(1, speed_val.lastIndexOf('"'));
-			  if(sim.funs.ChunkFun__Is_Chunk_Name("speed-img-" + speed_val)) {
-				  temp_chunk.Chunk_Name = "speed-img-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3));
-			  }
-			  else {
-				  temp_chunk.Chunk_Name = "speed-img-" + speed_val;
-				  sim.funs.ChunkFun__Define_Chunk(temp_chunk);
-			  }
+			  System.err.println ("ProductionModuleFun__Add_Imaginal_Request, dm_chunk_id range Error!");
+			  temp_chunk = new Chunk();
 		  }
 	  }
 	  
@@ -12523,7 +12539,6 @@ return return_string;
 	    sim.funs.ChunkFun__Add_Chunk_Slot_Name_And_Value(Temp_Entity.Chunk, The_Chunk_Spec_Request[j], The_Chunk_Spec_Request[j+1]);  //can handel exception for ISA chunk-type
 	    Temp_Entity.Chunk.Slot_Names_In_Order.addLast(The_Chunk_Spec_Request[j]);
 	  }
-
 	}
 	
 	public  void ProductionModuleFun__Add_Visual_Request(String[] The_Chunk_Spec_Request){
@@ -24044,91 +24059,106 @@ If the string is invalid or there is no current model then a warning is printed 
 		// return the vision chunk for critical element
 		// place it and return at the very beginning because the former driving model just return empty chunk as near point and far point does not have neccessary visual representation
 		if(visual_location.Chunk_Type.equals("visual-location-world3d-driving-criticalelement")) {
-			//String kind = sim.funs.ChunkFun__Get_Chunk_Slot_Value(visual_location, "kind");
-			//System.out.println("VisionModuleFun__Find_Visicon_By_Location, visual_location kind: " + kind);
-			//if(kind.equals("critical-element")) {
-				if( !visual_location.Slot.containsKey("id") ){
-					System.err.println("Error! VisionModuleFun__Find_Visicon_By_Location has no 'id' key");
-					return null;
-				}
-				if( !visual_location.Slot.containsKey("viewarea") ){
-					System.err.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has no 'viewarea' key");
-					return null;
-				}
+			if( !visual_location.Slot.containsKey("id") ){
+				System.err.println("Error! VisionModuleFun__Find_Visicon_By_Location has no 'id' key");
+				return null;
+			}
+			if( !visual_location.Slot.containsKey("viewarea") ){
+				System.err.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has no 'viewarea' key");
+				return null;
+			}
 
-				String id = (String)visual_location.Slot.get("id");
-				if(id.contains("\"")) id = id.substring(1, id.lastIndexOf('"'));
-				String viewArea = (String)visual_location.Slot.get("viewarea");
-				if(viewArea.contains("\"")) viewArea = viewArea.substring(1, viewArea.lastIndexOf('"'));
-				  
-				Chunk visiconChunk = null;
+			String id = (String)visual_location.Slot.get("id");
+			if(id.contains("\"")) id = id.substring(1, id.lastIndexOf('"'));
+			String viewArea = (String)visual_location.Slot.get("viewarea");
+			if(viewArea.contains("\"")) viewArea = viewArea.substring(1, viewArea.lastIndexOf('"'));
 
-	    		CriticalElement focusing = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).getCEByIdAndViewArea(id, viewArea);
-	    		if(focusing == null) {
-	    			System.out.println("VisionModuleFun__Find_Visicon_By_Location for a chosen critical element while the element doesn't exist");
-	    			return new Chunk();
+			CriticalElement focusing = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).getCEByIdAndViewArea(id, viewArea);
+			if(focusing == null) {
+				System.out.println("VisionModuleFun__Find_Visicon_By_Location for a chosen critical element while the element doesn't exist");
+				return new Chunk();
+			}
+			else if(focusing.type.equals("vehicle")) {
+				Chunk temp_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)), "isa", "world3d-driving-criticalelement-vehicle",  "screen-pos", visual_location.Chunk_Name, "id", "\"" + id + "\"", "color", "\"" + focusing.content + "\""});
+					  
+				int temp_int = sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec (temp_chunk);
+	    		if (temp_int == -1) {
+	    			// a new chunk
+	    			// for critical elements, add visicon here
+	                // copied from "Visual Display Onset" part
+	                Chunk cloned_chunk = sim.funs.ChunkFun__Chunk_Clone(temp_chunk);
+	                cloned_chunk.Creation_Time = SimSystem.clock();
+	                sim.vars.visualDisplay.Visicon.addLast(cloned_chunk);
+	                    
+	    			return temp_chunk;
 	    		}
-	    		else if(focusing.type.equals("vehicle")) {
-	    			// screen-pos is the first chunk related to this critical element. This is to keep content identical to avoid adding chunks to the model
-	    			if(sim.funs.ChunkFun__Is_Chunk_Name("critical-element-" + id)) {
-	    				visiconChunk  = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-vehicle",  "screen-pos", "critical-element-location-" + id, "id", id, "color", focusing.content});
-	    				visiconChunk.DM_Name_Origin = "critical-element-" + id;
-	    			}
-	    			else {
-	    				visiconChunk  = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + id , "isa", "world3d-driving-criticalelement-vehicle",  "screen-pos", "critical-element-location-" + id, "id", id, "color", focusing.content});
-
-	                    // for critical elements, add visicon here
-	                    // copied from "Visual Display Onset" part
-	                    Chunk temp_chunk = sim.funs.ChunkFun__Chunk_Clone(visiconChunk);
-	                    temp_chunk.Creation_Time = SimSystem.clock();
-	                    sim.vars.visualDisplay.Visicon.addLast(temp_chunk);
-	    			}
-	    		}
-	    		else if(focusing.type.equals("sign")) {
-	    			// screen-pos is the first chunk related to this critical element. This is to keep content identical to avoid adding chunks to the model
-	    			if(sim.funs.ChunkFun__Is_Chunk_Name("critical-element-" + id)) {
-	    				visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-criticalelement-sign",  "screen-pos", "critical-element-location-" + id, "id", id, "content", focusing.content});
-	    				visiconChunk.DM_Name_Origin = "critical-element-" + id;
-	    			}
-	    			else {
-	    				visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + id , "isa", "world3d-driving-criticalelement-sign",  "screen-pos", "critical-element-location-" + id, "id", id, "content", focusing.content});
-
-	                    // for critical elements, add visicon here
-	                    // copied from "Visual Display Onset" part
-	                    Chunk temp_chunk = sim.funs.ChunkFun__Chunk_Clone(visiconChunk);
-	                    temp_chunk.Creation_Time = SimSystem.clock();
-	                    sim.vars.visualDisplay.Visicon.addLast(temp_chunk);
-	    			}
+	    		else if (temp_int >= 0 && temp_int < sim.vars.declarativeModule.Number_of_Chunks) {
+	    			// the chunk with the same content already exists
+	    			// return that existing chunk
+	    			return sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, temp_int) ;
 	    		}
 	    		else {
-	    			System.err.println("unspecified type of critical element");
+	    			System.err.println ("VisionModuleFun__Find_Visicon_By_Location, dm_chunk_id range Error!");
 	    			return new Chunk();
 	    		}
-	    		
-	    		
-	    		return visiconChunk;
-	    	//}
+	    			
+	    	}
+	    	else if(focusing.type.equals("sign")) {
+	    		Chunk temp_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)), "isa", "world3d-driving-criticalelement-sign",  "screen-pos", visual_location.Chunk_Name, "id", "\"" + id + "\"", "content", "\"" + focusing.content + "\""});
+					  
+	    		int temp_int = sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec (temp_chunk);
+	    		if (temp_int == -1) {
+	    			// a new chunk
+	    			// for critical elements, add visicon here
+	                // copied from "Visual Display Onset" part
+	                Chunk cloned_chunk = sim.funs.ChunkFun__Chunk_Clone(temp_chunk);
+	                cloned_chunk.Creation_Time = SimSystem.clock();
+	                sim.vars.visualDisplay.Visicon.addLast(cloned_chunk);
+	                    
+	    			return temp_chunk;
+	    		}
+	    		else if (temp_int >= 0 && temp_int < sim.vars.declarativeModule.Number_of_Chunks) {
+	    			// the chunk with the same content already exists
+	    			// return that existing chunk
+	    			return sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, temp_int) ;
+	    		}
+	    		else {
+	    			System.err.println ("VisionModuleFun__Find_Visicon_By_Location, dm_chunk_id range Error!");
+	    			return new Chunk();
+	    		}
+	    			
+	    	}
+	    	else {
+	    		System.err.println("unspecified type of critical element");
+	    		return new Chunk();
+	    	}
 		}
 		// return the vision chunk for speed
 		else if(visual_location.Chunk_Type.equals("visual-location-world3d-driving-speed")) {
-			Chunk visiconChunk;
 			String speed_val = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).getSpeedLevel().getRange();
-			if(sim.funs.ChunkFun__Is_Chunk_Name("speedometer-" + speed_val)) {
-				visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "world3d-driving-speed",  "screen-pos", "speedometer-location", "speed", speed_val});
-				visiconChunk.DM_Name_Origin = "speedometer-" + speed_val;
-			}
-			else {
-				visiconChunk =  sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-" + speed_val , "isa", "world3d-driving-speed",  "screen-pos", "speedometer-location", "speed", "\"" + speed_val + "\"" });
-	    		// for speedometer, add visicon here
-	            // copied from "Visual Display Onset" part
-	            Chunk temp_chunk = sim.funs.ChunkFun__Chunk_Clone(visiconChunk);
-	            temp_chunk.Creation_Time = SimSystem.clock();
-	            sim.vars.visualDisplay.Visicon.addLast(temp_chunk);
-			}
-    		
-    		return visiconChunk;
+    		Chunk temp_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)), "isa", "world3d-driving-speed",  "screen-pos", visual_location.Chunk_Name, "speed", "\"" + speed_val + "\""});
+			  
+    		int temp_int = sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec (temp_chunk);
+    		if (temp_int == -1) {
+    			// a new chunk
+    			// for critical elements, add visicon here
+                // copied from "Visual Display Onset" part
+                Chunk cloned_chunk = sim.funs.ChunkFun__Chunk_Clone(temp_chunk);
+                cloned_chunk.Creation_Time = SimSystem.clock();
+                sim.vars.visualDisplay.Visicon.addLast(cloned_chunk);
+                    
+    			return temp_chunk;
+    		}
+    		else if (temp_int >= 0 && temp_int < sim.vars.declarativeModule.Number_of_Chunks) {
+    			// the chunk with the same content already exists
+    			// return that existing chunk
+    			return sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, temp_int) ;
+    		}
+    		else {
+    			System.err.println ("VisionModuleFun__Find_Visicon_By_Location, dm_chunk_id range Error!");
+    			return new Chunk();
+    		}
 		}
-		
 		else if(visual_location.Chunk_Type.equals("visual-location-world3d-driving")) {
 			// in driving model, near point/far point don't have visicon representation, 
 			// so I just let it return empty chunk
@@ -24197,6 +24227,9 @@ If the string is invalid or there is no current model then a warning is printed 
 	}
 	
 	public Chunk VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec(Chunk the_chunk_spec){
+//		System.out.println("VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec, the_chunk_spec: ");
+//		sim.funs.ChunkFun__Print_Chunk(the_chunk_spec);
+		
 		World3D_Template_Driving_Method the_method = null;
 		if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" ) || sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 			if(sim.vars.world3DTemplate.Method_Object != null && sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) the_method = sim.funs.TaskTemplateFun__Get_World3D_Driving_Method_Object();
@@ -24208,6 +24241,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	  
 	  //VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec
 	  String visual_location_isa = the_chunk_spec.Chunk_Type;
+
 	  if(visual_location_isa.equals( "visual-location-world3d-driving")) {
 	    if( sim.vars.world3DTemplate.Method_Object == null || !(sim.vars.world3DTemplate.Method_Object instanceof World3D_Template_Driving_Method) ) {
 	      System.err.println("Error! add location isa visual-location-world3d-driving need needs sim.vars.world3DTemplate.Method_Object is World3D_Template_Driving_Method");
@@ -24540,52 +24574,61 @@ If the string is invalid or there is no current model then a warning is printed 
 		  }
 
 		  String kind = (String)the_chunk_spec.Slot.get("kind");
+		  if(kind.contains("\"")) kind = kind.substring(1, kind.lastIndexOf('"'));
 		  String viewArea = (String)the_chunk_spec.Slot.get("viewarea");
 		  if(viewArea.contains("\"")) viewArea = viewArea.substring(1, viewArea.lastIndexOf('"'));
 			    
-		  if(kind.equals( "critical-element")) { // added by Yelly: Get a visible critical element
-			  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
-				  World3D_Template_Driving_Method theMethod = (World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object;
-				  String chosenCE_id = theMethod.chooseFocusingCriticalElementFromViewArea(viewArea);
+		  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
+			  World3D_Template_Driving_Method theMethod = (World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object;
+			  String chosenCE_id = theMethod.chooseFocusingCriticalElementFromViewArea(viewArea);
 				  
-				  if(chosenCE_id == null)	{
-					  System.out.println("after chooseFocusingCriticalElementFromViewArea" + viewArea +" , focusing on no critical element");
-					  return new Chunk();
+			  if(chosenCE_id == null)	{
+				  	System.out.println("after chooseFocusingCriticalElementFromViewArea" + viewArea +" , focusing on no critical element");
+				  	return new Chunk();
+			  }
+			  else {
+				  Chunk temp_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-location-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)), "isa", "visual-location-world3d-driving-criticalelement",  "kind", "\"" + kind + "\"", "id", "\"" + chosenCE_id + "\"", "viewarea", "\"" + viewArea + "\""});    	
+				  
+				  int temp_int = sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec (temp_chunk);
+				  if (temp_int == -1) {
+					  // a new chunk
+					  return temp_chunk;
+				  }
+				  else if (temp_int >= 0 && temp_int < sim.vars.declarativeModule.Number_of_Chunks) {
+					  // the chunk with the same content already exists
+					  // return that existing chunk
+					  return sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, temp_int) ;
 				  }
 				  else {
-					  if(sim.funs.ChunkFun__Is_Chunk_Name("critical-element-location-" + chosenCE_id)) {
-						  // if it already exists, give it a new name to avoid defining the renamed chunk in merge method
-						  Chunk temp_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-location-" + chosenCE_id +"-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)), "isa", "visual-location-world3d-driving-criticalelement",  "kind", "\"" + kind + "\"", "id", "\"" + chosenCE_id + "\"", "viewarea", "\"" + viewArea + "\""});    	
-						  temp_chunk.DM_Name_Origin = "critical-element-location-" + chosenCE_id;
-						  return temp_chunk;
-					  }
-					  else {
-						  //this chunk is the one that'll be referred to in "add visual" action
-						  return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "critical-element-location-" + chosenCE_id , "isa", "visual-location-world3d-driving-criticalelement",  "kind", "\"" + kind + "\"", "id", "\"" + chosenCE_id + "\"", "viewarea", "\"" + viewArea + "\""});    	
-					  }
+					  System.err.println ("VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec, dm_chunk_id range Error!");
+					  return new Chunk();
 				  }
 			  }
-			  else{
-				  //TODO: actually I don't know what to do because this is not for our experiment  
-				  return null;
-			  }
 		  }
-		  else {
-			  System.err.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has undefined kind: "+ kind);
+		  else{
+			  //TODO: actually I don't know what to do because this is not for our experiment  
 			  return null;
 		  }
 	  }
 	  else if(visual_location_isa.equals( "visual-location-world3d-driving-speed")) {
 		  if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
-			  if(sim.funs.ChunkFun__Is_Chunk_Name("speedometer-location")) {
-				  // if it already exists, give it a new name to avoid defining the renamed chunk in merge method
-				  Chunk temp_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-location-dup-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)), "isa", "visual-location-world3d-driving-speed"});
-				  temp_chunk.DM_Name_Origin = "speedometer-location";
+			  
+			  // speedometer location does not change
+			  Chunk temp_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-location", "isa", "visual-location-world3d-driving-speed"});    	
+			  
+			  int temp_int = sim.funs.DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec (temp_chunk);
+			  if (temp_int == -1) {
+				  // a new chunk
 				  return temp_chunk;
 			  }
+			  else if (temp_int >= 0 && temp_int < sim.vars.declarativeModule.Number_of_Chunks) {
+				  // the chunk with the same content already exists
+				  // return that existing chunk
+				  return sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, temp_int) ;
+			  }
 			  else {
-				  //this chunk is the one that'll be referred to in "add visual" action
-				  return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "speedometer-location", "isa", "visual-location-world3d-driving-speed"});
+				  System.err.println ("VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec, dm_chunk_id range Error!");
+				  return new Chunk();
 			  }
 		  }
 		  else return null; // else don't know how to deal because this is not our case

@@ -20,6 +20,19 @@ import java.util.*;
 public class Variables {
   public Variables(QnactrSimulation Sim){
     sim = Sim;
+    
+	// added by Yelly
+	// variables concerning merging into DM
+	DeclarativeModule__Merge_Chunk_Into_DM_do_no_merge.add("visual-location-world3d-driving");		//these are near and far points, assume that they are not stored in DM.
+	  
+	DeclarativeModule__Merge_Chunk_Into_DM_do_no_rename.add("world3d-driving-criticalelement-vehicle");
+	DeclarativeModule__Merge_Chunk_Into_DM_do_no_rename.add("world3d-driving-criticalelement-sign");
+	DeclarativeModule__Merge_Chunk_Into_DM_do_no_rename.add("world3d-driving-speed");
+	DeclarativeModule__Merge_Chunk_Into_DM_do_no_rename.add("world3d-driving-criticalelement-vehicle-img");
+	DeclarativeModule__Merge_Chunk_Into_DM_do_no_rename.add("world3d-driving-criticalelement-sign-img");
+	DeclarativeModule__Merge_Chunk_Into_DM_do_no_rename.add("world3d-driving-speed-img");
+	DeclarativeModule__Merge_Chunk_Into_DM_do_no_rename.add("visual-location-world3d-driving-criticalelement");
+	DeclarativeModule__Merge_Chunk_Into_DM_do_no_rename.add("visual-location-world3d-driving-speed");
   }
   
   QnactrSimulation sim;  
@@ -208,35 +221,41 @@ ProgramUtilitiesFun__Combined_Linear_Congruential_Generators
   // added by Yelly
   // output qn-answer
   public boolean qn_answer = false;
+  
+  // added by Yelly
+  // variables concerning merge_into_DM
+  // to improve performance
+  public List<String> DeclarativeModule__Merge_Chunk_Into_DM_do_no_merge = new ArrayList<String> ();
+  public List<String> DeclarativeModule__Merge_Chunk_Into_DM_do_no_rename = new ArrayList<String> ();
 	
   public TaskVisualization2D taskVisualization2D = QnactrSimulation.taskVisualization2D;
   public boolean programGlobalVar__MotorModule_Start_Right_Hand_At_Touch_Screen = false;
   public boolean programGlobalVar__MotorModule_Start_Left_Hand_At_Touch_Screen = false;
 	
-	public Variables(){
+  public Variables(){
 		
-	  displayAndResponseDurationRandomization = "fixed_order";
-	  displayItemDelay =  0.0;
+	displayAndResponseDurationRandomization = "fixed_order";
+	displayItemDelay =  0.0;
 
-		messageOn = false;
-		programGlobalVar__Color_String_To_Color_Type = 0;
+	messageOn = false;
+	programGlobalVar__Color_String_To_Color_Type = 0;
 		
-		utilization__Audio_Module_In_A_Second = 0.0F;
-    utilization__Clock_Minus_1 = 0.0F;
-    utilization__Cognitive_SubNetwork_In_A_Second=0.0F;
-    utilization__Declarative_Module_In_A_Second = 0.0F;
-    utilization__Imaginary_Module_In_A_Second = 0.0F;
-    utilization__Motor_Module_In_A_Second=0.0F;
-    utilization__Motor_SubNetwork_In_A_Second=0.0F;
-    utilization__Perceptual_SubNetwork_In_A_Second=0.0F;
-    utilization__Production_Module_In_A_Second=0.0F;
-    utilization__Speech_Module_In_A_Second=0.0F;
-    utilization__Vision_Module_In_A_Second = 0.0F;
-    varCopy__DriverCar_Pitch = 0.0F;
-    varCopy__DriverCar_Roll = 0.0F;
-    varCopy__DriverCar_Speed = 0.0F;
-    varCopy__DriverCar_Yaw = 0.0F;
-    visicon_History_Count=0;
+	utilization__Audio_Module_In_A_Second = 0.0F;
+	utilization__Clock_Minus_1 = 0.0F;
+	utilization__Cognitive_SubNetwork_In_A_Second=0.0F;
+	utilization__Declarative_Module_In_A_Second = 0.0F;
+	utilization__Imaginary_Module_In_A_Second = 0.0F;
+	utilization__Motor_Module_In_A_Second=0.0F;
+	utilization__Motor_SubNetwork_In_A_Second=0.0F;
+	utilization__Perceptual_SubNetwork_In_A_Second=0.0F;
+	utilization__Production_Module_In_A_Second=0.0F;
+	utilization__Speech_Module_In_A_Second=0.0F;
+	utilization__Vision_Module_In_A_Second = 0.0F;
+	varCopy__DriverCar_Pitch = 0.0F;
+	varCopy__DriverCar_Roll = 0.0F;
+	varCopy__DriverCar_Speed = 0.0F;
+	varCopy__DriverCar_Yaw = 0.0F;
+	visicon_History_Count=0;
     
-	}
+  }
 }

@@ -2450,7 +2450,7 @@ public class ServerLogics {
 
               String old_chunk_name = Entity.Chunk.Chunk_Name;
               
-              if(!Entity.Chunk.Chunk_Type.equals("world3d-driving-speed") && !Entity.Chunk.Chunk_Type.equals("world3d-driving-criticalelement-vehicle") && !Entity.Chunk.Chunk_Type.equals("world3d-driving-criticalelement-sign")) {//put Chunk in buffer naming rule: its name is changed into name-j, where j starts from 0. If "name-j" is already a name in the model chunk list, then j++, unitl it is a new name.
+              if(!Entity.Chunk.Chunk_Type.equals("world3d-driving-speed-img") && !Entity.Chunk.Chunk_Type.equals("world3d-driving-criticalelement-sign-img") && !Entity.Chunk.Chunk_Type.equals("world3d-driving-criticalelement-vehicle-img")) {//put Chunk in buffer naming rule: its name is changed into name-j, where j starts from 0. If "name-j" is already a name in the model chunk list, then j++, unitl it is a new name.
                   
 	              //put Chunk in buffer naming rule: its name is changed into name-j, where j starts from 0. If "name-j" is already a name in the model chunk list, then j++, unitl it is a new name.
 	              int j = 0;
@@ -5235,10 +5235,7 @@ public class ServerLogics {
                     //Currently don't have visual finst for world3d objects.
                   }
                   else{
-                	  String visicon_name = Entity.Chunk.Chunk_Name;
-                	  if(visicon_name.contains("dup")) visicon_name = Entity.Chunk.DM_Name_Origin;
-                	  //System.out.println("VisionModuleFun__Place_Visual_Finst_On visicon: " +visicon_name );
-                	  sim.funs.VisionModuleFun__Place_Visual_Finst_On (visicon_name);
+                	  sim.funs.VisionModuleFun__Place_Visual_Finst_On (Entity.Chunk.Chunk_Name);
                   }
 
                   sim.vars.visionModule.State_Error = false;
@@ -5568,7 +5565,7 @@ public class ServerLogics {
                 //ProgramUtilitiesFun__Output_Trace_Txt( sim.funs.ChunkFun__Get_Chunk_Contents (Entity.Chunk) );
             	// added by Yelly
             	// I need visual-location chunk to be in the center chunks (if not exists before),
-                if (sim.funs.ChunkFun__Is_Chunk_Name(Entity.Chunk.Chunk_Name) == false && !Entity.Chunk.Chunk_Name.contains("dup")) {
+                if (sim.funs.ChunkFun__Is_Chunk_Name(Entity.Chunk.Chunk_Name) == false) {
                     //System.out.println("visuallocationbuffer, defining chunk: " + Entity.Chunk.Chunk_Name);
                     //sim.funs.ChunkFun__Print_Chunk(Entity.Chunk);
                 	sim.funs.ChunkFun__Define_Chunk( Entity.Chunk );
@@ -5583,21 +5580,21 @@ public class ServerLogics {
             
             
             // Ending Effect
-            if (Entity.Entity_Type.equals( "Visual-location Buffer's New Chunk" )) { //|| Entity.Entity_Type.equals( "Production Rule Firing Trigger") //trigger moves to visual buffer
-              Entity.From = "Visual-location Buffer"; //change the entity and pass it to Matching And Selection as a trigger
-              Entity.To = "Matching And Selection";
-              Entity.Entity_Type = "Production Rule Firing Trigger";
-            //no need. if change Tag, must update server.qnactrEntityInServer and server.removeTokensInServer
-              //Entity.Tag = QnactrSimulation.entityNumber; 
-              //QnactrSimulation.entityNumber++;
-
-            }
-            
-            
-            if (Entity.Entity_Type.equals( "Production Rule Firing Trigger")){
-              Entity.From = "Visual-location Buffer";
-              Entity.To = "Matching And Selection";	
-            }
+//            if (Entity.Entity_Type.equals( "Visual-location Buffer's New Chunk" )) { //|| Entity.Entity_Type.equals( "Production Rule Firing Trigger") //trigger moves to visual buffer
+//              Entity.From = "Visual-location Buffer"; //change the entity and pass it to Matching And Selection as a trigger
+//              Entity.To = "Matching And Selection";
+//              Entity.Entity_Type = "Production Rule Firing Trigger";
+//            //no need. if change Tag, must update server.qnactrEntityInServer and server.removeTokensInServer
+//              //Entity.Tag = QnactrSimulation.entityNumber; 
+//              //QnactrSimulation.entityNumber++;
+//
+//            }
+//            
+//            
+//            if (Entity.Entity_Type.equals( "Production Rule Firing Trigger")){
+//              Entity.From = "Visual-location Buffer";
+//              Entity.To = "Matching And Selection";	
+//            }
             
             //ProgramUtilitiesFun__Obsolete_Clean_All_Trash();
             

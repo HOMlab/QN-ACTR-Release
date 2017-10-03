@@ -87,7 +87,7 @@ public class World3D_Template_Driving_Method {
 	private final float rightMirror_perceive_weight = 0.1f;
 	
 	// to trigger each q&a
-	private float qn_trigger = 150.0f;
+	private float qn_trigger = 200.0f;
 	public boolean qn_answer_switch = false;
 	
 	private final int OPENDS_CLOCK = 0;

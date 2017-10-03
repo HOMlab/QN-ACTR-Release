@@ -53,7 +53,7 @@
         fd-old          0	;; because far distance is determined by speed * far-time
 	time-old	0
 	speed-old	0	;; use initial speed
-	stage		attending-near
+	stage		"attending-near"
  )
 
 )
@@ -64,7 +64,7 @@
    =goal>
       isa drive-control
       lane =lane
-      stage attending-near
+      stage "attending-near"
 
 ==>
 !bind! =qn-answer (start-qn-answer)     ;; start output qn-answer if triggered
@@ -73,7 +73,7 @@
       kind near-point
       lane =lane   
    =goal>
-      stage processing-near-attending-far
+      stage "processing-near-attending-far"
 )
 
 (p drive-control-process-near-attend-far
@@ -81,7 +81,7 @@
       isa drive-control
       lane 	=lane
       na-new    =na-1
-      stage 	processing-near-attending-far
+      stage 	"processing-near-attending-far"
    =visual-location>
       isa  visual-location-world3d-driving
       kind near-point
@@ -92,7 +92,7 @@
    =goal>
       na-old 	=na-1      
       na-new    =na-2
-      stage     processing-far
+      stage     "processing-far"
    +visual-location>
       isa visual-location-world3d-driving
       kind far-point		;;this far point will include both road far points and car far points
@@ -110,7 +110,7 @@
       fd-old    =fd-1
       speed-old =v-1
       time-old  =time-1
-      stage     processing-far
+      stage     "processing-far"
    =visual-location>
       isa 	visual-location-world3d-driving
       kind 	far-point
@@ -130,7 +130,7 @@
       fd-old =fd-2
       speed-old =v-2
       time-old =time-2
-      stage     attending-speed
+      stage     "attending-speed"
    +visual>
       isa         move-attention 		;;note here as in Salvucci's model, near and far angle is not computed from visual but use visual-location only. this +visual> is used for showing eye movement, in fact as a side effect. info processing is not affected by visual prepare, encoding and eye movement speed
       screen-pos  =visual-location
@@ -150,18 +150,18 @@
 (p drive-control-attend-speed
    =goal>
       isa drive-control
-      stage attending-speed
+      stage "attending-speed"
 ==>
    +visual-location>
       isa  visual-location-world3d-driving-speed
    =goal>
-      stage processing-speed
+      stage "processing-speed"
 )
 
 (p drive-control-process-speed
    =goal>
       isa drive-control
-      stage 	processing-speed
+      stage 	"processing-speed"
    =visual-location>
       isa  visual-location-world3d-driving-speed
     ?visual>
@@ -171,20 +171,20 @@
       isa      move-attention
       screen-pos =visual-location
    =goal>
-      stage     reading-speed
+      stage     "reading-speed"
 )
 
 (p read-speed
     =goal>
       isa drive-control  
-      stage    reading-speed
+      stage    "reading-speed"
     =visual>
       isa      world3d-driving-speed
 	speed	=v
 
 ==>
     =goal>
-      stage    attending-critical
+      stage    "attending-critical"
 !eval! (world3d-driving-report-speed  =v) 
     +imaginal>
       isa      world3d-driving-speed-img
@@ -195,21 +195,21 @@
 (p attend-criticalelement
     =goal>
       isa drive-control  
-      stage    attending-critical
+      stage    "attending-critical"
    ==>
 !bind! =view (world3d-driving-choosing-viewArea)
     =goal>
-      stage    critical-detect-result
+      stage    "critical-detect-result"
    +visual-location>
       isa visual-location-world3d-driving-criticalelement
-      kind critical-element
+      kind "critical-element"
 	viewArea =view		
 )
 
 (p attend-criticalelement-detected
     =goal>
       isa drive-control  
-      stage    critical-detect-result
+      stage    "critical-detect-result"
     =visual-location>
       isa visual-location-world3d-driving-criticalelement
       kind "critical-element"
@@ -220,13 +220,13 @@
       isa      move-attention
       screen-pos =visual-location
     =goal>
-      stage    reading-critical
+      stage    "reading-critical"
 )
 
 (p attend-criticalelement-detect-failure
     =goal>
       isa drive-control  
-      stage    critical-detect-result
+      stage    "critical-detect-result"
     ?visual-location>
       state error
    ==>
@@ -238,7 +238,7 @@
 (p read-criticalelement-vehicle
     =goal>
       isa drive-control  
-      stage    reading-critical
+      stage    "reading-critical"
     =visual>
       isa      world3d-driving-criticalelement-vehicle
 	id	=i
@@ -259,7 +259,7 @@
 (p read-criticalelement-sign
     =goal>
       isa drive-control  
-      stage    reading-critical
+      stage    "reading-critical"
     =visual>
       isa      world3d-driving-criticalelement-sign
 	id	=i
@@ -280,7 +280,7 @@
 (p read-criticalelement-failure
     =goal>
       isa drive-control  
-      stage    reading-critical
+      stage    "reading-critical"
     ?visual>
       state error
 
@@ -293,108 +293,108 @@
 (p recall-sign
     =goal>
       isa      drive-control  
-      stage    recalling-sign
+      stage    "recalling-sign"
 ==>
     +retrieval>
       isa      world3d-driving-criticalelement-sign-img
     =goal>
-      stage    recall-sign-result
+      stage    "recall-sign-result"
 )
 
 (p recall-sign-success
     =goal>
       isa      drive-control  
-      stage    recall-sign-result
+      stage    "recall-sign-result"
     =retrieval>
       isa      world3d-driving-criticalelement-sign-img
       content    =cont
 ==>
     =goal>
-      stage    recalling-vehicle
+      stage    "recalling-vehicle"
 !eval! (world3d-driving-recall-criticalelement-sign  =cont)
 )
 
 (p cannot-recall-sign
     =goal>
       isa      drive-control  
-      stage    recall-sign-result
+      stage    "recall-sign-result"
     ?retrieval>
       state   error
    ==>
     =goal>
-      stage    recalling-vehicle
+      stage    "recalling-vehicle"
 !eval! (world3d-driving-recall-criticalelement-sign nil )
 )
 
 (p recall-vehicle
     =goal>
       isa      drive-control  
-      stage    recalling-vehicle
+      stage    "recalling-vehicle"
 ==>
     +retrieval>
       isa      world3d-driving-criticalelement-vehicle-img
     =goal>
-      stage    recall-vehicle-result
+      stage    "recall-vehicle-result"
 )
 
 (p recall-sign-success
     =goal>
       isa      drive-control  
-      stage    recall-vehicle-result
+      stage    "recall-vehicle-result"
     =retrieval>
       isa      world3d-driving-criticalelement-vehicle-img
       color	=col
 ==>
     =goal>
-      stage    recalling-speed
+      stage    "recalling-speed"
 !eval! (world3d-driving-recall-criticalelement-vehicle  =col)
 )
 
 (p cannot-recall-sign
     =goal>
       isa      drive-control  
-      stage    recall-vehicle-result
+      stage    "recall-vehicle-result"
     ?retrieval>
       state   error
    ==>
     =goal>
-      stage    recalling-speed
+      stage    "recalling-speed"
 !eval! (world3d-driving-recall-criticalelement-vehicle  nil )
 )
 
 (p recall-speed
     =goal>
       isa      drive-control  
-      stage    recalling-speed
+      stage    "recalling-speed"
 ==>
     +retrieval>
       isa      world3d-driving-speed-img
     =goal>
-      stage    recall-speed-result
+      stage    "recall-speed-result"
 )
 
 (p recall-speed-success
     =goal>
       isa      drive-control  
-      stage    recall-speed-result
+      stage    "recall-speed-result"
     =retrieval>
       isa      world3d-driving-speed-img
 	speed	=v
 ==>
     =goal>
-      stage    attending-near
+      stage    "attending-near"
 !eval! (world3d-driving-recall-speed  =v)
 )
 
 (p cannot-recall-speed
     =goal>
       isa      drive-control  
-      stage    recall-speed-result
+      stage    "recall-speed-result"
     ?retrieval>
       state   error
    ==>
     =goal>
-      stage    attending-near
+      stage    "attending-near"
 !eval! (world3d-driving-recall-speed  nil )
 )
 
