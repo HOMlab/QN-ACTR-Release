@@ -275,7 +275,7 @@ public class World3D_Template_Driving_Method {
 		str += "Steering: " + opendsControlSteerAngleDegree + ", ";  //steering angle in degree
 		if(qnclock > this.qn_trigger) {
 			str += "report: true, ";  //true/false
-			this.qn_trigger+=50;
+			this.qn_trigger+=200;
 			this.qn_answer_switch = true;
 			sim.funs.ProgramUtilitiesFun__Output_QN_Result_Txt("QNClock: " + qnclock);
 			System.out.println("outputing q&a");

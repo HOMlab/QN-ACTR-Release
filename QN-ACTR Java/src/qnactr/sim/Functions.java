@@ -1975,7 +1975,10 @@ public class Functions {
 		
 		ProgramUtilitiesFun__Output_Trace_Txt("");
 		ProgramUtilitiesFun__Output_Trace_Txt("ChunkFun__Print_All_Chunks_In_Model at: " + GlobalUtilities.round(SimSystem.clock(),3));
+		
 		Iterator<Entry> itrEntries = sim.vars.centralParametersModule.Chunks.entrySet().iterator();
+		
+		ProgramUtilitiesFun__Output_Trace_Txt("Chunk number in centralParametersModule: " + sim.vars.centralParametersModule.Chunks.size());
 		
 		while(itrEntries.hasNext()){
 		  Entry currentEntry = itrEntries.next();
@@ -2031,19 +2034,19 @@ public class Functions {
 	//DeclarativeModuleFun
 	
 	public Chunk DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name(String The_Chunk_Name){
-		sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name, sim.vars.declarativeModule.Number_of_Chunks: " + sim.vars.declarativeModule.Number_of_Chunks);
+		//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name, sim.vars.declarativeModule.Number_of_Chunks: " + sim.vars.declarativeModule.Number_of_Chunks);
 		int i;
 		for (i = 0; i < sim.vars.declarativeModule.Number_of_Chunks ; i ++){ 
 			Chunk temp_chunk = sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, i);
 			if (temp_chunk.Chunk_Name.equals( The_Chunk_Name)){
-				sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name, found.");
+				//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name, found.");
 				return sim.funs.ChunkFun__Chunk_Clone (temp_chunk); //suppose each chunk has a unique name
 			}
 		}
 
 		//if no such chunk name
 		//Model.Message ("No chunk with name: " + The_Chunk_Name + " in declarative memory.");
-		sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name, No chunk with name: " + The_Chunk_Name + " in declarative memory.");
+		//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_DM_Chunk_By_Chunk_Name, No chunk with name: " + The_Chunk_Name + " in declarative memory.");
 		return new Chunk();
 	}
 	
@@ -2505,7 +2508,7 @@ public class Functions {
 		
 		LinkedList<String> remove_list = new LinkedList<String>();
 		Enumeration enum_chunk_name = Collections.enumeration(sim.vars.declarativeModule.Declarative_Retrieved_Finst_Name_List);
-		sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Update_Declarative_Finst, sim.vars.declarativeModule.Declarative_Retrieved_Finst_Name_List number: " + sim.vars.declarativeModule.Declarative_Retrieved_Finst_Name_List.size());
+		//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Update_Declarative_Finst, sim.vars.declarativeModule.Declarative_Retrieved_Finst_Name_List number: " + sim.vars.declarativeModule.Declarative_Retrieved_Finst_Name_List.size());
 		while( enum_chunk_name.hasMoreElements()){
 			String chunk_name = (String)enum_chunk_name.nextElement();
 			double last_retrieval_time = (double) sim.vars.declarativeModule.Declarative_Retrieved_Finst_Time_Hashtable.get(chunk_name) ;
@@ -2518,7 +2521,7 @@ public class Functions {
 			sim.vars.declarativeModule.Declarative_Retrieved_Finst_Name_List.remove(temp_name);
 			sim.vars.declarativeModule.Declarative_Retrieved_Finst_Time_Hashtable.remove(temp_name);
 		} 
-		sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Update_Declarative_Finst, finish.");
+		//sim.funs.ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Update_Declarative_Finst, finish.");
 	}
 	
 	public  LinkedList<Integer> DeclarativeModuleFun__Find_Add_Retrieval_Matched_DM_Chunk_IDs_By_Chunk_Spec(Chunk The_Chunk_Spec){
@@ -2751,14 +2754,14 @@ public class Functions {
 
 		if (The_Chunk_Spec.Chunk_Type.equals( "nil")){  //the first round is chunk type, ISA match
 			//may add later for chunk type is nil
-			ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec has chunk type nil");
+			//ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec has chunk type nil");
 		}
 		else if (The_Chunk_Spec.Chunk_Type.equals( "" )){
 			//may add later for matching any chunk type that is not nil
-			ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec has chunk type empty");
+			//ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec has chunk type empty");
 		}
 		else {  //matching a specific chunk type 
-			ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec, matching a specific chunk type , sim.vars.declarativeModule.Number_of_Chunks=" + sim.vars.declarativeModule.Number_of_Chunks);
+			//ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec, matching a specific chunk type , sim.vars.declarativeModule.Number_of_Chunks=" + sim.vars.declarativeModule.Number_of_Chunks);
 			for (i = 0; i < sim.vars.declarativeModule.Number_of_Chunks ; i ++){ 		
 			if (sim.funs.ProgramUtilitiesFun__LinkedList_Get_i_th_Chunk_Pointer(sim.vars.declarativeModule.DM_Chunk, i).Chunk_Type.equals( The_Chunk_Spec.Chunk_Type)){
 			//if (sim.vars.declarativeModule.DM_Chunk[i].Chunk_Type == The_Chunk_Spec.Chunk_Type){
@@ -2768,7 +2771,7 @@ public class Functions {
 			}
 		}
 
-		ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec, Matched_Chunk_Number: " + Matched_Chunk_Number);
+		//ProgramUtilitiesFun__Output_Trace_Txt("DeclarativeModuleFun__Find_The_DM_Chunk_ID_By_Chunk_Spec, Matched_Chunk_Number: " + Matched_Chunk_Number);
 		if (Matched_Chunk_Number == 0)	return -1;
 
 
@@ -3494,7 +3497,7 @@ public class Functions {
 			sim.funs.ChunkFun__Print_Chunk(The_Chunk);
 			sim.funs.ProgramUtilitiesFun__Output_QN_Result_Txt("Total base-level: " + B);
 			sim.funs.ProgramUtilitiesFun__Output_QN_Result_Txt("");
-			//sim.funs.ChunkFun__Print_All_Chunks_In_Model();
+			sim.funs.ChunkFun__Print_All_Chunks_In_Model();
 		}
 
 		return (double) (B + S + P + Epsilon);
@@ -24261,12 +24264,22 @@ If the string is invalid or there is no current model then a warning is printed 
 	    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
 	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
 	    		String lane = (String)the_chunk_spec.Slot.get("lane");
-			      if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
-			        System.err.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec 'lane' is not integer but: " + lane);
-			        
+	    		
+			    if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
+			    	System.err.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec 'lane' is not integer but: " + lane);
 			        return null;
-			      }
-	    		return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "near-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving",  "distance", Double.toString(near_point_ahead_distance), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getOpenDSPercept().nearPointAngleDegree)     });
+			    }
+			    
+			    if(sim.funs.ChunkFun__Is_Chunk_Name("near-point-location")) {
+			    	Chunk location_chunk = (Chunk) sim.vars.centralParametersModule.Chunks.get("near-point-location");
+			    	sim.funs.ChunkFun__Set_Chunk_Slot_Value(location_chunk, "distance", Double.toString(near_point_ahead_distance));
+				    sim.funs.ChunkFun__Set_Chunk_Slot_Value(location_chunk, "lane", lane);
+			    	sim.funs.ChunkFun__Set_Chunk_Slot_Value(location_chunk, "angle", Double.toString(the_method.getOpenDSPercept().nearPointAngleDegree));
+			    	return location_chunk;
+			    }
+			    else{
+			    	return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "near-point-location", "isa", "visual-location-world3d-driving",  "distance", Double.toString(near_point_ahead_distance), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getOpenDSPercept().nearPointAngleDegree)     });
+			    }
 			}
 	    	else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
@@ -24315,14 +24328,22 @@ If the string is invalid or there is no current model then a warning is printed 
 	    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_opends" )){
 	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
 	    		String lane = (String)the_chunk_spec.Slot.get("lane");
-			      if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
-			        System.err.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec 'lane' is not integer but: " + lane);
-			        
-			        return null;
-			      }
-			      
-			      Chunk return_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "far-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving",  "distance", Double.toString(the_method.getOpenDSPercept().farPointDistanceMeter), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getOpenDSPercept().farPointAngleDegree)   });
-			      return return_chunk;	    		
+	    		
+			    if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
+			      System.err.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec 'lane' is not integer but: " + lane);
+			      return null;
+			    }
+
+				if(sim.funs.ChunkFun__Is_Chunk_Name("far-point-location")) {
+					Chunk location_chunk = (Chunk) sim.vars.centralParametersModule.Chunks.get("far-point-location");
+				    sim.funs.ChunkFun__Set_Chunk_Slot_Value(location_chunk, "distance", Double.toString(the_method.getOpenDSPercept().farPointDistanceMeter));
+				    sim.funs.ChunkFun__Set_Chunk_Slot_Value(location_chunk, "lane", lane);
+				    sim.funs.ChunkFun__Set_Chunk_Slot_Value(location_chunk, "angle", Double.toString(the_method.getOpenDSPercept().farPointAngleDegree));
+				    return location_chunk;
+				}
+				else{
+				    return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "far-point-location", "isa", "visual-location-world3d-driving",  "distance", Double.toString(the_method.getOpenDSPercept().farPointDistanceMeter), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getOpenDSPercept().farPointAngleDegree)     });
+				}    		
 			}
 	    	else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
