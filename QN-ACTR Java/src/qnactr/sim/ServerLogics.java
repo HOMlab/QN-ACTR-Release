@@ -6220,6 +6220,10 @@ public class ServerLogics {
             if(serverLogicsDebugPopupFlag)JOptionPane.showMessageDialog(null, "Clock: " + SimSystem.clock() + ". Operator ID: " + sim.ID  + "\nEnums has serverName: " + ServerName + ". ServiceStage: " + ServiceStage, "ServerLogics.java" , JOptionPane.INFORMATION_MESSAGE);
             if(Entity.Entity_Type.equals( "Display Initialization")){ // only once
               if(!sim.vars.taskTemplate.Method.equals( ""))  sim.funs.TaskTemplateFun__Start_Trial_Display(); //this function will change task stage to Display_And_Response
+            
+              if(QnactrSimulation.taskInterfaceWindowEnable) sim.createAndShowTaskInterfaceWindowGUI();
+            
+            
             } 
             else if (Entity.From.equals( "Control To Display") && Entity.To.equals( "Visual and Audio Display Schedule")){ //respond to control events
               if ( Entity.Entity_Type.equals( "Self Speech")  ){ //for self-hearing
@@ -6895,6 +6899,88 @@ public class ServerLogics {
               }
             } //end of bst-learn sample predefined model setup
             
+            
+         // predefined model setup: emr_model_demo             
+            else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "emr_model_demo" ) ){
+            	            	
+              switch (event_name){
+                        
+              	case "5000units_clicked" :{         	
+            	  
+            	  
+            	  System.out.println("5000units_clicked");
+  
+              	
+            	  break;
+              	}
+              
+                case "placenewordertextinput_clicked" :{
+                	
+                	Display_Item_Visual_Text_Button new_order_textbox = (Display_Item_Visual_Text_Button)dynamic_items.get("textbox1") ;
+                	sim.vars.deviceModule.enterTextboxInputMode(new_order_textbox);
+                	sim.funs.TaskTemplateFun__Refresh_Dynamic_Item( new_order_textbox , 0.0F); //two parameters: item pointer, time delay before the refresh
+                	
+                	System.out.println("serverlogics, dynamicevents, placeneworderTextInput_clicked");
+                  break;
+                }
+                
+                case "key_pressed" :{
+                	Display_Item_Visual_Text_Button new_order_textbox = (Display_Item_Visual_Text_Button)dynamic_items.get("textbox1") ;
+                	String key = ((Response_Item_Key_Press)Entity.Response_Item).Key ;
+                	sim.vars.deviceModule.textboxTyping(new_order_textbox, key);  //end textbox input mode function is defined inside deviceModule
+                	sim.funs.TaskTemplateFun__Refresh_Dynamic_Item( new_order_textbox , 0.0F); //two parameters: item pointer, time delay before the refresh
+                	
+                	String a_result_line = Double.toString(GlobalUtilities.round(SimSystem.clock() , 3)) + "\t" + key ;
+                	System.out.println("serverlogics, dynamicevents, key_pressed: " + a_result_line);
+                	            	
+                    break;
+                  }
+                
+                
+                default:{
+                  System.out.println("Dynamic Events Beginning Effect has undefine event_name: " + event_name);
+                  break;
+                }
+              } //end of switch
+              
+            } //end of emr_model_demo
+            
+            
+            
+            
+         // predefined model setup: ustb_model_demo             
+            else if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "ustb_model_demo" ) ){
+            	            	
+              switch (event_name){                        
+              	case "1000_clicked" :
+              	case "2000_clicked" :
+              	case "3000_clicked" :
+              	case "4000_clicked" :
+              	case "5000_clicked" :
+              	case "6000_clicked" :
+              	case "7000_clicked" :
+              	case "8000_clicked" :
+              	case "9000_clicked" :              	
+              	{         	
+              		Display_Item_Visual_Text_Button target = (Display_Item_Visual_Text_Button)dynamic_items.get( event_name.substring(0, 4)  ) ;
+              		target.Display_Item_Color = "red";
+              		target.Display_Button_Color  = "red";
+                	sim.funs.TaskTemplateFun__Refresh_Dynamic_Item( target , 0.0F); //two parameters: item pointer, time delay before the refresh            	  
+                	System.out.println(event_name); 
+              	
+            	  break;
+              	}
+              
+                
+                
+                
+                default:{
+                  System.out.println("Dynamic Events Beginning Effect has undefine event_name: " + event_name);
+                  break;
+                }
+              } //end of switch
+              
+            } //end of ustb_model_demo
             
             // predefined model setup: dual-task sample, typing_and_reading_comprehension
             

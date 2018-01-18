@@ -18,7 +18,7 @@ import qnactr.GUI.EntitiesViewer;
 import qnactr.GUI.TaskVisualization2D;
 import qnactr.GUI.TaskVisualization3D;
 import qnactr.objectDesigner.Entity;
-
+import qnactr.taskInterface.gui.*;
 import jmt.engine.QueueNet.Job;
 import jmt.engine.QueueNet.NetNode;
 import jmt.engine.simEngine.HybridEventQueue;
@@ -60,11 +60,13 @@ public class QnactrSimulation
   public static JFrame frameTaskVisualization2DViewer;
   public static TaskVisualization2D taskVisualization2D; //currently just one static member may change this to each object has one member
   
+  public TaskInterfaceWindow ucWindow;
+  
   public static JFrame frameTaskVisualization3DViewer;
   public static TaskVisualization3D taskVisualization3D; 
   
-  final public static int simulatedWindowDefaultSizeX = 633;  
-  final public static int simulatedWindowDefaultSizeY = 1200;
+  final public static int simulatedWindowDefaultSizeX = 1350;  
+  final public static int simulatedWindowDefaultSizeY = 750;
   final public static int taskVisualization2DExtendSizeX = 120;
   final public static int taskVisualization2DExtendSizeY = 280;
   
@@ -81,10 +83,11 @@ public class QnactrSimulation
   
   ///////////// SETUP Begin///////////////////
   public static boolean entitiesViewerEnable = false; // true or false
-  public static boolean taskVisualization2DEnable = false;
+  public static boolean taskVisualization2DEnable = true;
   public static boolean taskVisualization3DEnable = false;
+  public static boolean taskInterfaceWindowEnable = true;
     
-  public static double simSpeedFactor = -1; // -1 or any number < 0 means as fast as possible, larger number means faster simulation. N times normal speed.
+  public static double simSpeedFactor = 0.5; // -1 or any number < 0 means as fast as possible, larger number means faster simulation. N times normal speed.
   public static boolean computeUtilization = true;
   
   ///////////// SETUP end ////////////////////
@@ -146,6 +149,11 @@ public class QnactrSimulation
     frameEntitiesViewer.setLocationByPlatform(true);
     frameEntitiesViewer.setVisible(true);
 }
+  
+  public void createAndShowTaskInterfaceWindowGUI() {
+	  ucWindow=new TaskInterfaceWindow(this);
+	  ucWindow.setVisible(true);
+  }
   
   public static void createAndShowTaskVisualization2DViewerGUI() {
     frameTaskVisualization2DViewer  = new JFrame("TaskVisualization2DViewer");

@@ -4337,8 +4337,8 @@ return return_string;
 			sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.put( item_ID, temp_list );
 		}
 		else {
-		  ((LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID)).clear();
-      ((LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID)).addLast(temp_chunk.Chunk_Name);
+//		  ((LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID)).clear();
+		  ((LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID)).addLast(temp_chunk.Chunk_Name);
       
 //			LinkedList<String> tempList=new LinkedList<String>();
 //			tempList.add((String) sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID));
@@ -4423,8 +4423,8 @@ return return_string;
 			sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.put	( item_ID, temp_list );
 		}
 		else {
-		  ((LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID)).clear();
-      ((LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID)).addLast(temp_chunk_button.Chunk_Name);
+//		  ((LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID)).clear();
+		  ((LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID)).addLast(temp_chunk_button.Chunk_Name);
 
 		}
 
@@ -4522,7 +4522,7 @@ return return_string;
 		}
 		else {
 		  
-		    ((LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID)).clear();
+//		    ((LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID)).clear();
 		    ((LinkedList<String>)sim.vars.visualDisplay.Visicon_Names_Associated_With_A_Display_Item_ID.get(item_ID)).addLast(temp_chunk.Chunk_Name);
 
 		}
@@ -20971,6 +20971,21 @@ If the string is invalid or there is no current model then a warning is printed 
 	public  void TaskTemplateFun__Initialize_Predefined_Model_Setup (){
 	  	  
 	  switch (sim.vars.programGlobalVar__Use_Predefined_Model_Setup){
+	  	
+	  
+		case "ustb_model_demo":
+	    {
+	      //nothing to initialize
+
+			
+	      break;
+	    }
+	    case "emr_model_demo":
+	    {
+	      //nothing to initialize
+	      break;
+	    }
+	  
 	    case "experiment_driving_and_comprehension":
 	    {
 	      
