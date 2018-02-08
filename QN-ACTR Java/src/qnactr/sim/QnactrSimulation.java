@@ -18,7 +18,7 @@ import qnactr.GUI.EntitiesViewer;
 import qnactr.GUI.TaskVisualization2D;
 import qnactr.GUI.TaskVisualization3D;
 import qnactr.objectDesigner.Entity;
-import qnactr.taskInterface.gui.*;
+//import qnactr.taskInterface.gui.*;
 import jmt.engine.QueueNet.Job;
 import jmt.engine.QueueNet.NetNode;
 import jmt.engine.simEngine.HybridEventQueue;
@@ -60,7 +60,7 @@ public class QnactrSimulation
   public static JFrame frameTaskVisualization2DViewer;
   public static TaskVisualization2D taskVisualization2D; //currently just one static member may change this to each object has one member
   
-  public TaskInterfaceWindow ucWindow;
+  //public TaskInterfaceWindow ucWindow;
   
   public static JFrame frameTaskVisualization3DViewer;
   public static TaskVisualization3D taskVisualization3D; 
@@ -151,8 +151,8 @@ public class QnactrSimulation
 }
   
   public void createAndShowTaskInterfaceWindowGUI() {
-	  ucWindow=new TaskInterfaceWindow(this);
-	  ucWindow.setVisible(true);
+//	  ucWindow=new TaskInterfaceWindow(this);
+//	  ucWindow.setVisible(true);
   }
   
   public static void createAndShowTaskVisualization2DViewerGUI() {
