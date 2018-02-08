@@ -83,11 +83,11 @@ public class QnactrSimulation
   
   ///////////// SETUP Begin///////////////////
   public static boolean entitiesViewerEnable = false; // true or false
-  public static boolean taskVisualization2DEnable = true;
+  public static boolean taskVisualization2DEnable = false;
   public static boolean taskVisualization3DEnable = false;
-  public static boolean taskInterfaceWindowEnable = true;
+  public static boolean taskInterfaceWindowEnable = false;
     
-  public static double simSpeedFactor = 0.5; // -1 or any number < 0 means as fast as possible, larger number means faster simulation. N times normal speed.
+  public static double simSpeedFactor = -1; // -1 or any number < 0 means as fast as possible, larger number means faster simulation. N times normal speed.
   public static boolean computeUtilization = true;
   
   ///////////// SETUP end ////////////////////
