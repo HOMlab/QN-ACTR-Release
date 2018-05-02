@@ -51,6 +51,7 @@ public class World3D_Template_Driving_Method {
 	public double torcsControlAccelerator = 0.0; //0-1
 	public double torcsControlBrake = 0.0; //0-1
 	public double torcsControlSteerAngleDegree = 0.0; //
+
 	
 	private int UDPQNtoTORCSPort = 5678; 	//this can be set in TORCS expconfig.txt
 	private int UDPTORCStoQNPort = 8765;	//this can be set in TORCS expconfig.txt
@@ -134,6 +135,7 @@ public class World3D_Template_Driving_Method {
 		str += "Accelerator: " + torcsControlAccelerator + ", ";  //0-1
 		str += "Brake: " + torcsControlBrake + ", ";  //0-1
 		str += "Steering: " + torcsControlSteerAngleDegree + ", ";  //steering angle in degree
+
 				
 		byte buffer[] = new byte[bufferSizetoTORCS];
 		buffer = str.getBytes(); 
@@ -180,16 +182,36 @@ public class World3D_Template_Driving_Method {
 		double speedmps = 0.0;
 		
 		Matcher m1 = Pattern.compile("TORCSClock: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
-		Matcher m2 = Pattern.compile("nearPointAngleDegree: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
-		Matcher m3 = Pattern.compile("farPointAngleDegree: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
-		Matcher m4 = Pattern.compile("farPointDistanceMeter: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
-		Matcher m5 = Pattern.compile("speedM/s: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
+		Matcher m2 = Pattern.compile("farPointDistanceMeter: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
+		Matcher m3 = Pattern.compile("speedM/s: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
+		
+		Matcher nearPoint_n1 = Pattern.compile("nearPointAngleDegree-1: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
+		Matcher nearPoint_0 = Pattern.compile("nearPointAngleDegree0: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
+		Matcher nearPoint_p1 = Pattern.compile("nearPointAngleDegree+1: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
+		
+		Matcher farPoint_n1 = Pattern.compile("farPointAngleDegree-1: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
+		Matcher farPoint_0 = Pattern.compile("farPointAngleDegree0: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
+		Matcher farPoint_p1 = Pattern.compile("farPointAngleDegree+1: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(receivedString);
+		
 	    
 	    if( m1.find() ) TORCSClock = Double.parseDouble(m1.group().substring("TORCSClock: ".length()));
-	    if( m2.find() ) nearPointAngleDegree = Double.parseDouble(m2.group().substring("nearPointAngleDegree: ".length()));
-	    if( m3.find() ) farPointAngleDegree = Double.parseDouble(m3.group().substring("farPointAngleDegree: ".length()));
-	    if( m4.find() ) farPointDistanceMeter = Double.parseDouble(m4.group().substring("farPointDistanceMeter: ".length()));
-	    if( m5.find() ) speedmps = Double.parseDouble(m5.group().substring("speedM/s: ".length()));
+	    if( m2.find() ) farPointDistanceMeter = Double.parseDouble(m2.group().substring("farPointDistanceMeter: ".length()));
+	    if( m3.find() ) speedmps = Double.parseDouble(m3.group().substring("speedM/s: ".length()));	    
+	    torcsPerceptEarly.TORCSClock = TORCSClock;
+	    torcsPerceptEarly.farPointDistanceMeter = farPointDistanceMeter;
+	    torcsPerceptEarly.speed = speedmps;
+	    
+	    
+	    if( nearPoint_n1.find() ) torcsPerceptEarly.nearPointAngleDegree.put(-1,  Double.parseDouble(nearPoint_n1.group().substring("nearPointAngleDegree-1: ".length())) );
+	    if( nearPoint_0.find() ) torcsPerceptEarly.nearPointAngleDegree.put(0,  Double.parseDouble(nearPoint_0.group().substring("nearPointAngleDegree0: ".length())) );
+	    if( nearPoint_p1.find() ) torcsPerceptEarly.nearPointAngleDegree.put(1,  Double.parseDouble(nearPoint_p1.group().substring("nearPointAngleDegree+1: ".length())) );
+	    
+	    if( farPoint_n1.find() ) torcsPerceptEarly.farPointAngleDegree.put(-1, Double.parseDouble(farPoint_n1.group().substring("farPointAngleDegree-1: ".length())));
+	    if( farPoint_0.find() ) torcsPerceptEarly.farPointAngleDegree.put(0, Double.parseDouble(farPoint_0.group().substring("farPointAngleDegree0: ".length())));
+	    if( farPoint_p1.find() ) torcsPerceptEarly.farPointAngleDegree.put(1, Double.parseDouble(farPoint_p1.group().substring("farPointAngleDegree+1: ".length())));
+	    
+	        
+
 	    
 //	    System.out.println(TORCSClock);    
 //	    System.out.println(nearPointAngleDegree);
@@ -197,11 +219,7 @@ public class World3D_Template_Driving_Method {
 //	    System.out.println(farPointDistanceMeter);
 //	    System.out.println(speedmps);
 	    
-	    torcsPerceptEarly.TORCSClock = TORCSClock;
-	    torcsPerceptEarly.nearPointAngleDegree = nearPointAngleDegree;
-	    torcsPerceptEarly.farPointAngleDegree = farPointAngleDegree;
-	    torcsPerceptEarly.farPointDistanceMeter = farPointDistanceMeter;
-	    torcsPerceptEarly.speed = speedmps;
+
 		
 	}
 

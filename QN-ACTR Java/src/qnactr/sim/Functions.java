@@ -23869,13 +23869,14 @@ If the string is invalid or there is no current model then a warning is printed 
 	    	
 	    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
+	    		int targetLaneNum = Integer.parseInt(the_chunk_spec.Slot.get("lane")) ;	    				
 	    		String lane = (String)the_chunk_spec.Slot.get("lane");
 			      if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
 			        System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec 'lane' is not integer but: " + lane);
 			        
 			        return null;
 			      }
-	    		return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "near-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving",  "distance", Double.toString(near_point_ahead_distance), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getTorcsPercept().nearPointAngleDegree)     });
+	    		return sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "near-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving",  "distance", Double.toString(near_point_ahead_distance), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getTorcsPercept().nearPointAngleDegree.get(targetLaneNum) )    });
 			}
 	    	    	
 	    	
@@ -23917,6 +23918,7 @@ If the string is invalid or there is no current model then a warning is printed 
 	    else if (kind.equals( "far-point")){
 	    	if (sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs" )){
 	    		double near_point_ahead_distance = ((World3D_Template_Driving_Method)sim.vars.world3DTemplate.Method_Object).Near_Point_Distance;
+	    		int targetLaneNum = Integer.parseInt(the_chunk_spec.Slot.get("lane")) ;	   
 	    		String lane = (String)the_chunk_spec.Slot.get("lane");
 			      if( !ProgramUtilitiesFun__Is_String_Int(lane)) {
 			        System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec 'lane' is not integer but: " + lane);
@@ -23924,7 +23926,7 @@ If the string is invalid or there is no current model then a warning is printed 
 			        return null;
 			      }
 			      
-			      Chunk return_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "far-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving",  "distance", Double.toString(the_method.getTorcsPercept().farPointDistanceMeter), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getTorcsPercept().farPointAngleDegree)   });
+			      Chunk return_chunk = sim.funs.ChunkFun__Make_Chunk_From_Descritption(new String[] { "far-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , "isa", "visual-location-world3d-driving",  "distance", Double.toString(the_method.getTorcsPercept().farPointDistanceMeter), "kind",kind, "lane",lane,  "angle", Double.toString(the_method.getTorcsPercept().farPointAngleDegree.get(targetLaneNum)  )   });
 			      return return_chunk;	    		
 			}
 	    	

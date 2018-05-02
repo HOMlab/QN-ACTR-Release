@@ -1,5 +1,7 @@
 package qnactr.objectDesigner;
 
+import java.util.Hashtable;
+
 /**
  * This is used to store and pass model driving perception values from TORCS to QN-Java
  * 
@@ -8,15 +10,24 @@ package qnactr.objectDesigner;
  */
 public class Torcs_Percept {
 	
-	public double nearPointAngleDegree;
-	public double farPointAngleDegree;
+	//public double nearPointAngleDegree;
+	//public double farPointAngleDegree;\
+	public Hashtable<Integer, Double> nearPointAngleDegree = new Hashtable<Integer, Double> ();
+	public Hashtable<Integer, Double> farPointAngleDegree = new Hashtable<Integer, Double> ();
 	public double farPointDistanceMeter;
 	public double speed; // m/s
 	public double TORCSClock;
 	
 	public Torcs_Percept(){
-		nearPointAngleDegree = 0.0;
-		farPointAngleDegree = 0.0;
+		nearPointAngleDegree.put(-1, 0.0);
+		nearPointAngleDegree.put(1, 0.0);
+		nearPointAngleDegree.put(+1, 0.0);
+		
+		farPointAngleDegree.put(-1, 0.0);
+		farPointAngleDegree.put(1, 0.0);
+		farPointAngleDegree.put(+1, 0.0);
+				
+		
 		farPointDistanceMeter = 0.0;
 		speed = 0.0;
 		TORCSClock = 0.0;
