@@ -1560,7 +1560,35 @@ public class ServerLogics {
           
         }
         
+        if(sim.vars.programGlobalVar__Use_Predefined_Model_Setup.equals( "model_drive_torcs") )
+        {
+          
+          //specifying the rules that require follow up processing, as in the filtering discipline
+        	
+        	// goal, control and monitor
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("create-imaginal-buffer-chunk-for-monitor-zone", "goal");  // +imaginal>
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("drive-control-attend-near", "goal");  // +visual-location>
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("drive-control-process-near-attend-far", "goal");  //+visual-location>
             
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("drive-monitor-zone-left", "goal");  //+visual-location>     
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("drive-monitor-zone-right", "goal");  //+visual-location>      
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("drive-monitor-zone-left-mirror", "goal");  //+visual-location>      
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("drive-monitor-zone-right-mirror", "goal");  //+visual-location>
+            
+            
+            //goal-2, try lane change
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("try-lc-recall-left", "goal-2");  //+retrieval>
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("try-lc-recall-left-mirror", "goal-2");  //+retrieval>
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("try-lc-recall-right", "goal-2");  //+retrieval>
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("try-lc-recall-right-mirror", "goal-2");  //+retrieval>
+            
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("try-lc-look-left", "goal-2");  //+visual-location>
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("try-lc-look-left-mirror", "goal-2");  //+visual-location>
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("try-lc-look-right", "goal-2");  //+visual-location>
+            sim.vars.productionModule.Filtering_Follow_Up_Rule_Goal_Table.put("try-lc-look-right-mirror", "goal-2");  //+visual-location>
+                        
+         
+        }    
             
             
             // end of adding Clock = 0 Scenario Events

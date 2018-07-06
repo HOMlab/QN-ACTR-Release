@@ -24155,6 +24155,60 @@ If the string is invalid or there is no current model then a warning is printed 
 	    }
 	    
 	    
+	    else if (kind.equals( "monitor-zone-left")){
+	    	//isa   visual-location-world3d-driving
+	    	
+	    	String lane = "1";	//for two lane road, left = 1, right = 0.
+	    	double d =  the_method.getTorcsPercept().leftObjDist;
+	    	  
+    		return sim.funs.ChunkFun__Make_Chunk_From_Descritption(
+    				new String[] { kind + "-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , 
+    						"isa", "visual-location-world3d-driving",  
+    						"distance", String.valueOf(d) ,
+    						"kind", kind, 
+    						"lane", lane  });
+		}
+	    else if (kind.equals( "monitor-zone-left-mirror")){
+	    	//isa   visual-location-world3d-driving
+	    	
+	    	String lane = "1";	//for two lane road, left = 1, right = 0.
+	    	double d =  the_method.getTorcsPercept().leftMirrorObjDist;
+	    	  
+    		return sim.funs.ChunkFun__Make_Chunk_From_Descritption(
+    				new String[] { kind + "-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , 
+    						"isa", "visual-location-world3d-driving",  
+    						"distance", String.valueOf(d) ,
+    						"kind", kind, 
+    						"lane", lane  });
+		}
+	    else if (kind.equals( "monitor-zone-right")){
+	    	//isa   visual-location-world3d-driving
+	    	
+	    	String lane = "0";	//for two lane road, left = 1, right = 0.
+	    	double d =  the_method.getTorcsPercept().rightObjDist;
+	    	  
+    		return sim.funs.ChunkFun__Make_Chunk_From_Descritption(
+    				new String[] { kind + "-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , 
+    						"isa", "visual-location-world3d-driving",  
+    						"distance", String.valueOf(d) ,
+    						"kind", kind, 
+    						"lane", lane  });
+		}
+	    else if (kind.equals( "monitor-zone-right-mirror")){
+	    	//isa   visual-location-world3d-driving
+	    	
+	    	String lane = "0";	//for two lane road, left = 1, right = 0.
+	    	double d =  the_method.getTorcsPercept().rightMirrorObjDist;
+	    	  
+    		return sim.funs.ChunkFun__Make_Chunk_From_Descritption(
+    				new String[] { kind + "-point-" + Double.toString(GlobalUtilities.round(SimSystem.clock(), 3)) , 
+    						"isa", "visual-location-world3d-driving",  
+    						"distance", String.valueOf(d) ,
+    						"kind", kind, 
+    						"lane", lane  });
+		}
+	    
+	    
 	    else {
 	      System.out.println("Error! VisionModuleFun__Find_Visual_Location_In_World3D_By_Chunk_Spec has undefined kind: "+ kind);
 	     

@@ -18,6 +18,12 @@ public class Torcs_Percept {
 	public double speed; // m/s
 	public double TORCSClock;
 	
+	public double leftObjDist;
+	public double leftMirrorObjDist;
+	public double rightObjDist;
+	public double rightMirrorObjDist;	
+	
+	
 	public Torcs_Percept(){
 		nearPointAngleDegree.put(-1, 0.0);
 		nearPointAngleDegree.put(1, 0.0);
@@ -33,6 +39,8 @@ public class Torcs_Percept {
 		TORCSClock = 0.0;
 	}
 	
+
+	/*
 	public void copyTo (Torcs_Percept target){
 		target.nearPointAngleDegree = this.nearPointAngleDegree;
 		target.farPointAngleDegree = this.farPointAngleDegree;
@@ -40,5 +48,6 @@ public class Torcs_Percept {
 		target.speed = this.speed;
 		target.TORCSClock = this.TORCSClock;
 	}
+	*/
 	
 }
