@@ -1,0 +1,1624 @@
+;; QN_ACTR_Model_Initialization driving test TORCS
+;; QN-ACTR, Sample Driving (Modeling driving)
+;; For questions and comments, please send to Shi Cao (shi.cao@uwaterloo.ca).
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Task definition ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+(use_world3d_template   
+	:method    	driving    ;; the refresh rate will be syncronized to TORCS (about 50 Hz, 20 ms each cycle)
+)
+
+(use_predefined_model_setup		model_drive_torcs)
+;; the model will be connected with TORCS. Road and scenario settings are done in TORCS.
+
+
+;; auditory 2-back task
+(use_task_dbt_template   
+	:method						discrete_display_feedback_two_stages_method
+	:response_terminates_display			nil
+	:reset_all_modules_before_each_trial		nil
+	:auto_compute_default_reaction_time		t
+	:auto_compute_default_response_correctness	nil	
+)
+
+(add_trials_from_discrete_display_feedback_two_stages_method
+	:add_number_of_blocks_per_day			1
+	:add_number_of_trials_per_block			1000
+
+	:number_of_responses_per_trial			1
+	:display_and_response_duration			(2.25)
+	:feedback_duration				(0) 
+
+	(
+	:item_type					display_item_audio_digit_sound
+	:digit						(0 1 2 1 1 1)
+	:text_randomization				fixed_order
+	)
+)
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Mind definition ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+;; driving-control based on Salvucci (2006) driving model with two-point visual-motor control
+
+(chunk-type drive		;; both lateral and longitudinal controls 
+        lane  			;; target driving lane, in two-lane way, 1 is left lane, 0 is right lane.
+	na-old			;; near angle old (degree)
+	na-new			;; near angle new (degree)	
+	fa-old			;; far angle old  (degree)
+	fd-old			;; far point distance (m)
+	time-old
+	speed-old		;; in m/ s/s
+	stage			;; match production rule ID number
+	task			;; lk is lane keeping, lc is lane change
+	fthw			;; time of headway
+
+;;;	monitor			;; recalling, newgoal  ???
+
+
+	last-lane-change-complete-time
+)
+
+(chunk-type monitor-zone	;; used in imaginal buffer, stored in declarative memory
+	zone			;; which zone is being monitored; left, left-mirror, right, right-mirror  ; this is lane in Salvucci's model
+	distance
+	time
+)
+
+
+(chunk-type lane-change
+	to			;; left or right
+	stage			;; 0=not started; 1=recall left; 2=monitor left; 3=recall left mirror; 4=monitor left mirror
+	result			;; decide lane changing or not; success, failure
+)
+
+
+(add-dm
+ (driving-goal isa drive 
+	lane		0	
+	na-old		0
+	na-new		0
+	fa-old		0
+        fd-old          0	;; because far distance is determined by speed * far-time
+	time-old	0
+	speed-old	0	;; use initial speed
+
+	task		lk
+	last-lane-change-complete-time		0
+
+
+	stage		1		;; stage 1 is the start stage.
+ )
+
+ (lane-change-goal  isa lane-change
+	stage		inactive	;; stage 0 is the start stage.
+ )
+
+)
+
+
+
+;; auditory 2-back task
+(chunk-type
+	read-digits
+	digit1
+	digit2
+	stage)
+
+(add-dm	
+	(auditory-2-back-goal 
+		isa read-digits	
+		stage 1  )		; stage 1 is the start stage
+)	
+
+
+
+
+
+(sgp	:esc		t
+	:egs		0.5
+	:show-focus	nil	;; near point far point for driving do not support :show-focus
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; stop experiment
+
+#|
+
+(p stop-all 
+   =goal>
+	isa		drive
+
+!eval!	(>  (get-clock-time)  80) 
+
+==>
+ -goal>
+ -goal-2>
+ -goal-3>
+)	
+|#
+
+
+
+
+
+;;; driving production rules
+
+(p create-imaginal-buffer-chunk-for-monitor-zone		; extra 1	;at the beginning of simulation, create the imaginal buffer chunk for monitoring sub-task, this avoid the need to 200 ms imaginal creation. Salvucci's model did not use imaginal buffer, but used other non-standard modules for the same purpose.
+   =goal>
+	isa		drive
+	lane		=lane
+	stage		1
+   ?imaginal>
+	state		free
+	buffer		empty
+==>
+   +imaginal>
+	isa		monitor-zone
+)	
+(spp create-imaginal-buffer-chunk-for-monitor-zone 	:u 	10000)	;make sure this is run once in the beginnign of simulation
+
+(p drive-control-attend-near					;1
+   =goal>
+	isa		drive
+	lane		=lane
+	stage		1
+==>
+   +visual-location>
+	isa		visual-location-world3d-driving
+	kind		near-point
+	lane		=lane   
+   =goal>
+	stage		9	
+)
+
+(p drive-control-process-near-attend-far			;9
+   =goal>
+	isa		drive
+	lane		=lane
+	na-new		=na-1
+	stage		9
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		near-point
+	angle		=na-2
+==>
+   =goal>
+	na-old		=na-1      
+	na-new		=na-2
+	stage		10
+   +visual-location>
+	isa		visual-location-world3d-driving
+	kind		far-point	;;this far point will include both road far points and car far points
+	lane		=lane		;;here may find both far-road point and far-car point, use the closest one
+)
+
+(p drive-control-process-far					;10 & 11
+   =goal>
+	isa		drive      
+	lane		=lane
+	na-old		=na-old
+	na-new		=na-new
+	fa-old		=fa-1
+	fd-old		=fd-1
+	speed-old	=v-1
+	time-old	=time-1
+	stage		10
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		far-point
+	angle		=fa-2
+	distance	=fd-2
+   ?visual>
+	state		free 
+   ?manual>
+	state		free
+==>
+	!bind!		=time-2 (get-clock-time)		;; the short-cut way  
+	!bind!		=v-2 (world3d-driving-get-velocity)	;; the short-cut way 
+   =goal>
+	fa-old		=fa-2
+	fd-old		=fd-2
+	speed-old	=v-2
+	time-old	=time-2
+	stage		1
+   +visual>
+	isa		move-attention 		;;note here as in Salvucci's model, near and far angle is not computed from visual but use visual-location only. this +visual> is used for showing eye movement, in fact as a side effect. info processing is not affected by visual prepare, encoding and eye movement speed
+	screen-pos	=visual-location
+   +manual>
+	isa		world3d-driving-two-point-visual-manual-steer
+	na-old		=na-old
+	na-new		=na-new
+	fa-old		=fa-1     
+	fa-new		=fa-2
+	time-old	=time-1
+	time-new	=time-2
+	!eval!		(world3d-driving-accelerate-brake =fd-1 =fd-2 =v-1 =v-2 =time-1 =time-2)	;;currently no module for this, just !eval! as Salvucci's model
+)
+
+(p drive-monitor-zone-left				;2
+   =goal>
+	isa		drive
+	stage		1
+	;; TODO, car stable should be a condition.   !eval! (is-car-stable =na =vna =vfa)
+   =imaginal>
+	isa		monitor-zone
+==>
+   =goal>
+	stage		14
+   =imaginal>
+	zone		left
+   +visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left	;; look at left zone, find the object/car closest to self, obtain only the distance info.
+)
+(spp drive-monitor-zone-left 	:u 	-2)
+
+(p drive-monitor-zone-right				;3
+   =goal>
+	isa		drive
+	stage		1
+	;; TODO, car stable should be a condition.   !eval! (is-car-stable =na =vna =vfa)
+   =imaginal>
+	isa		monitor-zone
+==>
+   =goal>
+      	stage		14
+   =imaginal>
+	zone		right
+   +visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right	;; look at right zone, find the object/car closest to self, obtain only the distance info.
+)
+(spp drive-monitor-zone-right 	:u 	-2)
+
+(p drive-monitor-zone-left-mirror			;4
+   =goal>
+	isa		drive
+	stage		1
+	;; TODO, car stable should be a condition.   !eval! (is-car-stable =na =vna =vfa)
+   =imaginal>
+	isa		monitor-zone
+==>
+   =goal>
+      	stage		14
+   =imaginal>
+	zone		left-mirror
+   +visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left-mirror	;; look at left-mirror zone, find the object/car closest to self, obtain only the distance info.
+)
+(spp drive-monitor-zone-left-mirror 	:u 	-2)
+
+(p drive-monitor-zone-right-mirror			;5
+   =goal>
+	isa		drive
+	stage		1
+	;; TODO, car stable should be a condition.   !eval! (is-car-stable =na =vna =vfa)
+   =imaginal>
+	isa		monitor-zone
+==>
+   =goal>
+      	stage		14
+   =imaginal>
+	zone		right-mirror
+   +visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right-mirror	;; look at right-mirror zone, find the object/car closest to self, obtain only the distance info.
+)
+(spp drive-monitor-zone-right-mirror 	:u 	-2)
+
+(p monitor-zone-process-car-left			;14-left
+   =goal>
+	isa		drive
+	stage		14
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left						
+	>= distance	0
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =goal>
+	stage		1
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+)
+
+(p monitor-zone-process-car-right			;14-right
+   =goal>
+	isa		drive
+	stage		14
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right						
+	>= distance	0
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =goal>
+	stage		1
+   =imaginal>
+	distance	=d
+	time 		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+)
+
+(p monitor-zone-process-car-left-mirror			;14-left-mirror
+   =goal>
+	isa		drive
+	stage		14
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left-mirror						
+	>= distance	0
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =goal>
+	stage 		1
+   =imaginal>
+	distance	=d
+	time 		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+)
+
+(p monitor-zone-process-car-right-mirror		;14-right-mirror
+   =goal>
+	isa		drive
+	stage 		14
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right-mirror						
+	>= distance	0
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =goal>
+	stage 		1
+   =imaginal>
+	distance	=d
+	time 		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+)
+
+(p monitor-zone-process-none-left			;15-left
+   =goal>
+	isa		drive
+	stage 		14
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left				
+	< distance	0
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+
+   =goal>
+	stage 		1
+   =imaginal>
+	distance	nil
+	time 		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+)
+
+(p monitor-zone-process-none-right			;15-right
+   =goal>
+	isa		drive
+	stage 		14
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right				
+	< distance	0
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+
+   =goal>
+	stage 		1
+   =imaginal>
+	distance	nil
+	time 		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+)
+
+(p monitor-zone-process-none-left-mirror		;15-left-mirror
+   =goal>
+	isa		drive
+	stage 		14
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left-mirror				
+	< distance	0
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+
+   =goal>
+	stage 		1
+   =imaginal>
+	distance	nil
+	time 		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+)
+
+(p monitor-zone-process-none-right-mirror		;15-right-mirror
+   =goal>
+	isa		drive
+	stage 		14
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right-mirror				
+	< distance	0
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+
+   =goal>
+	stage 		1
+   =imaginal>
+	distance	nil
+	time 		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+)
+
+
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; lane change
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(p drive-try-lane-change-to-left			;6  -> 22
+   =goal>
+	isa		drive
+	stage		1
+	task		lk	; currently lane keeping task
+	lane		0	; currently driving in the right lane
+	last-lane-change-complete-time	=time
+
+!eval!	(>	(- (get-clock-time)  =time )	5 )	;; did not drive-end-lane-change within 5 seconds. 
+
+
+;; TODO, car stable should be a condition.   !eval! (is-car-stable =na =vna =vfa)
+;; TODO, current car following thw <= thw pass threshould 
+
+!eval!	(>  (get-clock-time)  15)  ; TEMP soluation
+
+
+   =goal-2>
+	isa 	lane-change
+	stage 	0	; NOT STARTED
+
+==>
+   =goal-2>		
+	to 	left
+	stage	1	; recall left zone
+)
+
+
+;; try-lc-recall-left		;22-left and 16  	-> to 17, 18, or 19
+(p try-lc-recall-left
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	1		
+   ?retrieval>
+	state	free
+
+==>
+   +retrieval>
+	isa 	monitor-zone	
+	zone	left	
+;;	time	highest			;;try retrieve the most recent memory
+
+   =goal-2>
+	stage	1.5
+)
+
+
+;; try-lc-recall-left-car-too-close	;;17	; cannot change lane
+(p try-lc-recall-left-car-too-close
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	1.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	left
+	< distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+==>
+   +goal-2>
+	isa 	lane-change
+	stage	0			;; return to not-started state
+)
+
+
+
+;; try-lc-recall-left-car-far-enough	;;18	; proceed to look at the zone -> stage 2
+(p try-lc-recall-left-car-far-enough
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	1.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	left
+	>= distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+==>
+   =goal-2>
+	stage	2			
+)
+
+
+;; try-lc-recall-left-none			; proceed to look at the zone -> stage 2
+(p try-lc-recall-left-none
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	1.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	left
+	distance	nil
+==>
+   =goal-2>
+	stage	2			
+)
+
+
+;; try-lc-recall-left-failure	;;19	; proceed to look at the zone -> stage 2
+(p try-lc-recall-left-failure
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	1.5		
+   ?retrieval>
+	state	error	; do not remember
+==>
+   =goal-2>
+	stage	2			
+)
+
+
+;; try-lc-look-left 	;; mimic monitor-left 
+(p try-lc-look-left
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	2
+
+	;; TODO, car stable should be a condition.   !eval! (is-car-stable =na =vna =vfa)
+
+   =imaginal>
+	isa		monitor-zone
+==>
+   =imaginal>
+	zone		left
+   +visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left	;; look at left zone, find the object/car closest to self, obtain only the distance info.
+   =goal-2>
+	stage	2.5
+)
+
+
+
+
+;; try-lc-look-left-too-close	;; mimic monitor-left-process-car	-> cannot change lane
+(p try-lc-look-left-too-close
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	2.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left		
+	>= distance	0		;; negative means no car
+	< distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   +goal-2>
+	isa 	lane-change
+	stage	0			;; return to not-started state
+)
+
+;; try-lc-look-left-far-enough		;; proceed to recall left mirror
+(p try-lc-look-left-far-enough
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	2.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left						
+	>= distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   =goal-2>	
+	stage	3	;; proceed to recall left mirror		
+)
+
+
+;; try-lc-look-left-none		;; proceed to recall left mirror
+(p try-lc-look-left-none
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	2.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left						
+	< distance	0		; means no car
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   =goal-2>	
+	stage	3	;; proceed to recall left mirror		
+)
+
+
+
+
+;; try-lc-recall-left-mirror	
+(p try-lc-recall-left-mirror
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	3		
+   ?retrieval>
+	state	free
+
+==>
+   +retrieval>
+	isa 	monitor-zone	
+	zone	left-mirror	
+;	time	highest			;;try retrieve the most recent memory
+
+   =goal-2>
+	stage	3.5
+)
+
+
+;; try-lc-recall-left-mirror-car-too-close	
+(p try-lc-recall-left-mirror-car-too-close
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	3.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	left-mirror
+	< distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+==>
+   +goal-2>
+	isa 	lane-change
+	stage	0			;; return to not-started state
+)
+
+
+
+;; try-lc-recall-left-mirror-car-far-enough	
+(p try-lc-recall-left-mirror-car-far-enough
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	3.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	left-mirror
+	>= distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+==>
+   =goal-2>
+	stage	4			
+)
+
+;; try-lc-recall-left-mirror-none	
+(p try-lc-recall-left-mirror-none
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	3.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	left-mirror
+	distance	nil
+==>
+   =goal-2>
+	stage	4			
+)
+
+;; try-lc-recall-left-mirror-failure	
+(p try-lc-recall-left-mirror-failure
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	3.5		
+   ?retrieval>
+	state	error	; do not remember
+==>
+   =goal-2>
+	stage	4			
+)
+
+
+
+;; try-lc-look-left-mirror 	
+(p try-lc-look-left-mirror 
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	4
+
+	;; TODO, car stable should be a condition.   !eval! (is-car-stable =na =vna =vfa)
+
+   =imaginal>
+	isa		monitor-zone
+==>
+   =imaginal>
+	zone		left-mirror 
+   +visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left-mirror 	;; look at left-mirror  zone, find the object/car closest to self, obtain only the distance info.
+   =goal-2>
+	stage	4.5
+)
+
+
+
+;; try-lc-look-left-mirror-too-close			;cannot change lane
+(p try-lc-look-left-mirror-too-close
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	4.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left-mirror		
+	>= distance	0		;; negative means no car
+	< distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   +goal-2>
+	isa 	lane-change
+	stage	0			;; return to not-started state
+)
+
+;; try-lc-look-left-mirror-far-enough		;; -> action change lane
+(p try-lc-look-left-mirror-far-enough
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	4.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left-mirror						
+	>= distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   =goal-2>	
+	stage	5	;; -> action change lane		
+)
+
+;; try-lc-look-left-mirror-none		;; -> action change lane
+(p try-lc-look-left-mirror-none
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	4.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-left-mirror						
+	< distance	0		; means no car
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   =goal-2>	
+	stage	5	;; -> action change lane		
+)
+
+
+;; try-lc-success-to-left-lane		;; 24-left	
+(p try-lc-success-to-left-lane
+   =goal-2>
+	isa 	lane-change
+	to 	left
+	stage	5
+==>
+ ; TODO, activate turn signal
+
+   =goal>
+	task 	lc
+	lane	1	; 1 for left lane, 0 for right lane	
+   +goal-2>
+	isa 	lane-change
+	stage	0			;; return to not-started state
+)
+
+;; drive-end-lane-change	; 8 
+(p drive-end-lane-change
+
+   =goal>
+	isa		drive
+	stage		1
+	task 		lc
+	na-old		=na
+!eval! 	(< (abs  =na) 	0.035)		;; as in Salvucci 2006 to determine lane change complete
+
+==>
+   
+!bind! =time (get-clock-time)
+	
+   =goal>
+	last-lane-change-complete-time		=time 
+	task 		lk
+)
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(p drive-try-lane-change-to-right			;6  -> 22
+   =goal>
+	isa		drive
+	stage		1
+	task		lk	; currently lane keeping task
+	lane		1	; currently driving in the left lane
+	last-lane-change-complete-time	=time
+
+;;	fd-old		=fd
+
+;; !eval!		(<	=fd	13)
+
+
+!eval!	(>	(- (get-clock-time)  =time )	5 )	;; did not drive-end-lane-change within 5 seconds. 
+
+
+
+;; TODO, car stable should be a condition.   !eval! (is-car-stable =na =vna =vfa)
+;; TODO, current car following thw <= thw pass threshould 
+!eval!	(>  (get-clock-time)  40)  ; TEMP soluation
+
+
+   =goal-2>
+	isa 	lane-change
+	stage 	0	; NOT STARTED
+
+==>
+   =goal-2>		
+	to 	right
+	stage	1	; recall right zone
+)
+
+
+;; try-lc-recall-right		;22-right and 16  	-> to 17, 18, or 19
+(p try-lc-recall-right
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	1		
+   ?retrieval>
+	state	free
+
+==>
+   +retrieval>
+	isa 	monitor-zone	
+	zone	right	
+;	time	highest			;;try retrieve the most recent memory
+
+   =goal-2>
+	stage	1.5
+)
+
+
+;; try-lc-recall-right-car-too-close	;;17	; cannot change lane
+(p try-lc-recall-right-car-too-close
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	1.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	right
+	< distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+==>
+   +goal-2>
+	isa 	lane-change
+	stage	0			;; return to not-started state
+)
+
+
+
+;; try-lc-recall-right-car-far-enough	;;18	; proceed to look at the zone -> stage 2
+(p try-lc-recall-right-car-far-enough
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	1.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	right
+	>= distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+==>
+   =goal-2>
+	stage	2			
+)
+
+
+;; try-lc-recall-right-none			; proceed to look at the zone -> stage 2
+(p try-lc-recall-right-none
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	1.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	right
+	distance	nil
+==>
+   =goal-2>
+	stage	2			
+)
+
+
+;; try-lc-recall-right-failure	;;19	; proceed to look at the zone -> stage 2
+(p try-lc-recall-right-failure
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	1.5		
+   ?retrieval>
+	state	error	; do not remember
+==>
+   =goal-2>
+	stage	2			
+)
+
+
+;; try-lc-look-right 	;; mimic monitor-right 
+(p try-lc-look-right
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	2
+
+	;; TODO, car stable should be a condition.   !eval! (is-car-stable =na =vna =vfa)
+
+   =imaginal>
+	isa		monitor-zone
+==>
+   =imaginal>
+	zone		right
+   +visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right	;; look at right zone, find the object/car closest to self, obtain only the distance info.
+   =goal-2>
+	stage	2.5
+)
+
+
+
+
+;; try-lc-look-right-too-close	;; mimic monitor-right-process-car	-> cannot change lane
+(p try-lc-look-right-too-close
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	2.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right		
+	>= distance	0		;; negative means no car
+	< distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   +goal-2>
+	isa 	lane-change
+	stage	0			;; return to not-started state
+)
+
+;; try-lc-look-right-far-enough		;; proceed to recall right mirror
+(p try-lc-look-right-far-enough
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	2.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right						
+	>= distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   =goal-2>	
+	stage	3	;; proceed to recall left mirror		
+)
+
+
+;; try-lc-look-right-none		;; proceed to recall right mirror
+(p try-lc-look-right-none
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	2.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right						
+	< distance	0		; means no car
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   =goal-2>	
+	stage	3	;; proceed to recall right mirror		
+)
+
+
+
+
+;; try-lc-recall-right-mirror	
+(p try-lc-recall-right-mirror
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	3		
+   ?retrieval>
+	state	free
+
+==>
+   +retrieval>
+	isa 	monitor-zone	
+	zone	right-mirror	
+;	time	highest			;;try retrieve the most recent memory
+
+   =goal-2>
+	stage	3.5
+)
+
+
+;; try-lc-recall-right-mirror-car-too-close	
+(p try-lc-recall-right-mirror-car-too-close
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	3.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	right-mirror
+	< distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+==>
+   +goal-2>
+	isa 	lane-change
+	stage	0			;; return to not-started state
+)
+
+
+
+;; try-lc-recall-right-mirror-car-far-enough	
+(p try-lc-recall-right-mirror-car-far-enough
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	3.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	right-mirror
+	>= distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+==>
+   =goal-2>
+	stage	4			
+)
+
+;; try-lc-recall-right-mirror-none	
+(p try-lc-recall-right-mirror-none
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	3.5		
+   =retrieval>
+	isa 	monitor-zone
+	zone	right-mirror
+	distance	nil
+==>
+   =goal-2>
+	stage	4			
+)
+
+;; try-lc-recall-right-mirror-failure	
+(p try-lc-recall-right-mirror-failure
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	3.5		
+   ?retrieval>
+	state	error	; do not remember
+==>
+   =goal-2>
+	stage	4			
+)
+
+
+
+;; try-lc-look-right-mirror 	
+(p try-lc-look-right-mirror 
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	4
+
+	;; TODO, car stable should be a condition.   !eval! (is-car-stable =na =vna =vfa)
+
+   =imaginal>
+	isa		monitor-zone
+==>
+   =imaginal>
+	zone		right-mirror 
+   +visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right-mirror 	;; look at right-mirror  zone, find the object/car closest to self, obtain only the distance info.
+   =goal-2>
+	stage	4.5
+)
+
+
+
+;; try-lc-look-right-mirror-too-close			;cannot change lane
+(p try-lc-look-right-mirror-too-close
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	4.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right-mirror		
+	>= distance	0		;; negative means no car
+	< distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   +goal-2>
+	isa 	lane-change
+	stage	0			;; return to not-started state
+)
+
+;; try-lc-look-right-mirror-far-enough		;; -> action change lane
+(p try-lc-look-right-mirror-far-enough
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	4.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right-mirror						
+	>= distance	40		; *lc-safe-distance*   40 m in Salvucci 2006 model
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   =goal-2>	
+	stage	5	;; -> action change lane		
+)
+
+;; try-lc-look-right-mirror-none		;; -> action change lane
+(p try-lc-look-right-mirror-none
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	4.5
+
+   =visual-location>
+	isa		visual-location-world3d-driving
+	kind		monitor-zone-right-mirror						
+	< distance	0		; means no car
+	distance	=d
+   ?visual>
+	state		free
+   =imaginal>
+	isa		monitor-zone 
+==>
+	!bind! =time (get-clock-time)
+   =imaginal>
+	distance	=d
+	time		=time
+   +imaginal>
+	isa		monitor-zone	; push the previous imaginal buffer to long-term memory, initiate the next empty buffer.
+   +visual>
+	isa		move-attention
+	screen-pos	=visual-location
+   =goal-2>	
+	stage	5	;; -> action change lane		
+)
+
+
+;; try-lc-success-to-right-lane		;; 24-right	
+(p try-lc-success-to-right-lane
+   =goal-2>
+	isa 	lane-change
+	to 	right
+	stage	5
+==>
+ ; TODO, activate turn signal
+
+   =goal>
+	task 	lc
+	lane	0	; 1 for left lane, 0 for right lane	
+   +goal-2>
+	isa 	lane-change
+	stage	0			;; return to not-started state
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; auditory 2 back production rules
+
+
+(P hear-sound
+ =goal-3>
+	isa		read-digits
+	stage		1
+ =aural-location>
+	isa		audio-event
+	location	external
+ ?aural>
+	state		free
+==>
+ +aural>
+	isa		sound
+	event		=aural-location
+ =goal-3>
+	stage		2
+)
+
+(P encode-first-digit
+ =goal-3>
+	isa read-digits
+	stage		2
+	digit1		nil
+ =aural>
+	isa		sound
+	content		=d1
+==>
+ =goal-3>
+	digit1		=d1
+	stage		1
+)
+
+(P encode-second-digit
+ =goal-3>
+	isa		read-digits
+	stage		2
+	digit1		=d1
+	digit2		nil
+ =aural>
+	isa		sound
+	content		=d2
+==>
+ =goal-3>
+	digit2		=d2
+	stage		1
+)
+
+(P speak
+ =goal-3>
+	isa		read-digits
+	digit1		=d1
+	digit2		=d2
+	stage		2
+ =aural>
+	isa		sound
+	content		=d3
+ ?vocal>
+	state		free
+==>
+ +vocal>
+	isa		speak
+	string		=d1
+ =goal-3>
+	digit1		=d2
+	digit2		=d3
+	stage		1
+)
+
+
+; with TOR signal watch
+
+
+ ; this rule distracts visual attention from the driving control task.
+(p monitor-visual-warning
+   =goal>
+	isa		drive
+	stage		1
+   =goal-2>
+	isa 		lane-change
+	stage		inactive
+
+!eval!	(>  (get-clock-time)  42)  ; TEMP soluation
+
+==>
+   
+   +visual-location>
+      
+	ISA         visual-location
+	  
+	screen-x  	50
+	screen-y  	50		; need to match code in QN-ACTR java  
+)
+
+
+
+
+(p attend-visual-warning
+   =goal-3>
+	isa		read-digits
+
+   =visual-location>
+      
+	ISA         visual-location
+	  
+	screen-x  	50
+	screen-y  	50		; need to match code in QN-ACTR java
+
+   ?visual>
+       
+	state       free
+
+==>
+   
+   +visual>
+      
+	ISA         move-attention
+      
+	screen-pos  =visual-location
+   
+   =goal-3>
+      
+	stage       attend	  
+)
+(spp attend-visual-warning 	:u 	1000)	
+;; very high utility (default is 0) so that this rule has the highest priority among rules of the same goal.
+;; by reducing this utility, can represent people do not immediately switch tasks but keep doing 2-back task.
+
+
+
+
+
+(p switch-tasks
+   =goal-2>
+	isa 		lane-change
+	stage		inactive	
+   =goal-3>
+	isa		read-digits
+	stage       	attend
+   =visual>
+      
+	ISA         text
+      
+	value       "TOR"
+==>
+   =goal-2>
+	stage		0		;0 is the start
+   	
+   =goal-3>
+	stage		inactive	
+)
+
+
+
+(goal-focus driving-goal)
+(goal-2-focus lane-change-goal)
+(goal-3-focus auditory-2-back-goal)
+
+
+
+
+
+

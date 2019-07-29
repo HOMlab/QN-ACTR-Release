@@ -1,0 +1,240 @@
+;; comment symbols are ; and #| ... |#, same as ACT-R (Lisp)
+;;
+;; use QN-ACTR task description template here (if any). 
+;;
+
+
+(use_task_dbt_template   
+	:method    discrete_display_feedback_two_stages_method
+	:response_terminates_display  nil   	
+	:reset_all_modules_before_each_trial   t   	
+	:auto_compute_default_reaction_time	t
+	:auto_compute_default_response_correctness  t  
+	
+)
+
+(add_trials_from_discrete_display_feedback_two_stages_method
+	:add_number_of_blocks_per_day     500
+	:add_number_of_trials_per_block   1
+	
+	:block_variable_target_x (175 125 75)	
+	:block_variable_randomization_target_x 		with_replacement
+	:block_variable_target_y (175 75  175)
+	:block_variable_randomization_target_y		=:block_variable_randomization_target_x
+	
+	:block_variable_foil1_x  (125 75 175)
+	:block_variable_randomization_foil1_x		=:block_variable_randomization_target_x
+	:block_variable_foil1_y  (75 175 175)
+	:block_variable_randomization_foil1_y		=:block_variable_randomization_target_x
+
+	:block_variable_foil2_x  (75 175 125)
+	:block_variable_randomization_foil2_x		=:block_variable_randomization_target_x
+	:block_variable_foil2_y  (175 175 75)
+	:block_variable_randomization_foil2_y		=:block_variable_randomization_target_x
+
+	:block_variable_correct_response (j  y  f)
+	:block_variable_randomization_correct_response		=:block_variable_randomization_target_x	
+	
+	
+	:number_of_responses_per_trial	1	
+	:display_and_response_duration   ( 7 ) 
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "a" )
+	:correct_response_to_each_visual_text  ( :block_variable_correct_response)
+	:display_item_screen_location_x  (:block_variable_target_x)
+	:display_item_screen_location_y  (:block_variable_target_y)
+	)
+
+	
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil1_x)
+	:display_item_screen_location_y  (:block_variable_foil1_y)
+	)
+	
+	
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil2_x)
+	:display_item_screen_location_y  (:block_variable_foil2_y)
+	)
+)
+
+
+;;
+;; For task-specific knowledge in the model, including declarative chunks, production rules, and parameters,
+;; directly copy the contents from an ACT-R model file, within the (define-model model-name  ... ) here. just the ... part, do not need "(define-model model-name" and the ")".
+;;
+;;
+
+
+;; Road sign reaction time experiment
+
+(sgp :v t :show-focus t :needs-mouse nil  :trace-detail high)
+
+(sgp :visual-num-finsts  100)  ; This parameter controls how many finsts are available to the vision module.  It can be set to any positive number and defaults to 4.
+(sgp :visual-finst-span 100)  ; This parameter controls how long a finst marker will remain on a location.  It is measured in seconds and default to 3.0.
+(sgp  :visual-attention-latency	 0.085 )  ;; This parameter specifies how long a visual attention shift will take in seconds.  The default value is .085.
+
+
+(chunk-type read-roads state location-x            target-name)
+
+(chunk-type road  name-text)
+
+(add-dm 
+ (start isa chunk) 
+ (attend isa chunk)
+ (respond isa chunk) 
+ (goal isa read-roads state start     target-name "a" ))
+
+
+(P find-unattended-name
+   =goal>
+      ISA         read-roads
+      state       start
+ ==>
+   +visual-location>
+      ISA         visual-location
+      :attended    nil
+      screen-x		lowest
+   
+   =goal>
+      state       find-location
+)
+
+(P attend-name
+   =goal>
+      ISA         read-roads
+      state       find-location
+   
+   =visual-location>
+      ISA         visual-location
+	  screen-x  	=val
+   
+   ?visual>
+       state       free
+==>
+   +visual>
+      ISA         move-attention
+      screen-pos  =visual-location
+   =goal>
+      state       attend
+	  location-x	=val
+)
+
+
+(P encode-name
+   =goal>
+      ISA         read-roads
+      state       attend
+
+   =visual>
+      ISA         text
+      value       =name
+
+   ?imaginal>
+      state       free	  
+==>
+   =goal>
+      state       respond
+   +imaginal>
+      isa         road
+      name-text		=name
+
+)
+
+
+(P read-again
+   =goal>
+      ISA         read-roads
+      state       respond	
+ 	target-name  =name
+   =imaginal>
+      isa         road
+	-  name-text	  =name
+   ==>
+      =goal>
+      state       start	
+ )  
+
+(P respond-right      ; short-cut
+   =goal>
+      ISA         read-roads
+      state       find-location
+   
+   =visual-location>
+      ISA         visual-location
+	  screen-x  	175
+	  
+    ?manual>
+       state       free
+   ==>
+   
+   +manual>
+      ISA         press-key
+      key         j
+      
+   -goal>
+)
+
+(spp   respond-right   :u   10)
+(spp   attend-name   :u      0)
+
+(P respond-up
+   =goal>
+      ISA         read-roads
+      state       respond
+	  location-x	125		
+	  target-name  =name
+   =imaginal>
+      isa         road
+  name-text	  =name
+	  
+    ?manual>
+       state       free
+   ==>
+   
+   +manual>
+      ISA         press-key
+      key         y
+      
+   -goal>
+)
+
+(P respond-left
+   =goal>
+      ISA         read-roads
+      state       respond
+	  location-x	75		
+	  target-name  =name
+
+   =imaginal>
+      isa         road
+  name-text	  =name
+	  
+    ?manual>
+       state       free
+   ==>
+   
+   +manual>
+      ISA         press-key
+      key         f
+      
+   -goal>
+)
+
+
+
+(goal-focus goal)

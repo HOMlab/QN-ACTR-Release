@@ -1,0 +1,535 @@
+;; QN_ACTR_Model_Initialization driving test TORCS
+;; QN-ACTR, Sample Driving (Modeling driving)
+;; For questions and comments, please send to Shi Cao (shicao@umich.edu).
+
+
+ ;;;;;;;;;;;;;;  #|
+
+
+
+;; concurrent task 1, sign reading, use goal buffer
+
+
+(use_task_dbt_template   
+	:method    discrete_display_feedback_two_stages_method
+	:response_terminates_display  nil   	
+        :reinitialize_goal_1_before_each_trial  t   	
+	:auto_compute_default_reaction_time	t
+	:auto_compute_default_response_correctness  t  
+	
+)
+
+(add_trials_from_discrete_display_feedback_two_stages_method
+	:add_number_of_blocks_per_day     9
+	:add_number_of_trials_per_block   1
+	
+	:block_variable_target_x (75 175 75 175 75 175 75 175 75 175 75 175)	
+	:block_variable_randomization_target_x 		with_replacement
+	:block_variable_target_y (75 75 100 100 125 125 150 150 175 175 200 200)
+	:block_variable_randomization_target_y		=:block_variable_randomization_target_x
+
+	
+	:block_variable_foil1_x  (175 75 175 75 175 75 175 75 175 75 175 75)	
+	:block_variable_randomization_foil1_x		=:block_variable_randomization_target_x
+	:block_variable_foil1_y  (75 100 100 125 125 150 150 175 175 200 200 75)
+	:block_variable_randomization_foil1_y		=:block_variable_randomization_target_x
+
+
+	:block_variable_foil2_x  (75 175 75 175 75 175 75 175 75 175 75 175)	
+	:block_variable_randomization_foil2_x		=:block_variable_randomization_target_x
+	:block_variable_foil2_y  (100 100 125 125 150 150 175 175 200 200 75 75)
+	:block_variable_randomization_foil2_y		=:block_variable_randomization_target_x
+
+
+	:block_variable_foil3_x  (175 75 175 75 175 75 175 75 175 75 175 75)	
+	:block_variable_randomization_foil3_x		=:block_variable_randomization_target_x
+	:block_variable_foil3_y  (100 125 125 150 150 175 175 200 200 75 75 100)
+	:block_variable_randomization_foil3_y		=:block_variable_randomization_target_x
+
+
+	:block_variable_foil4_x  (75 175 75 175 75 175 75 175 75 175 75 175)	
+	:block_variable_randomization_foil4_x		=:block_variable_randomization_target_x
+	:block_variable_foil4_y  (125 125 150 150 175 175 200 200 75 75 100 100)
+	:block_variable_randomization_foil4_y		=:block_variable_randomization_target_x
+
+
+	:block_variable_foil5_x  (175 75 175 75 175 75 175 75 175 75 175 75)	
+	:block_variable_randomization_foil5_x		=:block_variable_randomization_target_x
+	:block_variable_foil5_y  (125 150 150 175 175 200 200 75 75 100 100 125)
+	:block_variable_randomization_foil5_y		=:block_variable_randomization_target_x
+
+
+	:block_variable_foil6_x  (75 175 75 175 75 175 75 175 75 175 75 175)	
+	:block_variable_randomization_foil6_x		=:block_variable_randomization_target_x
+	:block_variable_foil6_y  (150 150 175 175 200 200 75 75 100 100 125 125)
+	:block_variable_randomization_foil6_y		=:block_variable_randomization_target_x	
+
+
+	:block_variable_foil7_x  (175 75 175 75 175 75 175 75 175 75 175 75)	
+	:block_variable_randomization_foil7_x		=:block_variable_randomization_target_x
+	:block_variable_foil7_y  (150 175 175 200 200 75 75 100 100 125 125 150)
+	:block_variable_randomization_foil7_y		=:block_variable_randomization_target_x
+
+
+	:block_variable_foil8_x  (75 175 75 175 75 175 75 175 75 175 75 175)	
+	:block_variable_randomization_foil8_x		=:block_variable_randomization_target_x
+	:block_variable_foil8_y  (175 175 200 200 75 75 100 100 125 125 150 150)
+	:block_variable_randomization_foil8_y		=:block_variable_randomization_target_x	
+
+
+	:block_variable_foil9_x  (175 75 175 75 175 75 175 75 175 75 175 75)	
+	:block_variable_randomization_foil9_x		=:block_variable_randomization_target_x
+	:block_variable_foil9_y  (175 200 200 75 75 100 100 125 125 150 150 175)
+	:block_variable_randomization_foil9_y		=:block_variable_randomization_target_x
+
+
+	:block_variable_foil10_x  (75 175 75 175 75 175 75 175 75 175 75 175)	
+	:block_variable_randomization_foil10_x		=:block_variable_randomization_target_x
+	:block_variable_foil10_y  (200 200 75 75 100 100 125 125 150 150 175 175)
+	:block_variable_randomization_foil10_y		=:block_variable_randomization_target_x
+
+
+	:block_variable_foil11_x  (175 75 175 75 175 75 175 75 175 75 175 75)	
+	:block_variable_randomization_foil11_x		=:block_variable_randomization_target_x
+	:block_variable_foil11_y  (200 75 75 100 100 125 125 150 150 175 175 200)
+	:block_variable_randomization_foil11_y		=:block_variable_randomization_target_x
+
+
+
+
+	:block_variable_correct_response (y j y j y j y j y j y j)
+	:block_variable_randomization_correct_response		=:block_variable_randomization_target_x
+
+		
+	:number_of_responses_per_trial	1	
+	:display_and_response_duration   (5) 
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "a" )
+	:correct_response_to_each_visual_text  ( :block_variable_correct_response)
+	:display_item_screen_location_x  (:block_variable_target_x)
+	:display_item_screen_location_y  (:block_variable_target_y)
+	)
+
+	
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil1_x)
+	:display_item_screen_location_y  (:block_variable_foil1_y)
+	)
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil2_x)
+	:display_item_screen_location_y  (:block_variable_foil2_y)
+	)
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil3_x)
+	:display_item_screen_location_y  (:block_variable_foil3_y)
+	)
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil4_x)
+	:display_item_screen_location_y  (:block_variable_foil4_y)
+	)
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil5_x)
+	:display_item_screen_location_y  (:block_variable_foil5_y)
+	)
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil6_x)
+	:display_item_screen_location_y  (:block_variable_foil6_y)
+	)
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil7_x)
+	:display_item_screen_location_y  (:block_variable_foil7_y)
+	)
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil8_x)
+	:display_item_screen_location_y  (:block_variable_foil8_y)
+	)
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil9_x)
+	:display_item_screen_location_y  (:block_variable_foil9_y)
+	)
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil10_x)
+	:display_item_screen_location_y  (:block_variable_foil10_y)
+	)
+
+	( 
+	:item_type   display_item_visual_text
+	:visual_text   ( "B" "C" "D" "F" "G" "H" 
+                              "J" "K" "L" "M" "N" "P" 
+                              "Q" "R" "S" "T" "V" "W" 
+                              "X" "Y" "Z")
+	:text_randomization  without_replacement
+	:display_item_screen_location_x  (:block_variable_foil11_x)
+	:display_item_screen_location_y  (:block_variable_foil11_y)
+	)
+)
+
+
+;;
+;; For task-specific knowledge in the model, including declarative chunks, production rules, and parameters,
+;; directly copy the contents from an ACT-R model file, within the (define-model model-name  ... ) here. just the ... part, do not need "(define-model model-name" and the ")".
+;;
+;;
+
+
+;; Road sign reaction time experiment
+
+(sgp :v t :show-focus t :needs-mouse nil  :trace-detail high)
+
+(sgp :visual-num-finsts 100)  ; This parameter controls how many finsts are available to the vision module.  It can be set to any positive number and defaults to 4.
+(sgp :visual-finst-span 100)  ; This parameter controls how long a finst marker will remain on a location.  It is measured in seconds and default to 3.0.
+(sgp  :visual-attention-latency	 0.085 )  ;; This parameter specifies how long a visual attention shift will take in seconds.  The default value is .085.
+
+
+(chunk-type read-roads state location-x            target-name)
+
+(chunk-type road  name-text)
+
+(add-dm 
+ (start isa chunk) 
+ (attend isa chunk)
+ (respond isa chunk) 
+ (goal isa read-roads state start     target-name "a" ))
+
+
+(P find-unattended-name
+   =goal>
+      ISA         read-roads
+      state       start
+ ==>
+   +visual-location>
+      ISA         visual-location
+      :attended    nil
+      screen-x		lowest
+   
+   =goal>
+      state       find-location
+)
+
+(P attend-name
+   =goal>
+      ISA         read-roads
+      state       find-location
+   
+   =visual-location>
+      ISA         visual-location
+	  screen-x  	=val
+   
+   ?visual>
+       state       free
+==>
+   +visual>
+      ISA         move-attention
+      screen-pos  =visual-location
+   =goal>
+      state       attend
+	  location-x	=val
+)
+
+
+(P encode-name
+   =goal>
+      ISA         read-roads
+      state       attend
+
+   =visual>
+      ISA         text
+      value       =name
+
+   ?imaginal>
+      state       free	  
+==>
+   =goal>
+      state       respond
+   +imaginal>
+      isa         road
+      name-text		=name
+
+)
+
+(P read-again
+   =goal>
+      ISA         read-roads
+      state       respond	
+ 	target-name  =name
+   =imaginal>
+      isa         road
+	-  name-text	  =name
+   ==>
+      =goal>
+      state       start	
+ )  
+
+(P respond-right      ; short-cut
+   =goal>
+      ISA         read-roads
+      state       find-location
+   
+   =visual-location>
+      ISA         visual-location
+	  screen-x  	175
+	  
+    ?manual>
+       state       free
+   ==>
+   
+   +manual>
+      ISA         press-key
+      key         j
+      
+   -goal>
+)
+(spp   respond-right   :u   10)
+(spp   attend-name   :u      0)
+(P respond-up
+   =goal>
+      ISA         read-roads
+      state       respond
+	  location-x	75		
+	  target-name  =name
+   =imaginal>
+      isa         road
+  name-text	  =name
+	  
+    ?manual>
+       state       free
+   ==>
+   
+   +manual>
+      ISA         press-key
+      key         y
+      
+   -goal>
+)
+
+
+(goal-focus goal)
+
+
+
+ ;;;;;;;;;;;;;;|#
+
+
+
+
+;; concurrent task 2, driving, use goal-2 buffer.
+;; Task definition ;;
+
+(use_world3d_template   
+	:method    	driving    ;; the refresh rate will be syncronized to TORCS (about 50 Hz, 20 ms each cycle)
+)
+
+(use_predefined_model_setup		model_drive_torcs)
+;; the model will be connected with TORCS. Road and scenario settings are done in TORCS.
+
+
+
+
+
+;;declarative knowledge, and production rules. 
+
+
+;; driving-control based on Salvucci (2006) driving model with two-point visual-motor control
+
+(chunk-type drive-control	;; both lateral and longitudinal controls 
+        lane  			;; target driving lane, 0 for center lane, -1 for 1st on the left, 1 for 1st on the right
+	na-old			;; near angle old (degree)
+	na-new			;; near angle new (degree)	
+	fa-old			;; far angle old  (degree)
+	fd-old			;; far point distance (m)
+	time-old
+	speed-old		;; in m/ s/s
+
+	stage			 
+)
+
+
+
+(add-dm
+ (driving isa drive-control 
+	lane		0
+	na-old		0
+	na-new		0
+	fa-old		0
+        fd-old          0	;; because far distance is determined by speed * far-time
+	time-old	0
+	speed-old	0	;; use initial speed
+	stage		1
+ )
+
+)
+
+
+
+(p drive-control-attend-near
+   =goal-2>
+      isa drive-control
+      lane =lane
+      stage 1
+
+==>
+   +visual-location>
+      isa  visual-location-world3d-driving
+      kind near-point
+      lane =lane   
+   =goal-2>
+      stage 2	
+)
+
+(p drive-control-process-near-attend-far
+   =goal-2>
+      isa drive-control
+      lane 	=lane
+      na-new    =na-1
+      stage 	2
+   =visual-location>
+      isa  visual-location-world3d-driving
+      kind near-point
+      angle   =na-2
+
+
+==>
+   =goal-2>
+      na-old 	=na-1      
+      na-new    =na-2
+      stage     3
+   +visual-location>
+      isa visual-location-world3d-driving
+      kind far-point		;;this far point will include both road far points and car far points
+      lane =lane		;;here may find both far-road point and far-car point, use the closest one
+)
+
+
+(p drive-control-process-far
+   =goal-2>
+      isa drive-control      
+      lane =lane
+      na-old 	=na-old
+      na-new    =na-new
+      fa-old    =fa-1
+      fd-old    =fd-1
+      speed-old =v-1
+      time-old  =time-1
+      stage     3
+   =visual-location>
+      isa 	visual-location-world3d-driving
+      kind 	far-point
+      angle	=fa-2
+      distance 	=fd-2
+   ?visual>
+      state 	free
+ 
+   ?manual>
+      state   free
+
+==>
+!bind! =time-2 (get-clock-time)     ;; the short-cut way  
+!bind! =v-2  (world3d-driving-get-velocity)   ;; the short-cut way 
+   =goal-2>
+      fa-old =fa-2
+      fd-old =fd-2
+      speed-old =v-2
+      time-old =time-2
+      stage     1
+   +visual>
+      isa         move-attention 		;;note here as in Salvucci's model, near and far angle is not computed from visual but use visual-location only. this +visual> is used for showing eye movement, in fact as a side effect. info processing is not affected by visual prepare, encoding and eye movement speed
+      screen-pos  =visual-location
+   +manual>
+      isa	world3d-driving-two-point-visual-manual-steer
+      na-old 	=na-old
+      na-new    =na-new
+      fa-old    =fa-1     
+      fa-new    =fa-2
+      time-old  =time-1
+      time-new  =time-2
+
+!eval! (world3d-driving-accelerate-brake   =fd-1   =fd-2  =v-1  =v-2    =time-1      =time-2  ) 	;;currently no module for this, just !eval! as Salvucci's model
+)
+
+
+(goal-2-focus driving)
+
+
+
+
+
+(sgp :esc  t) ;; allow utility computation needed for dual task scheduling
+(sgp :er t)  ;; allow random selection when two rules tie in utility
+
+
+
+
+
+
+

@@ -1,0 +1,108 @@
+;; comment symbols are ; and #| ... |#, same as ACT-R (Lisp).
+;; For questions and comments, please send to Shi Cao (shicao@umich.edu).
+;; use QN-ACTR task description template here (if any).
+
+(use_task_dbt_template   
+	:method						discrete_display_feedback_two_stages_method
+	:response_terminates_display			nil
+	:reset_all_modules_before_each_trial		nil
+	:auto_compute_default_reaction_time		t
+	:auto_compute_default_response_correctness	nil	
+)
+
+(add_trials_from_discrete_display_feedback_two_stages_method
+	:add_number_of_blocks_per_day			1
+	:add_number_of_trials_per_block			500
+
+	:number_of_responses_per_trial			1
+	:display_and_response_duration			(60)
+	:feedback_duration				(12) 
+
+	(
+	:item_type					display_item_audio_digit_sound
+	:digit						(0 1 2 1 1 1)
+	:text_randomization				fixed_order
+	)
+)
+
+(sgp	:v		t
+	:show-focus	t
+	:needs-mouse	nil
+	:trace-detail	high)
+
+(chunk-type
+	read-digits
+	digit1
+	digit2
+	step)
+
+(add-dm	(goal isa read-digits	step 1))
+
+(P hear-sound
+ =goal>
+	isa		read-digits
+	step		1
+ =aural-location>
+	isa		audio-event
+	location	external
+ ?aural>
+	state		free
+==>
+ +aural>
+	isa		sound
+	event		=aural-location
+ =goal>
+	step		2
+)
+
+(P encode-first-digit
+ =goal>
+	isa read-digits
+	step		2
+	digit1		nil
+ =aural>
+	isa		sound
+	content		=d1
+==>
+ =goal>
+	digit1		=d1
+	step		1
+)
+
+(P encode-second-digit
+ =goal>
+	isa		read-digits
+	step		2
+	digit1		=d1
+	digit2		nil
+ =aural>
+	isa		sound
+	content		=d2
+==>
+ =goal>
+	digit2		=d2
+	step		1
+)
+
+(P speak
+ =goal>
+	isa		read-digits
+	digit1		=d1
+	digit2		=d2
+	step		2
+ =aural>
+	isa		sound
+	content		=d3
+ ?vocal>
+	state		free
+==>
+ +vocal>
+	isa		speak
+	string		=d1
+ =goal>
+	digit1		=d2
+	digit2		=d3
+	step		1
+)
+
+(goal-focus goal)
