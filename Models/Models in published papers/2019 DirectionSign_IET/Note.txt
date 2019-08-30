@@ -1,0 +1,7 @@
+Models in this folder were used in this research paper: 
+
+Deng, C., Cao, S., Wu, C., & Lyu, N. (2019). Predicting drivers¡¯ direction sign reading reaction time using an integrated cognitive architecture. IET Intelligent Transport Systems, 13(4), 622-627.
+
+
+The driving related models require QN-ACTR to be connected with a driving simulation program TORCS (http://torcs.sourceforge.net) via User Datagram Protocol (UDP). Please contact Shi Cao (shi.cao@uwaterloo.ca) if you are interested in the customized version of TORCS that can be connected with QN-ACTR.
+

@@ -1,0 +1,9 @@
+Note:
+
+This Model Setup Assistant was designed in around 2013 to primarily work with the old QN-ACTR version implemented in Micro Saint Sharp. It has been discontinued, so some functions, such as driving task environment setup, may not work with the current QN-ACTR version implemented in Java. 
+
+To see some of the recent models such as driving related models, please refer to \QN-ACTR-Release\Models\Models in published papers
+
+Shi Cao 
+shi.cao@uwaterloo.ca
+2019 August

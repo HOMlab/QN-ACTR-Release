@@ -1,0 +1,7 @@
+Models in this folder were used in this research paper: 
+
+Deng, C., Cao, S., Wu, C., & Lyu, N. (accepted in 2019). Modeling driver take-over reaction time and emergency response time using an integrated cognitive architecture. Transportation Research Record.
+
+
+The driving related models require QN-ACTR to be connected with a driving simulation program TORCS (http://torcs.sourceforge.net) via User Datagram Protocol (UDP). Please contact Shi Cao (shi.cao@uwaterloo.ca) if you are interested in the customized version of TORCS that can be connected with QN-ACTR.
+
