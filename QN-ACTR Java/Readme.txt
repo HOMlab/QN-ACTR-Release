@@ -4,8 +4,10 @@ See \QN docs folder for QN-ACTR manual.
 Quick start:
 
 1. Download and install JDK: (Java Development Kit). http://www.oracle.com/technetwork/java/javase/downloads/index.html
+   It has been tested with JRE1.8.0 version. Newer versions should also work.
 
 2. Download an Integrated Development Environments (IDE) for Java, e.g., Eclipse (Eclipse IDE for Java Developers)
+   It has been tested with Eclipse Oxygen Release (4.7.0). Newer versions should also work.
 
 3. Unzip QN-ACTR Java [version number].zip.
 
